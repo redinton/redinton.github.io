@@ -166,8 +166,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><a href="https://zhuanlan.zhihu.com/p/56382372" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/56382372</a></p>
-<h3 id="word2vec和fasttext对比"><a class="markdownIt-Anchor" href="#word2vec和fasttext对比"></a> word2vec和fasttext对比</h3>
+        <h3 id="word2vec和fasttext对比"><a class="markdownIt-Anchor" href="#word2vec和fasttext对比"></a> word2vec和fasttext对比</h3>
 <ul>
 <li>fasttext会考虑subword(应对OOV)</li>
 <li>fasttext可进行有supervised learning for text classification
@@ -175,24 +174,6 @@
 <li>结构与CBOW类似</li>
 <li>采用hierarchical softmax对输出标签建立哈弗曼树，样本中标签多的类别对应更短的搜索路径</li>
 <li>N-gram，考虑词序特征</li>
-</ul>
-</li>
-</ul>
-<h3 id="glove和word2veclsa对比"><a class="markdownIt-Anchor" href="#glove和word2veclsa对比"></a> glove和word2vec,LSA对比</h3>
-<ul>
-<li>LSA，由全局语料得到共现矩阵，用SVD分解</li>
-<li>glove可看做是对LSA一种优化的高效矩阵分解，用adagrad对最小平方损失进行优化</li>
-<li>word2vec，局部语料库训练，特征提取基于滑窗，可以在线学习，而glove需要事先统计全局信息，做不到增量学习。</li>
-<li>glove在一定程度上有label，即共现次数log(<img src="https://www.zhihu.com/equation?tex=X_%7Bij%7D" alt="X_{ij}"> )</li>
-<li>word2vec损失函数是带权重的交叉熵，权重固定，glove损失函数最小平方损失函数，</li>
-</ul>
-<h3 id="elmogptbert三者区别"><a class="markdownIt-Anchor" href="#elmogptbert三者区别"></a> elmo,GPT,BERT三者区别</h3>
-<ul>
-<li>GPT采用单向语言模型，elmo和bert采用双向语言模型</li>
-<li>GPT和bert都采用Transformer，Transformer是encoder-decoder结构
-<ul>
-<li>GPT的单向语言模型采用decoder部分，decoder的部分见到的都是不完整的句子</li>
-<li>bert的双向语言模型则采用encoder部分，采用了完整句子。</li>
 </ul>
 </li>
 </ul>
