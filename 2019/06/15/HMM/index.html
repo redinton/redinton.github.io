@@ -18,7 +18,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://ww2.sinaimg.cn/large/006tNc79ly1g41m1u2u76j30if09y3zp.jpg">
 <meta property="og:image" content="http://ww4.sinaimg.cn/large/006tNc79ly1g41m1upbg3j30jf0c9q5d.jpg">
-<meta property="og:updated_time" content="2019-06-15T02:03:11.000Z">
+<meta property="og:updated_time" content="2019-06-15T02:21:48.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HMM">
 <meta name="twitter:description" content="定义 HMM是关于时序的概率模型，描述一个由隐藏的马尔科夫链随机生成不可观测的状态随机序列，再由各个状态生成一个可观测的观测随机序列。   随机生成的状态序列 - state sequence   每个状态生成一个观测，由此产生的观测随机序列- 观测序列 (observation sequence)   前提假设，当前时刻的观测值只依赖于当前时刻的隐状态  Hence we have assu">
@@ -695,5 +695,21 @@ MathJax.Hub.Queue(function() {
 
 </div>
   </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> >
 </body>
 </html>

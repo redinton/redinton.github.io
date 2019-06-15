@@ -24,7 +24,7 @@
 <meta property="og:image" content="https://www.zhihu.com/equation?tex=w">
 <meta property="og:image" content="https://www.zhihu.com/equation?tex=%5Ctilde%7Bw%7D">
 <meta property="og:image" content="https://www.zhihu.com/equation?tex=w%2B%5Ctilde%7Bw%7D">
-<meta property="og:updated_time" content="2019-06-15T02:03:45.000Z">
+<meta property="og:updated_time" content="2019-06-15T02:21:55.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="embedding 对比">
 <meta name="twitter:description" content="word2vec和fasttext对比  fasttext会考虑subword(应对OOV) fasttext可进行有supervised learning for text classification  结构与CBOW类似 采用hierarchical softmax对输出标签建立哈弗曼树，样本中标签多的类别对应更短的搜索路径 N-gram，考虑词序特征">
@@ -745,5 +745,21 @@ MathJax.Hub.Queue(function() {
 
 </div>
   </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> >
 </body>
 </html>
