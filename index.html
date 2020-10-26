@@ -146,82 +146,20 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-django-new" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-django-serializer" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/26/django-new/">django_new</a>
+      <a class="article-title" href="/2020/10/26/django-serializer/">django_serializer</a>
     </h1>
   
 
         
-        <a href="/2020/10/26/django-new/" class="archive-article-date">
-  	<time datetime="2020-10-26T02:48:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/10/26/django-new/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-django" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/26/django/">django</a>
-    </h1>
-  
-
-        
-        <a href="/2020/10/26/django/" class="archive-article-date">
-  	<time datetime="2020-10-26T02:41:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-26</time>
+        <a href="/2020/10/26/django-serializer/" class="archive-article-date">
+  	<time datetime="2020-10-26T03:08:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-26</time>
 </a>
         
       </header>
@@ -238,7 +176,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CommentSerializer</span><span class="params">(serializers.Serializer)</span>:</span></span><br><span class="line">    email = serializers.EmailField()</span><br><span class="line">    content = serializers.CharField(max_length=<span class="number">200</span>)</span><br><span class="line">    created = serializers.DateTimeField()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">create</span><span class="params">(self, validated_data)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> Comment(**validated_data)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">update</span><span class="params">(self, instance, validated_data)</span>:</span></span><br><span class="line">        instance.email = validated_data.get(<span class="string">'email'</span>, instance.email)</span><br><span class="line">        instance.content = validated_data.get(<span class="string">'content'</span>, instance.content)</span><br><span class="line">        instance.created = validated_data.get(<span class="string">'created'</span>, instance.created)</span><br><span class="line">        <span class="keyword">return</span> instance</span><br></pre></td></tr></table></figure>
 <p>when deserializing data, we can call <code>.save()</code> to return an object instance, based on the validated data.</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">comment = serializer.save()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Calling .save() will either create a new instance, or update an existing instance, depending on if an existing instance was passed when instantiating the serializer class:</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># .save() will create a new instance.</span></span><br><span class="line">serializer = CommentSerializer(data=data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># .save() will update the existing `comment` instance.</span></span><br><span class="line">serializer = CommentSerializer(comment, data=data)</span><br></pre></td></tr></table></figure>
-<p><img src="./django/image-20200819173214068.png" alt="image-20200819173214068"></p>
+<img src="/2020/10/26/django-serializer/image-20200819173214068.png" title="image-20200819173214068">
 <p>自定义序列化类的序列化、反序列化或验证过程的行为，可以通过重写<code>.to_representation()</code>或<code>.to_internal_value()</code>方法来完成。</p>
 <h4 id="to_internal_valueselfdata"><a class="markdownIt-Anchor" href="#to_internal_valueselfdata"></a> to_internal_value(self,data)</h4>
 <p>将未经验证的传入数据作为输入，返回可以<strong>通过<code>serializer.validated_data</code>来访问的已验证的数据</strong>。如果在序列化类上调用<code>.save()</code>，则该返回值也将传递给<code>.create()</code>或<code>.update()</code>方法。这是反向的过程，由前端数据往后端保存。</p>
@@ -272,7 +210,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/10/26/django/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/10/26/django-serializer/">展开全文 >></a>
         </p>
       
 
