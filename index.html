@@ -42,11 +42,11 @@
 <div class="overlay" style="background: #4d4d4d"></div>
 <div class="intrude-less">
 	<header id="header" class="inner">
-		<a href="/" class="profilepic">
-			<img src="http://pt33b98ln.bkt.clouddn.com/head.jpg" class="js-avatar">
+		<a href="/themes/yilia/source/" class="profilepic">
+			<img src="/img/head1.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">JasonYU</a></h1>
+		  <h1 class="header-author"><a href="/themes/yilia/source/">JasonYU</a></h1>
 		</hgroup>
 		
 		<p class="header-subtitle">回头竟百年身</p>
@@ -97,7 +97,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="http://pt33b98ln.bkt.clouddn.com/head.jpg" class="js-avatar">
+				<img src="/img/head1.jpg" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author">JasonYU</h1>
@@ -172,21 +172,17 @@
 <li>在反序列化时对客户端传来的数据进行验证(validation)</li>
 <li>重写序列化器类自带的create 和 update</li>
 </ul>
-<h4 id="serializer增加-update-create-写法"><a class="markdownIt-Anchor" href="#serializer增加-update-create-写法"></a> Serializer增加 update() / create () 写法</h4>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CommentSerializer</span><span class="params">(serializers.Serializer)</span>:</span></span><br><span class="line">    email = serializers.EmailField()</span><br><span class="line">    content = serializers.CharField(max_length=<span class="number">200</span>)</span><br><span class="line">    created = serializers.DateTimeField()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">create</span><span class="params">(self, validated_data)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> Comment(**validated_data)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">update</span><span class="params">(self, instance, validated_data)</span>:</span></span><br><span class="line">        instance.email = validated_data.get(<span class="string">'email'</span>, instance.email)</span><br><span class="line">        instance.content = validated_data.get(<span class="string">'content'</span>, instance.content)</span><br><span class="line">        instance.created = validated_data.get(<span class="string">'created'</span>, instance.created)</span><br><span class="line">        <span class="keyword">return</span> instance</span><br></pre></td></tr></table></figure>
+<h4 id="Serializer增加-update-create-写法"><a href="#Serializer增加-update-create-写法" class="headerlink" title="Serializer增加 update() / create () 写法"></a>Serializer增加 update() / create () 写法</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CommentSerializer</span><span class="params">(serializers.Serializer)</span>:</span></span><br><span class="line">    email = serializers.EmailField()</span><br><span class="line">    content = serializers.CharField(max_length=<span class="number">200</span>)</span><br><span class="line">    created = serializers.DateTimeField()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">create</span><span class="params">(self, validated_data)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> Comment(**validated_data)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">update</span><span class="params">(self, instance, validated_data)</span>:</span></span><br><span class="line">        instance.email = validated_data.get(<span class="string">'email'</span>, instance.email)</span><br><span class="line">        instance.content = validated_data.get(<span class="string">'content'</span>, instance.content)</span><br><span class="line">        instance.created = validated_data.get(<span class="string">'created'</span>, instance.created)</span><br><span class="line">        <span class="keyword">return</span> instance</span><br></pre></td></tr></table></figure>
 <p>when deserializing data, we can call <code>.save()</code> to return an object instance, based on the validated data.</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">comment = serializer.save()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Calling .save() will either create a new instance, or update an existing instance, depending on if an existing instance was passed when instantiating the serializer class:</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># .save() will create a new instance.</span></span><br><span class="line">serializer = CommentSerializer(data=data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># .save() will update the existing `comment` instance.</span></span><br><span class="line">serializer = CommentSerializer(comment, data=data)</span><br></pre></td></tr></table></figure>
 <img src="/2020/10/26/django-serializer/image-20200819173214068.png" title="image-20200819173214068">
 <p>自定义序列化类的序列化、反序列化或验证过程的行为，可以通过重写<code>.to_representation()</code>或<code>.to_internal_value()</code>方法来完成。</p>
-<h4 id="to_internal_valueselfdata"><a class="markdownIt-Anchor" href="#to_internal_valueselfdata"></a> to_internal_value(self,data)</h4>
-<p>将未经验证的传入数据作为输入，返回可以<strong>通过<code>serializer.validated_data</code>来访问的已验证的数据</strong>。如果在序列化类上调用<code>.save()</code>，则该返回值也将传递给<code>.create()</code>或<code>.update()</code>方法。这是反向的过程，由前端数据往后端保存。</p>
+<h4 id="to-internal-value-self-data"><a href="#to-internal-value-self-data" class="headerlink" title="to_internal_value(self,data)"></a>to_internal_value(self,data)</h4><p>将未经验证的传入数据作为输入，返回可以<strong>通过<code>serializer.validated_data</code>来访问的已验证的数据</strong>。如果在序列化类上调用<code>.save()</code>，则该返回值也将传递给<code>.create()</code>或<code>.update()</code>方法。这是反向的过程，由前端数据往后端保存。</p>
 <p>如果任何验证条件失败，那么该方法会引发一个<code>serializers.ValidationError(errors)</code>。通常，此处的<code>errors</code>参数将是错误消息字典的一个映射字段，或者是<code>settings.NON_FIELD_ERRORS_KEY</code>设置的值。</p>
-<p>传递给此方法的**<code>data</code>参数通常是<code>request.data</code>的值，**因此它提供的数据类型将取决于你为API配置的解析器类。</p>
-<h4 id="to_representationselfobj"><a class="markdownIt-Anchor" href="#to_representationselfobj"></a> to_representation(self,obj)</h4>
-<p>接收一个需要被序列化的对象实例并且返回一个序列化之后的表示。通常，这意味着<strong>返回内置Python数据类型的结构</strong>。可以处理的确切类型取决于你为API配置的渲染类。这是<strong>正向过程，由后端往前端</strong>。</p>
+<p>传递给此方法的<strong><code>data</code>参数通常是<code>request.data</code>的值，</strong>因此它提供的数据类型将取决于你为API配置的解析器类。</p>
+<h4 id="to-representation-self-obj"><a href="#to-representation-self-obj" class="headerlink" title="to_representation(self,obj)"></a>to_representation(self,obj)</h4><p>接收一个需要被序列化的对象实例并且返回一个序列化之后的表示。通常，这意味着<strong>返回内置Python数据类型的结构</strong>。可以处理的确切类型取决于你为API配置的渲染类。这是<strong>正向过程，由后端往前端</strong>。</p>
 <p><a href="https://www.liujiangblog.com/blog/43/" target="_blank" rel="noopener">Django REST framework 序列化器</a></p>
-<h5 id="validate"><a class="markdownIt-Anchor" href="#validate"></a> validate</h5>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">validate</span><span class="params">(self,data)</span>:</span></span><br><span class="line">	<span class="string">'''</span></span><br><span class="line"><span class="string">	做一些校验</span></span><br><span class="line"><span class="string">	'''</span></span><br><span class="line">	<span class="keyword">return</span> </span><br><span class="line">    </span><br><span class="line">serializer.object.get(<span class="string">'token'</span>)</span><br></pre></td></tr></table></figure>
+<h5 id="validate"><a href="#validate" class="headerlink" title="validate"></a>validate</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">validate</span><span class="params">(self,data)</span>:</span></span><br><span class="line">	<span class="string">'''</span></span><br><span class="line"><span class="string">	做一些校验</span></span><br><span class="line"><span class="string">	'''</span></span><br><span class="line">	<span class="keyword">return</span> </span><br><span class="line">    </span><br><span class="line">serializer.object.get(<span class="string">'token'</span>)</span><br></pre></td></tr></table></figure>
 
       
 
@@ -261,20 +257,15 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><img src="http://ww2.sinaimg.cn/large/006tNc79ly1g41m1u2u76j30if09y3zp.jpg" alt="image-20190615091128686"></p>
-<h4 id="定义"><a class="markdownIt-Anchor" href="#定义"></a> 定义</h4>
-<p>HMM是关于时序的概率模型，描述一个由隐藏的马尔科夫链随机生成不可观测的状态随机序列，再由各个状态生成一个可观测的观测随机序列。</p>
+<h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>HMM是关于时序的概率模型，描述一个由隐藏的马尔科夫链随机生成不可观测的状态随机序列，再由各个状态生成一个可观测的观测随机序列。</p>
 <ul>
-<li>
-<p>随机生成的状态序列 - state sequence</p>
+<li><p>随机生成的状态序列 - state sequence</p>
 </li>
-<li>
-<p>每个状态生成一个观测，由此产生的观测随机序列- 观测序列 (observation sequence)</p>
+<li><p>每个状态生成一个观测，由此产生的观测随机序列- 观测序列 (observation sequence)</p>
 <ul>
-<li>
-<p>前提假设，当前时刻的观测值只依赖于当前时刻的隐状态</p>
+<li><p>前提假设，当前时刻的观测值只依赖于当前时刻的隐状态</p>
 <blockquote>
-<p>Hence we have assumed that the value for the random variable X_i depends only on<br>
-the value of Y_i.</p>
+<p>Hence we have assumed that the value for the random variable X_i depends only on<br>the value of Y_i. </p>
 </blockquote>
 </li>
 </ul>
@@ -363,11 +354,9 @@ the value of Y_i.</p>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="word2vec和fasttext对比"><a class="markdownIt-Anchor" href="#word2vec和fasttext对比"></a> word2vec和fasttext对比</h3>
-<ul>
+        <h3 id="word2vec和fasttext对比"><a href="#word2vec和fasttext对比" class="headerlink" title="word2vec和fasttext对比"></a>word2vec和fasttext对比</h3><ul>
 <li>fasttext会考虑subword(应对OOV)</li>
-<li>fasttext可进行有supervised learning for text classification
-<ul>
+<li>fasttext可进行有supervised learning for text classification<ul>
 <li>结构与CBOW类似</li>
 <li>采用hierarchical softmax对输出标签建立哈弗曼树，样本中标签多的类别对应更短的搜索路径</li>
 <li>N-gram，考虑词序特征</li>
@@ -454,18 +443,13 @@ the value of Y_i.</p>
     <div class="article-entry" itemprop="articleBody">
       
         <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="quick-start"><a class="markdownIt-Anchor" href="#quick-start"></a> Quick Start</h2>
-<h3 id="create-a-new-post"><a class="markdownIt-Anchor" href="#create-a-new-post"></a> Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="run-server"><a class="markdownIt-Anchor" href="#run-server"></a> Run server</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="generate-static-files"><a class="markdownIt-Anchor" href="#generate-static-files"></a> Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="deploy-to-remote-sites"><a class="markdownIt-Anchor" href="#deploy-to-remote-sites"></a> Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
 
       
@@ -686,7 +670,7 @@ MathJax.Hub.Queue(function() {
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">很惭愧&lt;br&gt;&lt;br&gt;只做了一点微小的工作&lt;br&gt;谢谢大家</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">Hey Hey Jude</div>
   	  	
     	</section>
     
