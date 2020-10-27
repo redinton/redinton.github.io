@@ -6,15 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://jasonyu.top">
-  <title>Tag: HMM | Keep Moving</title>
+  <title>django_authentication | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Keep Moving">
-<meta property="og:url" content="http://jasonyu.top/tags/HMM/index.html">
+  <meta name="description" content="[TOC] 鉴权部分 (authentication) 参考 1 在配置中 base.py / development.py 123456REST_FRAMEWORK = &amp;#123;    &apos;DEFAULT_AUTHENTICATION_CLASSES&apos;: [        &apos;rest_framework.authentication.BasicAuthentication&apos;,        &apos;">
+<meta name="keywords" content="django">
+<meta property="og:type" content="article">
+<meta property="og:title" content="django_authentication">
+<meta property="og:url" content="http://jasonyu.top/2020/10/27/django_authentication/index.html">
 <meta property="og:site_name" content="Keep Moving">
+<meta property="og:description" content="[TOC] 鉴权部分 (authentication) 参考 1 在配置中 base.py / development.py 123456REST_FRAMEWORK = &amp;#123;    &apos;DEFAULT_AUTHENTICATION_CLASSES&apos;: [        &apos;rest_framework.authentication.BasicAuthentication&apos;,        &apos;">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://jasonyu.top/2020/10/27/django_authentication/image-20200916233140486.png">
+<meta property="og:updated_time" content="2020-10-27T02:53:10.687Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Keep Moving">
+<meta name="twitter:title" content="django_authentication">
+<meta name="twitter:description" content="[TOC] 鉴权部分 (authentication) 参考 1 在配置中 base.py / development.py 123456REST_FRAMEWORK = &amp;#123;    &apos;DEFAULT_AUTHENTICATION_CLASSES&apos;: [        &apos;rest_framework.authentication.BasicAuthentication&apos;,        &apos;">
+<meta name="twitter:image" content="http://jasonyu.top/2020/10/27/django_authentication/image-20200916233140486.png">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -144,68 +151,226 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-django_authentication" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/06/15/HMM/" class="archive-article-date">
-  	<time datetime="2019-06-15T01:51:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-15</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/06/15/HMM/">HMM</a>
+    <h1 class="article-title" itemprop="name">
+      django_authentication
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2020/10/27/django_authentication/" class="archive-article-date">
+  	<time datetime="2020-10-27T03:08:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>[TOC]</p>
+<p>鉴权部分 (authentication)</p>
+<p>参考 <a href="https://medium.com/@allwindicaprio/session-vs-token-based-authentication-b1f862dd7ed8" target="_blank" rel="noopener">1</a></p>
+<p>在配置中 <a href="http://base.py" target="_blank" rel="noopener">base.py</a> / <a href="http://development.py" target="_blank" rel="noopener">development.py</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">REST_FRAMEWORK = &#123;</span><br><span class="line">    <span class="string">'DEFAULT_AUTHENTICATION_CLASSES'</span>: [</span><br><span class="line">        <span class="string">'rest_framework.authentication.BasicAuthentication'</span>,</span><br><span class="line">        <span class="string">'rest_framework.authentication.SessionAuthentication'</span>,</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>默认状态下是 BasicAuthentication和SessionAuthentication只要满足一个就可以</p>
+<h5 id="basicauthentication"><a class="markdownIt-Anchor" href="#basicauthentication"></a> BasicAuthentication</h5>
+<p>当未认证时，会返回</p>
+<p>HTTP/1.1 401 Authorization Required <strong>www-Authenticate</strong>: Basic realm= “family”</p>
+<p>Basic说明要Basic方式认证，realm = “family&quot; 说明family中的内容是要权限的</p>
+<p>用户输入 账号密码，Base64( 账号:密码) 加密后放到下面Basic后的字段</p>
+<p>Authorization: Basic U2h1c2hlbmcwMDcldUZGMUFzczAwNw==</p>
+<p>缺点</p>
+<p><strong>不安全，http是裸奔状态</strong> ， 一般结合https用BasicAuthen</p>
+<h5 id="tokenauthentication"><a class="markdownIt-Anchor" href="#tokenauthentication"></a> TokenAuthentication</h5>
+<p>也叫Bearer authentication</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">INSTALLED_APPS = [</span><br><span class="line">    ...</span><br><span class="line">    <span class="string">'rest_framework.authtoken'</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>token key should be included in the <code>Authorization</code> HTTP header.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Authorization: Bearer &lt;token&gt;</span><br><span class="line">Authorization: Token <span class="number">9944</span>b09199c62bcf9418ad846dd0e4bbdfc6ee4b</span><br></pre></td></tr></table></figure>
+<p>用户首先输入账号密码到server端，server端验证后，返回一个token给用户，</p>
+<p>用户把这个token存在本地的local storage，之后发请求的时候就从本地取出token，加到Authorization http header中</p>
+<h5 id="sessionauthentication"><a class="markdownIt-Anchor" href="#sessionauthentication"></a> SessionAuthentication</h5>
+<img src="/2020/10/27/django_authentication/image-20200916233140486.png" title="image-20200916233140486">
+<p>用户提交账号密码后，在服务端会有一个session，返回一个session_id,下次请求的时候直接在request中 cookie加入 session_id 。</p>
+<p>可能存在一个<strong>CORS</strong> 问题。</p>
+<h5 id="jwt-json-web-token"><a class="markdownIt-Anchor" href="#jwt-json-web-token"></a> JWT json web token</h5>
+<p>base64(Header)  + “.” + base64(Payload) +&quot;.&quot; + Signature</p>
+<ul>
+<li>header
+<ul>
+<li>alg:加密用的算法 HS256</li>
+<li>typ: JWT</li>
+</ul>
+</li>
+<li>Payload
+<ul>
+<li>想要传递的信息 如 用户名</li>
+</ul>
+</li>
+<li>Signature
+<ul>
+<li>HS256 (Base64(Header) + “.” + Base64(Payload),   secretKey)</li>
+<li>secretkey是密钥，由server保存</li>
+</ul>
+</li>
+</ul>
+<h6 id="服务器验证"><a class="markdownIt-Anchor" href="#服务器验证"></a> 服务器验证</h6>
+<p>收到token后，先decode出JWT三个部分，得到sign的算法和payload，然后结合<strong>secretkey再次生成Signat</strong>ure，与原来的Signature对比验证token是否有效，验证通过才会用payload数据</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">HMM</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">nlp</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">NER</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">django</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://jasonyu.top/2020/10/27/django_authentication/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2020/10/26/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hello World</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#basicauthentication"><span class="toc-number">1.</span> <span class="toc-text"> BasicAuthentication</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#tokenauthentication"><span class="toc-number">2.</span> <span class="toc-text"> TokenAuthentication</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#sessionauthentication"><span class="toc-number">3.</span> <span class="toc-text"> SessionAuthentication</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#jwt-json-web-token"><span class="toc-number">4.</span> <span class="toc-text"> JWT json web token</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#服务器验证"><span class="toc-number">4.1.</span> <span class="toc-text"> 服务器验证</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="django_authentication" data-title="django_authentication" data-url="http://jasonyu.top/2020/10/27/django_authentication/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -228,9 +393,9 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,
