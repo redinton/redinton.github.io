@@ -6,19 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://jasonyu.top">
-  <title>Hello World | Keep Moving</title>
+  <title>django wsgi | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.  Quic">
+  <meta name="description" content="Django主要部署平台是WSGI，其是web server 和 web application的python 标准 通过startproject command 会生成一个default WSGI configuration，即主目录下有一个WSGI.py文件">
+<meta name="keywords" content="django">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://jasonyu.top/2020/10/26/hello-world/index.html">
+<meta property="og:title" content="django wsgi">
+<meta property="og:url" content="http://jasonyu.top/2020/10/27/django_wsgi/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.  Quic">
+<meta property="og:description" content="Django主要部署平台是WSGI，其是web server 和 web application的python 标准 通过startproject command 会生成一个default WSGI configuration，即主目录下有一个WSGI.py文件">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-10-26T03:44:19.152Z">
+<meta property="og:image" content="http://jasonyu.top/2020/10/27/django_wsgi/image-20200508175352456.png">
+<meta property="og:updated_time" content="2020-10-27T03:11:17.370Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.  Quic">
+<meta name="twitter:title" content="django wsgi">
+<meta name="twitter:description" content="Django主要部署平台是WSGI，其是web server 和 web application的python 标准 通过startproject command 会生成一个default WSGI configuration，即主目录下有一个WSGI.py文件">
+<meta name="twitter:image" content="http://jasonyu.top/2020/10/27/django_wsgi/image-20200508175352456.png">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -148,40 +151,80 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-hello-world" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-django_wsgi" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Hello World
+      django wsgi
     </h1>
   
 
         
-        <a href="/2020/10/26/hello-world/" class="archive-article-date">
-  	<time datetime="2020-10-26T03:44:19.152Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-26</time>
+        <a href="/2020/10/27/django_wsgi/" class="archive-article-date">
+  	<time datetime="2020-10-27T03:08:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-27</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="quick-start"><a class="markdownIt-Anchor" href="#quick-start"></a> Quick Start</h2>
-<h3 id="create-a-new-post"><a class="markdownIt-Anchor" href="#create-a-new-post"></a> Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="run-server"><a class="markdownIt-Anchor" href="#run-server"></a> Run server</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="generate-static-files"><a class="markdownIt-Anchor" href="#generate-static-files"></a> Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="deploy-to-remote-sites"><a class="markdownIt-Anchor" href="#deploy-to-remote-sites"></a> Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <p>Django主要部署平台是WSGI，其是web server 和 web application的python 标准</p>
+<p>通过startproject command 会生成一个default WSGI configuration，即主目录下有一个WSGI.py文件</p>
+<a id="more"></a>
+<h4 id="application-对象"><a class="markdownIt-Anchor" href="#application-对象"></a> application 对象</h4>
+<p>Server通过application callable 与 代码做交互， application callable 以一个位于 Python 模块中，名为 <code>application</code> 的对象的形式提供，且对服务器可见。</p>
+<p>通过<strong>runserver</strong>命令起的是<strong>django默认服务器。</strong></p>
+<p><a href="https://docs.djangoproject.com/zh-hans/3.0/howto/deployment/wsgi/" target="_blank" rel="noopener">参考</a></p>
+<img src="/2020/10/27/django_wsgi/image-20200508175352456.png" title="image-20200508175352456">
+<p>client  &lt;----&gt;  nginx  &lt;----&gt; socket  &lt;----&gt; uwsgi  &lt;-----&gt; django</p>
+<h4 id="django起服务"><a class="markdownIt-Anchor" href="#django起服务"></a> django起服务</h4>
+<p>在生产环境 不要用 python <a href="http://manage.py" target="_blank" rel="noopener">manage.py</a> runserver 起服务 <a href="https://serverfault.com/questions/717568/risks-of-using-django-manage-py-runserver-for-production-in-a-small-scale-server" target="_blank" rel="noopener">参考</a></p>
+<blockquote>
+<p>DO NOT USE THIS SERVER IN A PRODUCTION SETTING. It has not gone through security audits or performance tests. (And that’s how it’s gonna stay.</p>
+</blockquote>
+<h5 id="gunicorn-和-uwsgi的区别"><a class="markdownIt-Anchor" href="#gunicorn-和-uwsgi的区别"></a> Gunicorn 和 uWSGI的区别</h5>
+<p>都算WSGI web server，区别不太大， Gunicorn用的更广一点，ins有用</p>
+<ul>
+<li>production mode
+<ul>
+<li>Gunicorn 托管 django</li>
+<li>uWSGI 托管 django</li>
+<li>Apache 和 mod_wsgi 托管 django</li>
+</ul>
+</li>
+</ul>
+<h6 id="gunicorn"><a class="markdownIt-Anchor" href="#gunicorn"></a> Gunicorn</h6>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install gunicorn</span><br></pre></td></tr></table></figure>
+<p>在项目主目录下生成gunicorn配置文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> multiprocessing</span><br><span class="line"></span><br><span class="line">bind = <span class="string">"127.0.0.1:8000"</span>  <span class="comment"># 绑定的ip与端口</span></span><br><span class="line">workers = <span class="number">2</span>  <span class="comment"># 核心数</span></span><br><span class="line">errorlog = <span class="string">"/home/xyu3/codes/fasys/logs/gunicorn.error.log"</span>  <span class="comment"># 发生错误时log的路径</span></span><br><span class="line">accesslog = <span class="string">"/home/xyu3/codes/fasys/logs/gunicorn.access.log"</span>  <span class="comment"># 正常时的log路径</span></span><br><span class="line"><span class="comment"># loglevel = 'debug'   #日志等级</span></span><br><span class="line">proc_name = <span class="string">"gunicorn_fasys"</span>  <span class="comment"># 进程名</span></span><br></pre></td></tr></table></figure>
+<p>然后在主目录用nohup挂载后台运行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup gunicorn 项目名.wsgi:application -c /home/xxx/xxx/gunicorn.conf.py &amp;</span><br></pre></td></tr></table></figure>
+<p>或者直接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup gunicorn 项目名.wsgi:application -b 127.0.0.1:8000 &amp;</span><br></pre></td></tr></table></figure>
+<p>接着把gunicorn放到supervisor进程管理器中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[program:x508server]</span><br><span class="line">command=gunicorn x508server.wsgi:application -b 0.0.0.0:8000  ; 被监控的进程路径</span><br><span class="line">directory=/home/webserver/web/WebServer/               ; 执行前要不要先cd到目录$</span><br><span class="line">autostart=true                ; 随着supervisord的启动而启动</span><br><span class="line">autorestart=true              ; 自动重启。。当然要选上了</span><br><span class="line">startretries=10               ; 启动失败时的最多重试次数</span><br><span class="line">exitcodes=0                   ; 正常退出代码</span><br><span class="line">stopsignal=KILL               ; 用来杀死进程的信号</span><br><span class="line">stopwaitsecs=10               ; 发送SIGKILL前的等待时间</span><br><span class="line">redirect_stderr=true          ; 重定向stderr到stdout</span><br><span class="line">stdout_logfile=/home/webserver/web/logfile.log        ; 指定日志文件</span><br><span class="line">; 默认为 false，如果设置为 true，当进程收到 stop 信号时，会自动将该信号发给该进$</span><br><span class="line">stopasgroup=true             ; send stop signal to the UNIX process</span><br><span class="line">; 默认为 false，如果设置为 true，当进程收到 kill 信号时，会自动将该信号发给该进$</span><br><span class="line">killasgroup=true             ; SIGKILL the UNIX process group (def false)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[program:fasys_gunicorn]</span><br><span class="line">  </span><br><span class="line"><span class="built_in">command</span>     = /home/xyu3/anaconda3/envs/py36/bin/gunicorn fasys.wsgi:application -c /home/xyu3/codes/fasys/gunicorn.conf.py</span><br><span class="line">directory   = /home/xyu3/codes/fasys/</span><br><span class="line">user        = xyu3</span><br><span class="line">startsecs   = 3</span><br><span class="line">autostart   = <span class="literal">true</span></span><br><span class="line">autorestart = <span class="literal">true</span></span><br><span class="line">startretries = 3</span><br><span class="line">exitcodes   = 0</span><br><span class="line">stopsignal = KILL</span><br><span class="line"></span><br><span class="line">redirect_stderr         = <span class="literal">true</span> ; 重定向stderr到stdout</span><br><span class="line">stdout_logfile_maxbytes = 50MB</span><br><span class="line">stdout_logfile_backups  = 10</span><br><span class="line">stdout_logfile          = /home/xyu3/codes/fasys/logs/supervisor_gunicorn.log</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">supervisorctl</span><br><span class="line">update #更新配置</span><br><span class="line">reload # 重新启动配置的程序</span><br><span class="line">status # 查看状态</span><br></pre></td></tr></table></figure>
+<h6 id="配置nginx"><a class="markdownIt-Anchor" href="#配置nginx"></a> 配置nginx</h6>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name 10.127.3.101;</span><br><span class="line">    access_log /home/xyu3/codes/fasys/logs/nginx.access.log;</span><br><span class="line">    error_log /home/xyu3/codes/fasys/logs/nginx.error.log;</span><br><span class="line"></span><br><span class="line">    <span class="comment">#index login.html;</span></span><br><span class="line">    <span class="comment">#root /home/xyu3/codes/fasys/;</span></span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        try_files <span class="variable">$uri</span> <span class="variable">$uri</span>/ =404;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location /apis &#123;</span><br><span class="line">        rewrite ^.+apis/?(.*)$ /<span class="variable">$1</span> <span class="built_in">break</span>;</span><br><span class="line">        proxy_pass http://127.0.0.1:8000;</span><br><span class="line">        proxy_pass_header       Authorization;</span><br><span class="line">        proxy_pass_header       WWW-Authenticate;</span><br><span class="line">        proxy_set_header Host <span class="variable">$host</span>;</span><br><span class="line">        proxy_set_header X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">        proxy_set_header X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location /admin &#123;</span><br><span class="line">        proxy_pass http://127.0.0.1:8000;</span><br><span class="line">        proxy_pass_header       Authorization;</span><br><span class="line">        proxy_pass_header       WWW-Authenticate;</span><br><span class="line">        proxy_set_header Host <span class="variable">$host</span>;</span><br><span class="line">        proxy_set_header X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">        proxy_set_header X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo nginx -t 测试配置有无问题</span><br><span class="line">sudo service nginx restart 重启nginx</span><br></pre></td></tr></table></figure>
+<h6 id="uwsgi"><a class="markdownIt-Anchor" href="#uwsgi"></a> uWSGI</h6>
+<p>因为uswgi本身是个C应用，所以需要一个C编译器 gcc和python-dev</p>
+<p>虚拟环境中uwsgi的安装有坑，主要和gcc版本有关，需要低版本gcc. <a href="https://github.com/unbit/uwsgi/issues/1770" target="_blank" rel="noopener">参考</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get  install gcc-4.8</span><br><span class="line">sudo rm /usr/bin/gcc</span><br><span class="line">sudo ln -s /usr/bin/gcc-4.8 /usr/bin/gcc</span><br><span class="line"></span><br><span class="line">pip install uwsgi==2.0.15</span><br><span class="line">sudo rm /usr/bin/gcc</span><br><span class="line">sudo ln -s /usr/bin/gcc-7 /usr/bin/gcc</span><br></pre></td></tr></table></figure>
+<p>部署</p>
+<p>运行uWSGI启动一个会把请求传递给WSGI应用的 HTTP 服务器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uwsgi --http 127.0.0.1:8000 --wsgi-file</span><br></pre></td></tr></table></figure>
+<p>配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">socket：uwsgi监听的socket，可以为socket文件或ip地址+端口号(如0.0.0.0:9000)，取决于nginx中upstream的设置</span><br><span class="line"></span><br><span class="line">chdir：在app加载前切换到当前目录</span><br><span class="line"></span><br><span class="line">pythonpath：给PYTHONPATH 增加一个目录（或者一个egg），最多可以使用该选项64次。</span><br><span class="line"></span><br><span class="line">module：加载指定的python WSGI模块（模块路径必须在PYTHONPATH里）</span><br></pre></td></tr></table></figure>
+<p>uWSGI 搭配 nginx 配置</p>
+<p><a href="https://www.jianshu.com/p/8671c40a5be8" target="_blank" rel="noopener">upstream配置</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">upstream django &#123;</span><br><span class="line">    <span class="comment"># server unix:///path/to/your/mysite/mysite.sock; # for a file socket</span></span><br><span class="line">    server 127.0.0.1:8001; <span class="comment"># for a web port socket (we'll use this first)</span></span><br><span class="line">    server 192.168.1.235:3031;</span><br><span class="line">    server 10.0.0.17:3017;</span><br><span class="line">&#125;</span><br><span class="line">server &#123;</span><br><span class="line">    listen 8002;</span><br><span class="line">    server_name 10.127.3.101;</span><br><span class="line">    location / &#123;</span><br><span class="line">        uwsgi_pass  django;</span><br><span class="line">        include    /home/xyu3/codes/fasys/uwsgi_params.conf; </span><br><span class="line">        <span class="comment"># 上述文件可以在这里下载 https://github.com/nginx/nginx/blob/master/conf/uwsgi_params</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>client 不直接与uWSGI交互，而是通过web server (Nginx)。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># conf.ini</span></span><br><span class="line">[uwsgi]</span><br><span class="line"></span><br><span class="line">socket = 127.0.0.1:8001</span><br><span class="line"><span class="comment"># Django-ralated settings</span></span><br><span class="line"><span class="comment"># the base directory (full path)</span></span><br><span class="line"><span class="built_in">chdir</span> = /home/xyu3/codes/fasys</span><br><span class="line"><span class="comment"># Django's wsgi file</span></span><br><span class="line">module = fasys.wsgi</span><br><span class="line"><span class="comment"># the virtualenv (full path)</span></span><br><span class="line">home = /home/xyu3/anaconda3/envs/py36</span><br><span class="line"></span><br><span class="line"><span class="comment"># with appropriate permissions </span></span><br><span class="line">chmod-socket = 664</span><br><span class="line"></span><br><span class="line"><span class="comment"># process-related settings</span></span><br><span class="line">master = <span class="literal">true</span></span><br><span class="line"><span class="comment"># maximum number of worker processes</span></span><br><span class="line">processes = 4</span><br><span class="line"><span class="comment"># the socket (use the full path to be safe</span></span><br><span class="line">; socket          = /home/xyu3/codes/fasys/mysite.sock</span><br><span class="line"><span class="comment"># clear environment on exit</span></span><br><span class="line">vacuum          = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">; wsgi-file = /home/xyu3/codes/fasys/fasys/wsgi.py</span><br><span class="line"><span class="comment"># 设置一个地址，可以通过该地址监控运行状态，输出 JSON 格式的数据</span></span><br><span class="line">stats = 127.0.0.1:8080<span class="comment"># conf.ini</span></span><br><span class="line">[uwsgi]</span><br><span class="line"></span><br><span class="line">socket = 127.0.0.1:8001</span><br><span class="line"><span class="comment"># Django-ralated settings</span></span><br><span class="line"><span class="comment"># the base directory (full path)</span></span><br><span class="line"><span class="built_in">chdir</span> = /home/xyu3/codes/fasys</span><br><span class="line"><span class="comment"># Django's wsgi file</span></span><br><span class="line">module = fasys.wsgi</span><br><span class="line"><span class="comment"># the virtualenv (full path)</span></span><br><span class="line">home = /home/xyu3/anaconda3/envs/py36</span><br><span class="line"></span><br><span class="line"><span class="comment"># with appropriate permissions </span></span><br><span class="line">chmod-socket = 664</span><br><span class="line"></span><br><span class="line"><span class="comment"># process-related settings</span></span><br><span class="line">master = <span class="literal">true</span></span><br><span class="line"><span class="comment"># maximum number of worker processes</span></span><br><span class="line">processes = 4</span><br><span class="line"><span class="comment"># the socket (use the full path to be safe</span></span><br><span class="line">; socket          = /home/xyu3/codes/fasys/mysite.sock</span><br><span class="line"><span class="comment"># clear environment on exit</span></span><br><span class="line">vacuum          = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">; wsgi-file = /home/xyu3/codes/fasys/fasys/wsgi.py</span><br><span class="line"><span class="comment"># 设置一个地址，可以通过该地址监控运行状态，输出 JSON 格式的数据</span></span><br><span class="line">stats = 127.0.0.1:8080</span><br></pre></td></tr></table></figure>
 
       
 
@@ -190,6 +233,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">django</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -240,7 +294,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://jasonyu.top/2020/10/26/hello-world/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://jasonyu.top/2020/10/27/django_wsgi/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -254,18 +308,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/10/27/django_authentication/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          django authentication
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/10/26/django-serializer/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">django serializer</div>
+    <a href="/2020/10/27/django_authentication/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">django authentication</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -285,6 +330,19 @@
         </div>
         
         
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#application-对象"><span class="toc-number">1.</span> <span class="toc-text"> application 对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#django起服务"><span class="toc-number">2.</span> <span class="toc-text"> django起服务</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#gunicorn-和-uwsgi的区别"><span class="toc-number">2.1.</span> <span class="toc-text"> Gunicorn 和 uWSGI的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#gunicorn"><span class="toc-number">2.1.1.</span> <span class="toc-text"> Gunicorn</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#配置nginx"><span class="toc-number">2.1.2.</span> <span class="toc-text"> 配置nginx</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#uwsgi"><span class="toc-number">2.1.3.</span> <span class="toc-text"> uWSGI</span></a></li></ol></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
     </div>
 </aside>
 
@@ -293,7 +351,7 @@
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="hello-world" data-title="Hello World" data-url="http://jasonyu.top/2020/10/26/hello-world/"></div>
+	<div class="ds-thread" data-thread-key="django_wsgi" data-title="django wsgi" data-url="http://jasonyu.top/2020/10/27/django_wsgi/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
