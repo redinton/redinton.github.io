@@ -1,18 +1,10 @@
 ---
-title: django_serializer
+title: django serializer
 date: 2020-10-26 11:08:08
 tags:
 - django
 toc: true
 ---
-
-
-
-
-
-
-
-
 
 DRF的serializer可以实现
 
@@ -20,9 +12,7 @@ DRF的serializer可以实现
 * 在反序列化时对客户端传来的数据进行验证(validation)
 * 重写序列化器类自带的create 和 update
 
-
-
-
+<!--more-->
 
 #### Serializer增加 update() / create () 写法
 
@@ -58,7 +48,7 @@ serializer = CommentSerializer(comment, data=data)
 
 
 
-![image-20200819173214068](django-serializer/image-20200819173214068.png)
+![image-20200819173214068](django_serializer/image-20200819173214068.png)
 
 
 
