@@ -8,20 +8,20 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>mysql事务,隔离级别 | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="事务 (transaction)把多条语句作为一个整体进行操作 — 成为数据库事务  确保该事务范围内的所有操作全部成功或全部失败 单条SQL语句, 数据库系统自动作为一个事务执行, 这种事务称为隐式事务。 手动将多条SQL语句作为一个事务执行,  使用BEGIN开启一个事务, 使用COMMIT提交一个事务, 成为显式事务。  主动让事务失败,  用ROLLBACK回滚事务, 整个事务会失败。">
+  <meta name="description" content="事务 (transaction)把多条语句作为一个整体进行操作 — 成为数据库事务  确保该事务范围内的所有操作全部成功或全部失败 单条SQL语句, 数据库系统自动作为一个事务执行, 这种事务称为隐式事务。 手动将多条SQL语句作为一个事务执行,  使用BEGIN开启一个事务, 使用COMMIT提交一个事务, 成为显式事务。 主动让事务失败,  用ROLLBACK回滚事务, 整个事务会失败。 12">
 <meta name="keywords" content="mysql">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql事务,隔离级别">
 <meta property="og:url" content="http://jasonyu.top/2020/11/04/mysql_4/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="事务 (transaction)把多条语句作为一个整体进行操作 — 成为数据库事务  确保该事务范围内的所有操作全部成功或全部失败 单条SQL语句, 数据库系统自动作为一个事务执行, 这种事务称为隐式事务。 手动将多条SQL语句作为一个事务执行,  使用BEGIN开启一个事务, 使用COMMIT提交一个事务, 成为显式事务。  主动让事务失败,  用ROLLBACK回滚事务, 整个事务会失败。">
+<meta property="og:description" content="事务 (transaction)把多条语句作为一个整体进行操作 — 成为数据库事务  确保该事务范围内的所有操作全部成功或全部失败 单条SQL语句, 数据库系统自动作为一个事务执行, 这种事务称为隐式事务。 手动将多条SQL语句作为一个事务执行,  使用BEGIN开启一个事务, 使用COMMIT提交一个事务, 成为显式事务。 主动让事务失败,  用ROLLBACK回滚事务, 整个事务会失败。 12">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://jasonyu.top/2020/11/04/mysql_4/image-20200307113840232.png">
 <meta property="og:image" content="http://jasonyu.top/2020/11/04/mysql_4/image-20201104144623826.png">
-<meta property="og:updated_time" content="2020-11-05T15:00:58.284Z">
+<meta property="og:updated_time" content="2020-11-05T15:06:44.125Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql事务,隔离级别">
-<meta name="twitter:description" content="事务 (transaction)把多条语句作为一个整体进行操作 — 成为数据库事务  确保该事务范围内的所有操作全部成功或全部失败 单条SQL语句, 数据库系统自动作为一个事务执行, 这种事务称为隐式事务。 手动将多条SQL语句作为一个事务执行,  使用BEGIN开启一个事务, 使用COMMIT提交一个事务, 成为显式事务。  主动让事务失败,  用ROLLBACK回滚事务, 整个事务会失败。">
+<meta name="twitter:description" content="事务 (transaction)把多条语句作为一个整体进行操作 — 成为数据库事务  确保该事务范围内的所有操作全部成功或全部失败 单条SQL语句, 数据库系统自动作为一个事务执行, 这种事务称为隐式事务。 手动将多条SQL语句作为一个事务执行,  使用BEGIN开启一个事务, 使用COMMIT提交一个事务, 成为显式事务。 主动让事务失败,  用ROLLBACK回滚事务, 整个事务会失败。 12">
 <meta name="twitter:image" content="http://jasonyu.top/2020/11/04/mysql_4/image-20200307113840232.png">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
@@ -175,13 +175,12 @@
         <h3 id="事务-transaction"><a href="#事务-transaction" class="headerlink" title="事务 (transaction)"></a>事务 (transaction)</h3><p>把多条语句作为一个整体进行操作 — 成为数据库事务</p>
 <ul>
 <li>确保该事务范围内的所有操作全部成功或全部失败</li>
-<li>单条SQL语句, 数据库系统自动作为一个事务执行, 这种事务称为<strong>隐式事务</strong>。<!----></li>
-<li><p>手动将多条SQL语句作为一个事务执行,  使用BEGIN开启一个事务, 使用COMMIT提交一个事务, 成为<strong>显式事务</strong>。</p>
-</li>
-<li><p>主动让事务失败,  用ROLLBACK回滚事务, 整个事务会失败。</p>
+<li>单条SQL语句, 数据库系统自动作为一个事务执行, 这种事务称为<strong>隐式事务</strong>。</li>
+<li>手动将多条SQL语句作为一个事务执行,  使用BEGIN开启一个事务, 使用COMMIT提交一个事务, 成为<strong>显式事务</strong>。</li>
+<li>主动让事务失败,  用ROLLBACK回滚事务, 整个事务会失败。<!---->
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">BEGIN</span>;</span><br><span class="line"><span class="keyword">UPDATE</span> accounts <span class="keyword">SET</span> balance = balance - <span class="number">100</span> <span class="keyword">WHERE</span> <span class="keyword">id</span> = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">UPDATE</span> accounts <span class="keyword">SET</span> balance = balance + <span class="number">100</span> <span class="keyword">WHERE</span> <span class="keyword">id</span> = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">ROLLBACK</span>;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">BEGIN</span>;</span><br><span class="line"><span class="keyword">UPDATE</span> accounts <span class="keyword">SET</span> balance = balance - <span class="number">100</span> <span class="keyword">WHERE</span> <span class="keyword">id</span> = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">UPDATE</span> accounts <span class="keyword">SET</span> balance = balance + <span class="number">100</span> <span class="keyword">WHERE</span> <span class="keyword">id</span> = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">ROLLBACK</span>;</span><br></pre></td></tr></table></figure>
 <p>数据库事务具有ACID 四个属性</p>
 <ul>
 <li>A: Atomic ,  原子性 <ul>
@@ -491,10 +490,6 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">HMM</a>
               </li>
              
@@ -508,6 +503,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">django</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
               <li class="article-tag-list-item">

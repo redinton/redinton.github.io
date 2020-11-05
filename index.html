@@ -146,6 +146,101 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-mysql_sql_1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/05/mysql_sql_1/">SQL语法</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/05/mysql_sql_1/" class="archive-article-date">
+  	<time datetime="2020-11-05T15:05:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="常用SQL语句"><a href="#常用SQL语句" class="headerlink" title="常用SQL语句"></a>常用SQL语句</h4><h5 id="查询table的主键"><a href="#查询table的主键" class="headerlink" title="查询table的主键"></a>查询table的主键</h5><!---->
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> column_name</span><br><span class="line"><span class="keyword">FROM</span> INFORMATION_SCHEMA.<span class="string">`KEY_COLUMN_USAGE`</span> </span><br><span class="line"><span class="keyword">WHERE</span> table_name=<span class="string">'表名'</span> </span><br><span class="line"><span class="keyword">AND</span> CONSTRAINT_SCHEMA=<span class="string">'数据库名称'</span></span><br><span class="line"><span class="keyword">AND</span> constraint_name=<span class="string">'PRIMARY'</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> column_name </span><br><span class="line"><span class="keyword">FROM</span> INFORMATION_SCHEMA.<span class="string">`KEY_COLUMN_USAGE`</span>  </span><br><span class="line"><span class="keyword">WHERE</span> table_name=<span class="string">'keliuliang_daily'</span>  </span><br><span class="line"><span class="keyword">AND</span> CONSTRAINT_SCHEMA=<span class="string">'hexindao_ods'</span> </span><br><span class="line"><span class="keyword">AND</span> constraint_name=<span class="string">'PRIMARY'</span>;</span><br></pre></td></tr></table></figure>
+<h5 id="生成复合主键"><a href="#生成复合主键" class="headerlink" title="生成复合主键"></a>生成复合主键</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> table_name <span class="keyword">ADD</span> PRIMARY <span class="keyword">KEY</span>(字段A，字段B，字段C)；</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> keliuliang_daily <span class="keyword">ADD</span> PRIMARY <span class="keyword">KEY</span>(<span class="string">'dpcode'</span>, <span class="string">'curr_date'</span>)；</span><br></pre></td></tr></table></figure>
+<h5 id="插入语句应对重复情况"><a href="#插入语句应对重复情况" class="headerlink" title="插入语句应对重复情况"></a>插入语句应对重复情况</h5><ul>
+<li>方法一<ul>
+<li>不冲突时，相当于insert，其余列默认值</li>
+<li>当与主键冲突时，只updae对应的字段</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> 表名 (列名<span class="number">1</span>,列名<span class="number">2</span>) <span class="keyword">values</span>(值<span class="number">1</span>,值<span class="number">2</span>) <span class="keyword">on</span> <span class="keyword">duplicate</span> <span class="keyword">key</span> <span class="keyword">update</span> ...</span><br></pre></td></tr></table></figure>
+<ul>
+<li>方法二<ul>
+<li>不冲突时，相当于insert, 其余列默认值</li>
+<li>主键冲突时，会先delete原来的记录，然后做 insert， 未指定的列用默认值， 会导致自增主键发生变化</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">replace</span> <span class="keyword">into</span> 表名 (列名) <span class="keyword">values</span> (值)</span><br></pre></td></tr></table></figure>
+<h5 id="基本操作语句"><a href="#基本操作语句" class="headerlink" title="基本操作语句"></a>基本操作语句</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">databases</span>;</span><br><span class="line"><span class="keyword">create</span> databse <span class="keyword">test</span>; / <span class="keyword">drop</span> <span class="keyword">database</span> <span class="keyword">test</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="keyword">test</span>; </span><br><span class="line"><span class="keyword">show</span> <span class="keyword">tables</span>;</span><br><span class="line">desc students; / 查看表结构</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> students; / <span class="keyword">drop</span> <span class="keyword">table</span> students;</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> students <span class="keyword">add</span> <span class="keyword">column</span> birth  <span class="built_in">VARCHAR</span>(<span class="number">10</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>;</span><br></pre></td></tr></table></figure>
+<h5 id="实用操作语句"><a href="#实用操作语句" class="headerlink" title="实用操作语句"></a>实用操作语句</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO students (id, class_id, name, gender, score) VALUES (1, 1, &apos;小明&apos;, &apos;F&apos;, 99) ON DUPLICATE KEY UPDATE name=&apos;小明&apos;, gender=&apos;F&apos;, score=99;</span><br><span class="line">insert into .. on duplicate key update ... ; // 插入如果有重复就更新</span><br><span class="line"></span><br><span class="line">INSERT IGNORE INTO students (id, class_id, name, gender, score) VALUES (1, 1, &apos;小明&apos;, &apos;F&apos;, 99);</span><br><span class="line">insert ignore into...; //插入如果有重复就忽略</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/05/mysql_sql_1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-django" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -470,7 +565,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>参考深入浅出MySQL 第18章<br><!----></p>
+        <p>参考深入浅出MySQL 第18章</p>
 <h3 id="各种SQL执行效率"><a href="#各种SQL执行效率" class="headerlink" title="各种SQL执行效率"></a>各种SQL执行效率</h3><blockquote>
 <p>show status</p>
 <ul>
@@ -483,12 +578,12 @@
 <li>Com_select：执行select 操作的次数，一次查询只累加1。</li>
 <li>Com_insert：执行INSERT 操作的次数，对于批量插入的INSERT 操作，只累加一次。</li>
 <li>Com_update：执行UPDATE 操作的次数。</li>
-<li>Com_delete：执行DELETE 操作的次数。</li>
+<li>Com_delete：执行DELETE 操作的次数。<!---->
+上面这些参数对于所有存储引擎的表操作都会进行累计。下面这几个参数只是针对InnoDB 存储引擎的.</li>
 </ul>
 </li>
 </ul>
 </blockquote>
-<p>上面这些参数对于所有存储引擎的表操作都会进行累计。下面这几个参数只是针对InnoDB 存储引擎的.</p>
 <p>通过以上几个参数，可以很容易地了解当前数据库的应用是以插入更新为主还是以查询操作为主，以及各种类型的SQL 大致的执行比例是多少。对于更新操作的计数，是对执行次数的计数，不论提交还是回滚都会进行累加。</p>
 <h3 id="mysql-慢查询"><a href="#mysql-慢查询" class="headerlink" title="mysql 慢查询"></a>mysql 慢查询</h3><ul>
 <li><p>慢查询: 在<strong>日志中记录运行比较慢</strong>的sql语句</p>
@@ -816,8 +911,8 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>ubuntu 18.04 - mysql 5.7</p>
-<!---->
-<h3 id="安装与配置"><a href="#安装与配置" class="headerlink" title="安装与配置"></a>安装与配置</h3><h4 id="1-安装"><a href="#1-安装" class="headerlink" title="1. 安装"></a>1. 安装</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install mysql-server</span><br></pre></td></tr></table></figure>
+<h3 id="安装与配置"><a href="#安装与配置" class="headerlink" title="安装与配置"></a>安装与配置</h3><h4 id="1-安装"><a href="#1-安装" class="headerlink" title="1. 安装"></a>1. 安装</h4><!---->
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install mysql-server</span><br></pre></td></tr></table></figure>
 <h4 id="2-配置"><a href="#2-配置" class="headerlink" title="2. 配置"></a>2. 配置</h4><p>运行安全脚本</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mysql_secure_installation</span><br></pre></td></tr></table></figure>
 <h4 id="3-验证mysql安装"><a href="#3-验证mysql安装" class="headerlink" title="3. 验证mysql安装"></a>3. 验证mysql安装</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status mysql.service</span><br></pre></td></tr></table></figure>
@@ -984,128 +1079,6 @@
 
 
   
-    <article id="post-mysql_4" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/04/mysql_4/">mysql事务,隔离级别</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/04/mysql_4/" class="archive-article-date">
-  	<time datetime="2020-11-04T05:56:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="事务-transaction"><a href="#事务-transaction" class="headerlink" title="事务 (transaction)"></a>事务 (transaction)</h3><p>把多条语句作为一个整体进行操作 — 成为数据库事务</p>
-<ul>
-<li>确保该事务范围内的所有操作全部成功或全部失败</li>
-<li>单条SQL语句, 数据库系统自动作为一个事务执行, 这种事务称为<strong>隐式事务</strong>。<!----></li>
-<li><p>手动将多条SQL语句作为一个事务执行,  使用BEGIN开启一个事务, 使用COMMIT提交一个事务, 成为<strong>显式事务</strong>。</p>
-</li>
-<li><p>主动让事务失败,  用ROLLBACK回滚事务, 整个事务会失败。</p>
-</li>
-</ul>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">BEGIN</span>;</span><br><span class="line"><span class="keyword">UPDATE</span> accounts <span class="keyword">SET</span> balance = balance - <span class="number">100</span> <span class="keyword">WHERE</span> <span class="keyword">id</span> = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">UPDATE</span> accounts <span class="keyword">SET</span> balance = balance + <span class="number">100</span> <span class="keyword">WHERE</span> <span class="keyword">id</span> = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">ROLLBACK</span>;</span><br></pre></td></tr></table></figure>
-<p>数据库事务具有ACID 四个属性</p>
-<ul>
-<li>A: Atomic ,  原子性 <ul>
-<li>所有SQL作为原子工作单元执行, 要么全部执行, 要么全部不执行</li>
-</ul>
-</li>
-<li>C: Consistent  一致性<ul>
-<li>事务完成后,  所有数据状态都是一致 , A账户减去100,  B账户肯定加上100</li>
-</ul>
-</li>
-<li>I: Isolation  隔离性 <ul>
-<li>多个事务并发, 每个事务作出的修改必须与其他事务隔离</li>
-</ul>
-</li>
-<li>D: Duration  持久性<ul>
-<li>事务完成后,  对数据库数据的修改被持久化存储</li>
-</ul>
-</li>
-</ul>
-<h3 id="事务隔离级别"><a href="#事务隔离级别" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h3><p>事务支持并发执行。 但若涉及到操作同一条记录的时候, 可能会有问题。</p>
-<p>并发操作会带来数据的不一致性, 包括<strong>脏读(dirty read), 不可重复读(Non repeatable read ), 幻读(phantom  read)</strong>.</p>
-<img src="/2020/11/04/mysql_4/image-20200307113840232.png" title="image-20200307113840232">
-<h4 id="read-uncommitted"><a href="#read-uncommitted" class="headerlink" title="read uncommitted"></a>read uncommitted</h4><blockquote>
-<p>SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;</p>
-</blockquote>
-<p>一个事务可能读取到另一个事务更新但未提交的数据, 这个数据有可能是脏数据。 例如一个事务更新了数据, 然后这个时候另一个事务读了就可以读到,  但是原来那个事务可能下一步就回滚导致数据更新失效。</p>
-<p><strong>脏读</strong><br>对于两个事务 T1,T2, T1读取了已经被T2更新但还没有提交的字段。之后, 若T2 rollback, 则T1读取的内容就是临时且无效的。</p>
-<h4 id="read-commited"><a href="#read-commited" class="headerlink" title="read commited"></a>read commited</h4><p>在这个级别, 事务对其余事务更新数据的操作只能读到commit后的结果。</p>
-<p>事务可能遇到不可重复读情况。 即指, 在一个事务内, 多次读同一数据。</p>
-<p>在这个事务还没有结束时, 如果另一个事务恰好修改了这个数据, 那么, 在第一个事务中, 两次读取的数据就可能不一致。</p>
-<p><strong>不可重复读</strong><br>对于两个事务T1, T2, T1读取了一个字段, 然后T2<strong>更新</strong>了该字段, 之后, T1再次读取同一个字段, 值就不同了</p>
-<h4 id="repeatable-read"><a href="#repeatable-read" class="headerlink" title="repeatable read"></a>repeatable read</h4><p>这个级别就是, 某个事务在读数据的时候保持一致, 例如起初事务A读数据的时候是空, 然后在这期间事务B插入并commit了这条数据,  这个之后事务A再读数据的时候也是空的。这就是保持 repeatable read。(同样的select的语句保证结果一样 ) 但是这个时候如果事务A去update 这条数据, 是可以成功的, 并且之后再读这条数据也是成功的。—  这个情形就是幻读。</p>
-<p><strong>幻读</strong><br>对于两个事务T1,T2,  T1从一个表中读取了一个字段, 然后T2在该表中<strong>插入</strong>了一些新的行, 之后如果T1再次读取同一个表, 就会多出几行。</p>
-<ul>
-<li>不可重复读重点在于update和delete, 而幻读重点在insert  </li>
-</ul>
-<p>在RR(repeatable read)级别, 解决了脏读(读到uncomitted data)和不可重复读(同一个事务中对同一份数据多次读到结果不一样,由于另一个事务修改了这个数据),但还是会有幻读。样例如下，事务T1先读取数据发现没有id=1的数据，然后准备insert数据之前，另一个干扰事务T2插入了id=1的数据并且commit了。此时事务T1插入数据不成功，但读取id=1的时候也读取不到id=1的数据。因为解决不可重复读的问题就是保证一个事务中读到的数据一致。 但在RR级别，可以通过对SQL加锁来避免幻读。</p>
-<img src="/2020/11/04/mysql_4/image-20201104144623826.png" title="image-20201104144623826">
-<h4 id="Serializable"><a href="#Serializable" class="headerlink" title="Serializable"></a>Serializable</h4><p>确保事务可以从一个表中读取相同的行</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/04/mysql_4/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1220,10 +1193,6 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">HMM</a>
               </li>
              
@@ -1237,6 +1206,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">django</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
               <li class="article-tag-list-item">
