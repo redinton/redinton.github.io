@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://jasonyu.top">
-  <title>django_ORM | Keep Moving</title>
+  <title>django_源码 | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="annotate和aggregate初级查询方法如filter()和exclude().涉及对queryset某些字段进行计算或分组计算排序时">
+  <meta name="description" content="View">
 <meta name="keywords" content="django">
 <meta property="og:type" content="article">
-<meta property="og:title" content="django_ORM">
-<meta property="og:url" content="http://jasonyu.top/2020/11/04/django_ORM/index.html">
+<meta property="og:title" content="django_源码">
+<meta property="og:url" content="http://jasonyu.top/2020/11/05/django_源码/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="annotate和aggregate初级查询方法如filter()和exclude().涉及对queryset某些字段进行计算或分组计算排序时">
+<meta property="og:description" content="View">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-05T14:54:56.292Z">
+<meta property="og:updated_time" content="2020-11-05T14:54:56.296Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="django_ORM">
-<meta name="twitter:description" content="annotate和aggregate初级查询方法如filter()和exclude().涉及对queryset某些字段进行计算或分组计算排序时">
+<meta name="twitter:title" content="django_源码">
+<meta name="twitter:description" content="View">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -149,40 +149,40 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-django_ORM" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-django_源码" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      django_ORM
+      django_源码
     </h1>
   
 
         
-        <a href="/2020/11/04/django_ORM/" class="archive-article-date">
-  	<time datetime="2020-11-04T08:09:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-04</time>
+        <a href="/2020/11/05/django_源码/" class="archive-article-date">
+  	<time datetime="2020-11-05T14:52:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-05</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="annotate和aggregate"><a href="#annotate和aggregate" class="headerlink" title="annotate和aggregate"></a>annotate和aggregate</h3><p>初级查询方法如filter()和exclude().<br>涉及对queryset某些字段进行计算或分组计算排序时<br><a id="more"></a><br>student和hobby多对多关系<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span><span class="params">(models.Model)</span>:</span></span><br><span class="line"></span><br><span class="line">    name = models.CharField(max_length=<span class="number">20</span>)</span><br><span class="line">    age = models.IntegerField()</span><br><span class="line">    hobbies = models.ManyToManyField(Hobby)</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Hobby</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    name = models.CharField(max_length=<span class="number">20</span>)</span><br></pre></td></tr></table></figure></p>
+        <h4 id="View"><a href="#View" class="headerlink" title="View"></a>View</h4><a id="more"></a>
 <ul>
-<li>所有学生的平均年龄</li>
-<li>统计最受学生欢迎的5个爱好</li>
+<li>http_method<ul>
+<li>get/post/put/patch/delete</li>
+<li>head/options/trace</li>
 </ul>
-<h4 id="学生的平均年龄"><a href="#学生的平均年龄" class="headerlink" title="学生的平均年龄"></a>学生的平均年龄</h4><p>利用aggregate可以实现SQL中的一些agg操作</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db.models <span class="keyword">import</span> Avg, Max, Min</span><br><span class="line"></span><br><span class="line">Student.objects.all().aggregate(Avg(<span class="string">'age'</span>)) <span class="comment"># all并非必须的</span></span><br><span class="line"><span class="comment"># &#123; 'age__avg': 12 &#125;</span></span><br><span class="line">Student.objects.aggregate(average_age = Avg(<span class="string">'age'</span>)) <span class="comment">#设置字典的key</span></span><br><span class="line"><span class="comment"># &#123; 'average_age': 12 &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 根据Hobby反查学生最大年龄。查询字段student和age间有双下划线哦。</span></span><br><span class="line">Hobby.objects.aggregate(Max(<span class="string">'student__age'</span>))</span><br><span class="line"><span class="comment"># &#123; 'student__age__max': 12 &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 同时获取学生年龄均值, 最大值和最小值, 返回字典</span></span><br><span class="line">Student.objects.aggregate(Avg(<span class="string">'age'</span>), Max(<span class="string">'age'</span>), Min(<span class="string">'age'</span>))</span><br><span class="line"><span class="comment"># &#123; 'age__avg': 12, 'age__max': 18, 'age__min': 6, &#125;</span></span><br></pre></td></tr></table></figure>
-<h4 id="统计最受学生欢迎的5个爱好"><a href="#统计最受学生欢迎的5个爱好" class="headerlink" title="统计最受学生欢迎的5个爱好"></a>统计最受学生欢迎的5个爱好</h4><p>对数据集先进行分组然后再进行某些聚合操作或排序时，需要使用annotate方法.<br>annotate方法返回结果的不仅仅是含有统计结果的一个字典，而是包<strong>含有新增统计字段的查询集</strong>(queryset）.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 按学生分组，统计每个学生的爱好数量</span></span><br><span class="line">Student.objects.annotate(Count(<span class="string">'hobbies'</span>))</span><br><span class="line"><span class="comment"># 返回的结果依然是Student查询集，只不过多了hobbies__count这个字段</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 按爱好分组，再统计每组学生数量。</span></span><br><span class="line">Hobby.objects.annotate(Count(<span class="string">'student'</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 按爱好分组，再统计每组学生最大年龄。</span></span><br><span class="line">Hobby.objects.annotate(Max(<span class="string">'student__age'</span>))</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Annotate方法与Filter方法联用</span><br><span class="line"><span class="comment"># 先按爱好分组，再统计每组学生数量, 然后筛选出学生数量大于1的爱好。</span></span><br><span class="line">Hobby.objects.annotate(student_num=Count(<span class="string">'student'</span>)).filter(student_num__gt=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Annotate与order_by()联用</span><br><span class="line"><span class="comment"># 统计最受学生欢迎的5个爱好。</span></span><br><span class="line">Hobby.objects.annotate(student_num=Count(<span class="string">'student'</span>)).order_by(<span class="string">'-student_num'</span>)[:<span class="number">5</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Annotate与values()联用</span><br><span class="line"><span class="comment"># 按学生名字分组，统计每个学生的爱好数量。</span></span><br><span class="line">Student.objects.values(<span class="string">'name'</span>).annotate(Count(<span class="string">'hobbies'</span>))</span><br><span class="line"><span class="comment"># 在前例中按学生对象进行分组，我们同样可以按学生姓名name来进行分组。唯一区别是本例中，如果两个学生具有相同名字，那么他们的爱好数量将叠加</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># values方法从annotate返回的数据集里提取你所需要的字段</span></span><br><span class="line">Student.objects.annotate(hobby_count=Count(<span class="string">'hobbies'</span>)).values(<span class="string">'name'</span>, <span class="string">'hobby_count'</span>)</span><br></pre></td></tr></table></figure>
-<h3 id="F-表达式"><a href="#F-表达式" class="headerlink" title="F 表达式"></a>F 表达式</h3><p><a href="https://www.jianshu.com/p/6cad2bf1eb6a" target="_blank" rel="noopener">Django F()表达式</a><br>F()用于操作table中的某列值, F()允许Django直接引用模型字段的值并执行数据库操作，不用把他们导入到python的内存中。<br>Django使用F()对象生成一个<strong>描述数据库级别所需操作的SQL</strong>表达式。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">reporter = Reporters.objects.get(name=<span class="string">'Tintin'</span>)</span><br><span class="line">reporter.stories_field += <span class="number">1</span></span><br><span class="line">reporter.save()</span><br></pre></td></tr></table></figure></p>
-<p>从数据库中取出reporter.stories_field的值放入内存中并使用我们熟悉的python运算符操作它，然后把对象保存到数据库中.<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db.models <span class="keyword">import</span> F</span><br><span class="line">reporter = Reporters.objects.get(name=<span class="string">'Tintin'</span>)</span><br><span class="line">reporter.stories_field = F(<span class="string">'stories_field'</span>) + <span class="number">1</span></span><br><span class="line">reporter.save()</span><br></pre></td></tr></table></figure></p>
-<p>实例对象必须重新加载后才能获取以这种方式保存的值<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">reporter = Reporters.objects.get(pk=reporter.pk)</span><br><span class="line"><span class="comment"># 或者，更简洁的操作</span></span><br><span class="line">reporter.refresh_from_db()</span><br></pre></td></tr></table></figure></p>
-<p>使用update()来增加多个对象的字段值<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Reporters.objects.all().update(stories_field=F(<span class="string">'stories_field'</span>) + <span class="number">1</span>)</span><br></pre></td></tr></table></figure></p>
-<h4 id="在annotate中使用F"><a href="#在annotate中使用F" class="headerlink" title="在annotate中使用F()"></a>在annotate中使用F()</h4><p>F()可以使用算术运算组合不同字段在模型中创建动态字段<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">company = Company.objects.annotate(chairs_needed=F(<span class="string">'num_employee'</span>) - F(<span class="string">'num_chairs'</span>))</span><br></pre></td></tr></table></figure></p>
+</li>
+<li>as_view</li>
+<li>dispatch</li>
+</ul>
+<h4 id="APIView"><a href="#APIView" class="headerlink" title="APIView"></a>APIView</h4><h4 id="Request"><a href="#Request" class="headerlink" title="Request"></a>Request</h4><ul>
+<li>针对HttpRequest的封装</li>
+<li></li>
+</ul>
 
       
 
@@ -252,7 +252,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://jasonyu.top/2020/11/04/django_ORM/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://jasonyu.top/2020/11/05/django_源码/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -266,18 +266,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/11/05/django_1/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2020/11/05/django_test/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          django基本操作
+          django 测试
         
       </div>
     </a>
   
   
-    <a href="/2020/10/28/django_auth_user/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">django_auth_user</div>
+    <a href="/2020/11/05/django_1/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">django基本操作</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -304,7 +304,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#annotate和aggregate"><span class="toc-number">1.</span> <span class="toc-text">annotate和aggregate</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#学生的平均年龄"><span class="toc-number">1.1.</span> <span class="toc-text">学生的平均年龄</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#统计最受学生欢迎的5个爱好"><span class="toc-number">1.2.</span> <span class="toc-text">统计最受学生欢迎的5个爱好</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#F-表达式"><span class="toc-number">2.</span> <span class="toc-text">F 表达式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#在annotate中使用F"><span class="toc-number">2.1.</span> <span class="toc-text">在annotate中使用F()</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#View"><span class="toc-number">1.</span> <span class="toc-text">View</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#APIView"><span class="toc-number">2.</span> <span class="toc-text">APIView</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Request"><span class="toc-number">3.</span> <span class="toc-text">Request</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -318,7 +318,7 @@
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="django_ORM" data-title="django_ORM" data-url="http://jasonyu.top/2020/11/04/django_ORM/"></div>
+	<div class="ds-thread" data-thread-key="django_源码" data-title="django_源码" data-url="http://jasonyu.top/2020/11/05/django_源码/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
