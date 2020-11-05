@@ -6,15 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://jasonyu.top">
-  <title>Archives: 2019/4 | Keep Moving</title>
+  <title>mysql索引 | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Keep Moving">
-<meta property="og:url" content="http://jasonyu.top/archives/2019/04/index.html">
+  <meta name="description" content="所有mysql列类型都可以被索引。根据engine可以定义每个表的最大索引数和最大索引长度。MyiSAM和Innodb表默认都是BTree索引，Mysql支持前缀索引，即对索引字段的前N个字符创建索引 索引的设计 经常出现在where中作为筛选条件或者join中作为表连接条件 重复值较多的列，索引效果差   字符串类型的索引,最好指定前缀长度,创建短索引, 减少磁盘I/O而且在做比较时性能也更好,">
+<meta name="keywords" content="mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql索引">
+<meta property="og:url" content="http://jasonyu.top/2020/11/05/mysql_3/index.html">
 <meta property="og:site_name" content="Keep Moving">
+<meta property="og:description" content="所有mysql列类型都可以被索引。根据engine可以定义每个表的最大索引数和最大索引长度。MyiSAM和Innodb表默认都是BTree索引，Mysql支持前缀索引，即对索引字段的前N个字符创建索引 索引的设计 经常出现在where中作为筛选条件或者join中作为表连接条件 重复值较多的列，索引效果差   字符串类型的索引,最好指定前缀长度,创建短索引, 减少磁盘I/O而且在做比较时性能也更好,">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-11-05T15:00:50.345Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Keep Moving">
+<meta name="twitter:title" content="mysql索引">
+<meta name="twitter:description" content="所有mysql列类型都可以被索引。根据engine可以定义每个表的最大索引数和最大索引长度。MyiSAM和Innodb表默认都是BTree索引，Mysql支持前缀索引，即对索引字段的前N个字符创建索引 索引的设计 经常出现在where中作为筛选条件或者join中作为表连接条件 重复值较多的列，索引效果差   字符串类型的索引,最好指定前缀长度,创建短索引, 减少磁盘I/O而且在做比较时性能也更好,">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -144,64 +149,228 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-mysql_3" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/04/21/embedding/" class="archive-article-date">
-  	<time datetime="2019-04-21T06:56:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-21</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/04/21/embedding/">embedding 对比</a>
+    <h1 class="article-title" itemprop="name">
+      mysql索引
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2020/11/05/mysql_3/" class="archive-article-date">
+  	<time datetime="2020-11-05T02:57:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>所有mysql列类型都可以被索引。根据engine可以定义每个表的最大索引数和最大索引长度。<br>MyiSAM和Innodb表默认都是BTree索引，Mysql支持前缀索引，即对索引字段的前N个字符创建索引<br><!----></p>
+<h3 id="索引的设计"><a href="#索引的设计" class="headerlink" title="索引的设计"></a>索引的设计</h3><ul>
+<li>经常出现在where中作为筛选条件或者join中作为表连接条件</li>
+<li>重复值较多的列，索引效果差  </li>
+<li>字符串类型的索引,最好指定前缀长度,创建短索引, 减少磁盘I/O而且在做比较时性能也更好,MySQL底层的高速索引缓存能够缓存更多的键值.</li>
+<li>查询条件2个及以上，可以多个单列索引或者一个联合索引,创建包含N列的联合索引(多列索引),利用最左前缀匹配<br>当创建 (a,b,c)联合索引时，相当于创建了(a)单列索引，(a,b)联合索引以及(a,b,c)联合索引** 想要索引生效的话,只能使用 a和a,b和a,b,c三种组合；当然，我们上面测试过，a,c组合也可以，但实际上只用到了a的索引，c并没有用到！  </li>
+<li>不要过度使用索引。索引并不是越多越好，索引需要占用额外的存储空间而且会影响写操作的性能（插入、删除、更新数据时索引也需要更新</li>
+<li>要注意可能使索引失效的场景，例如：模糊查询使用了前置通配符 like %…</li>
+</ul>
+<p>BTree索引<br>当使用比较操作符(&gt;,&lt;,&gt;=,&lt;=,!=,&lt;&gt;),between,like ‘pattern’(pattern不以通配符开始), 可以使用上述相关列索引</p>
+<h4 id="索引的分类"><a href="#索引的分类" class="headerlink" title="索引的分类"></a>索引的分类</h4><ul>
+<li>普通索引<ul>
+<li>直接创建: create index index_name on table(column(length))</li>
+<li>修改表结构添加: alter table add index index_name on (column(length))</li>
+<li>创建表的过程中直接创建</li>
+</ul>
+</li>
+<li>唯一索引<ul>
+<li>索引列的值必须唯一，但允许空值，如果是组合索引，则列值的组合必须是唯一的</li>
+<li>直接创建 create unique index index_name on table(column(length))</li>
+<li>修改表结构 alter table add unique index index_name on (column(length))</li>
+</ul>
+</li>
+<li>组合索引<ul>
+<li>多个字段上创建的索引</li>
+</ul>
+</li>
+</ul>
+<h4 id="索引的缺点"><a href="#索引的缺点" class="headerlink" title="索引的缺点"></a>索引的缺点</h4><ul>
+<li>虽然加快查询的速度，但同时也降低更新的速度， insert，update，delete</li>
+<li>建索引会占用磁盘空间的索引文件。 一般不严重，但如果在一个表上创建了多种组合索引，索引文件增长会非常快</li>
+</ul>
+<h4 id="mysql建索引规则"><a href="#mysql建索引规则" class="headerlink" title="mysql建索引规则"></a>mysql建索引规则</h4><ul>
+<li>主键，外键必须</li>
+<li>数据量超过300必须</li>
+<li>经常与其他表join的表，join字段应该</li>
+<li>经常出现在where子句中的字段</li>
+<li>索引应该建立在小字段上</li>
+<li>复合索引建立要慎重</li>
+<li>频繁数据操作的表，不用建太多的索引</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">nlp</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">text classification</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://jasonyu.top/2020/11/05/mysql_3/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2020/11/05/mysql_5/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          mysql存储过程
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2020/11/05/mysql安装与使用/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">mysql安装与使用</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#索引的设计"><span class="toc-number">1.</span> <span class="toc-text">索引的设计</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#索引的分类"><span class="toc-number">1.1.</span> <span class="toc-text">索引的分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#索引的缺点"><span class="toc-number">1.2.</span> <span class="toc-text">索引的缺点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mysql建索引规则"><span class="toc-number">1.3.</span> <span class="toc-text">mysql建索引规则</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="mysql_3" data-title="mysql索引" data-url="http://jasonyu.top/2020/11/05/mysql_3/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -224,8 +393,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,

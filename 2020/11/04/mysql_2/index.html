@@ -6,15 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://jasonyu.top">
-  <title>Archives: 2019/4 | Keep Moving</title>
+  <title>mysql概念 | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Keep Moving">
-<meta property="og:url" content="http://jasonyu.top/archives/2019/04/index.html">
+  <meta name="description" content="mysql 的引擎mysql的存储方式由引擎决定，常用的有Innodb和MySiam。  不同的引擎区别在于如何存储和索引数据，是否使用事务 MySiam MySiAM不支持事务，不支持外键，强调的是性能，执行速度比Innodb要快 适用于对事务完整性没有要求，或者以select，insert为主的应用，可以用这个引擎建表    Innodb Innodb提供支持事务等高级数据库功能。 适用于并发">
+<meta name="keywords" content="mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql概念">
+<meta property="og:url" content="http://jasonyu.top/2020/11/04/mysql_2/index.html">
 <meta property="og:site_name" content="Keep Moving">
+<meta property="og:description" content="mysql 的引擎mysql的存储方式由引擎决定，常用的有Innodb和MySiam。  不同的引擎区别在于如何存储和索引数据，是否使用事务 MySiam MySiAM不支持事务，不支持外键，强调的是性能，执行速度比Innodb要快 适用于对事务完整性没有要求，或者以select，insert为主的应用，可以用这个引擎建表    Innodb Innodb提供支持事务等高级数据库功能。 适用于并发">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://jasonyu.top/2020/11/04/mysql_2/image-20200615115603959.png">
+<meta property="og:updated_time" content="2020-11-05T15:00:42.518Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Keep Moving">
+<meta name="twitter:title" content="mysql概念">
+<meta name="twitter:description" content="mysql 的引擎mysql的存储方式由引擎决定，常用的有Innodb和MySiam。  不同的引擎区别在于如何存储和索引数据，是否使用事务 MySiam MySiAM不支持事务，不支持外键，强调的是性能，执行速度比Innodb要快 适用于对事务完整性没有要求，或者以select，insert为主的应用，可以用这个引擎建表    Innodb Innodb提供支持事务等高级数据库功能。 适用于并发">
+<meta name="twitter:image" content="http://jasonyu.top/2020/11/04/mysql_2/image-20200615115603959.png">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -144,64 +151,376 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-mysql_2" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/04/21/embedding/" class="archive-article-date">
-  	<time datetime="2019-04-21T06:56:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-21</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/04/21/embedding/">embedding 对比</a>
+    <h1 class="article-title" itemprop="name">
+      mysql概念
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2020/11/04/mysql_2/" class="archive-article-date">
+  	<time datetime="2020-11-04T05:54:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="mysql-的引擎"><a href="#mysql-的引擎" class="headerlink" title="mysql 的引擎"></a>mysql 的引擎</h3><p>mysql的存储方式由引擎决定，常用的有Innodb和MySiam。</p>
+<ul>
+<li>不同的引擎区别在于如何存储和索引数据，是否使用事务<!---->
+<h4 id="MySiam"><a href="#MySiam" class="headerlink" title="MySiam"></a>MySiam</h4></li>
+<li>MySiAM不支持事务，不支持外键，强调的是性能，执行速度比Innodb要快<ul>
+<li>适用于<strong>对事务完整性没有要求，或者以select，insert为主的应用，可以用这个引擎建表</strong></li>
+</ul>
+</li>
+</ul>
+<h4 id="Innodb"><a href="#Innodb" class="headerlink" title="Innodb"></a>Innodb</h4><ul>
+<li>Innodb提供支持事务等高级数据库功能。</li>
+<li>适用于并发条件下要求数据的一致性，数据操作有较多的update和delete<ul>
+<li>MySQL支持外键的engine只有Innodb,创建外键的时候,父表必须有对应的索引，子表在创建外键的时候，也会自动创建对应的索引<ul>
+<li>在设定外键时支持多个模式，即在删除或更新父表的时候，对子表进行相应操作<ul>
+<li>restrict. no action 限制在子表有关联记录的情况下，父表不能更新</li>
+<li>cascade 父表在更新或删除时，更新或删除子表对应的记录</li>
+<li>set null 父表在更新或删除时，子表对应字段被set null</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>存储方式— 存储表和索引有两种方式<ul>
+<li>共享表空间存储<ul>
+<li>表结构保存在.frm 文件中</li>
+<li>数据和索引保存在innodb_data_home_dir和innodb_data_file_path 定义的表空间中，可以是多个文件</li>
+</ul>
+</li>
+<li>多表空间存储<ul>
+<li>表结构保存在.frm 文件中</li>
+<li>每个表的数据和索引单独保存在.ibd中</li>
+<li>如果是个分区表，则每个分区对应单独的.ibd文件，文件名是“表名+分区名”，可以在创建分区的时候指定每个分区的数据文件的位置，以此来将表的IO 均匀分布在多个磁盘</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="选择合适的数据类型"><a href="#选择合适的数据类型" class="headerlink" title="选择合适的数据类型"></a>选择合适的数据类型</h3><p>首先选择合适的存储引擎，根据指定的存储引擎确定合适的数据类型。</p>
+<h4 id="char-和-varchar"><a href="#char-和-varchar" class="headerlink" title="char 和 varchar"></a>char 和 varchar</h4><ul>
+<li>MyISAM: 最好使用固定长度的数据列代替可变长度的数据列。</li>
+<li>InnoDB: 建议使用varchar<ul>
+<li>没有区分固定长度和可变长度列（所有数据行都使用指向数据列值的头指针）用固定长度的CHAR 列不一定比使用可变长度VARCHAR 列性能要好。因而，主要的性能因素是数据行使用的存储总量。由于CHAR 平均占用的空间多于VARCHAR，因此使用VARCHAR 来最小化需要处理的数据行的存储总量和磁盘I/O 是比较好的</li>
+</ul>
+</li>
+</ul>
+<h4 id="浮点数float和定点数decimal"><a href="#浮点数float和定点数decimal" class="headerlink" title="浮点数float和定点数decimal"></a>浮点数float和定点数decimal</h4><ul>
+<li>浮点数<ul>
+<li>字段定义成float,插入数据精度超过该列定义的实际精度，插入值会被四舍五入到实际定义的精度值</li>
+</ul>
+</li>
+<li>定点数<ul>
+<li>实际以字符串形式存放，可以更加精确保存数据。 如果插入数据精度超过该列定义的实际精度,取决于SQLMode,若是traditional就会直接报错，导致数据无法插入</li>
+</ul>
+</li>
+</ul>
+<p>单精度浮点数表示会有误差</p>
+<ul>
+<li>如插入131072.32，数据库中存131072.31</li>
+<li>浮点数的比较 7.22-7.0=0.21999979</li>
+</ul>
+<p>精度要求比较高的应用中（比如货币）要使<strong>用定点数而不是浮点数</strong>来保存数据<br>编程中应尽量避免浮点数的比较，如果非要使用浮点数比较则最好使用范围比较而不要使用“==</p>
+<h3 id="字符集"><a href="#字符集" class="headerlink" title="字符集"></a>字符集</h3><p>创建数据库使用utf8，CREATE DATABASE IF NOT EXISTS my_db default charset utf8 COLLATE utf8_general_ci</p>
+<h3 id="锁机制和事务控制"><a href="#锁机制和事务控制" class="headerlink" title="锁机制和事务控制"></a>锁机制和事务控制</h3><p>Innodb提供行级锁，支持共享锁和排它锁两种锁定模式和四种不同的隔离级别.</p>
+<ul>
+<li>表级锁<ul>
+<li>开销小，加锁快，不会出现死锁，锁定粒度大，发生锁冲突概率最高，并发度最低</li>
+</ul>
+</li>
+<li>行级锁<ul>
+<li>开销大，枷锁慢，会出现死锁，锁定粒度小，发生锁冲突概率最低，并发度最高</li>
+</ul>
+</li>
+<li>页面锁<ul>
+<li>开销和加锁时间界于表锁和行锁之间；会出现死锁；锁定粒度界于表锁和行锁之间，并发度一搬</li>
+</ul>
+</li>
+</ul>
+<p>应用</p>
+<ul>
+<li>表级锁更适合于以查询为主，只有<strong>少量按索引条件更新数据</strong>的应用，如Web 应用</li>
+<li>行级锁则更适合于有<strong>大量按索引条件并发更新少量不同</strong>数据，同时又有并发查询的应用，如一些在线事务处理（OLTP）系统</li>
+</ul>
+<h4 id="表级锁"><a href="#表级锁" class="headerlink" title="表级锁"></a>表级锁</h4><p>MyISAM只支持表锁，MySQL表级锁有两种模式</p>
+<ul>
+<li>表共享读锁 table read lock<ul>
+<li>对MyISAM 表的读操作，<strong>不会阻塞其他用户对同一表的读</strong>请求，但<strong>会阻塞对同一表的写</strong>请求；</li>
+</ul>
+</li>
+<li>表独占写锁 table write lock<ul>
+<li>写操作，则会阻塞其他用户对同一表的读和写操作  </li>
+</ul>
+</li>
+</ul>
+<p>MyISAM 表的读操作与写操作之间，以及写操作之间是串行的！<br>一个线程获得对一个表的写锁后，只有持有锁的线程可以对表进行更新操作。其他线程的读、写操作都会等待，直到锁被释放为止。</p>
+<ul>
+<li>MyISAM锁调度<ul>
+<li>MyISAM 存储引擎的读锁和写锁是互斥的，读写操作是串行</li>
+<li>一个进程请求某个MyISAM 表的读锁，同时另一个进程也请求同一表的写锁<ul>
+<li>写进程先获得锁。不仅如此，即使读请求先到锁等待队列，写请求后到，写锁也会插到读锁请求之前。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="行级锁"><a href="#行级锁" class="headerlink" title="行级锁"></a>行级锁</h4><p>InnoDB采用行级锁。<br>脏读，不可以重复读，幻读都是数据库读一致性的问题，必须由数据库提供一定的事务隔离机制来解决。<br>数据库实现事务隔离方式</p>
+<ul>
+<li>读取数据前，对其加锁，阻止其他事务对数据进行修改</li>
+<li>不加锁 通过一定机制生成一个数据请求时间点的<strong>一致性数据快照</strong>（Snapshot)，并用这个快照来提供一定级别（语句级或事务级）的一致性读取。从用户的角度来看，好象是数据库可以提供同一数据的多个版本，因此，这种技术叫做数据多版本并发控制(MultiVersion Concurrency Control，简称<strong>MVCC</strong> 或MCC），也经常称为多版本数据库</li>
+</ul>
+<p>两种类型的行锁</p>
+<ul>
+<li>共享锁(S)<ul>
+<li>允许一个事务读一行，阻止其他事务获得相同数据集的排他锁</li>
+</ul>
+</li>
+<li>排他锁(X)<ul>
+<li>允许获得排他锁的事务更新数据，阻止其他事务获得相同数据集的共享锁和排他写锁</li>
+</ul>
+</li>
+</ul>
+<p>另外，为了允许行锁和表锁共存，实现多粒度锁机制，InnoDB 还有两种内部使用的意向锁（Intention Locks），这两种意向锁都是表锁。</p>
+<ul>
+<li>意向共享锁（IS）：事务打算给数据行加行共享锁，事务在给一个数据行加共享锁前必须先取得该表的 IS 锁。</li>
+<li>意向排他锁（IX）：事务打算给数据行加行排他锁，事务在给一个数据行加排他锁前<br>必须先取得该表的 IX 锁。</li>
+</ul>
+<p>意向锁是InnoDB 自动加的，不需用户干预。</p>
+<ul>
+<li>对于UPDATE、DELETE 和INSERT 语句，InnoDB会自动给涉及数据集加排他锁（X)；</li>
+<li>对于普通SELECT 语句，InnoDB 不会加任何锁；</li>
+<li>事务可以通过以下语句显示给记录集加共享锁或排他锁。<ul>
+<li>共享锁（S）：SELECT * FROM table_name WHERE … LOCK IN SHARE MODE。<ul>
+<li>排他锁（X)：SELECT * FROM table_name WHERE … FOR UPDATE。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>InnoDB行级锁的实现<br>通过给索引上的索引项加锁，Oracle是通过在数据块中对相应的数据行加锁实现。<br>只有通过索引条件检索数据，InnoDB才使用行级锁，否则InnoDB使用表锁。</p>
+<h3 id="mysql-与mongodb-区别"><a href="#mysql-与mongodb-区别" class="headerlink" title="mysql 与mongodb 区别"></a>mysql 与mongodb 区别</h3><p>mysql 关系型，mongodb非关系型</p>
+<p>关系型 mysql, sql server, postgre sql</p>
+<ul>
+<li>关系型数据库相对安全，因为存在硬盘</li>
+</ul>
+<p>非关系型 mongodb, redis, Memcached HBase</p>
+<ul>
+<li>Mongo的存储方式为虚拟内存+持久化存储，Mongo将数据写入内存中，再由虚拟内存管理器将其持久化到硬盘中，因此写操作会比关系型数据库快很多。不支持事务，也不能进行联表查询，一般用于较大规模数据的存储。</li>
+<li>什么时候适合<ul>
+<li>日志系统 — 系统运行产生的日志 一般种类多，范围大 内容杂乱</li>
+<li>地理位置存储</li>
+<li>数据规模增长很快 - mongo 分库分操作简单</li>
+<li>保证高可用</li>
+<li>文件存储需求</li>
+</ul>
+</li>
+</ul>
+<img src="/2020/11/04/mysql_2/image-20200615115603959.png" title="image-20200615115603959">
+<h5 id="建立索引"><a href="#建立索引" class="headerlink" title="建立索引"></a>建立索引</h5><ol>
+<li><p>可以建立前缀索引 来减少索引的占用空间</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">index</span> idx_student_name_1 <span class="keyword">on</span> tb_student(stuname(<span class="number">1</span>));</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>最适合索引的列 -<strong>- where中的 以及 连接字句中的列</strong></p>
+</li>
+<li><p>索引并非越多越好，加速了查操作，但是写操作变得很慢</p>
+</li>
+<li><p>InnoDB存储引擎，表的普通索引都会保存主键的值，主键要尽可能较短的数据类型，有效减少索引占用空间</p>
+</li>
+<li><p>InnoDB用的B-tree索引，数值类型的列在等值判断, &gt;,&lt;, &gt;=,&lt;=,between.. and &lt;&gt;时，索引生效</p>
+<ol>
+<li>字符串类型的列，如果不是通配符开头的模糊查询，索引也是起作用的</li>
+<li>索引失效，意味着做全表查询</li>
+</ol>
+</li>
+</ol>
+<h3 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h3><p>视图是关系型数据库中将一组查询指令构成的结果集组合成可查询的数据表的对象。简单的说，视图就是虚拟的表，但与数据表不同的是，数据表是一种实体结构，而视图是一种虚拟结构，你也可以将视图理解为保存在数据库中被赋予名字的SQL语句。</p>
+<h4 id="MySQL-Blob类型"><a href="#MySQL-Blob类型" class="headerlink" title="MySQL Blob类型"></a>MySQL Blob类型</h4><ul>
+<li><p>BLOB是一个大型二进制对象, 可存储大量数据的容器</p>
+</li>
+<li><p>插入BLOB类型的数据必须使用preparedStatement, 因为BLOB类型的数据无法使用字符串拼接</p>
+</li>
+<li><p>如果存储的文件过大, 数据库的性能会下降</p>
+<ul>
+<li>TinyBlob - 最大 255 byte</li>
+<li>Blob — 最大 65 K</li>
+<li>MediumBlob 最大 16 M</li>
+<li>LongBlob 最大 4G</li>
+</ul>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">nlp</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">text classification</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://jasonyu.top/2020/11/04/mysql_2/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2020/11/04/mysql_4/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          mysql事务,隔离级别
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2020/10/28/django_auth_user/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">django_auth_user</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#mysql-的引擎"><span class="toc-number">1.</span> <span class="toc-text">mysql 的引擎</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#MySiam"><span class="toc-number">1.1.</span> <span class="toc-text">MySiam</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Innodb"><span class="toc-number">1.2.</span> <span class="toc-text">Innodb</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#选择合适的数据类型"><span class="toc-number">2.</span> <span class="toc-text">选择合适的数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#char-和-varchar"><span class="toc-number">2.1.</span> <span class="toc-text">char 和 varchar</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#浮点数float和定点数decimal"><span class="toc-number">2.2.</span> <span class="toc-text">浮点数float和定点数decimal</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符集"><span class="toc-number">3.</span> <span class="toc-text">字符集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#锁机制和事务控制"><span class="toc-number">4.</span> <span class="toc-text">锁机制和事务控制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#表级锁"><span class="toc-number">4.1.</span> <span class="toc-text">表级锁</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#行级锁"><span class="toc-number">4.2.</span> <span class="toc-text">行级锁</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mysql-与mongodb-区别"><span class="toc-number">5.</span> <span class="toc-text">mysql 与mongodb 区别</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#建立索引"><span class="toc-number">5.0.1.</span> <span class="toc-text">建立索引</span></a></li></ol></li></ol><li class="toc-item toc-level-3"><a class="toc-link" href="#视图"><span class="toc-number">6.</span> <span class="toc-text">视图</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#MySQL-Blob类型"><span class="toc-number">6.1.</span> <span class="toc-text">MySQL Blob类型</span></a></li></ol></li>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="mysql_2" data-title="mysql概念" data-url="http://jasonyu.top/2020/11/04/mysql_2/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -224,8 +543,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
