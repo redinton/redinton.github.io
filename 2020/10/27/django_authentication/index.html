@@ -8,19 +8,19 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>django authentication | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="鉴权部分 (authentication)  参考 1 在配置中 base.py / development.py">
+  <meta name="description" content="鉴权部分 (authentication) 参考 1 在配置中 base.py / development.py">
 <meta name="keywords" content="django">
 <meta property="og:type" content="article">
 <meta property="og:title" content="django authentication">
 <meta property="og:url" content="http://jasonyu.top/2020/10/27/django_authentication/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="鉴权部分 (authentication)  参考 1 在配置中 base.py / development.py">
+<meta property="og:description" content="鉴权部分 (authentication) 参考 1 在配置中 base.py / development.py">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://jasonyu.top/2020/10/27/django_authentication/image-20200916233140486.png">
 <meta property="og:updated_time" content="2020-11-05T14:54:56.289Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="django authentication">
-<meta name="twitter:description" content="鉴权部分 (authentication)  参考 1 在配置中 base.py / development.py">
+<meta name="twitter:description" content="鉴权部分 (authentication) 参考 1 在配置中 base.py / development.py">
 <meta name="twitter:image" content="http://jasonyu.top/2020/10/27/django_authentication/image-20200916233140486.png">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
@@ -171,46 +171,54 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>鉴权部分 (authentication) </p>
+        <p>鉴权部分 (authentication)</p>
 <p>参考 <a href="https://medium.com/@allwindicaprio/session-vs-token-based-authentication-b1f862dd7ed8" target="_blank" rel="noopener">1</a></p>
-<p>在配置中 base.py / development.py</p>
+<p>在配置中 <a href="http://base.py" target="_blank" rel="noopener">base.py</a> / <a href="http://development.py" target="_blank" rel="noopener">development.py</a></p>
 <a id="more"></a>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">REST_FRAMEWORK = &#123;</span><br><span class="line">    <span class="string">'DEFAULT_AUTHENTICATION_CLASSES'</span>: [</span><br><span class="line">        <span class="string">'rest_framework.authentication.BasicAuthentication'</span>,</span><br><span class="line">        <span class="string">'rest_framework.authentication.SessionAuthentication'</span>,</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>默认状态下是 BasicAuthentication和SessionAuthentication只要满足一个就可以</p>
-<h5 id="BasicAuthentication"><a href="#BasicAuthentication" class="headerlink" title="BasicAuthentication"></a>BasicAuthentication</h5><p>当未认证时，会返回</p>
+<h5 id="basicauthentication"><a class="markdownIt-Anchor" href="#basicauthentication"></a> BasicAuthentication</h5>
+<p>当未认证时，会返回</p>
 <p>HTTP/1.1 401 Authorization Required <strong>www-Authenticate</strong>: Basic realm= “family”</p>
-<p>Basic说明要Basic方式认证，realm = “family” 说明family中的内容是要权限的</p>
+<p>Basic说明要Basic方式认证，realm = “family&quot; 说明family中的内容是要权限的</p>
 <p>用户输入 账号密码，Base64( 账号:密码) 加密后放到下面Basic后的字段</p>
 <p>Authorization: Basic U2h1c2hlbmcwMDcldUZGMUFzczAwNw==</p>
 <p>缺点</p>
 <p><strong>不安全，http是裸奔状态</strong> ， 一般结合https用BasicAuthen</p>
-<h5 id="TokenAuthentication"><a href="#TokenAuthentication" class="headerlink" title="TokenAuthentication"></a>TokenAuthentication</h5><p>也叫Bearer authentication</p>
+<h5 id="tokenauthentication"><a class="markdownIt-Anchor" href="#tokenauthentication"></a> TokenAuthentication</h5>
+<p>也叫Bearer authentication</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">INSTALLED_APPS = [</span><br><span class="line">    ...</span><br><span class="line">    <span class="string">'rest_framework.authtoken'</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 <p>token key should be included in the <code>Authorization</code> HTTP header.</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Authorization: Bearer &lt;token&gt;</span><br><span class="line">Authorization: Token <span class="number">9944</span>b09199c62bcf9418ad846dd0e4bbdfc6ee4b</span><br></pre></td></tr></table></figure>
 <p>用户首先输入账号密码到server端，server端验证后，返回一个token给用户，</p>
 <p>用户把这个token存在本地的local storage，之后发请求的时候就从本地取出token，加到Authorization http header中</p>
-<h5 id="SessionAuthentication"><a href="#SessionAuthentication" class="headerlink" title="SessionAuthentication"></a>SessionAuthentication</h5><img src="/2020/10/27/django_authentication/image-20200916233140486.png" title="image-20200916233140486">
+<h5 id="sessionauthentication"><a class="markdownIt-Anchor" href="#sessionauthentication"></a> SessionAuthentication</h5>
+<img src="/2020/10/27/django_authentication/image-20200916233140486.png" title="image-20200916233140486">
 <p>用户提交账号密码后，在服务端会有一个session，返回一个session_id,下次请求的时候直接在request中 cookie加入 session_id 。</p>
 <p>可能存在一个<strong>CORS</strong> 问题。</p>
-<h5 id="JWT-json-web-token"><a href="#JWT-json-web-token" class="headerlink" title="JWT json web token"></a>JWT json web token</h5><p>base64(Header)  + “.” + base64(Payload) +”.” + Signature</p>
+<h5 id="jwt-json-web-token"><a class="markdownIt-Anchor" href="#jwt-json-web-token"></a> JWT json web token</h5>
+<p>base64(Header)  + “.” + base64(Payload) +&quot;.&quot; + Signature</p>
 <ul>
-<li>header<ul>
+<li>header
+<ul>
 <li>alg:加密用的算法 HS256</li>
 <li>typ: JWT</li>
 </ul>
 </li>
-<li>Payload<ul>
+<li>Payload
+<ul>
 <li>想要传递的信息 如 用户名</li>
 </ul>
 </li>
-<li>Signature<ul>
+<li>Signature
+<ul>
 <li>HS256 (Base64(Header) + “.” + Base64(Payload),   secretKey)</li>
 <li>secretkey是密钥，由server保存</li>
 </ul>
 </li>
 </ul>
-<h6 id="服务器验证"><a href="#服务器验证" class="headerlink" title="服务器验证"></a>服务器验证</h6><p>收到token后，先decode出JWT三个部分，得到sign的算法和payload，然后结合<strong>secretkey再次生成Signat</strong>ure，与原来的Signature对比验证token是否有效，验证通过才会用payload数据</p>
+<h6 id="服务器验证"><a class="markdownIt-Anchor" href="#服务器验证"></a> 服务器验证</h6>
+<p>收到token后，先decode出JWT三个部分，得到sign的算法和payload，然后结合<strong>secretkey再次生成Signat</strong>ure，与原来的Signature对比验证token是否有效，验证通过才会用payload数据</p>
 
       
 
@@ -332,7 +340,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#BasicAuthentication"><span class="toc-number">1.</span> <span class="toc-text">BasicAuthentication</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#TokenAuthentication"><span class="toc-number">2.</span> <span class="toc-text">TokenAuthentication</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#SessionAuthentication"><span class="toc-number">3.</span> <span class="toc-text">SessionAuthentication</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#JWT-json-web-token"><span class="toc-number">4.</span> <span class="toc-text">JWT json web token</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#服务器验证"><span class="toc-number">4.1.</span> <span class="toc-text">服务器验证</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#basicauthentication"><span class="toc-number">1.</span> <span class="toc-text"> BasicAuthentication</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#tokenauthentication"><span class="toc-number">2.</span> <span class="toc-text"> TokenAuthentication</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#sessionauthentication"><span class="toc-number">3.</span> <span class="toc-text"> SessionAuthentication</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#jwt-json-web-token"><span class="toc-number">4.</span> <span class="toc-text"> JWT json web token</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#服务器验证"><span class="toc-number">4.1.</span> <span class="toc-text"> 服务器验证</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>

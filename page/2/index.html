@@ -166,55 +166,17 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="事务-transaction"><a href="#事务-transaction" class="headerlink" title="事务 (transaction)"></a>事务 (transaction)</h3><p>把多条语句作为一个整体进行操作 — 成为数据库事务</p>
+        <h3 id="事务-transaction"><a class="markdownIt-Anchor" href="#事务-transaction"></a> 事务 (transaction)</h3>
+<p>把多条语句作为一个整体进行操作 – 成为数据库事务</p>
 <ul>
 <li>确保该事务范围内的所有操作全部成功或全部失败</li>
 <li>单条SQL语句, 数据库系统自动作为一个事务执行, 这种事务称为<strong>隐式事务</strong>。</li>
 <li>手动将多条SQL语句作为一个事务执行,  使用BEGIN开启一个事务, 使用COMMIT提交一个事务, 成为<strong>显式事务</strong>。</li>
-<li>主动让事务失败,  用ROLLBACK回滚事务, 整个事务会失败。<!---->
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">BEGIN</span>;</span><br><span class="line"><span class="keyword">UPDATE</span> accounts <span class="keyword">SET</span> balance = balance - <span class="number">100</span> <span class="keyword">WHERE</span> <span class="keyword">id</span> = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">UPDATE</span> accounts <span class="keyword">SET</span> balance = balance + <span class="number">100</span> <span class="keyword">WHERE</span> <span class="keyword">id</span> = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">ROLLBACK</span>;</span><br></pre></td></tr></table></figure>
-</li>
+<li>主动让事务失败,  用ROLLBACK回滚事务, 整个事务会失败。</li>
 </ul>
-<p>数据库事务具有ACID 四个属性</p>
-<ul>
-<li>A: Atomic ,  原子性 <ul>
-<li>所有SQL作为原子工作单元执行, 要么全部执行, 要么全部不执行</li>
-</ul>
-</li>
-<li>C: Consistent  一致性<ul>
-<li>事务完成后,  所有数据状态都是一致 , A账户减去100,  B账户肯定加上100</li>
-</ul>
-</li>
-<li>I: Isolation  隔离性 <ul>
-<li>多个事务并发, 每个事务作出的修改必须与其他事务隔离</li>
-</ul>
-</li>
-<li>D: Duration  持久性<ul>
-<li>事务完成后,  对数据库数据的修改被持久化存储</li>
-</ul>
-</li>
-</ul>
-<h3 id="事务隔离级别"><a href="#事务隔离级别" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h3><p>事务支持并发执行。 但若涉及到操作同一条记录的时候, 可能会有问题。</p>
-<p>并发操作会带来数据的不一致性, 包括<strong>脏读(dirty read), 不可重复读(Non repeatable read ), 幻读(phantom  read)</strong>.</p>
-<img src="/2020/11/04/mysql_4/image-20200307113840232.png" title="image-20200307113840232">
-<h4 id="read-uncommitted"><a href="#read-uncommitted" class="headerlink" title="read uncommitted"></a>read uncommitted</h4><blockquote>
-<p>SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;</p>
-</blockquote>
-<p>一个事务可能读取到另一个事务更新但未提交的数据, 这个数据有可能是脏数据。 例如一个事务更新了数据, 然后这个时候另一个事务读了就可以读到,  但是原来那个事务可能下一步就回滚导致数据更新失效。</p>
-<p><strong>脏读</strong><br>对于两个事务 T1,T2, T1读取了已经被T2更新但还没有提交的字段。之后, 若T2 rollback, 则T1读取的内容就是临时且无效的。</p>
-<h4 id="read-commited"><a href="#read-commited" class="headerlink" title="read commited"></a>read commited</h4><p>在这个级别, 事务对其余事务更新数据的操作只能读到commit后的结果。</p>
-<p>事务可能遇到不可重复读情况。 即指, 在一个事务内, 多次读同一数据。</p>
-<p>在这个事务还没有结束时, 如果另一个事务恰好修改了这个数据, 那么, 在第一个事务中, 两次读取的数据就可能不一致。</p>
-<p><strong>不可重复读</strong><br>对于两个事务T1, T2, T1读取了一个字段, 然后T2<strong>更新</strong>了该字段, 之后, T1再次读取同一个字段, 值就不同了</p>
-<h4 id="repeatable-read"><a href="#repeatable-read" class="headerlink" title="repeatable read"></a>repeatable read</h4><p>这个级别就是, 某个事务在读数据的时候保持一致, 例如起初事务A读数据的时候是空, 然后在这期间事务B插入并commit了这条数据,  这个之后事务A再读数据的时候也是空的。这就是保持 repeatable read。(同样的select的语句保证结果一样 ) 但是这个时候如果事务A去update 这条数据, 是可以成功的, 并且之后再读这条数据也是成功的。—  这个情形就是幻读。</p>
-<p><strong>幻读</strong><br>对于两个事务T1,T2,  T1从一个表中读取了一个字段, 然后T2在该表中<strong>插入</strong>了一些新的行, 之后如果T1再次读取同一个表, 就会多出几行。</p>
-<ul>
-<li>不可重复读重点在于update和delete, 而幻读重点在insert  </li>
-</ul>
-<p>在RR(repeatable read)级别, 解决了脏读(读到uncomitted data)和不可重复读(同一个事务中对同一份数据多次读到结果不一样,由于另一个事务修改了这个数据),但还是会有幻读。样例如下，事务T1先读取数据发现没有id=1的数据，然后准备insert数据之前，另一个干扰事务T2插入了id=1的数据并且commit了。此时事务T1插入数据不成功，但读取id=1的时候也读取不到id=1的数据。因为解决不可重复读的问题就是保证一个事务中读到的数据一致。 但在RR级别，可以通过对SQL加锁来避免幻读。</p>
-<img src="/2020/11/04/mysql_4/image-20201104144623826.png" title="image-20201104144623826">
-<h4 id="Serializable"><a href="#Serializable" class="headerlink" title="Serializable"></a>Serializable</h4><p>确保事务可以从一个表中读取相同的行</p>
-
+        
+          <a class="article-more-a" href="/2020/11/04/mysql_4/#more">more >></a>
+        
       
 
       
@@ -287,196 +249,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="mysql-的引擎"><a href="#mysql-的引擎" class="headerlink" title="mysql 的引擎"></a>mysql 的引擎</h3><p>mysql的存储方式由引擎决定，常用的有Innodb和MySiam。</p>
+        <h3 id="mysql-的引擎"><a class="markdownIt-Anchor" href="#mysql-的引擎"></a> mysql 的引擎</h3>
+<p>mysql的存储方式由引擎决定，常用的有Innodb和MySiam。</p>
 <ul>
-<li>不同的引擎区别在于如何存储和索引数据，是否使用事务<!---->
-<h4 id="MySiam"><a href="#MySiam" class="headerlink" title="MySiam"></a>MySiam</h4></li>
-<li>MySiAM不支持事务，不支持外键，强调的是性能，执行速度比Innodb要快<ul>
-<li>适用于<strong>对事务完整性没有要求，或者以select，insert为主的应用，可以用这个引擎建表</strong></li>
+<li>不同的引擎区别在于如何存储和索引数据，是否使用事务</li>
 </ul>
-</li>
-</ul>
-<h4 id="Innodb"><a href="#Innodb" class="headerlink" title="Innodb"></a>Innodb</h4><ul>
-<li>Innodb提供支持事务等高级数据库功能。</li>
-<li>适用于并发条件下要求数据的一致性，数据操作有较多的update和delete<ul>
-<li>MySQL支持外键的engine只有Innodb,创建外键的时候,父表必须有对应的索引，子表在创建外键的时候，也会自动创建对应的索引<ul>
-<li>在设定外键时支持多个模式，即在删除或更新父表的时候，对子表进行相应操作<ul>
-<li>restrict. no action 限制在子表有关联记录的情况下，父表不能更新</li>
-<li>cascade 父表在更新或删除时，更新或删除子表对应的记录</li>
-<li>set null 父表在更新或删除时，子表对应字段被set null</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>存储方式— 存储表和索引有两种方式<ul>
-<li>共享表空间存储<ul>
-<li>表结构保存在.frm 文件中</li>
-<li>数据和索引保存在innodb_data_home_dir和innodb_data_file_path 定义的表空间中，可以是多个文件</li>
-</ul>
-</li>
-<li>多表空间存储<ul>
-<li>表结构保存在.frm 文件中</li>
-<li>每个表的数据和索引单独保存在.ibd中</li>
-<li>如果是个分区表，则每个分区对应单独的.ibd文件，文件名是“表名+分区名”，可以在创建分区的时候指定每个分区的数据文件的位置，以此来将表的IO 均匀分布在多个磁盘</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="选择合适的数据类型"><a href="#选择合适的数据类型" class="headerlink" title="选择合适的数据类型"></a>选择合适的数据类型</h3><p>首先选择合适的存储引擎，根据指定的存储引擎确定合适的数据类型。</p>
-<h4 id="char-和-varchar"><a href="#char-和-varchar" class="headerlink" title="char 和 varchar"></a>char 和 varchar</h4><ul>
-<li>MyISAM: 最好使用固定长度的数据列代替可变长度的数据列。</li>
-<li>InnoDB: 建议使用varchar<ul>
-<li>没有区分固定长度和可变长度列（所有数据行都使用指向数据列值的头指针）用固定长度的CHAR 列不一定比使用可变长度VARCHAR 列性能要好。因而，主要的性能因素是数据行使用的存储总量。由于CHAR 平均占用的空间多于VARCHAR，因此使用VARCHAR 来最小化需要处理的数据行的存储总量和磁盘I/O 是比较好的</li>
-</ul>
-</li>
-</ul>
-<h4 id="浮点数float和定点数decimal"><a href="#浮点数float和定点数decimal" class="headerlink" title="浮点数float和定点数decimal"></a>浮点数float和定点数decimal</h4><ul>
-<li>浮点数<ul>
-<li>字段定义成float,插入数据精度超过该列定义的实际精度，插入值会被四舍五入到实际定义的精度值</li>
-</ul>
-</li>
-<li>定点数<ul>
-<li>实际以字符串形式存放，可以更加精确保存数据。 如果插入数据精度超过该列定义的实际精度,取决于SQLMode,若是traditional就会直接报错，导致数据无法插入</li>
-</ul>
-</li>
-</ul>
-<p>单精度浮点数表示会有误差</p>
-<ul>
-<li>如插入131072.32，数据库中存131072.31</li>
-<li>浮点数的比较 7.22-7.0=0.21999979</li>
-</ul>
-<p>精度要求比较高的应用中（比如货币）要使<strong>用定点数而不是浮点数</strong>来保存数据<br>编程中应尽量避免浮点数的比较，如果非要使用浮点数比较则最好使用范围比较而不要使用“==</p>
-<h3 id="字符集"><a href="#字符集" class="headerlink" title="字符集"></a>字符集</h3><p>创建数据库使用utf8，CREATE DATABASE IF NOT EXISTS my_db default charset utf8 COLLATE utf8_general_ci</p>
-<h3 id="锁机制和事务控制"><a href="#锁机制和事务控制" class="headerlink" title="锁机制和事务控制"></a>锁机制和事务控制</h3><p>Innodb提供行级锁，支持共享锁和排它锁两种锁定模式和四种不同的隔离级别.</p>
-<ul>
-<li>表级锁<ul>
-<li>开销小，加锁快，不会出现死锁，锁定粒度大，发生锁冲突概率最高，并发度最低</li>
-</ul>
-</li>
-<li>行级锁<ul>
-<li>开销大，枷锁慢，会出现死锁，锁定粒度小，发生锁冲突概率最低，并发度最高</li>
-</ul>
-</li>
-<li>页面锁<ul>
-<li>开销和加锁时间界于表锁和行锁之间；会出现死锁；锁定粒度界于表锁和行锁之间，并发度一搬</li>
-</ul>
-</li>
-</ul>
-<p>应用</p>
-<ul>
-<li>表级锁更适合于以查询为主，只有<strong>少量按索引条件更新数据</strong>的应用，如Web 应用</li>
-<li>行级锁则更适合于有<strong>大量按索引条件并发更新少量不同</strong>数据，同时又有并发查询的应用，如一些在线事务处理（OLTP）系统</li>
-</ul>
-<h4 id="表级锁"><a href="#表级锁" class="headerlink" title="表级锁"></a>表级锁</h4><p>MyISAM只支持表锁，MySQL表级锁有两种模式</p>
-<ul>
-<li>表共享读锁 table read lock<ul>
-<li>对MyISAM 表的读操作，<strong>不会阻塞其他用户对同一表的读</strong>请求，但<strong>会阻塞对同一表的写</strong>请求；</li>
-</ul>
-</li>
-<li>表独占写锁 table write lock<ul>
-<li>写操作，则会阻塞其他用户对同一表的读和写操作  </li>
-</ul>
-</li>
-</ul>
-<p>MyISAM 表的读操作与写操作之间，以及写操作之间是串行的！<br>一个线程获得对一个表的写锁后，只有持有锁的线程可以对表进行更新操作。其他线程的读、写操作都会等待，直到锁被释放为止。</p>
-<ul>
-<li>MyISAM锁调度<ul>
-<li>MyISAM 存储引擎的读锁和写锁是互斥的，读写操作是串行</li>
-<li>一个进程请求某个MyISAM 表的读锁，同时另一个进程也请求同一表的写锁<ul>
-<li>写进程先获得锁。不仅如此，即使读请求先到锁等待队列，写请求后到，写锁也会插到读锁请求之前。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h4 id="行级锁"><a href="#行级锁" class="headerlink" title="行级锁"></a>行级锁</h4><p>InnoDB采用行级锁。<br>脏读，不可以重复读，幻读都是数据库读一致性的问题，必须由数据库提供一定的事务隔离机制来解决。<br>数据库实现事务隔离方式</p>
-<ul>
-<li>读取数据前，对其加锁，阻止其他事务对数据进行修改</li>
-<li>不加锁 通过一定机制生成一个数据请求时间点的<strong>一致性数据快照</strong>（Snapshot)，并用这个快照来提供一定级别（语句级或事务级）的一致性读取。从用户的角度来看，好象是数据库可以提供同一数据的多个版本，因此，这种技术叫做数据多版本并发控制(MultiVersion Concurrency Control，简称<strong>MVCC</strong> 或MCC），也经常称为多版本数据库</li>
-</ul>
-<p>两种类型的行锁</p>
-<ul>
-<li>共享锁(S)<ul>
-<li>允许一个事务读一行，阻止其他事务获得相同数据集的排他锁</li>
-</ul>
-</li>
-<li>排他锁(X)<ul>
-<li>允许获得排他锁的事务更新数据，阻止其他事务获得相同数据集的共享锁和排他写锁</li>
-</ul>
-</li>
-</ul>
-<p>另外，为了允许行锁和表锁共存，实现多粒度锁机制，InnoDB 还有两种内部使用的意向锁（Intention Locks），这两种意向锁都是表锁。</p>
-<ul>
-<li>意向共享锁（IS）：事务打算给数据行加行共享锁，事务在给一个数据行加共享锁前必须先取得该表的 IS 锁。</li>
-<li>意向排他锁（IX）：事务打算给数据行加行排他锁，事务在给一个数据行加排他锁前<br>必须先取得该表的 IX 锁。</li>
-</ul>
-<p>意向锁是InnoDB 自动加的，不需用户干预。</p>
-<ul>
-<li>对于UPDATE、DELETE 和INSERT 语句，InnoDB会自动给涉及数据集加排他锁（X)；</li>
-<li>对于普通SELECT 语句，InnoDB 不会加任何锁；</li>
-<li>事务可以通过以下语句显示给记录集加共享锁或排他锁。<ul>
-<li>共享锁（S）：SELECT * FROM table_name WHERE … LOCK IN SHARE MODE。<ul>
-<li>排他锁（X)：SELECT * FROM table_name WHERE … FOR UPDATE。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>InnoDB行级锁的实现<br>通过给索引上的索引项加锁，Oracle是通过在数据块中对相应的数据行加锁实现。<br>只有通过索引条件检索数据，InnoDB才使用行级锁，否则InnoDB使用表锁。</p>
-<h3 id="mysql-与mongodb-区别"><a href="#mysql-与mongodb-区别" class="headerlink" title="mysql 与mongodb 区别"></a>mysql 与mongodb 区别</h3><p>mysql 关系型，mongodb非关系型</p>
-<p>关系型 mysql, sql server, postgre sql</p>
-<ul>
-<li>关系型数据库相对安全，因为存在硬盘</li>
-</ul>
-<p>非关系型 mongodb, redis, Memcached HBase</p>
-<ul>
-<li>Mongo的存储方式为虚拟内存+持久化存储，Mongo将数据写入内存中，再由虚拟内存管理器将其持久化到硬盘中，因此写操作会比关系型数据库快很多。不支持事务，也不能进行联表查询，一般用于较大规模数据的存储。</li>
-<li>什么时候适合<ul>
-<li>日志系统 — 系统运行产生的日志 一般种类多，范围大 内容杂乱</li>
-<li>地理位置存储</li>
-<li>数据规模增长很快 - mongo 分库分操作简单</li>
-<li>保证高可用</li>
-<li>文件存储需求</li>
-</ul>
-</li>
-</ul>
-<img src="/2020/11/04/mysql_2/image-20200615115603959.png" title="image-20200615115603959">
-<h5 id="建立索引"><a href="#建立索引" class="headerlink" title="建立索引"></a>建立索引</h5><ol>
-<li><p>可以建立前缀索引 来减少索引的占用空间</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">index</span> idx_student_name_1 <span class="keyword">on</span> tb_student(stuname(<span class="number">1</span>));</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>最适合索引的列 -<strong>- where中的 以及 连接字句中的列</strong></p>
-</li>
-<li><p>索引并非越多越好，加速了查操作，但是写操作变得很慢</p>
-</li>
-<li><p>InnoDB存储引擎，表的普通索引都会保存主键的值，主键要尽可能较短的数据类型，有效减少索引占用空间</p>
-</li>
-<li><p>InnoDB用的B-tree索引，数值类型的列在等值判断, &gt;,&lt;, &gt;=,&lt;=,between.. and &lt;&gt;时，索引生效</p>
-<ol>
-<li>字符串类型的列，如果不是通配符开头的模糊查询，索引也是起作用的</li>
-<li>索引失效，意味着做全表查询</li>
-</ol>
-</li>
-</ol>
-<h3 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h3><p>视图是关系型数据库中将一组查询指令构成的结果集组合成可查询的数据表的对象。简单的说，视图就是虚拟的表，但与数据表不同的是，数据表是一种实体结构，而视图是一种虚拟结构，你也可以将视图理解为保存在数据库中被赋予名字的SQL语句。</p>
-<h4 id="MySQL-Blob类型"><a href="#MySQL-Blob类型" class="headerlink" title="MySQL Blob类型"></a>MySQL Blob类型</h4><ul>
-<li><p>BLOB是一个大型二进制对象, 可存储大量数据的容器</p>
-</li>
-<li><p>插入BLOB类型的数据必须使用preparedStatement, 因为BLOB类型的数据无法使用字符串拼接</p>
-</li>
-<li><p>如果存储的文件过大, 数据库的性能会下降</p>
-<ul>
-<li>TinyBlob - 最大 255 byte</li>
-<li>Blob — 最大 65 K</li>
-<li>MediumBlob 最大 16 M</li>
-<li>LongBlob 最大 4G</li>
-</ul>
-</li>
-</ul>
-
+        
+          <a class="article-more-a" href="/2020/11/04/mysql_2/#more">more >></a>
+        
       
 
       
@@ -549,7 +329,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="User"><a href="#User" class="headerlink" title="User"></a>User</h3>
+        <h3 id="user"><a class="markdownIt-Anchor" href="#user"></a> User</h3>
         
           <a class="article-more-a" href="/2020/10/28/django_auth_user/#more">more >></a>
         
@@ -625,9 +405,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>鉴权部分 (authentication) </p>
+        <p>鉴权部分 (authentication)</p>
 <p>参考 <a href="https://medium.com/@allwindicaprio/session-vs-token-based-authentication-b1f862dd7ed8" target="_blank" rel="noopener">1</a></p>
-<p>在配置中 base.py / development.py</p>
+<p>在配置中 <a href="http://base.py" target="_blank" rel="noopener">base.py</a> / <a href="http://development.py" target="_blank" rel="noopener">development.py</a></p>
         
           <a class="article-more-a" href="/2020/10/27/django_authentication/#more">more >></a>
         
@@ -1008,15 +788,20 @@
     <div class="article-entry" itemprop="articleBody">
       
         <img src="/2019/06/15/HMM/image-20201105224828123.png" title="image-20201105224828123">
-<h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>HMM是关于时序的概率模型，描述一个由隐藏的马尔科夫链随机生成不可观测的状态随机序列，再由各个状态生成一个可观测的观测随机序列。</p>
+<h4 id="定义"><a class="markdownIt-Anchor" href="#定义"></a> 定义</h4>
+<p>HMM是关于时序的概率模型，描述一个由隐藏的马尔科夫链随机生成不可观测的状态随机序列，再由各个状态生成一个可观测的观测随机序列。</p>
 <ul>
-<li><p>随机生成的状态序列 - state sequence</p>
+<li>
+<p>随机生成的状态序列 - state sequence</p>
 </li>
-<li><p>每个状态生成一个观测，由此产生的观测随机序列- 观测序列 (observation sequence)</p>
+<li>
+<p>每个状态生成一个观测，由此产生的观测随机序列- 观测序列 (observation sequence)</p>
 <ul>
-<li><p>前提假设，当前时刻的观测值只依赖于当前时刻的隐状态</p>
+<li>
+<p>前提假设，当前时刻的观测值只依赖于当前时刻的隐状态</p>
 <blockquote>
-<p>Hence we have assumed that the value for the random variable X_i depends only on<br>the value of Y_i. </p>
+<p>Hence we have assumed that the value for the random variable X_i depends only on<br>
+the value of Y_i.</p>
 </blockquote>
 </li>
 </ul>
@@ -1105,9 +890,11 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="word2vec和fasttext对比"><a href="#word2vec和fasttext对比" class="headerlink" title="word2vec和fasttext对比"></a>word2vec和fasttext对比</h3><ul>
+        <h3 id="word2vec和fasttext对比"><a class="markdownIt-Anchor" href="#word2vec和fasttext对比"></a> word2vec和fasttext对比</h3>
+<ul>
 <li>fasttext会考虑subword(应对OOV)</li>
-<li>fasttext可进行有supervised learning for text classification<ul>
+<li>fasttext可进行有supervised learning for text classification
+<ul>
 <li>结构与CBOW类似</li>
 <li>采用hierarchical softmax对输出标签建立哈弗曼树，样本中标签多的类别对应更短的搜索路径</li>
 <li>N-gram，考虑词序特征</li>

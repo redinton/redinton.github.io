@@ -169,58 +169,74 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="AJAX-CSRF-CORS"><a href="#AJAX-CSRF-CORS" class="headerlink" title="AJAX CSRF CORS"></a>AJAX CSRF CORS</h3><a id="more"></a>
-<h4 id="CSRF-Protection"><a href="#CSRF-Protection" class="headerlink" title="CSRF Protection"></a>CSRF Protection</h4><p>Cross site Request Forgery</p>
+        <h3 id="ajax-csrf-cors"><a class="markdownIt-Anchor" href="#ajax-csrf-cors"></a> AJAX CSRF CORS</h3>
+<a id="more"></a>
+<h4 id="csrf-protection"><a class="markdownIt-Anchor" href="#csrf-protection"></a> CSRF Protection</h4>
+<p>Cross site Request Forgery</p>
 <p>当用户没有登出网站，仍保留valid session的时候</p>
 <p>针对 safe http op 如 GET HEAD OPTIONS , 不能够用来改变server端的状态</p>
 <p>针对 unsafe的 op 如 POST，PUT，DELETE， always 需要一个valid CSRF token</p>
-<h4 id="CORS"><a href="#CORS" class="headerlink" title="CORS"></a>CORS</h4><p>Cross-Origin Resource Sharing 跨域资源共享</p>
+<h4 id="cors"><a class="markdownIt-Anchor" href="#cors"></a> CORS</h4>
+<p>Cross-Origin Resource Sharing 跨域资源共享</p>
 <ul>
-<li><p>URL由 协议， 域名， 端口， 路径 组成， 两个URL 协议， 域名， 端口相同，则同源</p>
+<li>
+<p>URL由 协议， 域名， 端口， 路径 组成， 两个URL 协议， 域名， 端口相同，则同源</p>
 </li>
-<li><p>前后端分离的跨域问题</p>
+<li>
+<p>前后端分离的跨域问题</p>
 <ul>
 <li>后端，前端，分处不同的域名，域名不同，则会有跨域问题</li>
 </ul>
 </li>
 </ul>
-<h3 id="Django-Restful"><a href="#Django-Restful" class="headerlink" title="Django Restful"></a>Django Restful</h3><h4 id="Django-Filter"><a href="#Django-Filter" class="headerlink" title="Django Filter"></a>Django Filter</h4><p>filter_backends 用于过滤查询集的过滤后端 可以在 <code>DEFAULT_FILTER_BACKENDS</code> 中配置</p>
-<p>配置完之后, <a href="http://127.0.0.1:8000/book/?title=&amp;bread=&amp;bcomment=&amp;btitle=%E5%B0%84%E9%9B%95&amp;pub_year=&amp;pub_year__gt=&amp;bread__gt=&amp;breadlt=" target="_blank" rel="noopener">http://127.0.0.1:8000/book/?title=&amp;bread=&amp;bcomment=&amp;btitle=%E5%B0%84%E9%9B%95&amp;pub_year=&amp;pub_year__gt=&amp;bread__gt=&amp;breadlt=</a></p>
+<h3 id="django-restful"><a class="markdownIt-Anchor" href="#django-restful"></a> Django Restful</h3>
+<h4 id="django-filter"><a class="markdownIt-Anchor" href="#django-filter"></a> Django Filter</h4>
+<p>filter_backends 用于过滤查询集的过滤后端 可以在 <code>DEFAULT_FILTER_BACKENDS</code> 中配置</p>
+<p>配置完之后, <a href="http://127.0.0.1:8000/book/?title=&amp;bread=&amp;bcomment=&amp;btitle=%E5%B0%84%E9%9B%95&amp;pub_year=&amp;pub_year__gt=&amp;bread__gt=&amp;breadlt=" target="_blank" rel="noopener">http://127.0.0.1:8000/book/?title=&amp;bread=&amp;bcomment=&amp;btitle=射雕&amp;pub_year=&amp;pub_year__gt=&amp;bread__gt=&amp;breadlt=</a></p>
 <p>上述url的过滤就可以直接在filter中实现</p>
 <p><a href="https://zhuanlan.zhihu.com/p/110060840" target="_blank" rel="noopener">参考filter使用</a></p>
-<h3 id="ORM的一些操作"><a href="#ORM的一些操作" class="headerlink" title="ORM的一些操作"></a>ORM的一些操作</h3><p>queryset 获取对象数据时，如果不指定，则不会检索关联对象的数据，只有当调用关联对象时，queryset会再一次访问数据库</p>
+<h3 id="orm的一些操作"><a class="markdownIt-Anchor" href="#orm的一些操作"></a> ORM的一些操作</h3>
+<p>queryset 获取对象数据时，如果不指定，则不会检索关联对象的数据，只有当调用关联对象时，queryset会再一次访问数据库</p>
 <p>关联对象指的是外键，或者多对多这种关系</p>
-<h4 id="set-操作"><a href="#set-操作" class="headerlink" title="_set 操作"></a>_set 操作</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Restaurant</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    name = models.TextField()</span><br><span class="line">    address = models.TextField(blank=<span class="literal">True</span>, default=<span class="string">''</span>)</span><br><span class="line">    telephone = models.TextField(blank=<span class="literal">True</span>, default=<span class="string">''</span>)</span><br><span class="line">    url = models.URLField(blank=<span class="literal">True</span>, null=<span class="literal">True</span>)</span><br><span class="line">    user = models.ForeignKey(User, default=<span class="number">1</span>,on_delete=models.CASCADE)</span><br><span class="line">    date = models.DateField(default=date.today)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br><span class="line">    </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dish</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    name = models.TextField()</span><br><span class="line">    description = models.TextField(blank=<span class="literal">True</span>,  default=<span class="string">''</span>)</span><br><span class="line">    price = models.DecimalField(<span class="string">'USD amount'</span>, max_digits=<span class="number">8</span>, decimal_places=<span class="number">2</span>, blank=<span class="literal">True</span>, null=<span class="literal">True</span>)</span><br><span class="line">    user = models.ForeignKey(User, default=<span class="number">1</span>, on_delete=models.CASCADE)</span><br><span class="line">    date = models.DateField(default=date.today)</span><br><span class="line">    image = models.ImageField(upload_to=<span class="string">"myrestaurants"</span>, blank=<span class="literal">True</span>, null=<span class="literal">True</span>)</span><br><span class="line">    restaurant = models.ForeignKey(Restaurant, null=<span class="literal">True</span>, related_name=<span class="string">'dishes'</span>, on_delete=models.CASCADE)</span><br><span class="line">    <span class="comment"># Related name "dishes" allows you to use restaurant.dishes.all to access all dishes objects</span></span><br><span class="line">    <span class="comment"># instead of using restaurant.dish_set.all</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br></pre></td></tr></table></figure>
+<h4 id="_set-操作"><a class="markdownIt-Anchor" href="#_set-操作"></a> _set 操作</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Restaurant</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    name = models.TextField()</span><br><span class="line">    address = models.TextField(blank=<span class="literal">True</span>, default=<span class="string">''</span>)</span><br><span class="line">    telephone = models.TextField(blank=<span class="literal">True</span>, default=<span class="string">''</span>)</span><br><span class="line">    url = models.URLField(blank=<span class="literal">True</span>, null=<span class="literal">True</span>)</span><br><span class="line">    user = models.ForeignKey(User, default=<span class="number">1</span>,on_delete=models.CASCADE)</span><br><span class="line">    date = models.DateField(default=date.today)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br><span class="line">    </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dish</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    name = models.TextField()</span><br><span class="line">    description = models.TextField(blank=<span class="literal">True</span>,  default=<span class="string">''</span>)</span><br><span class="line">    price = models.DecimalField(<span class="string">'USD amount'</span>, max_digits=<span class="number">8</span>, decimal_places=<span class="number">2</span>, blank=<span class="literal">True</span>, null=<span class="literal">True</span>)</span><br><span class="line">    user = models.ForeignKey(User, default=<span class="number">1</span>, on_delete=models.CASCADE)</span><br><span class="line">    date = models.DateField(default=date.today)</span><br><span class="line">    image = models.ImageField(upload_to=<span class="string">"myrestaurants"</span>, blank=<span class="literal">True</span>, null=<span class="literal">True</span>)</span><br><span class="line">    restaurant = models.ForeignKey(Restaurant, null=<span class="literal">True</span>, related_name=<span class="string">'dishes'</span>, on_delete=models.CASCADE)</span><br><span class="line">    <span class="comment"># Related name "dishes" allows you to use restaurant.dishes.all to access all dishes objects</span></span><br><span class="line">    <span class="comment"># instead of using restaurant.dish_set.all</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br></pre></td></tr></table></figure>
 <p>Dish中restaurant是外键, Dish.restaurant 可以知道这道菜的菜馆，反之要知道这个菜馆所有的菜</p>
 <p>restaurant.dish_set.all // restaurant.dishes.all</p>
-<h4 id="models中的抽象类"><a href="#models中的抽象类" class="headerlink" title="models中的抽象类"></a>models中的抽象类</h4><p>meta中 Abstract = True， Django认为这个模型是抽象类，就不会在db中创建对应的表</p>
-<h4 id="select-related"><a href="#select-related" class="headerlink" title="select_related"></a>select_related</h4><p>预加载单个关联对象— 外键关系这种，通常是一对多</p>
+<h4 id="models中的抽象类"><a class="markdownIt-Anchor" href="#models中的抽象类"></a> models中的抽象类</h4>
+<p>meta中 Abstract = True， Django认为这个模型是抽象类，就不会在db中创建对应的表</p>
+<h4 id="select_related"><a class="markdownIt-Anchor" href="#select_related"></a> select_related</h4>
+<p>预加载单个关联对象-- 外键关系这种，通常是一对多</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 访问一次数据库，获得Article对象</span></span><br><span class="line"><span class="keyword">for</span> a <span class="keyword">in</span> Article.objects.all():</span><br><span class="line">    <span class="comment"># 访问n次数据库，每次循环都要重新检索Category的数据</span></span><br><span class="line">    print(a.category)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> a <span class="keyword">in</span> Article.objects.all().select_related(<span class="string">'category'</span>):</span><br><span class="line">    <span class="comment"># 已经缓存了数据，不会再次访问数据库</span></span><br><span class="line">    print(a.category)</span><br></pre></td></tr></table></figure>
 <p><code>select_related()</code>使用JOIN获取了Category模型的数据。 <strong>一篇Article只关联了一个category</strong></p>
 <p>获取外键的外键只需用双下划线隔开</p>
 <p>ArticleComment.objects.select_related(‘article__category’)</p>
 <p><code>select_related</code>仅限于获取单值关系——外键和一对一关系</p>
-<h4 id="prefetch-related"><a href="#prefetch-related" class="headerlink" title="prefetch_related"></a>prefetch_related</h4><p>预加载多个关联对象</p>
+<h4 id="prefetch_related"><a class="markdownIt-Anchor" href="#prefetch_related"></a> prefetch_related</h4>
+<p>预加载多个关联对象</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">c = Category.objects.get(id=<span class="number">1</span>)</span><br><span class="line"><span class="comment"># 这两种方法是等价的，都要访问一次数据库</span></span><br><span class="line">c.article_set.all()</span><br><span class="line">Article.objects.filter(category=c)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查找多个分类下的文章时</span></span><br><span class="line"><span class="comment"># 访问1次数据库，获得分类</span></span><br><span class="line"><span class="keyword">for</span> c <span class="keyword">in</span> Category.objects.all():</span><br><span class="line">    <span class="comment"># 访问n次数据库，获得文章</span></span><br><span class="line">    c.article_set.all()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 访问2次数据库，获得分类与文章</span></span><br><span class="line"><span class="keyword">for</span> c <span class="keyword">in</span> Category.objects.prefetch_related(<span class="string">'article_set'</span>):</span><br><span class="line">    <span class="comment"># 直接调用缓存，不再访问数据库</span></span><br><span class="line">    c.article_set.all()</span><br></pre></td></tr></table></figure>
 <p><strong>一个Category绑定了多个Article</strong></p>
 <p>多对多的关系也可以 用prefetch_field 预加载</p>
-<h4 id="select-related与prefetch-related-区别"><a href="#select-related与prefetch-related-区别" class="headerlink" title="select_related与prefetch_related 区别"></a>select_related与prefetch_related 区别</h4><p>当查询的单个主对象或主对象列表 需要用到每个对象的关联对象信息的时候</p>
+<h4 id="select_related与prefetch_related-区别"><a class="markdownIt-Anchor" href="#select_related与prefetch_related-区别"></a> select_related与prefetch_related 区别</h4>
+<p>当查询的单个主对象或主对象列表 需要用到每个对象的关联对象信息的时候</p>
 <ul>
 <li>单对单，或单对多外键字段，用select_related</li>
 <li>多对多ManyToMany, 和反向外键关系， 用prefetch_related</li>
 <li>select_related 执行一次数据库查询，prefetch_related 执行两次数据库查询</li>
 <li>prefetch方法可以给prefetch_related方法增加额外条件和属性</li>
 </ul>
-<h4 id="select-for-update"><a href="#select-for-update" class="headerlink" title="select_for_update"></a>select_for_update</h4><p>select_for_update(nowait=False, skip_locked=False)</p>
+<h4 id="select_for_update"><a class="markdownIt-Anchor" href="#select_for_update"></a> select_for_update</h4>
+<p>select_for_update(nowait=False, skip_locked=False)</p>
 <p>返回一个锁住行直到事务结束的查询集，如果数据库支持，它将生成一个SELECT … FOR UPDATE语句。</p>
 <p>例如：</p>
 <p>entries = Entry.objects.select_for_update().filter(author=request.user)</p>
 <p>所有匹配的行将被锁定，直到事务结束。这意味着可以<strong>通过锁防止数据被其它事务</strong>修改。</p>
 <p>一般情况下如果其他事务锁定了相关行，那么本查询将被阻塞，直到锁被释放。使用select_for_update(nowait=True)将使查询不阻塞。如果其它事务持有冲突的锁,那么查询将引发DatabaseError异常。也可以使用select_for_update(skip_locked=True)忽略锁定的行。nowait和skip_locked是互斥的。</p>
 <p>目前，postgresql，oracle和mysql数据库后端支持select_for_update()。但是，MySQL不支持nowait和skip_locked参数。</p>
-<h4 id="通过外键相连"><a href="#通过外键相连" class="headerlink" title="通过外键相连"></a>通过外键相连</h4><p>Django的ForeignKey 和数据库的FOREIGN KEY 不同</p>
+<h4 id="通过外键相连"><a class="markdownIt-Anchor" href="#通过外键相连"></a> 通过外键相连</h4>
+<p>Django的ForeignKey 和数据库的FOREIGN KEY 不同</p>
 <ul>
-<li>Django是一种逻辑上两个表的关联关系<ul>
+<li>Django是一种逻辑上两个表的关联关系
+<ul>
 <li>通过db_constraint = False 可以不生成对应的数据库外键，而是通过生成额外的id来关联两个表 (所谓的软外键)</li>
 <li>related_name是用来做反向查询的时候用的</li>
 </ul>
@@ -229,13 +245,15 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Province</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    name = models.CharField(max_length=<span class="number">16</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__unicode__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">City</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    name = models.CharField(max_length=<span class="number">16</span>)</span><br><span class="line">    province = models.ForeignKey(Province, null=<span class="literal">True</span>,on_delete=models.SET_NULL,</span><br><span class="line">               related_name=<span class="string">'cities'</span>, db_constraint=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__unicode__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br></pre></td></tr></table></figure>
 <p>反向查询 例如我想知道某个省有多少个city</p>
 <p>p.city_set.all( )</p>
-<p><strong>“子表表名+_set”，注意全部是小写！！表示foreign_key 默认的属性名称。</strong> </p>
+<p><strong>“子表表名+_set”，注意全部是小写！！表示foreign_key 默认的属性名称。</strong></p>
 <p>p.cities.all( )</p>
 <p><a href="https://zhuanlan.zhihu.com/p/81806204" target="_blank" rel="noopener">参考资料</a></p>
-<h4 id="F-方法更新一个对象或多个对象的某个字段"><a href="#F-方法更新一个对象或多个对象的某个字段" class="headerlink" title="F 方法更新一个对象或多个对象的某个字段"></a>F 方法更新一个对象或多个对象的某个字段</h4><p>通常更新数据时，需要先从db将原数据取出来后放在内存，然后编辑，最后提交更新db。使用F方法避免把所有数据先载入内存，而是直接生成SQL语句更新数据库。</p>
+<h4 id="f-方法更新一个对象或多个对象的某个字段"><a class="markdownIt-Anchor" href="#f-方法更新一个对象或多个对象的某个字段"></a> F 方法更新一个对象或多个对象的某个字段</h4>
+<p>通常更新数据时，需要先从db将原数据取出来后放在内存，然后编辑，最后提交更新db。使用F方法避免把所有数据先载入内存，而是直接生成SQL语句更新数据库。</p>
 <p>但值得注意的是当你使用F方法对某个对象字段进行更新后，需要使用refresh_from_db()方法后才能获取最新的字段信息（非常重要！)</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">product.price = F(<span class="string">'price'</span>) + <span class="number">1</span></span><br><span class="line">product.save()</span><br><span class="line">print(product.price)            <span class="comment"># &lt;CombinedExpression: F(price) + Value(1)&gt;</span></span><br><span class="line">product.refresh_from_db()</span><br><span class="line">print(product.price)            <span class="comment"># Decimal('13.00')</span></span><br></pre></td></tr></table></figure>
-<h3 id="django-优缺点"><a href="#django-优缺点" class="headerlink" title="django 优缺点"></a>django 优缺点</h3><p>优点</p>
+<h3 id="django-优缺点"><a class="markdownIt-Anchor" href="#django-优缺点"></a> django 优缺点</h3>
+<p>优点</p>
 <ul>
 <li>自带大量常用工具 权限管理，分页，auth,完整的文档</li>
 <li>Model的ORM， APP理念可插拔</li>
@@ -246,7 +264,8 @@
 <li>相对太重，不如flask轻便</li>
 <li>过度封装，性能偏低(python的锅)</li>
 </ul>
-<h3 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h3><p><a href="https://mp.weixin.qq.com/s?__biz=MjM5OTMyODA4Nw==&amp;mid=2247483914&amp;idx=1&amp;sn=368657c4efc342d7d8e26a23f8209eb0&amp;chksm=a73c6232904beb249bd3705fdd09176b97fac5f49f152f846d5d10a3dac34e9ae88614f4e43d&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">参考</a></p>
+<h3 id="缓存"><a class="markdownIt-Anchor" href="#缓存"></a> 缓存</h3>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MjM5OTMyODA4Nw==&amp;mid=2247483914&amp;idx=1&amp;sn=368657c4efc342d7d8e26a23f8209eb0&amp;chksm=a73c6232904beb249bd3705fdd09176b97fac5f49f152f846d5d10a3dac34e9ae88614f4e43d&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">参考</a></p>
 <p>对<strong>页面实时性要求不高</strong>的页面。存放在缓存的数据，通常是频繁访问的，而不会经常修改的数据。</p>
 <ul>
 <li>博客文章。假设用户一天更新一篇文章，那么可以为博客设置1天的缓存，一天后会刷新。</li>
@@ -255,7 +274,8 @@
 </ul>
 <p>Django 提供多种缓存方式</p>
 <ul>
-<li>memcached<ul>
+<li>memcached
+<ul>
 <li>基于内存，数据存在server</li>
 </ul>
 </li>
@@ -265,140 +285,178 @@
 </ul>
 <p>禁用用户客户端如浏览器的缓存数据功能 ,用never_cache</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from django.views.decorators.cache import never_cache</span><br><span class="line"></span><br><span class="line">@never_cache</span><br><span class="line">def myview(request):</span><br></pre></td></tr></table></figure>
-<h3 id="Request"><a href="#Request" class="headerlink" title="Request"></a>Request</h3><ul>
+<h3 id="request"><a class="markdownIt-Anchor" href="#request"></a> Request</h3>
+<ul>
 <li>request.method: GET, POST</li>
-<li>request.user 当前访问用户的所有信息 </li>
+<li>request.user 当前访问用户的所有信息</li>
 <li>request.path 当前访问路径</li>
-<li>request.META 是个字典，包含了所有本次HTTP请求的Header信息<ul>
+<li>request.META 是个字典，包含了所有本次HTTP请求的Header信息
+<ul>
 <li>REQUEST_METHOD: 当前请求方法, GET或POST</li>
 <li>HTTP_USER_AGENT: 用户浏览器的字符串,</li>
-<li>REMOTE_ADDR<strong>: 客户端IP地址，</strong>比如54.489.102.201 。</li>
+<li>REMOTE_ADDR**: 客户端IP地址，**比如54.489.102.201 。</li>
 </ul>
 </li>
-<li>当有负载均衡proxy如nginx 时 获取真实 ip<ul>
+<li>当有负载均衡proxy如nginx 时 获取真实 ip
+<ul>
 <li>因为每个request中的远程IP地址(request.META[“REMOTE_IP”])将指向该负载平衡proxy的地址，而不是发起这个request的用户的实际IP。负载平衡proxy处理这个问题的方法在特殊的 X-Forwarded-For 中设置实际发起请求的IP。 因此，需要一个中间件来确保运行在proxy之后的站点也能在request.META[‘REMOTE_ADDR’]中得到正确的IP。</li>
 </ul>
 </li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">(request)</span>:</span></span><br><span class="line">    user = request.user</span><br><span class="line">    user_agent = request.META.get(<span class="string">'HTTP_USER_AGENT'</span>, <span class="string">'unknown'</span>)</span><br><span class="line">    x_forwarded_for = request.META.get(<span class="string">'HTTP_X_FORWARDED_FOR'</span>, <span class="string">''</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> x_forwarded_for:</span><br><span class="line">        ip = x_forwarded_for.split(<span class="string">','</span>)[<span class="number">0</span>]  <span class="comment"># 所以这里是真实的ip</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        ip = request.META.get(<span class="string">'REMOTE_ADDR'</span>)  <span class="comment"># 这里获得代理ip</span></span><br><span class="line"></span><br><span class="line">    context = &#123;<span class="string">'user'</span>: user, <span class="string">'user_agent'</span>: user_agent, <span class="string">'ip'</span>: ip, &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">"request_demo/index.html"</span>, context)</span><br></pre></td></tr></table></figure>
-<h3 id="QuerySet-用法"><a href="#QuerySet-用法" class="headerlink" title="QuerySet 用法"></a>QuerySet 用法</h3><h3 id="权限管理"><a href="#权限管理" class="headerlink" title="权限管理"></a>权限管理</h3><p>什么用户对什么对象有什么样的权限</p>
+<h3 id="queryset-用法"><a class="markdownIt-Anchor" href="#queryset-用法"></a> QuerySet 用法</h3>
+<h3 id="权限管理"><a class="markdownIt-Anchor" href="#权限管理"></a> 权限管理</h3>
+<p>什么用户对什么对象有什么样的权限</p>
 <p>Django的权限permission本质django.contrib.auth中的一个模型，与User的user_permissions字段多对多关系。在installed_app中添加auth应用后，Django为每个app中的model自动创建4个可选权限， view,add,change,delete</p>
 <ul>
-<li><p>用户权限的查看</p>
+<li>
+<p>用户权限的查看</p>
 </li>
-<li><p>user_A.has_perm(“blog.add_article”)</p>
+<li>
+<p>user_A.has_perm(“blog.add_article”)</p>
 </li>
-<li><p>用户所在组的权限或某个用户的所有权限</p>
+<li>
+<p>用户所在组的权限或某个用户的所有权限</p>
 <ul>
 <li>user_A.get_group_permissions()</li>
 <li>user_A.get_all_permissions()</li>
 </ul>
 </li>
-<li><p>手动定义和分配权限</p>
+<li>
+<p>手动定义和分配权限</p>
 <ul>
-<li>django自带的四种权限不够，自定义权限<ul>
+<li>django自带的四种权限不够，自定义权限
+<ul>
 <li>在Model的meta属性中添加permissions</li>
 <li>使用ContentType程序化创建permissions</li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p>用户权限的验证</p>
+<li>
+<p>用户权限的验证</p>
 <ul>
-<li><p>视图中</p>
+<li>
+<p>视图中</p>
 <ul>
-<li><p>基于函数的视图 @permission_required( perm , login_url=None, raise_exception=False )</p>
+<li>
+<p>基于函数的视图 @permission_required( perm , login_url=None, raise_exception=False )</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.contrib.auth.decorators <span class="keyword">import</span> permission_required</span><br><span class="line"></span><br><span class="line"><span class="meta">@permission_required('polls.can_vote')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_view</span><span class="params">(request)</span>:</span></span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>基于类的视图 继承 PermissionRequiredMixin</p>
+<li>
+<p>基于类的视图 继承 PermissionRequiredMixin</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.contrib.auth.mixins <span class="keyword">import</span> PermissionRequiredMixin</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyView</span><span class="params">(PermissionRequiredMixin, View)</span>:</span></span><br><span class="line">    permission_required = <span class="string">'polls.can_vote'</span></span><br><span class="line">    <span class="comment"># Or multiple of permissions:</span></span><br><span class="line">    permission_required = (<span class="string">'polls.can_open'</span>, <span class="string">'polls.can_edit'</span>)</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p>用户组(Group)</p>
+<li>
+<p>用户组(Group)</p>
 <ul>
 <li>Group和User是多对多的关系，在权限控制时批量对用户的权限进行管理和分配</li>
 <li>将一个用户加入一个group后，就拥有这个group分配到的所有权限</li>
 </ul>
 </li>
-<li><p>不足</p>
+<li>
+<p>不足</p>
 <ul>
 <li>Django自带的权限是针对模型的，意味着一个用户对Article模型有change的权限，那么该用户有对所有的文章对象进行修改的权限，</li>
 <li>若想要实现对单个文章对象的权限管理，需要借助 <strong>django guardian</strong></li>
 </ul>
 </li>
 </ul>
-<h3 id="Django-用户登录"><a href="#Django-用户登录" class="headerlink" title="Django 用户登录"></a>Django 用户登录</h3><p>借助django-allauth 实现用户注册，登录，登出，找回密码，第三方登录等功能。</p>
+<h3 id="django-用户登录"><a class="markdownIt-Anchor" href="#django-用户登录"></a> Django 用户登录</h3>
+<p>借助django-allauth 实现用户注册，登录，登出，找回密码，第三方登录等功能。</p>
 <p><a href="https://zhuanlan.zhihu.com/p/70186446" target="_blank" rel="noopener">参考</a></p>
 <p><a href="https://zhuanlan.zhihu.com/p/37960481" target="_blank" rel="noopener">参考</a></p>
-<h3 id="Django常用装饰器"><a href="#Django常用装饰器" class="headerlink" title="Django常用装饰器"></a>Django常用装饰器</h3><ul>
-<li>@login_required(login_url = ‘…’)<ul>
+<h3 id="django常用装饰器"><a class="markdownIt-Anchor" href="#django常用装饰器"></a> Django常用装饰器</h3>
+<ul>
+<li>
+<p>@login_required(login_url = ‘…’)</p>
+<ul>
 <li>执行视图函数前检查用户是否通过登录身份验证，login_url 可选，默认是settings.py中的LOGIN_URL</li>
 <li>不会检查用户是否是is_active的状态，进一步限制登录成功的用户对某些视图函数的访问，用下面这个</li>
 </ul>
 </li>
-<li><p>@user_passes_test</p>
+<li>
+<p>@user_passes_test</p>
 </li>
-<li><p>对登录用户对象的信息进行判断,只有通过测试的用户才能访问视图函数</p>
+<li>
+<p>对登录用户对象的信息进行判断,只有通过测试的用户才能访问视图函数</p>
 </li>
-<li><p>@permission_required( perm, login_url)</p>
+<li>
+<p>@permission_required( perm, login_url)</p>
 </li>
-<li><p>检查用户是否有特定权限</p>
+<li>
+<p>检查用户是否有特定权限</p>
 </li>
-<li><p>@cache_page</p>
+<li>
+<p>@cache_page</p>
 </li>
-<li><p>@cache_control</p>
+<li>
+<p>@cache_control</p>
 <ul>
 <li>用户自己浏览器的缓存 (Private)   @cache_control(private = True)</li>
 <li>服务提供者(服务端)的缓存 (Public</li>
 </ul>
 </li>
-<li><p>@method_decorator</p>
+<li>
+<p>@method_decorator</p>
 <ul>
-<li><p>需要在基于类的视图上使用装饰器</p>
+<li>
+<p>需要在基于类的视图上使用装饰器</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.contrib.auth.decorators <span class="keyword">import</span> login_required</span><br><span class="line"><span class="keyword">from</span> django.utils.decorators <span class="keyword">import</span> method_decorator</span><br><span class="line"><span class="keyword">from</span> django.views.generic <span class="keyword">import</span> TemplateView</span><br><span class="line"></span><br><span class="line"><span class="meta">@method_decorator(login_required, name='dispatch')</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProtectedView</span><span class="params">(TemplateView)</span>:</span></span><br><span class="line">    template_name = <span class="string">'secret.html</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
-<li><p>@require_http_methods</p>
+<li>
+<p>@require_http_methods</p>
 <ul>
-<li><p>限制用户的请求方法</p>
+<li>
+<p>限制用户的请求方法</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.views.decorators.http <span class="keyword">import</span> require_http_methods</span><br><span class="line"></span><br><span class="line"><span class="meta">@require_http_methods(["GET", "POST"])</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_view</span><span class="params">(request)</span>:</span></span><br><span class="line">    <span class="comment"># Only accept GET or POST method</span></span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
 </ul>
-<h3 id="Path与Re-path的不同"><a href="#Path与Re-path的不同" class="headerlink" title="Path与Re_path的不同"></a>Path与Re_path的不同</h3><p>Django的URL设计有path和re_path两种方式，你需要仔细观察两者的相同点和共同点:</p>
+<h3 id="path与re_path的不同"><a class="markdownIt-Anchor" href="#path与re_path的不同"></a> Path与Re_path的不同</h3>
+<p>Django的URL设计有path和re_path两种方式，你需要仔细观察两者的相同点和共同点:</p>
 <ul>
-<li>相同点：结尾一般是需要有斜线”/“的。</li>
-<li>不同点：re_path需要小”r”注明正则匹配，已”^”开头，已”$”结尾。</li>
+<li>相同点：结尾一般是需要有斜线&quot;/&quot;的。</li>
+<li>不同点：re_path需要小&quot;r&quot;注明正则匹配，已&quot;^“开头，已”$&quot;结尾。</li>
 </ul>
 <p>如果不按规范写，你的URL可能永远都匹配不到你想要的内容。如果你习惯了开发RESTful API，你还需要知道Django URL设计与RESTful API URI设计的不同。</p>
 <ul>
-<li><strong>RESTful API URI的结尾不能加”/“</strong>，Django URL需要</li>
+<li><strong>RESTful API URI的结尾不能加&quot;/&quot;</strong>，Django URL需要</li>
 <li>RESTful API URI不能包含动词，只能是名词，Django URL很常用。</li>
 <li>RESTful API URI代表资源的名字要以复数命名，Django URL无所谓。</li>
 </ul>
-<h3 id="Models的继承"><a href="#Models的继承" class="headerlink" title="Models的继承"></a>Models的继承</h3><ul>
+<h3 id="models的继承"><a class="markdownIt-Anchor" href="#models的继承"></a> Models的继承</h3>
+<ul>
 <li>抽象模型继承 abstract model</li>
-<li>多表模型继承 multi-table </li>
+<li>多表模型继承 multi-table</li>
 <li>代理模型 proxy model</li>
 </ul>
-<h4 id="abstract-model"><a href="#abstract-model" class="headerlink" title="abstract model"></a>abstract model</h4><p>两个模型有许多共同的字段， 提取共同字段建立一个父级抽象模型</p>
+<h4 id="abstract-model"><a class="markdownIt-Anchor" href="#abstract-model"></a> abstract model</h4>
+<p>两个模型有许多共同的字段， 提取共同字段建立一个父级抽象模型</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ItemBase</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    owner = models.ForeignKey(User, on_delete=models.CASCADE)</span><br><span class="line">    <span class="comment"># owner = models.ForeignKey(User,related_name='%(class)s_related',on_delete=models.CASCADE)</span></span><br><span class="line">    <span class="comment"># 这样模型继承后，每个子类模型会生成自己专属的related_name, 比如articles_related和courses_related。</span></span><br><span class="line">    title = models.CharField(max_length=<span class="number">250</span>)</span><br><span class="line">    created = models.DateTimeField(auto_now_add=<span class="literal">True</span>)</span><br><span class="line">    updated = models.DateTimeField(auto_now=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">       <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        abstract = <span class="literal">True</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.title</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Article</span><span class="params">(ItemBase)</span>:</span></span><br><span class="line">    body = models.TextField()</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Course</span><span class="params">(ItemBase)</span>:</span></span><br><span class="line">    description = models.TextField()</span><br></pre></td></tr></table></figure>
-<p>建立一个父类抽象模型，只需要在父类模型Meta选项中设置abstract=True。Django不会为抽象模型在数据库中生成自己的数据表<strong>。父类Meta中的abstract=True也不会传递给子</strong>类</p>
-<h4 id="多表模型继承"><a href="#多表模型继承" class="headerlink" title="多表模型继承"></a>多表模型继承</h4><p>其与抽象模型继承最大的区别在于Django也会为父类模型建立自己的数据表，同时隐式地在父类和子类之间建立一个一对一关系</p>
+<p>建立一个父类抽象模型，只需要在父类模型Meta选项中设置abstract=True。Django不会为抽象模型在数据库中生成自己的数据表**。父类Meta中的abstract=True也不会传递给子**类</p>
+<h4 id="多表模型继承"><a class="markdownIt-Anchor" href="#多表模型继承"></a> 多表模型继承</h4>
+<p>其与抽象模型继承最大的区别在于Django也会为父类模型建立自己的数据表，同时隐式地在父类和子类之间建立一个一对一关系</p>
 <p>删除了父类模型Meta选项中的abstract=True, 这样Django就会<strong>创建3个数据表</strong>。其中<strong>共有字段部分会存储在父类模型对应的数据表里</strong>，每个子类模型专属的字段会存在每个子类对应的数据表里。尽管共有字段是存在父类模型对应的数据表里，<strong>每个子类对象可以像使用自己数据表里的字段一样使用那些字段</strong>，比如article.title, course.owner。</p>
 <p>在多表继承中，一般父类的Meta属性不会继承到子类中，但是ordering和 get_latest_by是可以继承的。如果子类不想继承父类的ordering的Meta选项，则可以手动显式的指定ordering=[]或者任何自己想要的值</p>
 <p>多表继承中如果一个父类有多个子类，且子类不在关系中显式地指定related_name字段，django会引发验证错误。这是因为多表继承的时候，Django隐式地在父类和子类之间建立一个一对一关系，有时候父类与其他类的关系会从父类下移到子类中。</p>
-<h4 id="代理模型"><a href="#代理模型" class="headerlink" title="代理模型"></a>代理模型</h4><p>如果我们只想改变某个模型的行为方法，而不是添加额外的字段或创建额外的数据表，我们就可以使用代理模型(proxy model)。设置一个代理模型，需要在子类模型Meta选项中设置proxy=True<strong>， Django不会为代理模型生成新的数据表</strong>。</p>
+<h4 id="代理模型"><a class="markdownIt-Anchor" href="#代理模型"></a> 代理模型</h4>
+<p>如果我们只想改变某个模型的行为方法，而不是添加额外的字段或创建额外的数据表，我们就可以使用代理模型(proxy model)。设置一个代理模型，需要在子类模型Meta选项中设置proxy=True**， Django不会为代理模型生成新的数据表**。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    first_name = models.CharField(max_length=<span class="number">30</span>)</span><br><span class="line">    last_name = models.CharField(max_length=<span class="number">30</span>)</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyPerson</span><span class="params">(Person)</span>:</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        proxy = <span class="literal">True</span></span><br><span class="line">ordering = [<span class="string">'last_name'</span>]</span><br></pre></td></tr></table></figure>
-<h3 id="Signals"><a href="#Signals" class="headerlink" title="Signals"></a>Signals</h3><ul>
-<li><p>“信号分发器”机制，允许<strong>解耦的应用在框架的其它地方发生操作时会被通知到</strong>。 通俗而讲Django信号的工作原理就是当<strong>某个事件发生的时候会发出一个信号(signals), 而监听这个信号的函数(receivers)就会</strong>立即执行。</p>
+<h3 id="signals"><a class="markdownIt-Anchor" href="#signals"></a> Signals</h3>
+<ul>
+<li>
+<p>“信号分发器”机制，允许<strong>解耦的应用在框架的其它地方发生操作时会被通知到</strong>。 通俗而讲Django信号的工作原理就是当<strong>某个事件发生的时候会发出一个信号(signals), 而监听这个信号的函数(receivers)就会</strong>立即执行。</p>
 </li>
-<li><p>尤其是<strong>用于不同模型或程序间的联动</strong>。常见例子包括创建User对象实例时创建一对一关系的UserProfile对象实例，或者每当用户下订单时触发给管理员发邮件的动作。</p>
+<li>
+<p>尤其是<strong>用于不同模型或程序间的联动</strong>。常见例子包括创建User对象实例时创建一对一关系的UserProfile对象实例，或者每当用户下订单时触发给管理员发邮件的动作。</p>
 </li>
 </ul>
 <p>样例</p>
@@ -409,22 +467,24 @@
 <p>有一个Profile模型，与User模型是一对一的关系。我们希望创建User对象实例时也创建Profile对象实例，而使用post_save更新User对象时不创建新的Profile对象。</p>
 <p>由于post_save可同时用于模型的创建和更新，我们用if created这个判断来加以区别</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"><span class="keyword">from</span> django.db.models.signals <span class="keyword">import</span> post_save</span><br><span class="line"><span class="keyword">from</span> django.dispatch <span class="keyword">import</span> receiver</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Profile</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    user = models.OneToOneField(User, on_delete=models.CASCADE)</span><br><span class="line">    birth_date = models.DateField(null=<span class="literal">True</span>, blank=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">@receiver(post_save, sender=User)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">create_user_profile</span><span class="params">(sender, instance, created, **kwargs)</span>:</span></span><br><span class="line">   <span class="keyword">if</span> created:</span><br><span class="line">       Profile.objects.create(user=instance)</span><br><span class="line"></span><br><span class="line"><span class="meta">@receiver(post_save, sender=User)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">save_user_profile</span><span class="params">(sender, instance, **kwargs)</span>:</span></span><br><span class="line">    instance.profile.save()</span><br></pre></td></tr></table></figure>
-<h4 id="Django-内置的信号"><a href="#Django-内置的信号" class="headerlink" title="Django 内置的信号"></a>Django 内置的信号</h4><p>之前的例子中我们使用的都是post_save信号，即在模型调用save()方法后才发送信号。Django其它常用内置信号还包括:</p>
+<h4 id="django-内置的信号"><a class="markdownIt-Anchor" href="#django-内置的信号"></a> Django 内置的信号</h4>
+<p>之前的例子中我们使用的都是post_save信号，即在模型调用save()方法后才发送信号。Django其它常用内置信号还包括:</p>
 <ul>
 <li>django.db.models.signals.pre_save &amp; post_save在模型调用 save()方法之前或之后发送。</li>
-<li>django.db.models.signals.pre<em>init&amp; post_init在模型调用_init</em>方法之前或之后发送。</li>
+<li>django.db.models.signals.pre_init&amp; post_init在模型调用_init_方法之前或之后发送。</li>
 <li>django.db.models.signals.pre_delete &amp; post_delete在模型调用delete()方法或查询集调用delete() 方法之前或之后发送。</li>
 <li>django.db.models.signals.m2m_changed在模型多对多关系改变后发送。</li>
 <li>django.core.signals.request_started &amp; request_finished Django建立或关闭HTTP 请求时发送。</li>
 </ul>
-<p>假如我们有个account的app，包含了User和Pofile模型，我们不仅需要在account文件夹下<strong>新建signals.py</strong>，还需要修改account文件下apps.py和<code>__init__</code>.py，以导入创建的信号监听函数。</p>
+<p>假如我们有个account的app，包含了User和Pofile模型，我们不仅需要在account文件夹下<strong><a href="http://xn--signals-i71nf79b.py" target="_blank" rel="noopener">新建signals.py</a></strong>，还需要修改account文件下apps.py和<code>__init__</code>.py，以导入创建的信号监听函数。</p>
 <p>account/signals.py</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db.models.signals <span class="keyword">import</span> post_save</span><br><span class="line"><span class="keyword">from</span> django.dispatch <span class="keyword">import</span> receiver</span><br><span class="line"><span class="keyword">from</span> .models <span class="keyword">import</span> User, Profile</span><br><span class="line"></span><br><span class="line"><span class="meta">@receiver(post_save, sender=User)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">create_user_profile</span><span class="params">(sender, instance, created, **kwargs)</span>:</span>  </span><br><span class="line">    <span class="keyword">if</span> created:      </span><br><span class="line">        Profile.objects.create(user=instance)</span><br><span class="line">        </span><br><span class="line"><span class="meta">@receiver(post_save, sender=User)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">save_user_profile</span><span class="params">(sender, instance, **kwargs)</span>:</span>    </span><br><span class="line">    instance.profile.save()</span><br></pre></td></tr></table></figure>
 <p><em># account/apps.py</em></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.apps <span class="keyword">import</span> AppConfig</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AccountConfig</span><span class="params">(AppConfig)</span>:</span></span><br><span class="line">    name = <span class="string">'account'</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">ready</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">import</span> account.signals</span><br></pre></td></tr></table></figure>
 <p><em># account/<code>__init__</code>.py</em></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">default_app_config = &apos;account.apps.AccountConfig&apos;</span><br></pre></td></tr></table></figure>
-<h3 id="中间件"><a href="#中间件" class="headerlink" title="中间件"></a>中间件</h3><p>MiddleWare是嵌入都django的request/response处理机制中的一个hooks，可以修改django 全局输入或输出</p>
+<h3 id="中间件"><a class="markdownIt-Anchor" href="#中间件"></a> 中间件</h3>
+<p>MiddleWare是嵌入都django的request/response处理机制中的一个hooks，可以修改django 全局输入或输出</p>
 <ul>
 <li>HTTP Web服务器工作原理一般都是接收用户发来的请求(request), 然后给出响应(response)。</li>
 <li>Django也不例外，其一般工作方式是接收request对象和其它参数，<strong>交由视图(view)处理</strong>，然后给出它的响应(respone)数据: 渲染过的html文件或json格式的数据。</li>
@@ -441,7 +501,7 @@
 <li>在View视图函数执行前或执行后把特定信息打印到log日志</li>
 <li>在View视图函数执行后对reponse数据进行修改后返回给用户</li>
 </ul>
-<p>中间件对<strong>Django的输入或输出的改变是全局的，</strong>反之亦然。如果让你希望对Django的输入或输出做出全局性的改变时，需要使用中间件。另外Django对POST表单中携带的CSRF token的全局校验也是通过CsrfViewMiddleware这个中间件进行的</p>
+<p>中间件对**Django的输入或输出的改变是全局的，**反之亦然。如果让你希望对Django的输入或输出做出全局性的改变时，需要使用中间件。另外Django对POST表单中携带的CSRF token的全局校验也是通过CsrfViewMiddleware这个中间件进行的</p>
 <ul>
 <li>SecurityMiddleware：为request/response提供了几种安全改进，无它不安全</li>
 <li>SessionMiddleware：开启session会话支持，无它无session</li>
@@ -453,38 +513,49 @@
 </ul>
 <p>如果你要实现全站缓存, 还需要使用UpdateCacheMiddleware和FetchFromCacheMiddleware，但一定要注意它们的顺序，Update在前和Fetch在后。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MIDDLEWARE = [&apos;django.middleware.cache.UpdateCacheMiddleware&apos;, </span><br><span class="line">			  &apos;django.middleware.common.CommonMiddleware&apos;， &apos;django.middleware.cache.FetchFromCacheMiddleware&apos;,]</span><br></pre></td></tr></table></figure>
-<p>除此以外Django还提供了压缩网站内容的<strong>GZipMiddleware，</strong>根据用户请求语言返回不同内容的<strong>LocaleMiddleware</strong>和给GET请求附加条件的<strong>ConditionalGetMiddleware。</strong>这些中间件都是可选的。</p>
+<p>除此以外Django还提供了压缩网站内容的<strong>GZipMiddleware，<strong>根据用户请求语言返回不同内容的</strong>LocaleMiddleware</strong>和给GET请求附加条件的**ConditionalGetMiddleware。**这些中间件都是可选的。</p>
 <p>当你在settings.py注册中间件时一定要要考虑中间件的执行顺序，中间件在request到达view之前是从上向下执行的，在view执行完后返回reponse过程中是从下向上执行的，如下图所示。举个例子，如果你自定义的中间件有依赖于request.user（比如判断用户是否登录)，那么你自定义的中间件一定要放在AuthenticationMiddleware的后面。</p>
 
-<h4 id="自定义中间件"><a href="#自定义中间件" class="headerlink" title="自定义中间件"></a>自定义中间件</h4><p>支持 函数和类 两种方式定义</p>
+<h4 id="自定义中间件"><a class="markdownIt-Anchor" href="#自定义中间件"></a> 自定义中间件</h4>
+<p>支持 函数和类 两种方式定义</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">simple_middleware</span><span class="params">(get_response)</span>:</span></span><br><span class="line"><span class="comment"># One-time configuration and initialization. 一次性设置和初始化</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">middleware</span><span class="params">(request)</span>:</span></span><br><span class="line">        <span class="comment"># Code to be executed for each request before the view (and later middleware) are called.</span></span><br><span class="line">        <span class="comment"># request请求到达视图函数执行前的代码</span></span><br><span class="line"></span><br><span class="line">        response = get_response(request)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Code to be executed for each request/response after</span></span><br><span class="line">        <span class="comment"># the view is called. 视图函数执行后的代码</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> middleware</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SimpleMiddleware</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, get_response)</span>:</span></span><br><span class="line">        self.get_response = get_response</span><br><span class="line">        <span class="comment"># One-time configuration and initialization.一次性设置和初始化</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, request)</span>:</span></span><br><span class="line">        <span class="comment"># Code to be executed for each request before the view (and later middleware) are called.</span></span><br><span class="line">        <span class="comment"># 视图函数执行前的代码</span></span><br><span class="line"></span><br><span class="line">        response = self.get_response(request)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Code to be executed for each request/response after</span></span><br><span class="line">        <span class="comment"># the view is called. 视图函数执行后的代码</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> response</span><br></pre></td></tr></table></figure>
 <p>django版本是1.x或2.x版</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.utils.deprecation <span class="keyword">import</span> MiddlewareMixin </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyMiddleware</span><span class="params">(MiddlewareMixin)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_request</span><span class="params">(self, request)</span>:</span></span><br><span class="line">        print(<span class="string">"Request before view is called!"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_response</span><span class="params">(self, request, response)</span>:</span></span><br><span class="line">        print(<span class="string">"Response after view is called!"</span>)</span><br><span class="line">        <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_exception</span><span class="params">(self, request, exception)</span>:</span></span><br><span class="line">        print(<span class="string">"Exception!"</span>)</span><br></pre></td></tr></table></figure>
 <p>希望在视图函数执行请求前或执行请求后添加额外的功能，且这种功能是全局性的（针对所有的request或view或response), 那么使用中间件是最好的实现方式。</p>
-<h4 id="Django-文件的上载"><a href="#Django-文件的上载" class="headerlink" title="Django 文件的上载"></a>Django 文件的上载</h4><ul>
+<h4 id="django-文件的上载"><a class="markdownIt-Anchor" href="#django-文件的上载"></a> Django 文件的上载</h4>
+<ul>
 <li>Django提供 FileField 和 ImageField 字段用于文件上传用</li>
 <li>默认情况，Django会store file locally, 用 <code>MEDIA_ROOT</code> 和 <code>MEDIA_URL</code> settings</li>
-<li>与此同时，Django也提供 custom file storage systems， 允许自定义 where and how Django 存储文件<ul>
+<li>与此同时，Django也提供 custom file storage systems， 允许自定义 where and how Django 存储文件
+<ul>
 <li>FileField(upload_to = … , storage = )</li>
 </ul>
 </li>
 </ul>
-<h3 id="限制用户上传文件格式与大小"><a href="#限制用户上传文件格式与大小" class="headerlink" title="限制用户上传文件格式与大小"></a>限制用户上传文件格式与大小</h3><p><a href="https://mp.weixin.qq.com/s?__biz=MjM5OTMyODA4Nw==&amp;mid=2247484260&amp;idx=1&amp;sn=f55f51f3a845e2b9bb6fca67b8909edd&amp;chksm=a73c635c904bea4aaefe634d95128116fca657b49531ccc4f71ad050c727e03ba17546fd5b0a&amp;scene=178#rd" target="_blank" rel="noopener">参考</a></p>
+<h3 id="限制用户上传文件格式与大小"><a class="markdownIt-Anchor" href="#限制用户上传文件格式与大小"></a> 限制用户上传文件格式与大小</h3>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MjM5OTMyODA4Nw==&amp;mid=2247484260&amp;idx=1&amp;sn=f55f51f3a845e2b9bb6fca67b8909edd&amp;chksm=a73c635c904bea4aaefe634d95128116fca657b49531ccc4f71ad050c727e03ba17546fd5b0a&amp;scene=178#rd" target="_blank" rel="noopener">参考</a></p>
 <p>扩展FileField 字段</p>
-<h3 id="nginx-和-uWISG-服务器之间如何配合工作的"><a href="#nginx-和-uWISG-服务器之间如何配合工作的" class="headerlink" title="nginx 和 uWISG 服务器之间如何配合工作的"></a><strong>nginx 和 uWISG 服务器之间如何配合工作的</strong></h3><ul>
-<li><p>首先浏览器发起 http 请求到 nginx 服务器，Nginx 根据接收到请求包，进行 url 分析,</p>
+<h3 id="nginx-和-uwisg-服务器之间如何配合工作的"><a class="markdownIt-Anchor" href="#nginx-和-uwisg-服务器之间如何配合工作的"></a> <strong>nginx 和 uWISG 服务器之间如何配合工作的</strong></h3>
+<ul>
+<li>
+<p>首先浏览器发起 http 请求到 nginx 服务器，Nginx 根据接收到请求包，进行 url 分析,</p>
 <p>判断访问的资源类型。如果是静态资源，直接读取静态资源返回给浏览器。</p>
 </li>
-<li><p>如果请求的是动态资源就转交给 uwsgi服务器。</p>
+<li>
+<p>如果请求的是动态资源就转交给 uwsgi服务器。</p>
 </li>
-<li><p>uwsgi 服务器根据自身的uwsgi 和 WSGI 协议，找到对应的 Django 框架。</p>
+<li>
+<p>uwsgi 服务器根据自身的uwsgi 和 WSGI 协议，找到对应的 Django 框架。</p>
 </li>
-<li><p>Django 框架下的应用进行逻辑处理后，将返回值发送到 uwsgi 服务器。</p>
+<li>
+<p>Django 框架下的应用进行逻辑处理后，将返回值发送到 uwsgi 服务器。</p>
 </li>
-<li><p>uwsgi 服务器再返回给 nginx，最后 nginx将返回值返回给浏览器进行渲染显示给用户。</p>
+<li>
+<p>uwsgi 服务器再返回给 nginx，最后 nginx将返回值返回给浏览器进行渲染显示给用户。</p>
 </li>
 </ul>
-<h3 id="Django项目如何实现高并发"><a href="#Django项目如何实现高并发" class="headerlink" title="Django项目如何实现高并发"></a><strong>Django项目如何实现高并发</strong></h3><ul>
+<h3 id="django项目如何实现高并发"><a class="markdownIt-Anchor" href="#django项目如何实现高并发"></a> <strong>Django项目如何实现高并发</strong></h3>
+<ul>
 <li>使用nginx进行反向代理和负载均衡</li>
 <li>数据库分库和读写分离(含主从复制)</li>
 <li>使用nosql数据库比如redis缓存热点数据</li>
@@ -492,14 +563,17 @@
 <li>使用Gzip或django-compressor压缩静态文件</li>
 <li>使用CDN加速静态文件访问</li>
 </ul>
-<h3 id="什么是wsgi-uwsgi-uWSGI"><a href="#什么是wsgi-uwsgi-uWSGI" class="headerlink" title="什么是wsgi,uwsgi,uWSGI"></a><strong>什么是wsgi,uwsgi,uWSGI</strong></h3><p>Web服务器网关接口,是一套协议。用于接收用户请求并将请求进行初次封装，然后将请求交给web框架。实现wsgi协议的模块有：</p>
+<h3 id="什么是wsgiuwsgiuwsgi"><a class="markdownIt-Anchor" href="#什么是wsgiuwsgiuwsgi"></a> <strong>什么是wsgi,uwsgi,uWSGI</strong></h3>
+<p>Web服务器网关接口,是一套协议。用于接收用户请求并将请求进行初次封装，然后将请求交给web框架。实现wsgi协议的模块有：</p>
 <p>1.wsgiref,本质上就是编写一个socket服务端，用于接收用户请求(django)</p>
 <p>2.werkzeug,本质上就是编写一个socket服务端，用于接收用户请求(flask)</p>
 <p>uwsgi:</p>
 <p>与WSGI一样是一种通信协议，它是uWSGI服务器的独占协议,用于定义传输信息的类型</p>
 <p>uWSGI:</p>
 <p>是一个web服务器,实现了WSGI协议,uWSGI协议,http协议,</p>
-<h3 id="各种插件"><a href="#各种插件" class="headerlink" title="各种插件"></a>各种插件</h3><h4 id="django生成model之间ER图"><a href="#django生成model之间ER图" class="headerlink" title="django生成model之间ER图"></a>django生成model之间ER图</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install django-extensions</span><br></pre></td></tr></table></figure>
+<h3 id="各种插件"><a class="markdownIt-Anchor" href="#各种插件"></a> 各种插件</h3>
+<h4 id="django生成model之间er图"><a class="markdownIt-Anchor" href="#django生成model之间er图"></a> django生成model之间ER图</h4>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install django-extensions</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 全部models生成dot</span><br><span class="line">python manage.py graph_models -a &gt; all.dot</span><br><span class="line"># 单个app生成dot</span><br><span class="line">python manage.py graph_models testApp &gt; testApp.dot</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 转换dot文件为png图片</span><br><span class="line">sudo apt install graphviz</span><br><span class="line">dot -Tpng testApp.dot &gt; testApp.png</span><br></pre></td></tr></table></figure>
 
@@ -623,7 +697,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#AJAX-CSRF-CORS"><span class="toc-number">1.</span> <span class="toc-text">AJAX CSRF CORS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#CSRF-Protection"><span class="toc-number">1.1.</span> <span class="toc-text">CSRF Protection</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CORS"><span class="toc-number">1.2.</span> <span class="toc-text">CORS</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Django-Restful"><span class="toc-number">2.</span> <span class="toc-text">Django Restful</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Django-Filter"><span class="toc-number">2.1.</span> <span class="toc-text">Django Filter</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ORM的一些操作"><span class="toc-number">3.</span> <span class="toc-text">ORM的一些操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#set-操作"><span class="toc-number">3.1.</span> <span class="toc-text">_set 操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#models中的抽象类"><span class="toc-number">3.2.</span> <span class="toc-text">models中的抽象类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#select-related"><span class="toc-number">3.3.</span> <span class="toc-text">select_related</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#prefetch-related"><span class="toc-number">3.4.</span> <span class="toc-text">prefetch_related</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#select-related与prefetch-related-区别"><span class="toc-number">3.5.</span> <span class="toc-text">select_related与prefetch_related 区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#select-for-update"><span class="toc-number">3.6.</span> <span class="toc-text">select_for_update</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#通过外键相连"><span class="toc-number">3.7.</span> <span class="toc-text">通过外键相连</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#F-方法更新一个对象或多个对象的某个字段"><span class="toc-number">3.8.</span> <span class="toc-text">F 方法更新一个对象或多个对象的某个字段</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#django-优缺点"><span class="toc-number">4.</span> <span class="toc-text">django 优缺点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#缓存"><span class="toc-number">5.</span> <span class="toc-text">缓存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Request"><span class="toc-number">6.</span> <span class="toc-text">Request</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#QuerySet-用法"><span class="toc-number">7.</span> <span class="toc-text">QuerySet 用法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#权限管理"><span class="toc-number">8.</span> <span class="toc-text">权限管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Django-用户登录"><span class="toc-number">9.</span> <span class="toc-text">Django 用户登录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Django常用装饰器"><span class="toc-number">10.</span> <span class="toc-text">Django常用装饰器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Path与Re-path的不同"><span class="toc-number">11.</span> <span class="toc-text">Path与Re_path的不同</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Models的继承"><span class="toc-number">12.</span> <span class="toc-text">Models的继承</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#abstract-model"><span class="toc-number">12.1.</span> <span class="toc-text">abstract model</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#多表模型继承"><span class="toc-number">12.2.</span> <span class="toc-text">多表模型继承</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#代理模型"><span class="toc-number">12.3.</span> <span class="toc-text">代理模型</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Signals"><span class="toc-number">13.</span> <span class="toc-text">Signals</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Django-内置的信号"><span class="toc-number">13.1.</span> <span class="toc-text">Django 内置的信号</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#中间件"><span class="toc-number">14.</span> <span class="toc-text">中间件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#自定义中间件"><span class="toc-number">14.1.</span> <span class="toc-text">自定义中间件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Django-文件的上载"><span class="toc-number">14.2.</span> <span class="toc-text">Django 文件的上载</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#限制用户上传文件格式与大小"><span class="toc-number">15.</span> <span class="toc-text">限制用户上传文件格式与大小</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nginx-和-uWISG-服务器之间如何配合工作的"><span class="toc-number">16.</span> <span class="toc-text">nginx 和 uWISG 服务器之间如何配合工作的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Django项目如何实现高并发"><span class="toc-number">17.</span> <span class="toc-text">Django项目如何实现高并发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是wsgi-uwsgi-uWSGI"><span class="toc-number">18.</span> <span class="toc-text">什么是wsgi,uwsgi,uWSGI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#各种插件"><span class="toc-number">19.</span> <span class="toc-text">各种插件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#django生成model之间ER图"><span class="toc-number">19.1.</span> <span class="toc-text">django生成model之间ER图</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#ajax-csrf-cors"><span class="toc-number">1.</span> <span class="toc-text"> AJAX CSRF CORS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#csrf-protection"><span class="toc-number">1.1.</span> <span class="toc-text"> CSRF Protection</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#cors"><span class="toc-number">1.2.</span> <span class="toc-text"> CORS</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#django-restful"><span class="toc-number">2.</span> <span class="toc-text"> Django Restful</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#django-filter"><span class="toc-number">2.1.</span> <span class="toc-text"> Django Filter</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#orm的一些操作"><span class="toc-number">3.</span> <span class="toc-text"> ORM的一些操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#_set-操作"><span class="toc-number">3.1.</span> <span class="toc-text"> _set 操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#models中的抽象类"><span class="toc-number">3.2.</span> <span class="toc-text"> models中的抽象类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#select_related"><span class="toc-number">3.3.</span> <span class="toc-text"> select_related</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#prefetch_related"><span class="toc-number">3.4.</span> <span class="toc-text"> prefetch_related</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#select_related与prefetch_related-区别"><span class="toc-number">3.5.</span> <span class="toc-text"> select_related与prefetch_related 区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#select_for_update"><span class="toc-number">3.6.</span> <span class="toc-text"> select_for_update</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#通过外键相连"><span class="toc-number">3.7.</span> <span class="toc-text"> 通过外键相连</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#f-方法更新一个对象或多个对象的某个字段"><span class="toc-number">3.8.</span> <span class="toc-text"> F 方法更新一个对象或多个对象的某个字段</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#django-优缺点"><span class="toc-number">4.</span> <span class="toc-text"> django 优缺点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#缓存"><span class="toc-number">5.</span> <span class="toc-text"> 缓存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#request"><span class="toc-number">6.</span> <span class="toc-text"> Request</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#queryset-用法"><span class="toc-number">7.</span> <span class="toc-text"> QuerySet 用法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#权限管理"><span class="toc-number">8.</span> <span class="toc-text"> 权限管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#django-用户登录"><span class="toc-number">9.</span> <span class="toc-text"> Django 用户登录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#django常用装饰器"><span class="toc-number">10.</span> <span class="toc-text"> Django常用装饰器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#path与re_path的不同"><span class="toc-number">11.</span> <span class="toc-text"> Path与Re_path的不同</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#models的继承"><span class="toc-number">12.</span> <span class="toc-text"> Models的继承</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#abstract-model"><span class="toc-number">12.1.</span> <span class="toc-text"> abstract model</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#多表模型继承"><span class="toc-number">12.2.</span> <span class="toc-text"> 多表模型继承</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#代理模型"><span class="toc-number">12.3.</span> <span class="toc-text"> 代理模型</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#signals"><span class="toc-number">13.</span> <span class="toc-text"> Signals</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#django-内置的信号"><span class="toc-number">13.1.</span> <span class="toc-text"> Django 内置的信号</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#中间件"><span class="toc-number">14.</span> <span class="toc-text"> 中间件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#自定义中间件"><span class="toc-number">14.1.</span> <span class="toc-text"> 自定义中间件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#django-文件的上载"><span class="toc-number">14.2.</span> <span class="toc-text"> Django 文件的上载</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#限制用户上传文件格式与大小"><span class="toc-number">15.</span> <span class="toc-text"> 限制用户上传文件格式与大小</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nginx-和-uwisg-服务器之间如何配合工作的"><span class="toc-number">16.</span> <span class="toc-text"> nginx 和 uWISG 服务器之间如何配合工作的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#django项目如何实现高并发"><span class="toc-number">17.</span> <span class="toc-text"> Django项目如何实现高并发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是wsgiuwsgiuwsgi"><span class="toc-number">18.</span> <span class="toc-text"> 什么是wsgi,uwsgi,uWSGI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#各种插件"><span class="toc-number">19.</span> <span class="toc-text"> 各种插件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#django生成model之间er图"><span class="toc-number">19.1.</span> <span class="toc-text"> django生成model之间ER图</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
