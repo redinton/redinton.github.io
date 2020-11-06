@@ -146,6 +146,87 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-django_serializer" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/10/26/django_serializer/">django serializer</a>
+    </h1>
+  
+
+        
+        <a href="/2020/10/26/django_serializer/" class="archive-article-date">
+  	<time datetime="2020-10-26T03:08:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>DRF的serializer可以实现</p>
+<ul>
+<li>控制序列化后相应数据的格式</li>
+<li>在反序列化时对客户端传来的数据进行验证(validation)</li>
+<li>重写序列化器类自带的create 和 update</li>
+</ul>
+        
+          <a class="article-more-a" href="/2020/10/26/django_serializer/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">django</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/26/django_serializer/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-HMM" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -167,15 +248,20 @@
     <div class="article-entry" itemprop="articleBody">
       
         <img src="/2019/06/15/HMM/image-20201105224828123.png" title="image-20201105224828123">
-<h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>HMM是关于时序的概率模型，描述一个由隐藏的马尔科夫链随机生成不可观测的状态随机序列，再由各个状态生成一个可观测的观测随机序列。</p>
+<h4 id="定义"><a class="markdownIt-Anchor" href="#定义"></a> 定义</h4>
+<p>HMM是关于时序的概率模型，描述一个由隐藏的马尔科夫链随机生成不可观测的状态随机序列，再由各个状态生成一个可观测的观测随机序列。</p>
 <ul>
-<li><p>随机生成的状态序列 - state sequence</p>
+<li>
+<p>随机生成的状态序列 - state sequence</p>
 </li>
-<li><p>每个状态生成一个观测，由此产生的观测随机序列- 观测序列 (observation sequence)</p>
+<li>
+<p>每个状态生成一个观测，由此产生的观测随机序列- 观测序列 (observation sequence)</p>
 <ul>
-<li><p>前提假设，当前时刻的观测值只依赖于当前时刻的隐状态</p>
+<li>
+<p>前提假设，当前时刻的观测值只依赖于当前时刻的隐状态</p>
 <blockquote>
-<p>Hence we have assumed that the value for the random variable X_i depends only on<br>the value of Y_i. </p>
+<p>Hence we have assumed that the value for the random variable X_i depends only on<br>
+the value of Y_i.</p>
 </blockquote>
 </li>
 </ul>
@@ -264,9 +350,11 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="word2vec和fasttext对比"><a href="#word2vec和fasttext对比" class="headerlink" title="word2vec和fasttext对比"></a>word2vec和fasttext对比</h3><ul>
+        <h3 id="word2vec和fasttext对比"><a class="markdownIt-Anchor" href="#word2vec和fasttext对比"></a> word2vec和fasttext对比</h3>
+<ul>
 <li>fasttext会考虑subword(应对OOV)</li>
-<li>fasttext可进行有supervised learning for text classification<ul>
+<li>fasttext可进行有supervised learning for text classification
+<ul>
 <li>结构与CBOW类似</li>
 <li>采用hierarchical softmax对输出标签建立哈弗曼树，样本中标签多的类别对应更短的搜索路径</li>
 <li>N-gram，考虑词序特征</li>
@@ -446,10 +534,6 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">HMM</a>
               </li>
              
@@ -462,11 +546,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">text classification</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
               </li>
             
             <div class="clearfix"></div>
@@ -591,20 +683,5 @@ MathJax.Hub.Queue(function() {
 
 </div>
   </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

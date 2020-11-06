@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>mysql锁机制 | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="锁机制和事务控制Innodb提供行级锁，支持共享锁和排它锁两种锁定模式和四种不同的隔离级别.  表级锁 开销小，加锁快，不会出现死锁，锁定粒度大，发生锁冲突概率最高，并发度最低   行级锁 开销大，枷锁慢，会出现死锁，锁定粒度小，发生锁冲突概率最低，并发度最高   页面锁 开销和加锁时间界于表锁和行锁之间；会出现死锁；锁定粒度界于表锁和行锁之间，并发度一搬">
+  <meta name="description" content="锁机制和事务控制 Innodb提供行级锁，支持共享锁和排它锁两种锁定模式和四种不同的隔离级别.  表级锁  开销小，加锁快，不会出现死锁，锁定粒度大，发生锁冲突概率最高，并发度最低   行级锁  开销大，枷锁慢，会出现死锁，锁定粒度小，发生锁冲突概率最低，并发度最高   页面锁  开销和加锁时间界于表锁和行锁之间；会出现死锁；锁定粒度界于表锁和行锁之间，并发度一搬">
 <meta name="keywords" content="mysql">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql锁机制">
 <meta property="og:url" content="http://jasonyu.top/2020/11/06/mysql锁机制/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="锁机制和事务控制Innodb提供行级锁，支持共享锁和排它锁两种锁定模式和四种不同的隔离级别.  表级锁 开销小，加锁快，不会出现死锁，锁定粒度大，发生锁冲突概率最高，并发度最低   行级锁 开销大，枷锁慢，会出现死锁，锁定粒度小，发生锁冲突概率最低，并发度最高   页面锁 开销和加锁时间界于表锁和行锁之间；会出现死锁；锁定粒度界于表锁和行锁之间，并发度一搬">
+<meta property="og:description" content="锁机制和事务控制 Innodb提供行级锁，支持共享锁和排它锁两种锁定模式和四种不同的隔离级别.  表级锁  开销小，加锁快，不会出现死锁，锁定粒度大，发生锁冲突概率最高，并发度最低   行级锁  开销大，枷锁慢，会出现死锁，锁定粒度小，发生锁冲突概率最低，并发度最高   页面锁  开销和加锁时间界于表锁和行锁之间；会出现死锁；锁定粒度界于表锁和行锁之间，并发度一搬">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-06T03:20:25.628Z">
+<meta property="og:updated_time" content="2020-11-06T03:22:56.299Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql锁机制">
-<meta name="twitter:description" content="锁机制和事务控制Innodb提供行级锁，支持共享锁和排它锁两种锁定模式和四种不同的隔离级别.  表级锁 开销小，加锁快，不会出现死锁，锁定粒度大，发生锁冲突概率最高，并发度最低   行级锁 开销大，枷锁慢，会出现死锁，锁定粒度小，发生锁冲突概率最低，并发度最高   页面锁 开销和加锁时间界于表锁和行锁之间；会出现死锁；锁定粒度界于表锁和行锁之间，并发度一搬">
+<meta name="twitter:description" content="锁机制和事务控制 Innodb提供行级锁，支持共享锁和排它锁两种锁定模式和四种不同的隔离级别.  表级锁  开销小，加锁快，不会出现死锁，锁定粒度大，发生锁冲突概率最高，并发度最低   行级锁  开销大，枷锁慢，会出现死锁，锁定粒度小，发生锁冲突概率最低，并发度最高   页面锁  开销和加锁时间界于表锁和行锁之间；会出现死锁；锁定粒度界于表锁和行锁之间，并发度一搬">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -169,58 +169,76 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="锁机制和事务控制"><a href="#锁机制和事务控制" class="headerlink" title="锁机制和事务控制"></a>锁机制和事务控制</h3><p>Innodb提供行级锁，支持共享锁和排它锁两种锁定模式和四种不同的隔离级别.</p>
+        <h3 id="锁机制和事务控制"><a class="markdownIt-Anchor" href="#锁机制和事务控制"></a> 锁机制和事务控制</h3>
+<p>Innodb提供行级锁，支持共享锁和排它锁两种锁定模式和四种不同的隔离级别.</p>
 <ul>
-<li>表级锁<ul>
+<li>表级锁
+<ul>
 <li>开销小，加锁快，不会出现死锁，锁定粒度大，发生锁冲突概率最高，并发度最低</li>
 </ul>
 </li>
-<li>行级锁<ul>
+<li>行级锁
+<ul>
 <li>开销大，枷锁慢，会出现死锁，锁定粒度小，发生锁冲突概率最低，并发度最高</li>
 </ul>
 </li>
-<li>页面锁<ul>
-<li>开销和加锁时间界于表锁和行锁之间；会出现死锁；锁定粒度界于表锁和行锁之间，并发度一搬<a id="more"></a>
-应用</li>
+<li>页面锁
+<ul>
+<li>开销和加锁时间界于表锁和行锁之间；会出现死锁；锁定粒度界于表锁和行锁之间，并发度一搬</li>
 </ul>
 </li>
+</ul>
+<a id="more"></a>
+<p>应用</p>
+<ul>
 <li>表级锁更适合于以查询为主，只有<strong>少量按索引条件更新数据</strong>的应用，如Web 应用</li>
 <li>行级锁则更适合于有<strong>大量按索引条件并发更新少量不同</strong>数据，同时又有并发查询的应用，如一些在线事务处理（OLTP）系统</li>
 </ul>
-<h4 id="表级锁"><a href="#表级锁" class="headerlink" title="表级锁"></a>表级锁</h4><p>MyISAM只支持表锁，MySQL表级锁有两种模式</p>
+<h4 id="表级锁"><a class="markdownIt-Anchor" href="#表级锁"></a> 表级锁</h4>
+<p>MyISAM只支持表锁，MySQL表级锁有两种模式</p>
 <ul>
-<li>表共享读锁 table read lock<ul>
+<li>表共享读锁 table read lock
+<ul>
 <li>对MyISAM 表的读操作，<strong>不会阻塞其他用户对同一表的读</strong>请求，但<strong>会阻塞对同一表的写</strong>请求；</li>
 </ul>
 </li>
-<li>表独占写锁 table write lock<ul>
-<li>写操作，则会阻塞其他用户对同一表的读和写操作  </li>
+<li>表独占写锁 table write lock
+<ul>
+<li>写操作，则会阻塞其他用户对同一表的读和写操作</li>
 </ul>
 </li>
 </ul>
-<p>MyISAM 表的读操作与写操作之间，以及写操作之间是串行的！<br>一个线程获得对一个表的写锁后，只有持有锁的线程可以对表进行更新操作。其他线程的读、写操作都会等待，直到锁被释放为止。</p>
+<p>MyISAM 表的读操作与写操作之间，以及写操作之间是串行的！<br>
+一个线程获得对一个表的写锁后，只有持有锁的线程可以对表进行更新操作。其他线程的读、写操作都会等待，直到锁被释放为止。</p>
 <ul>
-<li>MyISAM锁调度<ul>
+<li>MyISAM锁调度
+<ul>
 <li>MyISAM 存储引擎的读锁和写锁是互斥的，读写操作是串行</li>
-<li>一个进程请求某个MyISAM 表的读锁，同时另一个进程也请求同一表的写锁<ul>
+<li>一个进程请求某个MyISAM 表的读锁，同时另一个进程也请求同一表的写锁
+<ul>
 <li>写进程先获得锁。不仅如此，即使读请求先到锁等待队列，写请求后到，写锁也会插到读锁请求之前。</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<h4 id="行级锁"><a href="#行级锁" class="headerlink" title="行级锁"></a>行级锁</h4><p>InnoDB采用行级锁。<br>脏读，不可以重复读，幻读都是数据库读一致性的问题，必须由数据库提供一定的事务隔离机制来解决。<br>数据库实现事务隔离方式</p>
+<h4 id="行级锁"><a class="markdownIt-Anchor" href="#行级锁"></a> 行级锁</h4>
+<p>InnoDB采用行级锁。<br>
+脏读，不可以重复读，幻读都是数据库读一致性的问题，必须由数据库提供一定的事务隔离机制来解决。<br>
+数据库实现事务隔离方式</p>
 <ul>
 <li>读取数据前，对其加锁，阻止其他事务对数据进行修改</li>
 <li>不加锁 通过一定机制生成一个数据请求时间点的<strong>一致性数据快照</strong>（Snapshot)，并用这个快照来提供一定级别（语句级或事务级）的一致性读取。从用户的角度来看，好象是数据库可以提供同一数据的多个版本，因此，这种技术叫做数据多版本并发控制(MultiVersion Concurrency Control，简称<strong>MVCC</strong> 或MCC），也经常称为多版本数据库</li>
 </ul>
 <p>两种类型的行锁</p>
 <ul>
-<li>共享锁(S)<ul>
+<li>共享锁(S)
+<ul>
 <li>允许一个事务读一行，阻止其他事务获得相同数据集的排他锁</li>
 </ul>
 </li>
-<li>排他锁(X)<ul>
+<li>排他锁(X)
+<ul>
 <li>允许获得排他锁的事务更新数据，阻止其他事务获得相同数据集的共享锁和排他写锁</li>
 </ul>
 </li>
@@ -233,22 +251,26 @@
 <p>另外，为了允许行锁和表锁共存，实现多粒度锁机制，InnoDB 还有两种内部使用的意向锁（Intention Locks），这两种意向锁都是表锁。</p>
 <ul>
 <li>意向共享锁（IS）：事务打算给数据行加行共享锁，事务在给一个数据行加共享锁前必须先取得该表的 IS 锁。</li>
-<li>意向排他锁（IX）：事务打算给数据行加行排他锁，事务在给一个数据行加排他锁前<br>必须先取得该表的 IX 锁。</li>
+<li>意向排他锁（IX）：事务打算给数据行加行排他锁，事务在给一个数据行加排他锁前<br>
+必须先取得该表的 IX 锁。</li>
 </ul>
 <p>意向锁是InnoDB 自动加的，不需用户干预。</p>
 <ul>
 <li>对于UPDATE、DELETE 和INSERT 语句，InnoDB会自动给涉及数据集加排他锁（X)；</li>
 <li>对于普通SELECT 语句，InnoDB 不会加任何锁；</li>
-<li>事务可以通过以下语句显示给记录集加共享锁或排他锁。<ul>
-<li>共享锁（S）：SELECT * FROM table_name WHERE … LOCK IN SHARE MODE。<ul>
+<li>事务可以通过以下语句显示给记录集加共享锁或排他锁。
+<ul>
+<li>共享锁（S）：SELECT * FROM table_name WHERE … LOCK IN SHARE MODE。</li>
 <li>排他锁（X)：SELECT * FROM table_name WHERE … FOR UPDATE。</li>
 </ul>
 </li>
 </ul>
-</li>
-</ul>
-<p>InnoDB行级锁的实现<br>通过给索引上的索引项加锁，Oracle是通过在数据块中对相应的数据行加锁实现。<br>只有<strong>通过索引条件检索数据，I</strong>nnoDB才使用行级锁，否则InnoDB使用表锁。</p>
-<h4 id="间隙锁-next-key-锁"><a href="#间隙锁-next-key-锁" class="headerlink" title="间隙锁 next-key 锁"></a>间隙锁 next-key 锁</h4><p>使用范围条件而非相等条件检索数据,并请求共享或排他锁时，InnoDB会给符合条件的记录的索引项加锁，同时，对键值在条件范围内但不存在的记录，叫做间隙GAP，也会加锁。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Select</span> * <span class="keyword">from</span> emp <span class="keyword">where</span> empid &gt; <span class="number">100</span> <span class="keyword">for</span> <span class="keyword">update</span>;</span><br></pre></td></tr></table></figure></p>
+<p>InnoDB行级锁的实现<br>
+通过给索引上的索引项加锁，Oracle是通过在数据块中对相应的数据行加锁实现。<br>
+只有<strong>通过索引条件检索数据，I</strong>nnoDB才使用行级锁，否则InnoDB使用表锁。</p>
+<h4 id="间隙锁-next-key-锁"><a class="markdownIt-Anchor" href="#间隙锁-next-key-锁"></a> 间隙锁 next-key 锁</h4>
+<p>使用范围条件而非相等条件检索数据,并请求共享或排他锁时，InnoDB会给符合条件的记录的索引项加锁，同时，对键值在条件范围内但不存在的记录，叫做间隙GAP，也会加锁。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Select</span> * <span class="keyword">from</span> emp <span class="keyword">where</span> empid &gt; <span class="number">100</span> <span class="keyword">for</span> <span class="keyword">update</span>;</span><br></pre></td></tr></table></figure>
 <p>表emp中只有id从1,2,…101.对empid大于101(不存在的记录)加锁。</p>
 <p>目的</p>
 <ul>
@@ -258,7 +280,8 @@
 <p>Innodb这种锁机制会阻塞符合条件范围内键值的并发插入，造成严重的锁等待。针对并发插入操作多的应用，尽量使用相同条件来访问更新数据，避免使用范围条件。</p>
 <p>InnoDB针对使用相同条件请求一个不存在的记录<strong>加锁</strong>，也会用间隙锁。&lt;这个就无关事务隔离级别了&gt;</p>
 <blockquote>
-<p>本来应该加行锁，变成加间隙锁<br>select * from emp where empid=201 for update;</p>
+<p>本来应该加行锁，变成加间隙锁<br>
+select * from emp where empid=201 for update;</p>
 </blockquote>
 
       
@@ -372,7 +395,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#锁机制和事务控制"><span class="toc-number">1.</span> <span class="toc-text">锁机制和事务控制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#表级锁"><span class="toc-number">1.1.</span> <span class="toc-text">表级锁</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#行级锁"><span class="toc-number">1.2.</span> <span class="toc-text">行级锁</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#间隙锁-next-key-锁"><span class="toc-number">1.3.</span> <span class="toc-text">间隙锁 next-key 锁</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#锁机制和事务控制"><span class="toc-number">1.</span> <span class="toc-text"> 锁机制和事务控制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#表级锁"><span class="toc-number">1.1.</span> <span class="toc-text"> 表级锁</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#行级锁"><span class="toc-number">1.2.</span> <span class="toc-text"> 行级锁</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#间隙锁-next-key-锁"><span class="toc-number">1.3.</span> <span class="toc-text"> 间隙锁 next-key 锁</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -521,10 +544,6 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">HMM</a>
               </li>
              
@@ -537,11 +556,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">text classification</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
               </li>
             
             <div class="clearfix"></div>
@@ -666,20 +693,5 @@ MathJax.Hub.Queue(function() {
 
 </div>
   </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

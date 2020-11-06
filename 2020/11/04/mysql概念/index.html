@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>mysql概念 | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="mysql 的引擎mysql的存储方式由引擎决定，常用的有Innodb和MySiam。  不同的引擎区别在于如何存储和索引数据，是否使用事务">
+  <meta name="description" content="mysql 的引擎 mysql的存储方式由引擎决定，常用的有Innodb和MySiam。  不同的引擎区别在于如何存储和索引数据，是否使用事务">
 <meta name="keywords" content="mysql">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql概念">
 <meta property="og:url" content="http://jasonyu.top/2020/11/04/mysql概念/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="mysql 的引擎mysql的存储方式由引擎决定，常用的有Innodb和MySiam。  不同的引擎区别在于如何存储和索引数据，是否使用事务">
+<meta property="og:description" content="mysql 的引擎 mysql的存储方式由引擎决定，常用的有Innodb和MySiam。  不同的引擎区别在于如何存储和索引数据，是否使用事务">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-06T03:20:25.625Z">
+<meta property="og:updated_time" content="2020-11-06T03:22:56.295Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql概念">
-<meta name="twitter:description" content="mysql 的引擎mysql的存储方式由引擎决定，常用的有Innodb和MySiam。  不同的引擎区别在于如何存储和索引数据，是否使用事务">
+<meta name="twitter:description" content="mysql 的引擎 mysql的存储方式由引擎决定，常用的有Innodb和MySiam。  不同的引擎区别在于如何存储和索引数据，是否使用事务">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -169,20 +169,29 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="mysql-的引擎"><a href="#mysql-的引擎" class="headerlink" title="mysql 的引擎"></a>mysql 的引擎</h3><p>mysql的存储方式由引擎决定，常用的有Innodb和MySiam。</p>
+        <h3 id="mysql-的引擎"><a class="markdownIt-Anchor" href="#mysql-的引擎"></a> mysql 的引擎</h3>
+<p>mysql的存储方式由引擎决定，常用的有Innodb和MySiam。</p>
 <ul>
-<li>不同的引擎区别在于如何存储和索引数据，是否使用事务<a id="more"></a>
-<h4 id="MySiam"><a href="#MySiam" class="headerlink" title="MySiam"></a>MySiam</h4></li>
-<li>MySiAM不支持事务，不支持外键，强调的是性能，执行速度比Innodb要快<ul>
+<li>不同的引擎区别在于如何存储和索引数据，是否使用事务</li>
+</ul>
+<a id="more"></a>
+<h4 id="mysiam"><a class="markdownIt-Anchor" href="#mysiam"></a> MySiam</h4>
+<ul>
+<li>MySiAM不支持事务，不支持外键，强调的是性能，执行速度比Innodb要快
+<ul>
 <li>适用于<strong>对事务完整性没有要求，或者以select，insert为主的应用，可以用这个引擎建表</strong></li>
 </ul>
 </li>
 </ul>
-<h4 id="Innodb"><a href="#Innodb" class="headerlink" title="Innodb"></a>Innodb</h4><ul>
+<h4 id="innodb"><a class="markdownIt-Anchor" href="#innodb"></a> Innodb</h4>
+<ul>
 <li>Innodb提供支持事务等高级数据库功能。</li>
-<li>适用于并发条件下要求数据的一致性，数据操作有较多的update和delete<ul>
-<li>MySQL支持外键的engine只有Innodb,创建外键的时候,父表必须有对应的索引，子表在创建外键的时候，也会自动创建对应的索引<ul>
-<li>在设定外键时支持多个模式，即在删除或更新父表的时候，对子表进行相应操作<ul>
+<li>适用于并发条件下要求数据的一致性，数据操作有较多的update和delete
+<ul>
+<li>MySQL支持外键的engine只有Innodb,创建外键的时候,父表必须有对应的索引，子表在创建外键的时候，也会自动创建对应的索引
+<ul>
+<li>在设定外键时支持多个模式，即在删除或更新父表的时候，对子表进行相应操作
+<ul>
 <li>restrict. no action 限制在子表有关联记录的情况下，父表不能更新</li>
 <li>cascade 父表在更新或删除时，更新或删除子表对应的记录</li>
 <li>set null 父表在更新或删除时，子表对应字段被set null</li>
@@ -190,13 +199,16 @@
 </li>
 </ul>
 </li>
-<li>存储方式— 存储表和索引有两种方式<ul>
-<li>共享表空间存储<ul>
+<li>存储方式-- 存储表和索引有两种方式
+<ul>
+<li>共享表空间存储
+<ul>
 <li>表结构保存在.frm 文件中</li>
 <li>数据和索引保存在innodb_data_home_dir和innodb_data_file_path 定义的表空间中，可以是多个文件</li>
 </ul>
 </li>
-<li>多表空间存储<ul>
+<li>多表空间存储
+<ul>
 <li>表结构保存在.frm 文件中</li>
 <li>每个表的数据和索引单独保存在.ibd中</li>
 <li>如果是个分区表，则每个分区对应单独的.ibd文件，文件名是“表名+分区名”，可以在创建分区的时候指定每个分区的数据文件的位置，以此来将表的IO 均匀分布在多个磁盘</li>
@@ -207,20 +219,26 @@
 </ul>
 </li>
 </ul>
-<h3 id="选择合适的数据类型"><a href="#选择合适的数据类型" class="headerlink" title="选择合适的数据类型"></a>选择合适的数据类型</h3><p>首先选择合适的存储引擎，根据指定的存储引擎确定合适的数据类型。</p>
-<h4 id="char-和-varchar"><a href="#char-和-varchar" class="headerlink" title="char 和 varchar"></a>char 和 varchar</h4><ul>
+<h3 id="选择合适的数据类型"><a class="markdownIt-Anchor" href="#选择合适的数据类型"></a> 选择合适的数据类型</h3>
+<p>首先选择合适的存储引擎，根据指定的存储引擎确定合适的数据类型。</p>
+<h4 id="char-和-varchar"><a class="markdownIt-Anchor" href="#char-和-varchar"></a> char 和 varchar</h4>
+<ul>
 <li>MyISAM: 最好使用固定长度的数据列代替可变长度的数据列。</li>
-<li>InnoDB: 建议使用varchar<ul>
+<li>InnoDB: 建议使用varchar
+<ul>
 <li>没有区分固定长度和可变长度列（所有数据行都使用指向数据列值的头指针）用固定长度的CHAR 列不一定比使用可变长度VARCHAR 列性能要好。因而，主要的性能因素是数据行使用的存储总量。由于CHAR 平均占用的空间多于VARCHAR，因此使用VARCHAR 来最小化需要处理的数据行的存储总量和磁盘I/O 是比较好的</li>
 </ul>
 </li>
 </ul>
-<h4 id="浮点数float和定点数decimal"><a href="#浮点数float和定点数decimal" class="headerlink" title="浮点数float和定点数decimal"></a>浮点数float和定点数decimal</h4><ul>
-<li>浮点数<ul>
+<h4 id="浮点数float和定点数decimal"><a class="markdownIt-Anchor" href="#浮点数float和定点数decimal"></a> 浮点数float和定点数decimal</h4>
+<ul>
+<li>浮点数
+<ul>
 <li>字段定义成float,插入数据精度超过该列定义的实际精度，插入值会被四舍五入到实际定义的精度值</li>
 </ul>
 </li>
-<li>定点数<ul>
+<li>定点数
+<ul>
 <li>实际以字符串形式存放，可以更加精确保存数据。 如果插入数据精度超过该列定义的实际精度,取决于SQLMode,若是traditional就会直接报错，导致数据无法插入</li>
 </ul>
 </li>
@@ -230,9 +248,12 @@
 <li>如插入131072.32，数据库中存131072.31</li>
 <li>浮点数的比较 7.22-7.0=0.21999979</li>
 </ul>
-<p>精度要求比较高的应用中（比如货币）要使<strong>用定点数而不是浮点数</strong>来保存数据<br>编程中应尽量避免浮点数的比较，如果非要使用浮点数比较则最好使用范围比较而不要使用“==</p>
-<h3 id="字符集"><a href="#字符集" class="headerlink" title="字符集"></a>字符集</h3><p>创建数据库使用utf8，CREATE DATABASE IF NOT EXISTS my_db default charset utf8 COLLATE utf8_general_ci</p>
-<h3 id="mysql-与mongodb-区别"><a href="#mysql-与mongodb-区别" class="headerlink" title="mysql 与mongodb 区别"></a>mysql 与mongodb 区别</h3><p>mysql 关系型，mongodb非关系型</p>
+<p>精度要求比较高的应用中（比如货币）要使<strong>用定点数而不是浮点数</strong>来保存数据<br>
+编程中应尽量避免浮点数的比较，如果非要使用浮点数比较则最好使用范围比较而不要使用“==</p>
+<h3 id="字符集"><a class="markdownIt-Anchor" href="#字符集"></a> 字符集</h3>
+<p>创建数据库使用utf8，CREATE DATABASE IF NOT EXISTS my_db default charset utf8 COLLATE utf8_general_ci</p>
+<h3 id="mysql-与mongodb-区别"><a class="markdownIt-Anchor" href="#mysql-与mongodb-区别"></a> mysql 与mongodb 区别</h3>
+<p>mysql 关系型，mongodb非关系型</p>
 <p>关系型 mysql, sql server, postgre sql</p>
 <ul>
 <li>关系型数据库相对安全，因为存在硬盘</li>
@@ -240,8 +261,9 @@
 <p>非关系型 mongodb, redis, Memcached HBase</p>
 <ul>
 <li>Mongo的存储方式为虚拟内存+持久化存储，Mongo将数据写入内存中，再由虚拟内存管理器将其持久化到硬盘中，因此写操作会比关系型数据库快很多。不支持事务，也不能进行联表查询，一般用于较大规模数据的存储。</li>
-<li>什么时候适合<ul>
-<li>日志系统 — 系统运行产生的日志 一般种类多，范围大 内容杂乱</li>
+<li>什么时候适合
+<ul>
+<li>日志系统 – 系统运行产生的日志 一般种类多，范围大 内容杂乱</li>
 <li>地理位置存储</li>
 <li>数据规模增长很快 - mongo 分库分操作简单</li>
 <li>保证高可用</li>
@@ -250,33 +272,44 @@
 </li>
 </ul>
 
-<h5 id="建立索引"><a href="#建立索引" class="headerlink" title="建立索引"></a>建立索引</h5><ol>
-<li><p>可以建立前缀索引 来减少索引的占用空间</p>
+<h5 id="建立索引"><a class="markdownIt-Anchor" href="#建立索引"></a> 建立索引</h5>
+<ol>
+<li>
+<p>可以建立前缀索引 来减少索引的占用空间</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">index</span> idx_student_name_1 <span class="keyword">on</span> tb_student(stuname(<span class="number">1</span>));</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>最适合索引的列 -<strong>- where中的 以及 连接字句中的列</strong></p>
+<li>
+<p>最适合索引的列 -<strong>- where中的 以及 连接字句中的列</strong></p>
 </li>
-<li><p>索引并非越多越好，加速了查操作，但是写操作变得很慢</p>
+<li>
+<p>索引并非越多越好，加速了查操作，但是写操作变得很慢</p>
 </li>
-<li><p>InnoDB存储引擎，表的普通索引都会保存主键的值，主键要尽可能较短的数据类型，有效减少索引占用空间</p>
+<li>
+<p>InnoDB存储引擎，表的普通索引都会保存主键的值，主键要尽可能较短的数据类型，有效减少索引占用空间</p>
 </li>
-<li><p>InnoDB用的B-tree索引，数值类型的列在等值判断, &gt;,&lt;, &gt;=,&lt;=,between.. and &lt;&gt;时，索引生效</p>
+<li>
+<p>InnoDB用的B-tree索引，数值类型的列在等值判断, &gt;,&lt;, &gt;=,&lt;=,between… and &lt;&gt;时，索引生效</p>
 <ol>
 <li>字符串类型的列，如果不是通配符开头的模糊查询，索引也是起作用的</li>
 <li>索引失效，意味着做全表查询</li>
 </ol>
 </li>
 </ol>
-<h3 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h3><p>视图是关系型数据库中将一组查询指令构成的结果集组合成可查询的数据表的对象。简单的说，视图就是虚拟的表，但与数据表不同的是，数据表是一种实体结构，而视图是一种虚拟结构，你也可以将视图理解为保存在数据库中被赋予名字的SQL语句。</p>
-<h4 id="MySQL-Blob类型"><a href="#MySQL-Blob类型" class="headerlink" title="MySQL Blob类型"></a>MySQL Blob类型</h4><ul>
-<li><p>BLOB是一个大型二进制对象, 可存储大量数据的容器</p>
+<h3 id="视图"><a class="markdownIt-Anchor" href="#视图"></a> 视图</h3>
+<p>视图是关系型数据库中将一组查询指令构成的结果集组合成可查询的数据表的对象。简单的说，视图就是虚拟的表，但与数据表不同的是，数据表是一种实体结构，而视图是一种虚拟结构，你也可以将视图理解为保存在数据库中被赋予名字的SQL语句。</p>
+<h4 id="mysql-blob类型"><a class="markdownIt-Anchor" href="#mysql-blob类型"></a> MySQL Blob类型</h4>
+<ul>
+<li>
+<p>BLOB是一个大型二进制对象, 可存储大量数据的容器</p>
 </li>
-<li><p>插入BLOB类型的数据必须使用preparedStatement, 因为BLOB类型的数据无法使用字符串拼接</p>
+<li>
+<p>插入BLOB类型的数据必须使用preparedStatement, 因为BLOB类型的数据无法使用字符串拼接</p>
 </li>
-<li><p>如果存储的文件过大, 数据库的性能会下降</p>
+<li>
+<p>如果存储的文件过大, 数据库的性能会下降</p>
 <ul>
 <li>TinyBlob - 最大 255 byte</li>
-<li>Blob — 最大 65 K</li>
+<li>Blob – 最大 65 K</li>
 <li>MediumBlob 最大 16 M</li>
 <li>LongBlob 最大 4G</li>
 </ul>
@@ -403,7 +436,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#mysql-的引擎"><span class="toc-number">1.</span> <span class="toc-text">mysql 的引擎</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#MySiam"><span class="toc-number">1.1.</span> <span class="toc-text">MySiam</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Innodb"><span class="toc-number">1.2.</span> <span class="toc-text">Innodb</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#选择合适的数据类型"><span class="toc-number">2.</span> <span class="toc-text">选择合适的数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#char-和-varchar"><span class="toc-number">2.1.</span> <span class="toc-text">char 和 varchar</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#浮点数float和定点数decimal"><span class="toc-number">2.2.</span> <span class="toc-text">浮点数float和定点数decimal</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符集"><span class="toc-number">3.</span> <span class="toc-text">字符集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mysql-与mongodb-区别"><span class="toc-number">4.</span> <span class="toc-text">mysql 与mongodb 区别</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#建立索引"><span class="toc-number">4.0.1.</span> <span class="toc-text">建立索引</span></a></li></ol></li></ol><li class="toc-item toc-level-3"><a class="toc-link" href="#视图"><span class="toc-number">5.</span> <span class="toc-text">视图</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#MySQL-Blob类型"><span class="toc-number">5.1.</span> <span class="toc-text">MySQL Blob类型</span></a></li></ol></li>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#mysql-的引擎"><span class="toc-number">1.</span> <span class="toc-text"> mysql 的引擎</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#mysiam"><span class="toc-number">1.1.</span> <span class="toc-text"> MySiam</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#innodb"><span class="toc-number">1.2.</span> <span class="toc-text"> Innodb</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#选择合适的数据类型"><span class="toc-number">2.</span> <span class="toc-text"> 选择合适的数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#char-和-varchar"><span class="toc-number">2.1.</span> <span class="toc-text"> char 和 varchar</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#浮点数float和定点数decimal"><span class="toc-number">2.2.</span> <span class="toc-text"> 浮点数float和定点数decimal</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符集"><span class="toc-number">3.</span> <span class="toc-text"> 字符集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mysql-与mongodb-区别"><span class="toc-number">4.</span> <span class="toc-text"> mysql 与mongodb 区别</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#建立索引"><span class="toc-number">4.0.1.</span> <span class="toc-text"> 建立索引</span></a></li></ol></li></ol><li class="toc-item toc-level-3"><a class="toc-link" href="#视图"><span class="toc-number">5.</span> <span class="toc-text"> 视图</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#mysql-blob类型"><span class="toc-number">5.1.</span> <span class="toc-text"> MySQL Blob类型</span></a></li></ol></li>
                     </div>
                 </span>
             </div>
@@ -552,10 +585,6 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">HMM</a>
               </li>
              
@@ -568,11 +597,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">text classification</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
               </li>
             
             <div class="clearfix"></div>
@@ -697,20 +734,5 @@ MathJax.Hub.Queue(function() {
 
 </div>
   </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
