@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>SQL语法 | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="常用SQL语句  查询table的主键">
+  <meta name="description" content="常用SQL语句查询table的主键">
 <meta name="keywords" content="mysql">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SQL语法">
 <meta property="og:url" content="http://jasonyu.top/2020/11/05/mysql_sql_1/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="常用SQL语句  查询table的主键">
+<meta property="og:description" content="常用SQL语句查询table的主键">
 <meta property="og:locale" content="default">
 <meta property="og:updated_time" content="2020-11-06T03:22:56.287Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SQL语法">
-<meta name="twitter:description" content="常用SQL语句  查询table的主键">
+<meta name="twitter:description" content="常用SQL语句查询table的主键">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -169,18 +169,13 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="常用sql语句"><a class="markdownIt-Anchor" href="#常用sql语句"></a> 常用SQL语句</h4>
-<h5 id="查询table的主键"><a class="markdownIt-Anchor" href="#查询table的主键"></a> 查询table的主键</h5>
-<a id="more"></a>
+        <h4 id="常用SQL语句"><a href="#常用SQL语句" class="headerlink" title="常用SQL语句"></a>常用SQL语句</h4><h5 id="查询table的主键"><a href="#查询table的主键" class="headerlink" title="查询table的主键"></a>查询table的主键</h5><a id="more"></a>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> column_name</span><br><span class="line"><span class="keyword">FROM</span> INFORMATION_SCHEMA.<span class="string">`KEY_COLUMN_USAGE`</span> </span><br><span class="line"><span class="keyword">WHERE</span> table_name=<span class="string">'表名'</span> </span><br><span class="line"><span class="keyword">AND</span> CONSTRAINT_SCHEMA=<span class="string">'数据库名称'</span></span><br><span class="line"><span class="keyword">AND</span> constraint_name=<span class="string">'PRIMARY'</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> column_name </span><br><span class="line"><span class="keyword">FROM</span> INFORMATION_SCHEMA.<span class="string">`KEY_COLUMN_USAGE`</span>  </span><br><span class="line"><span class="keyword">WHERE</span> table_name=<span class="string">'keliuliang_daily'</span>  </span><br><span class="line"><span class="keyword">AND</span> CONSTRAINT_SCHEMA=<span class="string">'hexindao_ods'</span> </span><br><span class="line"><span class="keyword">AND</span> constraint_name=<span class="string">'PRIMARY'</span>;</span><br></pre></td></tr></table></figure>
-<h5 id="生成复合主键"><a class="markdownIt-Anchor" href="#生成复合主键"></a> 生成复合主键</h5>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> table_name <span class="keyword">ADD</span> PRIMARY <span class="keyword">KEY</span>(字段A，字段B，字段C)；</span><br></pre></td></tr></table></figure>
+<h5 id="生成复合主键"><a href="#生成复合主键" class="headerlink" title="生成复合主键"></a>生成复合主键</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> table_name <span class="keyword">ADD</span> PRIMARY <span class="keyword">KEY</span>(字段A，字段B，字段C)；</span><br></pre></td></tr></table></figure>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> keliuliang_daily <span class="keyword">ADD</span> PRIMARY <span class="keyword">KEY</span>(<span class="string">'dpcode'</span>, <span class="string">'curr_date'</span>)；</span><br></pre></td></tr></table></figure>
-<h5 id="插入语句应对重复情况"><a class="markdownIt-Anchor" href="#插入语句应对重复情况"></a> 插入语句应对重复情况</h5>
-<ul>
-<li>方法一
-<ul>
+<h5 id="插入语句应对重复情况"><a href="#插入语句应对重复情况" class="headerlink" title="插入语句应对重复情况"></a>插入语句应对重复情况</h5><ul>
+<li>方法一<ul>
 <li>不冲突时，相当于insert，其余列默认值</li>
 <li>当与主键冲突时，只updae对应的字段</li>
 </ul>
@@ -188,18 +183,15 @@
 </ul>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> 表名 (列名<span class="number">1</span>,列名<span class="number">2</span>) <span class="keyword">values</span>(值<span class="number">1</span>,值<span class="number">2</span>) <span class="keyword">on</span> <span class="keyword">duplicate</span> <span class="keyword">key</span> <span class="keyword">update</span> ...</span><br></pre></td></tr></table></figure>
 <ul>
-<li>方法二
-<ul>
+<li>方法二<ul>
 <li>不冲突时，相当于insert, 其余列默认值</li>
 <li>主键冲突时，会先delete原来的记录，然后做 insert， 未指定的列用默认值， 会导致自增主键发生变化</li>
 </ul>
 </li>
 </ul>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">replace</span> <span class="keyword">into</span> 表名 (列名) <span class="keyword">values</span> (值)</span><br></pre></td></tr></table></figure>
-<h5 id="基本操作语句"><a class="markdownIt-Anchor" href="#基本操作语句"></a> 基本操作语句</h5>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">databases</span>;</span><br><span class="line"><span class="keyword">create</span> databse <span class="keyword">test</span>; / <span class="keyword">drop</span> <span class="keyword">database</span> <span class="keyword">test</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="keyword">test</span>; </span><br><span class="line"><span class="keyword">show</span> <span class="keyword">tables</span>;</span><br><span class="line">desc students; / 查看表结构</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> students; / <span class="keyword">drop</span> <span class="keyword">table</span> students;</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> students <span class="keyword">add</span> <span class="keyword">column</span> birth  <span class="built_in">VARCHAR</span>(<span class="number">10</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>;</span><br></pre></td></tr></table></figure>
-<h5 id="实用操作语句"><a class="markdownIt-Anchor" href="#实用操作语句"></a> 实用操作语句</h5>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO students (id, class_id, name, gender, score) VALUES (1, 1, &apos;小明&apos;, &apos;F&apos;, 99) ON DUPLICATE KEY UPDATE name=&apos;小明&apos;, gender=&apos;F&apos;, score=99;</span><br><span class="line">insert into .. on duplicate key update ... ; // 插入如果有重复就更新</span><br><span class="line"></span><br><span class="line">INSERT IGNORE INTO students (id, class_id, name, gender, score) VALUES (1, 1, &apos;小明&apos;, &apos;F&apos;, 99);</span><br><span class="line">insert ignore into...; //插入如果有重复就忽略</span><br></pre></td></tr></table></figure>
+<h5 id="基本操作语句"><a href="#基本操作语句" class="headerlink" title="基本操作语句"></a>基本操作语句</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">databases</span>;</span><br><span class="line"><span class="keyword">create</span> databse <span class="keyword">test</span>; / <span class="keyword">drop</span> <span class="keyword">database</span> <span class="keyword">test</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="keyword">test</span>; </span><br><span class="line"><span class="keyword">show</span> <span class="keyword">tables</span>;</span><br><span class="line">desc students; / 查看表结构</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> students; / <span class="keyword">drop</span> <span class="keyword">table</span> students;</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> students <span class="keyword">add</span> <span class="keyword">column</span> birth  <span class="built_in">VARCHAR</span>(<span class="number">10</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>;</span><br></pre></td></tr></table></figure>
+<h5 id="实用操作语句"><a href="#实用操作语句" class="headerlink" title="实用操作语句"></a>实用操作语句</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO students (id, class_id, name, gender, score) VALUES (1, 1, &apos;小明&apos;, &apos;F&apos;, 99) ON DUPLICATE KEY UPDATE name=&apos;小明&apos;, gender=&apos;F&apos;, score=99;</span><br><span class="line">insert into .. on duplicate key update ... ; // 插入如果有重复就更新</span><br><span class="line"></span><br><span class="line">INSERT IGNORE INTO students (id, class_id, name, gender, score) VALUES (1, 1, &apos;小明&apos;, &apos;F&apos;, 99);</span><br><span class="line">insert ignore into...; //插入如果有重复就忽略</span><br></pre></td></tr></table></figure>
       
 
       
@@ -320,7 +312,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#常用sql语句"><span class="toc-number">1.</span> <span class="toc-text"> 常用SQL语句</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#查询table的主键"><span class="toc-number">1.1.</span> <span class="toc-text"> 查询table的主键</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#生成复合主键"><span class="toc-number">1.2.</span> <span class="toc-text"> 生成复合主键</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#插入语句应对重复情况"><span class="toc-number">1.3.</span> <span class="toc-text"> 插入语句应对重复情况</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#基本操作语句"><span class="toc-number">1.4.</span> <span class="toc-text"> 基本操作语句</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#实用操作语句"><span class="toc-number">1.5.</span> <span class="toc-text"> 实用操作语句</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#常用SQL语句"><span class="toc-number">1.</span> <span class="toc-text">常用SQL语句</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#查询table的主键"><span class="toc-number">1.1.</span> <span class="toc-text">查询table的主键</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#生成复合主键"><span class="toc-number">1.2.</span> <span class="toc-text">生成复合主键</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#插入语句应对重复情况"><span class="toc-number">1.3.</span> <span class="toc-text">插入语句应对重复情况</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#基本操作语句"><span class="toc-number">1.4.</span> <span class="toc-text">基本操作语句</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#实用操作语句"><span class="toc-number">1.5.</span> <span class="toc-text">实用操作语句</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -469,6 +461,14 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">HMM</a>
               </li>
              
@@ -481,15 +481,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">text classification</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -618,5 +614,20 @@ MathJax.Hub.Queue(function() {
 
 </div>
   </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
