@@ -169,7 +169,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="Django-unit-test"><a href="#Django-unit-test" class="headerlink" title="Django unit test"></a>Django unit test</h3><a id="more"></a>
+        <h3 id="django-unit-test"><a class="markdownIt-Anchor" href="#django-unit-test"></a> Django unit test</h3>
+<a id="more"></a>
 
 <ul>
 <li>SimpleTestCase</li>
@@ -179,18 +180,22 @@
 <li>TransactionTestCase</li>
 <li>TestCase</li>
 </ul>
-<p>class-wide initialization </p>
+<p>class-wide initialization</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyTestCase</span><span class="params">(TestCase)</span>:</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @classmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">setUpClass</span><span class="params">(cls)</span>:</span></span><br><span class="line">        super().setUpClass()</span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line"><span class="meta">    @classmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">tearDownClass</span><span class="params">(cls)</span>:</span></span><br><span class="line">        ...</span><br><span class="line">        super().tearDownClass()</span><br></pre></td></tr></table></figure>
-<h4 id="setUp-self-和-setUpClass-cls-区别"><a href="#setUp-self-和-setUpClass-cls-区别" class="headerlink" title="setUp(self) 和 setUpClass(cls) 区别"></a>setUp(self) 和 setUpClass(cls) 区别</h4><ul>
-<li>setUpClass(cls) 是类方法<ul>
+<h4 id="setupself-和-setupclasscls-区别"><a class="markdownIt-Anchor" href="#setupself-和-setupclasscls-区别"></a> setUp(self) 和 setUpClass(cls) 区别</h4>
+<ul>
+<li>setUpClass(cls) 是类方法
+<ul>
 <li>初始化的数据是整个class share</li>
 </ul>
 </li>
-<li>setUp(self) 是实例方法<ul>
+<li>setUp(self) 是实例方法
+<ul>
 <li>每次run一个新的test method 会重新初始化一下，</li>
 </ul>
 </li>
-<li>setUpTestData(cls)<ul>
+<li>setUpTestData(cls)
+<ul>
 <li>是通过setUpClass() 和 tearDownclass()共同实现的</li>
 <li>生成的data 持续整个testcase</li>
 </ul>
@@ -199,13 +204,16 @@
 <p>通过setUpClass(cls) 初始化的结果属于整个类share，那么就可能存在被一个test method修改了以后 那么setUpClass中的数据就变了，因此引入了 refresh_from_db</p>
 <p><a href="https://makina-corpus.com/blog/metier/2015/how-to-optimize-django-unit-tests-with-setuptestdata" target="_blank" rel="noopener">参考</a></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PersonTest</span><span class="params">(TestCase)</span>:</span></span><br><span class="line"><span class="meta">    @classmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">setUpTestData</span><span class="params">(cls)</span>:</span></span><br><span class="line">        cls.alice = Person.objects.create(first_name=<span class="string">'Alice'</span>, last_name=<span class="string">'Smith'</span>)</span><br><span class="line">        cls.bob = Person.objects.create(first_name=<span class="string">'Bob'</span>, last_name=<span class="string">'Smith'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">setUp</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.alice.refresh_from_db()</span><br><span class="line">        self.bob.refresh_from_db()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_alice_first_name</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.assertEqual(self.alice.first_name, <span class="string">'Alice'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_bob_first_name</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.assertEqual(self.bob.first_name, <span class="string">'Bob'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_bob_first_name_modified</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.bob.first_name = <span class="string">'Jack'</span></span><br><span class="line">        self.bob.save()</span><br><span class="line">        self.assertEqual(self.bob.first_name, <span class="string">'Jack'</span>)</span><br></pre></td></tr></table></figure>
-<h4 id="运行方式"><a href="#运行方式" class="headerlink" title="运行方式"></a>运行方式</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
-<h3 id="Pytest"><a href="#Pytest" class="headerlink" title="Pytest"></a>Pytest</h3><h4 id="类Xunit"><a href="#类Xunit" class="headerlink" title="类Xunit"></a>类Xunit</h4><p><a href="https://docs.pytest.org/en/stable/xunit_setup.html" target="_blank" rel="noopener">reference</a></p>
+<h4 id="运行方式"><a class="markdownIt-Anchor" href="#运行方式"></a> 运行方式</h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+<h3 id="pytest"><a class="markdownIt-Anchor" href="#pytest"></a> Pytest</h3>
+<h4 id="类xunit"><a class="markdownIt-Anchor" href="#类xunit"></a> 类Xunit</h4>
+<p><a href="https://docs.pytest.org/en/stable/xunit_setup.html" target="_blank" rel="noopener">reference</a></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Method and function level setup/teardown</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">setup_method</span><span class="params">(self, method)</span>:</span></span><br><span class="line">    <span class="string">""" setup any state tied to the execution of the given method in a</span></span><br><span class="line"><span class="string">    class.  setup_method is invoked for every test method of a class.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">teardown_method</span><span class="params">(self, method)</span>:</span></span><br><span class="line">    <span class="string">""" teardown any state that was previously setup with a setup_method</span></span><br><span class="line"><span class="string">    call.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## Class level setup/teardown</span></span><br><span class="line"><span class="meta">@classmethod</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">setup_class</span><span class="params">(cls)</span>:</span></span><br><span class="line">    <span class="string">""" setup any state specific to the execution of the given class (which</span></span><br><span class="line"><span class="string">    usually contains tests).</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@classmethod</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">teardown_class</span><span class="params">(cls)</span>:</span></span><br><span class="line">    <span class="string">""" teardown any state that was previously setup with a call to</span></span><br><span class="line"><span class="string">    setup_class.</span></span><br><span class="line"><span class="string">    """</span></span><br></pre></td></tr></table></figure>
 <p>弊端: class level 的setup/teardown中不能做一些db 相关的操作，pytest-django 实现的django_db 也不work， 而db是function级别的fixture，底层也是用到了TestCase的pre_set_up 和 post_tear_down.</p>
 <p>django自带的test的好处在于class 级别 的setup和teardown 资源可以重复利用，不用function级别的操作</p>
 <p>q1： 在测试某个接口的时候，可否用到其他的接口，比如场景，先创建用户，然后创建数据集，然后上传图片，然后针对图片做一些操作，</p>
-<p>q2: 涉及到一些异步操作的接口， 怎么测试 比如 </p>
+<p>q2: 涉及到一些异步操作的接口， 怎么测试 比如</p>
 
       
 
@@ -327,7 +335,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Django-unit-test"><span class="toc-number">1.</span> <span class="toc-text">Django unit test</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#setUp-self-和-setUpClass-cls-区别"><span class="toc-number">1.1.</span> <span class="toc-text">setUp(self) 和 setUpClass(cls) 区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#运行方式"><span class="toc-number">1.2.</span> <span class="toc-text">运行方式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pytest"><span class="toc-number">2.</span> <span class="toc-text">Pytest</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#类Xunit"><span class="toc-number">2.1.</span> <span class="toc-text">类Xunit</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#django-unit-test"><span class="toc-number">1.</span> <span class="toc-text"> Django unit test</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#setupself-和-setupclasscls-区别"><span class="toc-number">1.1.</span> <span class="toc-text"> setUp(self) 和 setUpClass(cls) 区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#运行方式"><span class="toc-number">1.2.</span> <span class="toc-text"> 运行方式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pytest"><span class="toc-number">2.</span> <span class="toc-text"> Pytest</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#类xunit"><span class="toc-number">2.1.</span> <span class="toc-text"> 类Xunit</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -476,14 +484,6 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">HMM</a>
               </li>
              
@@ -493,6 +493,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">NER</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
               <li class="article-tag-list-item">

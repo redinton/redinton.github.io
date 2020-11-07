@@ -146,102 +146,6 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-mq" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>消息队列</p>
-<p>对实时一致性要求没那么高的请求，通过MQ异步的方式处理</p>
-<h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><ul>
-<li><p>异步带来的不一致问题</p>
-<ul>
-<li>通过job去重试保证接口调用成功</li>
-</ul>
-</li>
-<li><p>消息可靠性的保证</p>
-<p>消息的丢失</p>
-<ul>
-<li><p>生产者丢失</p>
-<ul>
-<li>程序发送失败抛异常没有重试处理，或者发送过程成功，但过程中网络问题MQ没收到</li>
-<li>异步发送消息的方式<ul>
-<li>异步有回调</li>
-<li>异步无回调<ul>
-<li>生产者发送完消息后不管结果就可能会造成消息丢失</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>异步发送 + 回调通知 + 本地消息表</li>
-</ul>
-</li>
-<li><p>MQ丢失</p>
-<ul>
-<li>生产者保证消息发送到MQ，但MQ收到消息后还在内存中，这时宕机了来不及同步到从节点没导致消息丢失</li>
-</ul>
-</li>
-<li>消费者丢失<ul>
-<li>消费者刚收到消息，此时server宕机，MQ人为消费者已经消费，不重复发送消息</li>
-<li>消费方不返回ACK确认，重发的机制根据MQ类型的不同发送时间间隔，次数不尽相同，重试超过次数之后进入死信队列，需要手动处理</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>消费者消费失败，一直消费失败导致消息积压</p>
-<ul>
-<li><p>如果容易修复，先把问题修复，让consumer恢复正常消费</p>
-</li>
-<li><p>如果时间来不及处理很麻烦，做转发处理，写一个临时的consumer消费方案，先把消息消费，然后再转发到一个新的topic和MQ资源，这个新的topic的机器资源单独申请，要能承载住当前积压的消息</p>
-</li>
-<li><p>处理完积压数据后，修复consumer，去消费新的MQ和现有的MQ数据，新MQ消费完成后恢复原状</p>
-</li>
-</ul>
-</li>
-</ul>
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/07/mq/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-redis哨兵机制" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -262,14 +166,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Redis 的主从复制模式下，一旦主节点由于故障不能提供服务，需要<strong>手动将从节点晋升为主节点</strong>，同时还要通知客户端更新主节点地址，这种故障处理方式从一定程度上是无法接受的。<br>
+        <p>Redis 的主从复制模式下，一旦主节点由于故障不能提供服务，需要<strong>手动将从节点晋升为主节点</strong>，同时还要通知客户端更新主节点地址，这种故障处理方式从一定程度上是无法接受的。</p>
         
           <a class="article-more-a" href="/2020/11/07/redis哨兵机制/#more">more >></a>
         
       
 
       
-    </p></div>
+    </div>
     <div class="article-info article-info-index">
       
       
@@ -341,17 +245,18 @@
         <p>数据的复制是单向的，只能由主节点到从节点</p>
 <p>主从复制的作用</p>
 <ul>
-<li>数据冗余：主从复制<strong>实现了数据的热备份，</strong>是持久化之外的一种数据冗余方式。</li>
+<li>数据冗余：主从复制**实现了数据的热备份，**是持久化之外的一种数据冗余方式。</li>
 <li>故障恢复：当主节点出现问题时，可以由<strong>从节点提供服务</strong>，实现快速的故障恢复；实际上是一种服务的冗余。</li>
 <li>负载均衡：在主从复制的基础上，配合读写分离，可以由主<strong>节点提供写服务，由从节点提供读服务，分担服务器负载</strong>；尤其是在写少<strong>读多的场景下</strong>，通过多个从节点分担读负载，可以大大提高Redis服务器的并发量。</li>
-<li>高可用基石：主从复制还是哨兵和集群能够实施的基础，因此说主从复制是Redis高可用的基础。
+<li>高可用基石：主从复制还是哨兵和集群能够实施的基础，因此说主从复制是Redis高可用的基础。</li>
+</ul>
         
           <a class="article-more-a" href="/2020/11/07/redis主从复制/#more">more >></a>
         
       
 
       
-    </li></ul></div>
+    </div>
     <div class="article-info article-info-index">
       
       
@@ -421,14 +326,14 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>关系型数据库ACID 中关于原子性的定义</p>
-<p><strong>原子性</strong>:一个事务(transaction)中的所有操作，要么全部完成，要么全部不完成，不会结束在中间某个环节。事务在执行过程中发生错误，会被恢复(Rollback)<strong>到事务开始前的状态</strong>，就像这个事务从来没有执行过一样。<br>
+<p><strong>原子性</strong>:一个事务(transaction)中的所有操作，要么全部完成，要么全部不完成，不会结束在中间某个环节。事务在执行过程中发生错误，会被恢复(Rollback)<strong>到事务开始前的状态</strong>，就像这个事务从来没有执行过一样。</p>
         
           <a class="article-more-a" href="/2020/11/07/redis事务/#more">more >></a>
         
       
 
       
-    </p></div>
+    </div>
     <div class="article-info article-info-index">
       
       
@@ -497,14 +402,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>当缓存内存不足时，通过淘汰旧数据处理新加入数据选择的策略.<br>
+        <p>当缓存内存不足时，通过淘汰旧数据处理新加入数据选择的策略.</p>
         
           <a class="article-more-a" href="/2020/11/07/redis内存淘汰机制/#more">more >></a>
         
       
 
       
-    </p></div>
+    </div>
     <div class="article-info article-info-index">
       
       
@@ -573,16 +478,18 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="缓存穿透"><a href="#缓存穿透" class="headerlink" title="缓存穿透"></a>缓存穿透</h4><ul>
+        <h4 id="缓存穿透"><a class="markdownIt-Anchor" href="#缓存穿透"></a> 缓存穿透</h4>
+<ul>
 <li>缓存穿透是指用户请求的数据在<strong>缓存中不存在即没有命中，同时在数据库中也不存在</strong>，导致用户每次请求该数据都要去数据库中查询一遍，然后返回空</li>
-<li>有恶意攻击者不断请求系统中不存在的数据，会导致短时间大量请求落在数据库上，造成数据库压力过大，甚至击垮数据库系统
+<li>有恶意攻击者不断请求系统中不存在的数据，会导致短时间大量请求落在数据库上，造成数据库压力过大，甚至击垮数据库系统</li>
+</ul>
         
           <a class="article-more-a" href="/2020/11/07/缓存各种问题/#more">more >></a>
         
       
 
       
-    </li></ul></div>
+    </div>
     <div class="article-info article-info-index">
       
       
@@ -651,14 +558,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>重启系统或者关闭系统，之前缓存在内存中的数据都会丢失再也不能找回。因此为了避免这种情况，Redis需要实现持久化将内存中的数据存储起来<br>
+        <p>重启系统或者关闭系统，之前缓存在内存中的数据都会丢失再也不能找回。因此为了避免这种情况，Redis需要实现持久化将内存中的数据存储起来</p>
         
           <a class="article-more-a" href="/2020/11/07/redis持久化/#more">more >></a>
         
       
 
       
-    </p></div>
+    </div>
     <div class="article-info article-info-index">
       
       
@@ -727,32 +634,40 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="value的数据结构类型"><a href="#value的数据结构类型" class="headerlink" title="value的数据结构类型"></a>value的数据结构类型</h4><p>Redis 可以存储键和五种不同类型的值之间的映射。键的类型只能为字符串，值支持五种数据类型：字符串、列表、集合、散列表、有序集合。</p>
+        <h4 id="value的数据结构类型"><a class="markdownIt-Anchor" href="#value的数据结构类型"></a> value的数据结构类型</h4>
+<p>Redis 可以存储键和五种不同类型的值之间的映射。键的类型只能为字符串，值支持五种数据类型：字符串、列表、集合、散列表、有序集合。</p>
 <ul>
-<li>string<ul>
-<li>字符串类型的值实际可以是字符串（<strong>简单的字符串、复杂的字符串</strong>（例如JSON、XML））、<strong>数字</strong><br><strong>（整数、浮点数），甚至是二进制</strong>（图片、音频、视频），但是值最大不能<br><strong>超过512MB</strong>。</li>
+<li>string
+<ul>
+<li>字符串类型的值实际可以是字符串（<strong>简单的字符串、复杂的字符串</strong>（例如JSON、XML））、<strong>数字</strong><br>
+<strong>（整数、浮点数），甚至是二进制</strong>（图片、音频、视频），但是值最大不能<br>
+<strong>超过512MB</strong>。</li>
 <li>set key_name value</li>
 </ul>
 </li>
-<li>hash<ul>
+<li>hash
+<ul>
 <li>hset key_name field value</li>
 </ul>
 </li>
-<li>list<ul>
+<li>list
+<ul>
 <li>linkedlist</li>
-<li>ziplist </li>
+<li>ziplist</li>
 <li>lpush key_name v1 v2 … vn list头部添加字符串元素</li>
 <li>rpush key_name v1 v2 … vn</li>
 <li>lrem key_name count value 对应list中删除count个和value相同的元素</li>
 <li>llen key_name 返回对应的list长度</li>
 </ul>
 </li>
-<li>set<ul>
+<li>set
+<ul>
 <li>sadd key_name value</li>
 <li>集合通过哈希表实现，添加删除查找的复杂度都是O(1)</li>
 </ul>
 </li>
-<li>zset(有序集合)<ul>
+<li>zset(有序集合)
+<ul>
 <li>zadd key_name score1 value1</li>
 <li>通过分数从小到大排序，分数可以重复，元素不重复</li>
 </ul>
@@ -833,7 +748,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="redis-配置"><a href="#redis-配置" class="headerlink" title="redis 配置"></a>redis 配置</h3><p>101服务器上的redis 服务是通过以下命令安装</p>
+        <h3 id="redis-配置"><a class="markdownIt-Anchor" href="#redis-配置"></a> redis 配置</h3>
+<p>101服务器上的redis 服务是通过以下命令安装</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install redis-server</span><br></pre></td></tr></table></figure>
         
           <a class="article-more-a" href="/2020/11/06/redis_1/#more">more >></a>
@@ -910,25 +826,32 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="锁机制和事务控制"><a href="#锁机制和事务控制" class="headerlink" title="锁机制和事务控制"></a>锁机制和事务控制</h3><p>Innodb提供行级锁，支持共享锁和排它锁两种锁定模式和四种不同的隔离级别.</p>
+        <h3 id="锁机制和事务控制"><a class="markdownIt-Anchor" href="#锁机制和事务控制"></a> 锁机制和事务控制</h3>
+<p>Innodb提供行级锁，支持共享锁和排它锁两种锁定模式和四种不同的隔离级别.</p>
 <ul>
-<li>表级锁<ul>
+<li>表级锁
+<ul>
 <li>开销小，加锁快，不会出现死锁，锁定粒度大，发生锁冲突概率最高，并发度最低</li>
 </ul>
 </li>
-<li>行级锁<ul>
+<li>行级锁
+<ul>
 <li>开销大，枷锁慢，会出现死锁，锁定粒度小，发生锁冲突概率最低，并发度最高</li>
 </ul>
 </li>
-<li>页面锁<ul>
-<li>开销和加锁时间界于表锁和行锁之间；会出现死锁；锁定粒度界于表锁和行锁之间，并发度一搬
+<li>页面锁
+<ul>
+<li>开销和加锁时间界于表锁和行锁之间；会出现死锁；锁定粒度界于表锁和行锁之间，并发度一搬</li>
+</ul>
+</li>
+</ul>
         
           <a class="article-more-a" href="/2020/11/06/mysql锁机制/#more">more >></a>
         
       
 
       
-    </li></ul></li></ul></div>
+    </div>
     <div class="article-info article-info-index">
       
       
@@ -977,9 +900,115 @@
 
 
   
+    <article id="post-mysql优化" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/06/mysql优化/">mysql优化</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/06/mysql优化/" class="archive-article-date">
+  	<time datetime="2020-11-06T01:57:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="从代码角度优化"><a class="markdownIt-Anchor" href="#从代码角度优化"></a> 从代码角度优化</h4>
+<ul>
+<li>连接池
+<ul>
+<li>使用持久的连接数据库以避免连接开销。代码中我们一般使用连接池。</li>
+</ul>
+</li>
+<li>减少对MySQL访问
+<ul>
+<li>避免对同一数据做重复检索
+<ul>
+<li>理清取数逻辑，一次连接取出所有结果</li>
+</ul>
+</li>
+<li>查询缓存 MySQL Query Cache
+<ul>
+<li>存储select查询文本以及相应结果，随后收到相同的查询，server直接从查询缓存中取查询结果</li>
+<li>适用更新不频繁的表，当表更改(结构或者数据)时，查询缓存值相关的record也会清除</li>
+<li>需要指定开启
+<ul>
+<li>query_cache_size 表明缓存区大小，单位为M</li>
+<li>query_cache_type 的变量值从0 到2</li>
+<li>Qcache_queries_in_cache  在缓存中已注册的查询数目</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">variables</span> <span class="keyword">like</span> <span class="string">'%query_cache%'</span>;</span><br><span class="line"><span class="keyword">show</span> <span class="keyword">status</span> <span class="keyword">like</span> <span class="string">'query'</span>;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+        
+          <a class="article-more-a" href="/2020/11/06/mysql优化/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/06/mysql优化/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 
@@ -1091,14 +1120,6 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">HMM</a>
               </li>
              
@@ -1108,6 +1129,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">NER</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
               <li class="article-tag-list-item">

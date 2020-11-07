@@ -8,13 +8,13 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>embedding 对比 | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="word2vec和fasttext对比 fasttext会考虑subword(应对OOV) fasttext可进行有supervised learning for text classification 结构与CBOW类似 采用hierarchical softmax对输出标签建立哈弗曼树，样本中标签多的类别对应更短的搜索路径 N-gram，考虑词序特征">
+  <meta name="description" content="word2vec和fasttext对比  fasttext会考虑subword(应对OOV) fasttext可进行有supervised learning for text classification  结构与CBOW类似 采用hierarchical softmax对输出标签建立哈弗曼树，样本中标签多的类别对应更短的搜索路径 N-gram，考虑词序特征">
 <meta name="keywords" content="nlp,text classification">
 <meta property="og:type" content="article">
 <meta property="og:title" content="embedding 对比">
 <meta property="og:url" content="http://jasonyu.top/2019/04/21/embedding/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="word2vec和fasttext对比 fasttext会考虑subword(应对OOV) fasttext可进行有supervised learning for text classification 结构与CBOW类似 采用hierarchical softmax对输出标签建立哈弗曼树，样本中标签多的类别对应更短的搜索路径 N-gram，考虑词序特征">
+<meta property="og:description" content="word2vec和fasttext对比  fasttext会考虑subword(应对OOV) fasttext可进行有supervised learning for text classification  结构与CBOW类似 采用hierarchical softmax对输出标签建立哈弗曼树，样本中标签多的类别对应更短的搜索路径 N-gram，考虑词序特征">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://www.zhihu.com/equation?tex=X_%7Bij%7D">
 <meta property="og:image" content="https://www.zhihu.com/equation?tex=X_%7Bij%7D">
@@ -27,7 +27,7 @@
 <meta property="og:updated_time" content="2020-10-26T03:44:19.152Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="embedding 对比">
-<meta name="twitter:description" content="word2vec和fasttext对比 fasttext会考虑subword(应对OOV) fasttext可进行有supervised learning for text classification 结构与CBOW类似 采用hierarchical softmax对输出标签建立哈弗曼树，样本中标签多的类别对应更短的搜索路径 N-gram，考虑词序特征">
+<meta name="twitter:description" content="word2vec和fasttext对比  fasttext会考虑subword(应对OOV) fasttext可进行有supervised learning for text classification  结构与CBOW类似 采用hierarchical softmax对输出标签建立哈弗曼树，样本中标签多的类别对应更短的搜索路径 N-gram，考虑词序特征">
 <meta name="twitter:image" content="https://www.zhihu.com/equation?tex=X_%7Bij%7D">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
@@ -178,9 +178,11 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="word2vec和fasttext对比"><a href="#word2vec和fasttext对比" class="headerlink" title="word2vec和fasttext对比"></a>word2vec和fasttext对比</h3><ul>
+        <h3 id="word2vec和fasttext对比"><a class="markdownIt-Anchor" href="#word2vec和fasttext对比"></a> word2vec和fasttext对比</h3>
+<ul>
 <li>fasttext会考虑subword(应对OOV)</li>
-<li>fasttext可进行有supervised learning for text classification<ul>
+<li>fasttext可进行有supervised learning for text classification
+<ul>
 <li>结构与CBOW类似</li>
 <li>采用hierarchical softmax对输出标签建立哈弗曼树，样本中标签多的类别对应更短的搜索路径</li>
 <li>N-gram，考虑词序特征</li>
@@ -188,68 +190,85 @@
 </li>
 </ul>
 <a id="more"></a> 
-<h3 id="glove和word2vec-LSA对比"><a href="#glove和word2vec-LSA对比" class="headerlink" title="glove和word2vec,LSA对比"></a>glove和word2vec,LSA对比</h3><ul>
+<h3 id="glove和word2veclsa对比"><a class="markdownIt-Anchor" href="#glove和word2veclsa对比"></a> glove和word2vec,LSA对比</h3>
+<ul>
 <li>LSA，由全局语料得到共现矩阵，用SVD分解</li>
 <li>glove可看做是对LSA一种优化的高效矩阵分解，用adagrad对最小平方损失进行优化</li>
 <li>word2vec，局部语料库训练，特征提取基于滑窗，可以在线学习，而glove需要事先统计全局信息，做不到增量学习。</li>
 <li>glove在一定程度上有label，即共现次数log(<img src="https://www.zhihu.com/equation?tex=X_%7Bij%7D" alt="X_{ij}"> )</li>
 <li>word2vec损失函数是带权重的交叉熵，权重固定，glove损失函数最小平方损失函数，</li>
 </ul>
-<h3 id="elmo-GPT-BERT三者区别"><a href="#elmo-GPT-BERT三者区别" class="headerlink" title="elmo,GPT,BERT三者区别"></a>elmo,GPT,BERT三者区别</h3><ul>
+<h3 id="elmogptbert三者区别"><a class="markdownIt-Anchor" href="#elmogptbert三者区别"></a> elmo,GPT,BERT三者区别</h3>
+<ul>
 <li>GPT采用单向语言模型，elmo和bert采用双向语言模型</li>
-<li>GPT和bert都采用Transformer，Transformer是encoder-decoder结构<ul>
+<li>GPT和bert都采用Transformer，Transformer是encoder-decoder结构
+<ul>
 <li>GPT的单向语言模型采用decoder部分，decoder的部分见到的都是不完整的句子</li>
 <li>bert的双向语言模型则采用encoder部分，采用了完整句子。</li>
 </ul>
 </li>
 </ul>
-<h3 id="word2vec-详解-挖坑"><a href="#word2vec-详解-挖坑" class="headerlink" title="word2vec 详解 (挖坑)"></a>word2vec 详解 (挖坑)</h3><ul>
-<li>skip-gram<ul>
+<h3 id="word2vec-详解-挖坑"><a class="markdownIt-Anchor" href="#word2vec-详解-挖坑"></a> word2vec 详解 (挖坑)</h3>
+<ul>
+<li>skip-gram
+<ul>
 <li>central 预测context</li>
-<li>training samples： (central, context1), (central,context2)…..</li>
+<li>training samples： (central, context1), (central,context2)……</li>
 <li>The network is going to tell us the <strong>probability for every word in</strong> our vocabulary of <strong>being the “nearby word”</strong> that we chose.</li>
 </ul>
 </li>
 </ul>
 <p>word2vec, glove , fasttext 参数调优选择经验</p>
-<h3 id="Glove-详解"><a href="#Glove-详解" class="headerlink" title="Glove 详解"></a>Glove 详解</h3><ul>
+<h3 id="glove-详解"><a class="markdownIt-Anchor" href="#glove-详解"></a> Glove 详解</h3>
+<ul>
 <li>基于<strong>全局词频统计</strong>（count-based &amp; overall statistics）的词表征（word representation）工具。</li>
 <li>根据语料库构建一个共现矩阵，矩阵中的每一个元素 <img src="https://www.zhihu.com/equation?tex=X_%7Bij%7D" alt="X_{ij}"> 代表单词 <img src="https://www.zhihu.com/equation?tex=i" alt="i"> 和上下文单词 <img src="https://www.zhihu.com/equation?tex=j" alt="j"> 在<strong>特定大小</strong>的<strong>上下文窗口</strong>内共同出现的次数</li>
-<li><img src="https://www.zhihu.com/equation?tex=J+%3D+%5Csum_%7Bi%2Cj%3D1%7D%5EV+f%5CBig%28X_%7Bij%7D%5CBig%29%5CBig%28w_i%5ET%5Ctilde%7Bw_j%7D+%2B+b_i+%2B+b_j+-%5Clog%7BX_%7Bij%7D%7D+%5CBig%29%5E2" alt="J = \sum_{i,j=1}^V f\Big(X_{ij}\Big)\Big(w_i^T\tilde{w_j} + b_i + b_j -\log{X_{ij}} \Big)^2">  目标函数 - 类似一个MSE<ul>
+<li><img src="https://www.zhihu.com/equation?tex=J+%3D+%5Csum_%7Bi%2Cj%3D1%7D%5EV+f%5CBig%28X_%7Bij%7D%5CBig%29%5CBig%28w_i%5ET%5Ctilde%7Bw_j%7D+%2B+b_i+%2B+b_j+-%5Clog%7BX_%7Bij%7D%7D+%5CBig%29%5E2" alt="J = \sum_{i,j=1}^V f\Big(X_{ij}\Big)\Big(w_i^T\tilde{w_j} + b_i + b_j -\log{X_{ij}} \Big)^2">  目标函数 - 类似一个MSE
+<ul>
 <li>w代表词向量，原本LSA的方法是对一个VxV大小的共现矩阵做SVD,w_i 和w_j 代表对应的词i,j的词向量</li>
 </ul>
 </li>
 <li>向量 <img src="https://www.zhihu.com/equation?tex=w" alt="w"> 和 <img src="https://www.zhihu.com/equation?tex=%5Ctilde%7Bw%7D" alt="\tilde{w}">为学习参数</li>
 <li>为了提高鲁棒性，我们最终会选择两者之和 <img src="https://www.zhihu.com/equation?tex=w%2B%5Ctilde%7Bw%7D" alt="w+\tilde{w}"> 作为最终的vector。</li>
 </ul>
-<h3 id="ELMO-详解"><a href="#ELMO-详解" class="headerlink" title="ELMO 详解"></a>ELMO 详解</h3><ul>
+<h3 id="elmo-详解"><a class="markdownIt-Anchor" href="#elmo-详解"></a> ELMO 详解</h3>
+<ul>
 <li>词向量不是一成不变的，而是<strong>根据上下文而随时变化</strong>，这与word2vec或者glove具有很大的区别</li>
 <li>ELMo是双向语言模型biLM的<strong>多层表示的组合</strong>，基于大量文本，ELMo模型是从深层的<strong>双向语言模型</strong>（deep bidirectional language model）中的内部状态(internal state)学习而来的。</li>
-<li>ELMO 用法<ul>
-<li>输入：输入是一个list，每个元素是一个句子 string<ul>
+<li>ELMO 用法
+<ul>
+<li>输入：输入是一个list，每个元素是一个句子 string
+<ul>
 <li>也可以是list嵌套list，其中的list就是每个句子tokenize的结果,但是也要对应指明句子长度</li>
 </ul>
 </li>
-<li>输出:<ul>
-<li>输出有多个选项<ul>
-<li>word_emb<ul>
+<li>输出:
+<ul>
+<li>输出有多个选项
+<ul>
+<li>word_emb
+<ul>
 <li>[batch_size, max_length, 512] - 训练ELMO语言模型的时候里面的embedding</li>
 </ul>
 </li>
-<li>lstm_outputs1<ul>
+<li>lstm_outputs1
+<ul>
 <li>[batch_size, max_length, 1024] , 第一层LSTM的hidden_state (双向，因此concat)</li>
 </ul>
 </li>
-<li>lstm_outputs2<ul>
+<li>lstm_outputs2
+<ul>
 <li>[batch_size, max_length, 1024], 第二层LSTM hidden_state</li>
 </ul>
 </li>
-<li>elmo<ul>
-<li>the weighted sum of the 3 layers, where the weights are trainable. </li>
+<li>elmo
+<ul>
+<li>the weighted sum of the 3 layers, where the weights are trainable.</li>
 <li>[batch_size, max_length, 1024]</li>
 </ul>
 </li>
-<li>default:<ul>
+<li>default:
+<ul>
 <li>a fixed mean-pooling of all contextualized word representations</li>
 <li>[batch_size, 1024]</li>
 </ul>
@@ -258,46 +277,58 @@
 </li>
 </ul>
 </li>
-<li>可训练的参数<ul>
-<li>tf给的接口一共有四个可以训练的参数，三个是”elmo”中三个层的 wighted sum的权值,还有一个缩放系数。</li>
+<li>可训练的参数
+<ul>
+<li>tf给的接口一共有四个可以训练的参数，三个是&quot;elmo&quot;中三个层的 wighted sum的权值,还有一个缩放系数。</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<p>$\mathbf{E} \mathbf{L} \mathbf{M} \mathbf{o}<em>{k}^{t a s k}=E\left(R</em>{k} ; \Theta^{\operatorname{task}}\right)=\gamma^{\operatorname{tas} k} \sum<em>{j=0}^{L} s</em>{j}^{\operatorname{task}} \mathbf{h}_{k, j}^{L M}$</p>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="bold">E</mi><mi mathvariant="bold">L</mi><mi mathvariant="bold">M</mi><msubsup><mi mathvariant="bold">o</mi><mi>k</mi><mrow><mi>t</mi><mi>a</mi><mi>s</mi><mi>k</mi></mrow></msubsup><mo>=</mo><mi>E</mi><mrow><mo fence="true">(</mo><msub><mi>R</mi><mi>k</mi></msub><mo separator="true">;</mo><msup><mi mathvariant="normal">Θ</mi><mi mathvariant="normal">task</mi><mo>⁡</mo></msup><mo fence="true">)</mo></mrow><mo>=</mo><msup><mi>γ</mi><mrow><mi mathvariant="normal">tas</mi><mo>⁡</mo><mi>k</mi></mrow></msup><msubsup><mo>∑</mo><mrow><mi>j</mi><mo>=</mo><mn>0</mn></mrow><mi>L</mi></msubsup><msubsup><mi>s</mi><mi>j</mi><mi mathvariant="normal">task</mi><mo>⁡</mo></msubsup><msubsup><mi mathvariant="bold">h</mi><mrow><mi>k</mi><mo separator="true">,</mo><mi>j</mi></mrow><mrow><mi>L</mi><mi>M</mi></mrow></msubsup></mrow><annotation encoding="application/x-tex">\mathbf{E} \mathbf{L} \mathbf{M} \mathbf{o}_{k}^{t a s k}=E\left(R_{k} ; \Theta^{\operatorname{task}}\right)=\gamma^{\operatorname{tas} k} \sum_{j=0}^{L} s_{j}^{\operatorname{task}} \mathbf{h}_{k, j}^{L M}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.132216em;vertical-align:-0.2831079999999999em;"></span><span class="mord"><span class="mord mathbf">E</span></span><span class="mord"><span class="mord mathbf">L</span></span><span class="mord"><span class="mord mathbf">M</span></span><span class="mord"><span class="mord"><span class="mord mathbf">o</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.849108em;"><span style="top:-2.4168920000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span><span class="mord mathdefault mtight">a</span><span class="mord mathdefault mtight">s</span><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2831079999999999em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.20001em;vertical-align:-0.35001em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size1">(</span></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">;</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord">Θ</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.849108em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mop mtight"><span class="mord mathrm mtight">t</span><span class="mord mathrm mtight">a</span><span class="mord mathrm mtight">s</span><span class="mord mathrm mtight">k</span></span></span></span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size1">)</span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.417049em;vertical-align:-0.43581800000000004em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05556em;">γ</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.849108em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mop mtight"><span class="mord mathrm mtight">t</span><span class="mord mathrm mtight">a</span><span class="mord mathrm mtight">s</span></span><span class="mspace mtight" style="margin-right:0.19516666666666668em;"></span><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:-0.0000050000000000050004em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.981231em;"><span style="top:-2.40029em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span><span class="mrel mtight">=</span><span class="mord mtight">0</span></span></span></span><span style="top:-3.2029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">L</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.43581800000000004em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.849108em;"><span style="top:-2.441336em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mop mtight"><span class="mord mathrm mtight">t</span><span class="mord mathrm mtight">a</span><span class="mord mathrm mtight">s</span><span class="mord mathrm mtight">k</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.394772em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord"><span class="mord mathbf">h</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-2.4168920000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span><span class="mpunct mtight">,</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">L</span><span class="mord mathdefault mtight" style="margin-right:0.10903em;">M</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.4192159999999999em;"><span></span></span></span></span></span></span></span></span></span></p>
 <p><a href="https://tfhub.dev/google/elmo/2" target="_blank" rel="noopener">tensorflow hub elmo 官方文档</a></p>
-<h3 id="词向量调参经验"><a href="#词向量调参经验" class="headerlink" title="词向量调参经验"></a>词向量调参经验</h3><h4 id="gensim-word2vec"><a href="#gensim-word2vec" class="headerlink" title="gensim word2vec"></a>gensim word2vec</h4><ul>
-<li>-sg 0 使用cbow模型， 默认0 , 1是skip-gram， cbow有向量相加<ul>
+<h3 id="词向量调参经验"><a class="markdownIt-Anchor" href="#词向量调参经验"></a> 词向量调参经验</h3>
+<h4 id="gensim-word2vec"><a class="markdownIt-Anchor" href="#gensim-word2vec"></a> gensim word2vec</h4>
+<ul>
+<li>-sg 0 使用cbow模型， 默认0 , 1是skip-gram， cbow有向量相加
+<ul>
 <li><strong>skip-gram慢，但对罕见词有利</strong>，cbow快</li>
 </ul>
 </li>
 <li>-size 经验超过1000，感觉去sqrt(dict_size)/2，多试</li>
-<li>-window 窗口大小,往前看window个词，往后看window个词，一般cbow取5，skip-gram一般10<ul>
+<li>-window 窗口大小,往前看window个词，往后看window个词，一般cbow取5，skip-gram一般10
+<ul>
 <li>小语料的window可以设小一点</li>
 </ul>
 </li>
 <li>-hs 0是指Negative Sampling，是1的话并且负采样个数negative大于0， 则是Hierarchical Softmax。默认是0即Negative Sampling</li>
-<li>-negative:即使用Negative Sampling时负采样的个数，默认是5。推荐在[3,10]之间<ul>
+<li>-negative:即使用Negative Sampling时负采样的个数，默认是5。推荐在[3,10]之间
+<ul>
 <li>5~20适合小数据，2~5适合大数据</li>
 </ul>
 </li>
 <li>-cbow_mean 仅用于CBOW在做投影的时候，为0，则算法中的X_w为上下文的词向量之和，为1则为上下文的词向量的平均值,默认1</li>
-<li>-min_count:需要计算词向量的最小词频<ul>
+<li>-min_count:需要计算词向量的最小词频
+<ul>
 <li>小语料则可以调低</li>
 </ul>
 </li>
 <li>-iter: 随机梯度下降法中迭代的最大次数，默认是5。对于大语料，可以增大这个值。</li>
 <li>拿到了分词后的文件，在一般的NLP处理中，会需要去停用词。由于word2vec的算法依赖于上下文，而上下文有可能就是停词。<strong>因此对于word2vec，我们可以不用去停词</strong>。</li>
 </ul>
-<h4 id="Fasttext-调参"><a href="#Fasttext-调参" class="headerlink" title="Fasttext 调参"></a>Fasttext 调参</h4><p><a href="http://albertxiebnu.github.io/fasttext/" target="_blank" rel="noopener">http://albertxiebnu.github.io/fasttext/</a></p>
-<h4 id="LDA-调参"><a href="#LDA-调参" class="headerlink" title="LDA 调参"></a>LDA 调参</h4><ul>
-<li><p>直接把短文档（比如一个微博，一个查询）作为输入，不如先做预处理把这些短文章聚合成一些长文章（比如把同一作者的微博合一块)。</p>
+<h4 id="fasttext-调参"><a class="markdownIt-Anchor" href="#fasttext-调参"></a> Fasttext 调参</h4>
+<p><a href="http://albertxiebnu.github.io/fasttext/" target="_blank" rel="noopener">http://albertxiebnu.github.io/fasttext/</a></p>
+<h4 id="lda-调参"><a class="markdownIt-Anchor" href="#lda-调参"></a> LDA 调参</h4>
+<ul>
+<li>
+<p>直接把短文档（比如一个微博，一个查询）作为输入，不如先做预处理把这些短文章聚合成一些长文章（比如把同一作者的微博合一块)。</p>
 </li>
-<li><p>文档长度不能太短，至少是文档数目的log，所以对于太短的文档，我们必须把他们聚合</p>
+<li>
+<p>文档长度不能太短，至少是文档数目的log，所以对于太短的文档，我们必须把他们聚合</p>
 </li>
 </ul>
-<h3 id="面试可能会问的东西"><a href="#面试可能会问的东西" class="headerlink" title="面试可能会问的东西"></a>面试可能会问的东西</h3><p>1.词向量好坏怎么评估</p>
+<h3 id="面试可能会问的东西"><a class="markdownIt-Anchor" href="#面试可能会问的东西"></a> 面试可能会问的东西</h3>
+<p>1.词向量好坏怎么评估</p>
 <p>2.word2vec和glove优劣</p>
 <p><strong>参考链接</strong></p>
 <p><a href="https://zhuanlan.zhihu.com/p/56382372" target="_blank" rel="noopener">知乎</a></p>
@@ -423,7 +454,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#word2vec和fasttext对比"><span class="toc-number">1.</span> <span class="toc-text">word2vec和fasttext对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#glove和word2vec-LSA对比"><span class="toc-number">2.</span> <span class="toc-text">glove和word2vec,LSA对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#elmo-GPT-BERT三者区别"><span class="toc-number">3.</span> <span class="toc-text">elmo,GPT,BERT三者区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#word2vec-详解-挖坑"><span class="toc-number">4.</span> <span class="toc-text">word2vec 详解 (挖坑)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Glove-详解"><span class="toc-number">5.</span> <span class="toc-text">Glove 详解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ELMO-详解"><span class="toc-number">6.</span> <span class="toc-text">ELMO 详解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#词向量调参经验"><span class="toc-number">7.</span> <span class="toc-text">词向量调参经验</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#gensim-word2vec"><span class="toc-number">7.1.</span> <span class="toc-text">gensim word2vec</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Fasttext-调参"><span class="toc-number">7.2.</span> <span class="toc-text">Fasttext 调参</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#LDA-调参"><span class="toc-number">7.3.</span> <span class="toc-text">LDA 调参</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#面试可能会问的东西"><span class="toc-number">8.</span> <span class="toc-text">面试可能会问的东西</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#word2vec和fasttext对比"><span class="toc-number">1.</span> <span class="toc-text"> word2vec和fasttext对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#glove和word2veclsa对比"><span class="toc-number">2.</span> <span class="toc-text"> glove和word2vec,LSA对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#elmogptbert三者区别"><span class="toc-number">3.</span> <span class="toc-text"> elmo,GPT,BERT三者区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#word2vec-详解-挖坑"><span class="toc-number">4.</span> <span class="toc-text"> word2vec 详解 (挖坑)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#glove-详解"><span class="toc-number">5.</span> <span class="toc-text"> Glove 详解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#elmo-详解"><span class="toc-number">6.</span> <span class="toc-text"> ELMO 详解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#词向量调参经验"><span class="toc-number">7.</span> <span class="toc-text"> 词向量调参经验</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#gensim-word2vec"><span class="toc-number">7.1.</span> <span class="toc-text"> gensim word2vec</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fasttext-调参"><span class="toc-number">7.2.</span> <span class="toc-text"> Fasttext 调参</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#lda-调参"><span class="toc-number">7.3.</span> <span class="toc-text"> LDA 调参</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#面试可能会问的东西"><span class="toc-number">8.</span> <span class="toc-text"> 面试可能会问的东西</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -572,14 +603,6 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">HMM</a>
               </li>
              
@@ -589,6 +612,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">NER</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
               <li class="article-tag-list-item">

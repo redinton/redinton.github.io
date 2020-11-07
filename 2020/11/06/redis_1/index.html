@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>redis基础(-) | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="redis 配置101服务器上的redis 服务是通过以下命令安装 12sudo apt-get updatesudo apt-get install redis-server">
+  <meta name="description" content="redis 配置 101服务器上的redis 服务是通过以下命令安装 12sudo apt-get updatesudo apt-get install redis-server">
 <meta name="keywords" content="redis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="redis基础(-)">
 <meta property="og:url" content="http://jasonyu.top/2020/11/06/redis_1/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="redis 配置101服务器上的redis 服务是通过以下命令安装 12sudo apt-get updatesudo apt-get install redis-server">
+<meta property="og:description" content="redis 配置 101服务器上的redis 服务是通过以下命令安装 12sudo apt-get updatesudo apt-get install redis-server">
 <meta property="og:locale" content="default">
 <meta property="og:updated_time" content="2020-11-07T11:20:13.161Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="redis基础(-)">
-<meta name="twitter:description" content="redis 配置101服务器上的redis 服务是通过以下命令安装 12sudo apt-get updatesudo apt-get install redis-server">
+<meta name="twitter:description" content="redis 配置 101服务器上的redis 服务是通过以下命令安装 12sudo apt-get updatesudo apt-get install redis-server">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -169,31 +169,40 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="redis-配置"><a href="#redis-配置" class="headerlink" title="redis 配置"></a>redis 配置</h3><p>101服务器上的redis 服务是通过以下命令安装</p>
+        <h3 id="redis-配置"><a class="markdownIt-Anchor" href="#redis-配置"></a> redis 配置</h3>
+<p>101服务器上的redis 服务是通过以下命令安装</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install redis-server</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
 <ul>
-<li><p>启动 redis</p>
+<li>
+<p>启动 redis</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-server</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>启动客户端</p>
+<li>
+<p>启动客户端</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>redis 的配置文件位置</p>
+<li>
+<p>redis 的配置文件位置</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/etc/redis/redis.conf</span><br><span class="line">需要用ip访问的话</span><br><span class="line">#bind 127.0.0.1 ::1</span><br><span class="line">protected-mode no</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h4 id="python-操作-redis"><a href="#python-操作-redis" class="headerlink" title="python 操作 redis"></a>python 操作 redis</h4><p><a href="https://segmentfault.com/a/1190000014416025" target="_blank" rel="noopener">参考连接</a></p>
-<h4 id="Redis介绍"><a href="#Redis介绍" class="headerlink" title="Redis介绍"></a>Redis介绍</h4><ul>
+<h4 id="python-操作-redis"><a class="markdownIt-Anchor" href="#python-操作-redis"></a> python 操作 redis</h4>
+<p><a href="https://segmentfault.com/a/1190000014416025" target="_blank" rel="noopener">参考连接</a></p>
+<h4 id="redis介绍"><a class="markdownIt-Anchor" href="#redis介绍"></a> Redis介绍</h4>
+<ul>
 <li>Redis是开源的内存中的数据结构存储系统，可以用作：数据库，缓存和消息中间件。</li>
 <li>Redis 内置了复制(replication), LUA脚本，LRU驱动事件(LRU eviction), 事务和不同级别的磁盘持久化(Persistence),并通过Redis 哨兵(Sentinel)和自动分区(Cluster)提供高可用性。</li>
 </ul>
-<h4 id="面试问题"><a href="#面试问题" class="headerlink" title="面试问题"></a>面试问题</h4><ul>
-<li><p>redis是单线程，为什么这么快</p>
+<h4 id="面试问题"><a class="markdownIt-Anchor" href="#面试问题"></a> 面试问题</h4>
+<ul>
+<li>
+<p>redis是单线程，为什么这么快</p>
 <ul>
 <li>完全基于内存，内存操作比较快</li>
 <li>单线程，避免了不必要的上下文切换和竞争条件，不存在多进程或多线程导致的切换消耗CPU，不考虑各种锁的时间</li>
-<li>多路I/O复用，非阻塞IO<ul>
+<li>多路I/O复用，非阻塞IO
+<ul>
 <li>多路指的是多个网络连接</li>
 <li>复用指的是复用同一个线程</li>
 <li>利用select,poll,epoll同时监察多个流的I/O事件的能力</li>
@@ -201,43 +210,54 @@
 </li>
 </ul>
 </li>
-<li><p>redis 单线程原因</p>
+<li>
+<p>redis 单线程原因</p>
 <ul>
 <li>redis是基于内存的操作，CPU不是redis瓶颈，redis瓶颈最有可能是内存大小或者网络带宽</li>
 <li>单线程指的是在处理网络请求的时候只有一个线程处理，起redis server时肯定不止一个线程</li>
 </ul>
 </li>
 </ul>
-<h4 id="redis与memcached，mongodb区别"><a href="#redis与memcached，mongodb区别" class="headerlink" title="redis与memcached，mongodb区别"></a>redis与memcached，mongodb区别</h4><ul>
+<h4 id="redis与memcachedmongodb区别"><a class="markdownIt-Anchor" href="#redis与memcachedmongodb区别"></a> redis与memcached，mongodb区别</h4>
+<ul>
 <li>memcached中key和value都是字符串</li>
 <li>mongodb由Json组成的文档</li>
 <li>redis的value有多种类型 string,list,hash,set,zset</li>
 </ul>
-<h4 id="Memcache与Redis的区别"><a href="#Memcache与Redis的区别" class="headerlink" title="Memcache与Redis的区别"></a>Memcache与Redis的区别</h4><ul>
-<li>存储方式<ul>
+<h4 id="memcache与redis的区别"><a class="markdownIt-Anchor" href="#memcache与redis的区别"></a> Memcache与Redis的区别</h4>
+<ul>
+<li>存储方式
+<ul>
 <li>Memecache把数据全部存在内存之中，断电后会挂掉，数据不能超过内存大小。</li>
 <li>Redis有部份存在硬盘上，这样能保证数据的持久性。</li>
 </ul>
 </li>
-<li>数据支持类型<ul>
+<li>数据支持类型
+<ul>
 <li>Memcache对数据类型支持相对简单。</li>
 <li>Redis有丰富的数据类型。</li>
 </ul>
 </li>
-<li>使用底层模型不同<ul>
+<li>使用底层模型不同
+<ul>
 <li>它们之间底层实现方式 以及与客户端之间通信的应用协议不一样。</li>
 <li>Redis直接自己构建了VM 机制 ，因为一般的系统调用系统函数的话，会浪费一定的时间去移动和请求。</li>
 </ul>
 </li>
 </ul>
-<h4 id="如果有大量的key需要设置同一时间过期，一般需要注意什么"><a href="#如果有大量的key需要设置同一时间过期，一般需要注意什么" class="headerlink" title="如果有大量的key需要设置同一时间过期，一般需要注意什么"></a>如果有大量的key需要设置同一时间过期，一般需要注意什么</h4><p>大量的key过期时间设置的过于集中，到过期的那个时间点，Redis可能会出现短暂的卡顿现象(因为redis是单线程的)。严重的话可能会导致服务器雪崩，所以我们一般在过期时间上加一个随机值，让过期时间尽量分散。</p>
-<h4 id="redis-cli操作"><a href="#redis-cli操作" class="headerlink" title="redis-cli操作"></a>redis-cli操作</h4><p><a href="https://mp.weixin.qq.com/s?__biz=MzI3ODcxMzQzMw==&amp;mid=2247487010&amp;idx=2&amp;sn=5ef9a8e55b19f2b2d3e0237356c52347&amp;chksm=eb538b14dc2402023cb03c6cd63fd320d21e0854f8f78fccb0e970b4a04a379ccda25f1da334&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">设置密码</a></p>
+<h4 id="如果有大量的key需要设置同一时间过期一般需要注意什么"><a class="markdownIt-Anchor" href="#如果有大量的key需要设置同一时间过期一般需要注意什么"></a> 如果有大量的key需要设置同一时间过期，一般需要注意什么</h4>
+<p>大量的key过期时间设置的过于集中，到过期的那个时间点，Redis可能会出现短暂的卡顿现象(因为redis是单线程的)。严重的话可能会导致服务器雪崩，所以我们一般在过期时间上加一个随机值，让过期时间尽量分散。</p>
+<h4 id="redis-cli操作"><a class="markdownIt-Anchor" href="#redis-cli操作"></a> redis-cli操作</h4>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzI3ODcxMzQzMw==&amp;mid=2247487010&amp;idx=2&amp;sn=5ef9a8e55b19f2b2d3e0237356c52347&amp;chksm=eb538b14dc2402023cb03c6cd63fd320d21e0854f8f78fccb0e970b4a04a379ccda25f1da334&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">设置密码</a></p>
 <ul>
-<li><p><code>redis-cli</code> 刚进入的时候是默认db 0， 一共是16个db</p>
+<li>
+<p><code>redis-cli</code> 刚进入的时候是默认db 0， 一共是16个db</p>
 </li>
-<li><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; select 6</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379[6]&gt; keys *</span><br></pre></td></tr></table></figure>
+<li>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; select 6</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379[6]&gt; keys *</span><br></pre></td></tr></table></figure>
 </li>
-<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379[6]&gt; TYPE rq:workers</span><br><span class="line">set</span><br><span class="line">127.0.0.1:6379[6]&gt; smembers rq:workers</span><br><span class="line">1) &quot;rq:worker:156ffde747464e0f877b940a9d515a7d&quot;</span><br><span class="line">127.0.0.1:6379[6]&gt; TYPE rq:worker:156ffde747464e0f877b940a9d515a7d</span><br><span class="line">hash</span><br><span class="line">127.0.0.1:6379[6]&gt; HGETALL rq:worker:156ffde747464e0f877b940a9d515a7d</span><br><span class="line"> 1) &quot;hostname&quot;</span><br><span class="line"> 2) &quot;xyu3&quot;</span><br><span class="line"> 3) &quot;pid&quot;</span><br><span class="line"> 4) &quot;32228&quot;</span><br><span class="line"> 5) &quot;birth&quot;</span><br><span class="line"> 6) &quot;2020-10-19T03:02:02.953304Z&quot;</span><br><span class="line"> 7) &quot;total_working_time&quot;</span><br><span class="line"> 8) &quot;1.792315&quot;</span><br><span class="line"> 9) &quot;queues&quot;</span><br><span class="line">10) &quot;cpu_high,cpu_default,cpu_low&quot;</span><br><span class="line">11) &quot;successful_job_count&quot;</span><br><span class="line">12) &quot;16&quot;</span><br><span class="line">13) &quot;last_heartbeat&quot;</span><br><span class="line">14) &quot;2020-10-19T03:33:46.949179Z&quot;</span><br><span class="line">15) &quot;state&quot;</span><br><span class="line">16) &quot;idle&quot;</span><br><span class="line">127.0.0.1:6379[6]&gt;</span><br></pre></td></tr></table></figure>
+<li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379[6]&gt; TYPE rq:workers</span><br><span class="line">set</span><br><span class="line">127.0.0.1:6379[6]&gt; smembers rq:workers</span><br><span class="line">1) &quot;rq:worker:156ffde747464e0f877b940a9d515a7d&quot;</span><br><span class="line">127.0.0.1:6379[6]&gt; TYPE rq:worker:156ffde747464e0f877b940a9d515a7d</span><br><span class="line">hash</span><br><span class="line">127.0.0.1:6379[6]&gt; HGETALL rq:worker:156ffde747464e0f877b940a9d515a7d</span><br><span class="line"> 1) &quot;hostname&quot;</span><br><span class="line"> 2) &quot;xyu3&quot;</span><br><span class="line"> 3) &quot;pid&quot;</span><br><span class="line"> 4) &quot;32228&quot;</span><br><span class="line"> 5) &quot;birth&quot;</span><br><span class="line"> 6) &quot;2020-10-19T03:02:02.953304Z&quot;</span><br><span class="line"> 7) &quot;total_working_time&quot;</span><br><span class="line"> 8) &quot;1.792315&quot;</span><br><span class="line"> 9) &quot;queues&quot;</span><br><span class="line">10) &quot;cpu_high,cpu_default,cpu_low&quot;</span><br><span class="line">11) &quot;successful_job_count&quot;</span><br><span class="line">12) &quot;16&quot;</span><br><span class="line">13) &quot;last_heartbeat&quot;</span><br><span class="line">14) &quot;2020-10-19T03:33:46.949179Z&quot;</span><br><span class="line">15) &quot;state&quot;</span><br><span class="line">16) &quot;idle&quot;</span><br><span class="line">127.0.0.1:6379[6]&gt;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <p><a href="https://my.oschina.net/letiantian/blog/526024" target="_blank" rel="noopener">如何使用redis构建异步任务处理程序</a></p>
@@ -362,7 +382,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#redis-配置"><span class="toc-number">1.</span> <span class="toc-text">redis 配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#python-操作-redis"><span class="toc-number">1.1.</span> <span class="toc-text">python 操作 redis</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Redis介绍"><span class="toc-number">1.2.</span> <span class="toc-text">Redis介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#面试问题"><span class="toc-number">1.3.</span> <span class="toc-text">面试问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#redis与memcached，mongodb区别"><span class="toc-number">1.4.</span> <span class="toc-text">redis与memcached，mongodb区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Memcache与Redis的区别"><span class="toc-number">1.5.</span> <span class="toc-text">Memcache与Redis的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#如果有大量的key需要设置同一时间过期，一般需要注意什么"><span class="toc-number">1.6.</span> <span class="toc-text">如果有大量的key需要设置同一时间过期，一般需要注意什么</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#redis-cli操作"><span class="toc-number">1.7.</span> <span class="toc-text">redis-cli操作</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#redis-配置"><span class="toc-number">1.</span> <span class="toc-text"> redis 配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#python-操作-redis"><span class="toc-number">1.1.</span> <span class="toc-text"> python 操作 redis</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#redis介绍"><span class="toc-number">1.2.</span> <span class="toc-text"> Redis介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#面试问题"><span class="toc-number">1.3.</span> <span class="toc-text"> 面试问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#redis与memcachedmongodb区别"><span class="toc-number">1.4.</span> <span class="toc-text"> redis与memcached，mongodb区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#memcache与redis的区别"><span class="toc-number">1.5.</span> <span class="toc-text"> Memcache与Redis的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#如果有大量的key需要设置同一时间过期一般需要注意什么"><span class="toc-number">1.6.</span> <span class="toc-text"> 如果有大量的key需要设置同一时间过期，一般需要注意什么</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#redis-cli操作"><span class="toc-number">1.7.</span> <span class="toc-text"> redis-cli操作</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -511,14 +531,6 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">HMM</a>
               </li>
              
@@ -528,6 +540,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">NER</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
               <li class="article-tag-list-item">

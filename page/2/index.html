@@ -146,106 +146,6 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-mysql优化" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/06/mysql优化/">mysql优化</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/06/mysql优化/" class="archive-article-date">
-  	<time datetime="2020-11-06T01:57:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="从代码角度优化"><a href="#从代码角度优化" class="headerlink" title="从代码角度优化"></a>从代码角度优化</h4><ul>
-<li>连接池<ul>
-<li>使用持久的连接数据库以避免连接开销。代码中我们一般使用连接池。</li>
-</ul>
-</li>
-<li>减少对MySQL访问<ul>
-<li>避免对同一数据做重复检索<ul>
-<li>理清取数逻辑，一次连接取出所有结果</li>
-</ul>
-</li>
-<li>查询缓存 MySQL Query Cache<ul>
-<li>存储select查询文本以及相应结果，随后收到相同的查询，server直接从查询缓存中取查询结果</li>
-<li>适用更新不频繁的表，当表更改(结构或者数据)时，查询缓存值相关的record也会清除</li>
-<li>需要指定开启<ul>
-<li>query_cache_size 表明缓存区大小，单位为M</li>
-<li>query_cache_type 的变量值从0 到2</li>
-<li>Qcache_queries_in_cache  在缓存中已注册的查询数目<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">variables</span> <span class="keyword">like</span> <span class="string">'%query_cache%'</span>;</span><br><span class="line"><span class="keyword">show</span> <span class="keyword">status</span> <span class="keyword">like</span> <span class="string">'query'</span>;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-        
-          <a class="article-more-a" href="/2020/11/06/mysql优化/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/06/mysql优化/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-mysql_sql_1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -266,7 +166,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="常用SQL语句"><a href="#常用SQL语句" class="headerlink" title="常用SQL语句"></a>常用SQL语句</h4><h5 id="查询table的主键"><a href="#查询table的主键" class="headerlink" title="查询table的主键"></a>查询table的主键</h5>
+        <h4 id="常用sql语句"><a class="markdownIt-Anchor" href="#常用sql语句"></a> 常用SQL语句</h4>
+<h5 id="查询table的主键"><a class="markdownIt-Anchor" href="#查询table的主键"></a> 查询table的主键</h5>
         
           <a class="article-more-a" href="/2020/11/05/mysql_sql_1/#more">more >></a>
         
@@ -342,7 +243,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="AJAX-CSRF-CORS"><a href="#AJAX-CSRF-CORS" class="headerlink" title="AJAX CSRF CORS"></a>AJAX CSRF CORS</h3>
+        <h3 id="ajax-csrf-cors"><a class="markdownIt-Anchor" href="#ajax-csrf-cors"></a> AJAX CSRF CORS</h3>
         
           <a class="article-more-a" href="/2020/11/05/django/#more">more >></a>
         
@@ -418,7 +319,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="Django-unit-test"><a href="#Django-unit-test" class="headerlink" title="Django unit test"></a>Django unit test</h3>
+        <h3 id="django-unit-test"><a class="markdownIt-Anchor" href="#django-unit-test"></a> Django unit test</h3>
         
           <a class="article-more-a" href="/2020/11/05/django_test/#more">more >></a>
         
@@ -494,7 +395,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="View"><a href="#View" class="headerlink" title="View"></a>View</h4>
+        <h4 id="view"><a class="markdownIt-Anchor" href="#view"></a> View</h4>
         
           <a class="article-more-a" href="/2020/11/05/django_源码/#more">more >></a>
         
@@ -570,7 +471,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="django-基本的操作"><a href="#django-基本的操作" class="headerlink" title="django 基本的操作"></a>django 基本的操作</h3>
+        <h3 id="django-基本的操作"><a class="markdownIt-Anchor" href="#django-基本的操作"></a> django 基本的操作</h3>
         
           <a class="article-more-a" href="/2020/11/05/django_1/#more">more >></a>
         
@@ -646,18 +547,20 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="二叉查找树-BST"><a href="#二叉查找树-BST" class="headerlink" title="二叉查找树 BST"></a>二叉查找树 BST</h4><ul>
+        <h4 id="二叉查找树-bst"><a class="markdownIt-Anchor" href="#二叉查找树-bst"></a> 二叉查找树 BST</h4>
+<ul>
 <li>任意节点，节点左边所有的值小于等于根节点</li>
 <li>任意节点，节点右边的值大于根节点</li>
 </ul>
-<p>局限性:<br>某些情况，BST会退化成一个有n个节点的线性链，降低了查找效率，进而引出AVL 平衡二叉查找树<br>
+<p>局限性:<br>
+某些情况，BST会退化成一个有n个节点的线性链，降低了查找效率，进而引出AVL 平衡二叉查找树</p>
         
           <a class="article-more-a" href="/2020/11/05/tree/#more">more >></a>
         
       
 
       
-    </p></div>
+    </div>
     <div class="article-info article-info-index">
       
       
@@ -727,26 +630,33 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>参考深入浅出MySQL 第18章</p>
-<h3 id="各种SQL执行效率"><a href="#各种SQL执行效率" class="headerlink" title="各种SQL执行效率"></a>各种SQL执行效率</h3><blockquote>
+<h3 id="各种sql执行效率"><a class="markdownIt-Anchor" href="#各种sql执行效率"></a> 各种SQL执行效率</h3>
+<blockquote>
 <p>show status</p>
+</blockquote>
 <ul>
-<li>show [session | global] status<ul>
+<li>show [session | global] status
+<ul>
 <li>session 当前连接</li>
 <li>global 从数据库上次启动至今统计结果</li>
 </ul>
 </li>
-<li>show status like ‘Com_%’;<ul>
+<li>show status like ‘Com_%’;
+<ul>
 <li>Com_select：执行select 操作的次数，一次查询只累加1。</li>
 <li>Com_insert：执行INSERT 操作的次数，对于批量插入的INSERT 操作，只累加一次。</li>
 <li>Com_update：执行UPDATE 操作的次数。</li>
-<li>Com_delete：执行DELETE 操作的次数。
+<li>Com_delete：执行DELETE 操作的次数。</li>
+</ul>
+</li>
+</ul>
         
           <a class="article-more-a" href="/2020/11/05/SQL优化/#more">more >></a>
         
       
 
       
-    </li></ul></li></ul></blockquote></div>
+    </div>
     <div class="article-info article-info-index">
       
       
@@ -815,14 +725,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>存储过程和函数是事先经过编译并存储在数据库中的一段SQL语句集合。调用存储过程和函数，减少数据在db和应用服务器之间的传输。<br>
+        <p>存储过程和函数是事先经过编译并存储在数据库中的一段SQL语句集合。调用存储过程和函数，减少数据在db和应用服务器之间的传输。</p>
         
           <a class="article-more-a" href="/2020/11/05/mysql存储过程/#more">more >></a>
         
       
 
       
-    </p></div>
+    </div>
     <div class="article-info article-info-index">
       
       
@@ -891,14 +801,15 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>所有mysql列类型都可以被索引。根据engine可以定义每个表的最大索引数和最大索引长度。<br>MyiSAM和Innodb表默认都是BTree索引，Mysql支持前缀索引，即对索引字段的前N个字符创建索引<br>
+        <p>所有mysql列类型都可以被索引。根据engine可以定义每个表的最大索引数和最大索引长度。<br>
+MyiSAM和Innodb表默认都是BTree索引，Mysql支持前缀索引，即对索引字段的前N个字符创建索引</p>
         
           <a class="article-more-a" href="/2020/11/05/mysql索引/#more">more >></a>
         
       
 
       
-    </p></div>
+    </div>
     <div class="article-info article-info-index">
       
       
@@ -947,9 +858,87 @@
 
 
   
+    <article id="post-mysql安装与使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/05/mysql安装与使用/">mysql安装与使用</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/05/mysql安装与使用/" class="archive-article-date">
+  	<time datetime="2020-11-05T02:12:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>ubuntu 18.04 - mysql 5.7</p>
+<h3 id="安装与配置"><a class="markdownIt-Anchor" href="#安装与配置"></a> 安装与配置</h3>
+<h4 id="1-安装"><a class="markdownIt-Anchor" href="#1-安装"></a> 1. 安装</h4>
+        
+          <a class="article-more-a" href="/2020/11/05/mysql安装与使用/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/05/mysql安装与使用/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
     </nav>
   
 
@@ -1061,14 +1050,6 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">HMM</a>
               </li>
              
@@ -1078,6 +1059,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">NER</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
               <li class="article-tag-list-item">

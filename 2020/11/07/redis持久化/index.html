@@ -171,8 +171,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>重启系统或者关闭系统，之前缓存在内存中的数据都会丢失再也不能找回。因此为了避免这种情况，Redis需要实现持久化将内存中的数据存储起来<br><a id="more"></a></p>
-<h4 id="持久化"><a href="#持久化" class="headerlink" title="持久化"></a>持久化</h4><ul>
+        <p>重启系统或者关闭系统，之前缓存在内存中的数据都会丢失再也不能找回。因此为了避免这种情况，Redis需要实现持久化将内存中的数据存储起来</p>
+<a id="more"></a>
+<h4 id="持久化"><a class="markdownIt-Anchor" href="#持久化"></a> 持久化</h4>
+<ul>
 <li>RDB</li>
 </ul>
 <p>将某个时间点的所有数据都存放到硬盘上</p>
@@ -187,25 +189,31 @@
 <p>使用 AOF 持久化需要设置同步选项，从而确保<strong>写命令</strong>同步到磁盘文件上的时机。这是因为对文件进行写入并不会马上将内容同步到磁盘上，而是先存储到缓冲区，然后由操作系统决定什么时候同步到磁盘。</p>
 <p>记录每次对服务器写的操作，当服务器重启的时候会重新执行这些命令来恢复原始的数据，AOF命令以redis协议追加保存每次写的操作到文件末尾。Redis还能对AOF文件进行后台重写，使得AOF文件的体积不至于过大。</p>
 <p>同时开启RDB和AOF：你也可以同时开启两种持久化方式，在这种情况下当redis重启的时候会优先载入AOF文件来恢复原始的数据，因为在通常情况下AOF文件保存的数据集要比RDB文件保存的数据集要完整</p>
-<h4 id="RDB持久化"><a href="#RDB持久化" class="headerlink" title="RDB持久化"></a>RDB持久化</h4><p>把当前内存数据生成快照保存到硬盘。</p>
+<h4 id="rdb持久化"><a class="markdownIt-Anchor" href="#rdb持久化"></a> RDB持久化</h4>
+<p>把当前内存数据生成快照保存到硬盘。</p>
 <ul>
-<li>手动触发<ul>
+<li>手动触发
+<ul>
 <li>对应save命令，会阻塞当前Redis服务器，</li>
 </ul>
 </li>
-<li>自动触发<ul>
+<li>自动触发
+<ul>
 <li>bgsave redis进程fork子进程，rdb持久化由子进程负责，完成后自动结束，阻塞只发生fork阶段，时间短</li>
 </ul>
 </li>
 </ul>
-<h4 id="AOF"><a href="#AOF" class="headerlink" title="AOF"></a>AOF</h4><p>append only file，以独立日志的方式记录每次写命令，重启时再重新执行AOF中的命令，达到恢复数据的目的。</p>
+<h4 id="aof"><a class="markdownIt-Anchor" href="#aof"></a> AOF</h4>
+<p>append only file，以独立日志的方式记录每次写命令，重启时再重新执行AOF中的命令，达到恢复数据的目的。</p>
 <p>开启AOF需要配置appendonly yes,默认不开启。</p>
 <p>AOF工作流程: 命令写入，文件同步，文件重写，重启加载</p>
 <img src="/2020/11/07/redis持久化/image-20201107162934401.png" title="image-20201107162934401">
 <ul>
-<li><p>AOF为什么把命令追加到aof_buf中？Redis使用单线程响应命令，如果每次写AOF文件命令都直接追加到硬盘，那么性能完全取决于当前硬盘负载。先写入缓冲区aof_buf中，还有另一个好处，Redis可以提供多种缓冲区同步硬盘的策略，在性能和安全性方面做出平衡。</p>
+<li>
+<p>AOF为什么把命令追加到aof_buf中？Redis使用单线程响应命令，如果每次写AOF文件命令都直接追加到硬盘，那么性能完全取决于当前硬盘负载。先写入缓冲区aof_buf中，还有另一个好处，Redis可以提供多种缓冲区同步硬盘的策略，在性能和安全性方面做出平衡。</p>
 </li>
-<li><p>随着AOF文件越来越大，需要定期对AOF文件进行重写，达到压缩的目的</p>
+<li>
+<p>随着AOF文件越来越大，需要定期对AOF文件进行重写，达到压缩的目的</p>
 </li>
 </ul>
 <p>数据恢复流程</p>
@@ -214,12 +222,14 @@
 <li>AOF关闭或者AOF文件不存在时，加载RDB文件</li>
 <li>AOF/RDB文件存在错误时，Redis启动失败并打印错误信息</li>
 </ul>
-<h4 id="AOF和RDB优缺点"><a href="#AOF和RDB优缺点" class="headerlink" title="AOF和RDB优缺点"></a>AOF和RDB优缺点</h4><p>RDB优点</p>
+<h4 id="aof和rdb优缺点"><a class="markdownIt-Anchor" href="#aof和rdb优缺点"></a> AOF和RDB优缺点</h4>
+<p>RDB优点</p>
 <ul>
 <li>保存某个时间点的数据集，适合数据集备份</li>
 <li>紧凑的单一文件，方便传送，适用于灾难恢复</li>
 <li>RDB保存时，父进程fork一个子进程来做，父进程不需要再做其他IO操作</li>
-<li>相比AOF，恢复大数据集的时候，RDB快一点<br>缺点</li>
+<li>相比AOF，恢复大数据集的时候，RDB快一点<br>
+缺点</li>
 <li>若要保存整个数据集，通常要每隔5min或者更久做一次完成保存，万一redis宕机，<strong>损失几分钟数据</strong></li>
 <li>RDB通过fork子进程保存数据集到硬盘上。数据集比较大的时候, fork 的过程是非常耗时的,可能会导致 Redis 在一些毫秒级内不能响应客户端的请求</li>
 </ul>
@@ -238,12 +248,15 @@
 <p>RDB优点：</p>
 <ul>
 <li>RDB 是紧凑的二进制文件，比较适合备份，全量复制等场景</li>
-<li>RDB 恢复数据远快于 AOF<br>RDB缺点：</li>
+<li>RDB 恢复数据远快于 AOF<br>
+RDB缺点：</li>
 <li>RDB 无法实现实时或者秒级持久化；</li>
-<li>新老版本无法兼容 RDB 格式。<br>AOF优点：</li>
+<li>新老版本无法兼容 RDB 格式。<br>
+AOF优点：</li>
 <li>可以更好地保护数据不丢失；</li>
 <li>append-only 模式写入性能比较高；</li>
-<li>适合做灾难性的误删除紧急恢复。<br>AOF缺点：</li>
+<li>适合做灾难性的误删除紧急恢复。<br>
+AOF缺点：</li>
 <li>对于同一份文件，AOF 文件要比 RDB 快照大；</li>
 <li>AOF 开启后，<strong>会对写的 QPS 有所影响</strong>，相对于 RDB 来说 写 QPS 要下降；</li>
 <li>数据库恢复比较慢， 不合适做冷备。</li>
@@ -369,7 +382,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#持久化"><span class="toc-number">1.</span> <span class="toc-text">持久化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RDB持久化"><span class="toc-number">2.</span> <span class="toc-text">RDB持久化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#AOF"><span class="toc-number">3.</span> <span class="toc-text">AOF</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#AOF和RDB优缺点"><span class="toc-number">4.</span> <span class="toc-text">AOF和RDB优缺点</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#持久化"><span class="toc-number">1.</span> <span class="toc-text"> 持久化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#rdb持久化"><span class="toc-number">2.</span> <span class="toc-text"> RDB持久化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#aof"><span class="toc-number">3.</span> <span class="toc-text"> AOF</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#aof和rdb优缺点"><span class="toc-number">4.</span> <span class="toc-text"> AOF和RDB优缺点</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -518,14 +531,6 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">HMM</a>
               </li>
              
@@ -535,6 +540,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">NER</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>mysql优化 | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="从代码角度优化 连接池 使用持久的连接数据库以避免连接开销。代码中我们一般使用连接池。   减少对MySQL访问 避免对同一数据做重复检索 理清取数逻辑，一次连接取出所有结果   查询缓存 MySQL Query Cache 存储select查询文本以及相应结果，随后收到相同的查询，server直接从查询缓存中取查询结果 适用更新不频繁的表，当表更改(结构或者数据)时，查询缓存值相关的record">
+  <meta name="description" content="从代码角度优化  连接池  使用持久的连接数据库以避免连接开销。代码中我们一般使用连接池。   减少对MySQL访问  避免对同一数据做重复检索  理清取数逻辑，一次连接取出所有结果   查询缓存 MySQL Query Cache  存储select查询文本以及相应结果，随后收到相同的查询，server直接从查询缓存中取查询结果 适用更新不频繁的表，当表更改(结构或者数据)时，查询缓存值相关的">
 <meta name="keywords" content="mysql">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql优化">
 <meta property="og:url" content="http://jasonyu.top/2020/11/06/mysql优化/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="从代码角度优化 连接池 使用持久的连接数据库以避免连接开销。代码中我们一般使用连接池。   减少对MySQL访问 避免对同一数据做重复检索 理清取数逻辑，一次连接取出所有结果   查询缓存 MySQL Query Cache 存储select查询文本以及相应结果，随后收到相同的查询，server直接从查询缓存中取查询结果 适用更新不频繁的表，当表更改(结构或者数据)时，查询缓存值相关的record">
+<meta property="og:description" content="从代码角度优化  连接池  使用持久的连接数据库以避免连接开销。代码中我们一般使用连接池。   减少对MySQL访问  避免对同一数据做重复检索  理清取数逻辑，一次连接取出所有结果   查询缓存 MySQL Query Cache  存储select查询文本以及相应结果，随后收到相同的查询，server直接从查询缓存中取查询结果 适用更新不频繁的表，当表更改(结构或者数据)时，查询缓存值相关的">
 <meta property="og:locale" content="default">
 <meta property="og:updated_time" content="2020-11-06T03:22:56.291Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql优化">
-<meta name="twitter:description" content="从代码角度优化 连接池 使用持久的连接数据库以避免连接开销。代码中我们一般使用连接池。   减少对MySQL访问 避免对同一数据做重复检索 理清取数逻辑，一次连接取出所有结果   查询缓存 MySQL Query Cache 存储select查询文本以及相应结果，随后收到相同的查询，server直接从查询缓存中取查询结果 适用更新不频繁的表，当表更改(结构或者数据)时，查询缓存值相关的record">
+<meta name="twitter:description" content="从代码角度优化  连接池  使用持久的连接数据库以避免连接开销。代码中我们一般使用连接池。   减少对MySQL访问  避免对同一数据做重复检索  理清取数逻辑，一次连接取出所有结果   查询缓存 MySQL Query Cache  存储select查询文本以及相应结果，随后收到相同的查询，server直接从查询缓存中取查询结果 适用更新不频繁的表，当表更改(结构或者数据)时，查询缓存值相关的">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -169,52 +169,67 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="从代码角度优化"><a href="#从代码角度优化" class="headerlink" title="从代码角度优化"></a>从代码角度优化</h4><ul>
-<li>连接池<ul>
+        <h4 id="从代码角度优化"><a class="markdownIt-Anchor" href="#从代码角度优化"></a> 从代码角度优化</h4>
+<ul>
+<li>连接池
+<ul>
 <li>使用持久的连接数据库以避免连接开销。代码中我们一般使用连接池。</li>
 </ul>
 </li>
-<li>减少对MySQL访问<ul>
-<li>避免对同一数据做重复检索<ul>
+<li>减少对MySQL访问
+<ul>
+<li>避免对同一数据做重复检索
+<ul>
 <li>理清取数逻辑，一次连接取出所有结果</li>
 </ul>
 </li>
-<li>查询缓存 MySQL Query Cache<ul>
+<li>查询缓存 MySQL Query Cache
+<ul>
 <li>存储select查询文本以及相应结果，随后收到相同的查询，server直接从查询缓存中取查询结果</li>
 <li>适用更新不频繁的表，当表更改(结构或者数据)时，查询缓存值相关的record也会清除</li>
-<li>需要指定开启<ul>
+<li>需要指定开启
+<ul>
 <li>query_cache_size 表明缓存区大小，单位为M</li>
 <li>query_cache_type 的变量值从0 到2</li>
-<li>Qcache_queries_in_cache  在缓存中已注册的查询数目<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">variables</span> <span class="keyword">like</span> <span class="string">'%query_cache%'</span>;</span><br><span class="line"><span class="keyword">show</span> <span class="keyword">status</span> <span class="keyword">like</span> <span class="string">'query'</span>;</span><br></pre></td></tr></table></figure>
-</li>
+<li>Qcache_queries_in_cache  在缓存中已注册的查询数目</li>
 </ul>
 </li>
 </ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">variables</span> <span class="keyword">like</span> <span class="string">'%query_cache%'</span>;</span><br><span class="line"><span class="keyword">show</span> <span class="keyword">status</span> <span class="keyword">like</span> <span class="string">'query'</span>;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
 </ul>
 <a id="more"></a>
 <ul>
-<li>应用端增加cache层<ul>
-<li>例如把部分数据从数据库中抽取出来放在应用端，查询时直接去这个”cache”中检索， 涉及到的问题有数据更新怎么办，多久更新这个”cache”</li>
+<li>应用端增加cache层
+<ul>
+<li>例如把部分数据从数据库中抽取出来放在应用端，查询时直接去这个&quot;cache&quot;中检索， 涉及到的问题有数据更新怎么办，多久更新这个&quot;cache&quot;</li>
 <li>或者建立一个二级数据库，把访问频度大的数据放到二级库上，然后设定一个机制与主数据库同步，降低主数据库的压力</li>
-<li>负载均衡</li>
 </ul>
 </li>
+<li>负载均衡
+<ul>
 <li>核心思想把固定的负载量分布到不同的server上</li>
-<li>MySQL 复制分流— 主从复制<ul>
+<li>MySQL 复制分流-- 主从复制
+<ul>
 <li>分流update和select操作，即主server承担update，多台从服务器承担select，主从之间通过复制实现同步，多台从服务器一方面确保可用性，另一方面可以创建不同的索引满足不同查询需要</li>
 <li>问题：主服务器更新频繁或网络问题，主从之间存在较大延迟更新</li>
-<li>分布式数据库</li>
 </ul>
 </li>
+</ul>
+</li>
+<li>分布式数据库
+<ul>
 <li>适合大数据量，负载高，具有良好的扩展性和高可用性</li>
-<li>具体实现，使用MySQL的CLUSTER功能，分布式事务只支持InnoDB engine<ul>
-<li>其他优化思想</li>
+<li>具体实现，使用MySQL的CLUSTER功能，分布式事务只支持InnoDB engine</li>
 </ul>
 </li>
+<li>其他优化思想
+<ul>
 <li>字段尽量不用自增属性，因为在高并发情况下，字段的自增可能对效率有影响，推荐在应用中实现字段的自增长</li>
+</ul>
+</li>
 </ul>
 
       
@@ -337,7 +352,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#从代码角度优化"><span class="toc-number">1.</span> <span class="toc-text">从代码角度优化</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#从代码角度优化"><span class="toc-number">1.</span> <span class="toc-text"> 从代码角度优化</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -486,14 +501,6 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">HMM</a>
               </li>
              
@@ -503,6 +510,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">NER</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
               <li class="article-tag-list-item">
