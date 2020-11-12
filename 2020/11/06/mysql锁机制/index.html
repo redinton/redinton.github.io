@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>mysql锁机制 | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="锁机制和事务控制 Innodb提供行级锁，支持共享锁和排它锁两种锁定模式和四种不同的隔离级别.  表级锁  开销小，加锁快，不会出现死锁，锁定粒度大，发生锁冲突概率最高，并发度最低   行级锁  开销大，枷锁慢，会出现死锁，锁定粒度小，发生锁冲突概率最低，并发度最高   页面锁  开销和加锁时间界于表锁和行锁之间；会出现死锁；锁定粒度界于表锁和行锁之间，并发度一搬">
+  <meta name="description" content="锁机制和事务控制 Innodb提供行级锁，支持共享锁和排它锁两种锁定模式和四种不同的隔离级别.  表级锁  开销小，加锁快，不会出现死锁，锁定粒度大，发生锁冲突概率最高，并发度最低   行级锁  开销大，枷锁慢，会出现死锁，锁定粒度小，发生锁冲突概率最低，并发度最高   页面锁  开销和加锁时间界于表锁和行锁之间；会出现死锁；锁定粒度界于表锁和行锁之间，并发度一般">
 <meta name="keywords" content="mysql">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql锁机制">
 <meta property="og:url" content="http://jasonyu.top/2020/11/06/mysql锁机制/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="锁机制和事务控制 Innodb提供行级锁，支持共享锁和排它锁两种锁定模式和四种不同的隔离级别.  表级锁  开销小，加锁快，不会出现死锁，锁定粒度大，发生锁冲突概率最高，并发度最低   行级锁  开销大，枷锁慢，会出现死锁，锁定粒度小，发生锁冲突概率最低，并发度最高   页面锁  开销和加锁时间界于表锁和行锁之间；会出现死锁；锁定粒度界于表锁和行锁之间，并发度一搬">
+<meta property="og:description" content="锁机制和事务控制 Innodb提供行级锁，支持共享锁和排它锁两种锁定模式和四种不同的隔离级别.  表级锁  开销小，加锁快，不会出现死锁，锁定粒度大，发生锁冲突概率最高，并发度最低   行级锁  开销大，枷锁慢，会出现死锁，锁定粒度小，发生锁冲突概率最低，并发度最高   页面锁  开销和加锁时间界于表锁和行锁之间；会出现死锁；锁定粒度界于表锁和行锁之间，并发度一般">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-06T03:22:56.299Z">
+<meta property="og:updated_time" content="2020-11-12T02:18:43.637Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql锁机制">
-<meta name="twitter:description" content="锁机制和事务控制 Innodb提供行级锁，支持共享锁和排它锁两种锁定模式和四种不同的隔离级别.  表级锁  开销小，加锁快，不会出现死锁，锁定粒度大，发生锁冲突概率最高，并发度最低   行级锁  开销大，枷锁慢，会出现死锁，锁定粒度小，发生锁冲突概率最低，并发度最高   页面锁  开销和加锁时间界于表锁和行锁之间；会出现死锁；锁定粒度界于表锁和行锁之间，并发度一搬">
+<meta name="twitter:description" content="锁机制和事务控制 Innodb提供行级锁，支持共享锁和排它锁两种锁定模式和四种不同的隔离级别.  表级锁  开销小，加锁快，不会出现死锁，锁定粒度大，发生锁冲突概率最高，并发度最低   行级锁  开销大，枷锁慢，会出现死锁，锁定粒度小，发生锁冲突概率最低，并发度最高   页面锁  开销和加锁时间界于表锁和行锁之间；会出现死锁；锁定粒度界于表锁和行锁之间，并发度一般">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -184,7 +184,7 @@
 </li>
 <li>页面锁
 <ul>
-<li>开销和加锁时间界于表锁和行锁之间；会出现死锁；锁定粒度界于表锁和行锁之间，并发度一搬</li>
+<li>开销和加锁时间界于表锁和行锁之间；会出现死锁；锁定粒度界于表锁和行锁之间，并发度一般</li>
 </ul>
 </li>
 </ul>
@@ -565,11 +565,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -582,6 +586,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
               </li>
             
             <div class="clearfix"></div>

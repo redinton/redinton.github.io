@@ -17,7 +17,7 @@
 <meta property="og:description" content="重启系统或者关闭系统，之前缓存在内存中的数据都会丢失再也不能找回。因此为了避免这种情况，Redis需要实现持久化将内存中的数据存储起来">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://jasonyu.top/2020/11/07/redis持久化/image-20201107162934401.png">
-<meta property="og:updated_time" content="2020-11-07T11:20:13.170Z">
+<meta property="og:updated_time" content="2020-11-12T02:18:43.631Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="redis持久化">
 <meta name="twitter:description" content="重启系统或者关闭系统，之前缓存在内存中的数据都会丢失再也不能找回。因此为了避免这种情况，Redis需要实现持久化将内存中的数据存储起来">
@@ -216,9 +216,9 @@
 <p>随着AOF文件越来越大，需要定期对AOF文件进行重写，达到压缩的目的</p>
 </li>
 </ul>
-<p>数据恢复流程</p>
+<p>数据恢复流程<br>
+*** AOF持久化开启且存在AOF文件时，优先加载AOF文件**</p>
 <ul>
-<li>AOF持久化开启且存在AOF文件时，优先加载AOF文件</li>
 <li>AOF关闭或者AOF文件不存在时，加载RDB文件</li>
 <li>AOF/RDB文件存在错误时，Redis启动失败并打印错误信息</li>
 </ul>
@@ -235,7 +235,11 @@
 </ul>
 <p>AOF优点</p>
 <ul>
-<li>不同fsync策略，无fsync，每秒fsync，每次写的时候fsync，一旦故障，最多丢1s的数据</li>
+<li>不同fsync策略，无fsync，每秒fsync，每次写的时候fsync，默认每秒fsync,一旦故障，最多丢1s的数据
+<ul>
+<li>无fsync，让os自动操作把缓存数据写到硬盘上，不可靠，但最快</li>
+</ul>
+</li>
 <li>AOF是只进行追加的日志文件，不需要写入seek</li>
 <li>整个重写操作是绝对安全的，因为 <strong>Redis 在创建新 AOF 文件的过程中，会继续将命令追加到现有的 AOF 文件里面，即使重写过程中发生停机，现有的 AOF 文件也不会丢失</strong>。而一旦新 AOF 文件创建完毕，Redis 就会从旧 AOF 文件切换到新 AOF 文件，并开始对新 AOF 文件进行追加操作</li>
 <li>AOF 文件有序地保存了对数据库执行的所有写入操作， 这些写入操作以 Redis 协议的格式保存， 因此 AOF 文件的内容非常容易被人读懂， 对文件进行分析（parse）也很轻松。导出（export） AOF 文件也非常简单：举个例子， 如果你不小心执行了 FLUSHALL 命令， 但只要 AOF 文件未被重写， 那么只要停止服务器， 移除 AOF 文件末尾的 FLUSHALL 命令， 并重启 Redis ， 就可以将数据集恢复到 FLUSHALL 执行之前的状态</li>
@@ -244,6 +248,7 @@
 <ul>
 <li>对于相同的数据集来说，AOF 文件的体积通常要大于 RDB 文件的体积</li>
 <li>数据恢复（load）时AOF比RDB慢，通常RDB 可以提供更有保证的最大延迟时间。</li>
+<li>大量写入和载入的时候，AOF的效率会比RDB低，大量写入，AOF会执行更多的保存命令，载入的时候也需要大量的重执行命令。</li>
 </ul>
 <p>RDB优点：</p>
 <ul>
@@ -260,6 +265,22 @@ AOF缺点：</li>
 <li>对于同一份文件，AOF 文件要比 RDB 快照大；</li>
 <li>AOF 开启后，<strong>会对写的 QPS 有所影响</strong>，相对于 RDB 来说 写 QPS 要下降；</li>
 <li>数据库恢复比较慢， 不合适做冷备。</li>
+</ul>
+<h4 id="如何选择"><a class="markdownIt-Anchor" href="#如何选择"></a> 如何选择</h4>
+<ul>
+<li>不考虑硬盘大小，最安全的方式是RDB和AOF同时使用，即使AOF损坏无法修复，还可以用RDB恢复数据</li>
+<li>若redis的数据在服务中并不是必要数据，只是当简单缓存，意味着数据的安全可靠性不是首要考虑范围，那么单独使用RDB就可以</li>
+<li>不推荐单独用AOF</li>
+</ul>
+<h4 id="redis-持久化从rdb切到aof"><a class="markdownIt-Anchor" href="#redis-持久化从rdb切到aof"></a> redis 持久化从rdb切到aof</h4>
+<ul>
+<li>redis 默认是rdb把数据dump到dump.rdb文件下</li>
+<li>贸然切换到aof，重启后会读取aof文件，但这个时候aof文件是空的</li>
+<li>操作方法
+<ul>
+<li>redis command 动态配置打开aof方式，在shutdown安全退出后，自动记录当前所有记录到aof中，再修改redis文件配置打开aof方式，启动redis后会自动加载之前安全退出保存的aof数据</li>
+</ul>
+</li>
 </ul>
 
       
@@ -382,7 +403,7 @@ AOF缺点：</li>
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#持久化"><span class="toc-number">1.</span> <span class="toc-text"> 持久化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#rdb持久化"><span class="toc-number">2.</span> <span class="toc-text"> RDB持久化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#aof"><span class="toc-number">3.</span> <span class="toc-text"> AOF</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#aof和rdb优缺点"><span class="toc-number">4.</span> <span class="toc-text"> AOF和RDB优缺点</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#持久化"><span class="toc-number">1.</span> <span class="toc-text"> 持久化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#rdb持久化"><span class="toc-number">2.</span> <span class="toc-text"> RDB持久化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#aof"><span class="toc-number">3.</span> <span class="toc-text"> AOF</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#aof和rdb优缺点"><span class="toc-number">4.</span> <span class="toc-text"> AOF和RDB优缺点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#如何选择"><span class="toc-number">5.</span> <span class="toc-text"> 如何选择</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#redis-持久化从rdb切到aof"><span class="toc-number">6.</span> <span class="toc-text"> redis 持久化从rdb切到aof</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -543,11 +564,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -560,6 +585,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
               </li>
             
             <div class="clearfix"></div>
