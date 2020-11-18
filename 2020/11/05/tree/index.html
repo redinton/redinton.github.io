@@ -19,7 +19,10 @@
 <meta property="og:image" content="http://jasonyu.top/2020/11/05/tree/image-20201105144424251.png">
 <meta property="og:image" content="http://jasonyu.top/2020/11/05/tree/image-20201105154843079.png">
 <meta property="og:image" content="http://jasonyu.top/2020/11/05/tree/image-20201106115118751.png">
-<meta property="og:updated_time" content="2020-11-06T06:17:26.669Z">
+<meta property="og:image" content="http://jasonyu.top/2020/11/05/tree/image-20201116163721814.png">
+<meta property="og:image" content="http://jasonyu.top/2020/11/05/tree/image-20201116163747072.png">
+<meta property="og:image" content="http://jasonyu.top/2020/11/05/tree/image-20201116163936907.png">
+<meta property="og:updated_time" content="2020-11-18T05:54:52.656Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="树结构">
 <meta name="twitter:description" content="二叉查找树 BST  任意节点，节点左边所有的值小于等于根节点 任意节点，节点右边的值大于根节点  局限性: 某些情况，BST会退化成一个有n个节点的线性链，降低了查找效率，进而引出AVL 平衡二叉查找树">
@@ -231,19 +234,66 @@
 <p>以上大多数的树都是作为内存中的数据结构。</p>
 <h4 id="b树b树"><a class="markdownIt-Anchor" href="#b树b树"></a> B树/B+树</h4>
 <ul>
-<li>B树和B-树是一致的。MySQL中的数据一般是放在磁盘中，读取数据会涉及访问磁盘的操作。其中定位数据在磁盘中的哪一块是一个很耗时的工作。</li>
-<li><strong>B/B+树是N叉平衡树</strong>(平衡多路查找树)，每个节点可以有更多的孩子，新的值可以插在已有的节点里，而不改变树的高度，从而大量减少重新平衡和数据迁移的次数。适合做db索引这种需要持久化在磁盘，同时需要大量查询和插入操作的应用。</li>
-<li>B/B+树上操作时间由读取磁盘时间和CPU计算时间构成，B树操作效率主要取决于访问磁盘的次数。</li>
-<li>B+树应文件系统(文件的目录一级一级索引，但只有最底层的叶子结点(文件)保存数据,非叶子节点只存索引</li>
-<li>B+树比B树更适合db索引
+<li>
+<p>B树和B-树是一致的。MySQL中的数据一般是放在磁盘中，读取数据会涉及访问磁盘的操作。其中定位数据在磁盘中的哪一块是一个很耗时的工作。</p>
+</li>
+<li>
+<p><strong>B/B+树是N叉平衡树</strong>(平衡多路查找树)，每个节点可以有更多的孩子，新的值可以插在已有的节点里，而不改变树的高度，从而大量减少重新平衡和数据迁移的次数。适合做db索引这种需要持久化在磁盘，同时需要大量查询和插入操作的应用。</p>
+</li>
+<li>
+<p>B/B+树上操作时间由读取磁盘时间和CPU计算时间构成，B树操作效率主要取决于访问磁盘的次数。</p>
+</li>
+<li>
+<p>B+树应文件系统(文件的目录一级一级索引，但只有最底层的叶子结点(文件)保存数据,非叶子节点只存索引</p>
+</li>
+<li>
+<p>B+树比B树更适合db索引</p>
 <ul>
 <li>B+树的<strong>磁盘读写代价更低</strong>：B+树的内部节点并没有指向关键字具体信息的指针，因此其内部节点相对B树更小，如果把所有同一内部节点的关键字存放在同一盘块中，那么盘块所能容纳的关键字数量也越多，一次性读入内存的需要查找的关键字也就越多，<strong>相对IO读写次数</strong>就降低了。</li>
 <li><strong>B+树的查询效率更加稳</strong>定：由于非终结点并不是最终指向文件内容的结点，而只是叶子结点中关键字的索引。所以任何关键字的查找必须走一条从根结点到叶子结点的路。所有关键字查询的路径长度相同，导致每一个数据的查询效率相当。</li>
 <li>由于B+树的数据都存储在叶子结点中，<strong>分支结点均为索引</strong>，方便扫库，只需要扫一遍叶子结点即可，但是B树因为其分支结点同样存储着数据，我们要找到具体的数据，需要进行一次中序遍历按序来扫，所以B+树<strong>更加适合在区间查询</strong>的情况，所以通常B+树用于数据库索引。</li>
 </ul>
 </li>
+<li>
+<p>B树和B+树的区别</p>
+<ul>
+<li>
+<p>B树如下</p>
+</li>
+<li>
+<img src="/2020/11/05/tree/image-20201116163721814.png" title="image-20201116163721814">
+</li>
+<li>
+<p>B+树如下</p>
+</li>
+<li>
+<img src="/2020/11/05/tree/image-20201116163747072.png" title="image-20201116163747072">
+</li>
+<li>
+<p>B+Tree比B-Tree更适合实现外存储索引结构</p>
+</li>
+<li>
+<p>与B-Tree相比，B+Tree有以下不同点：</p>
+<ul>
+<li>
+<p>每个节点的指针上限为2d而不是2d+1。</p>
+</li>
+<li>
+<p>内节点不存储data，只存储key；叶子节点不存储指针</p>
+</li>
+</ul>
+</li>
+<li>
+<img src="/2020/11/05/tree/image-20201116163936907.png" title="image-20201116163936907">
+<ul>
+<li>带有顺序访问指针的B+Tree 要查询key为从18到49的所有数据记录，当找到18后，只需顺着节点和指针顺序遍历就可以一次性访问到所有数据节点，极大提到了区间查询效率</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <p>以上的树都是有序的，因此在有数据库索引的情况下，order by索引的值速度会特别快，因为只是在遍历树。</p>
+<p><a href="http://blog.codinglabs.org/articles/theory-of-mysql-index.html" target="_blank" rel="noopener">参考</a></p>
 <h4 id="trie树"><a class="markdownIt-Anchor" href="#trie树"></a> Trie树</h4>
 <ul>
 <li>Trie并不是平衡树，也不一定非要有序</li>
@@ -658,6 +708,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">网络</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
@@ -666,11 +724,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">text classification</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">text classification</a>
+                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -678,7 +736,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">OS</a>
               </li>
              
               <li class="article-tag-list-item">

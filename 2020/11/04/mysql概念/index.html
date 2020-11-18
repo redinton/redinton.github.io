@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Keep Moving">
 <meta property="og:description" content="mysql 的引擎 mysql的存储方式由引擎决定，常用的有Innodb和MySiam。  不同的引擎区别在于如何存储和索引数据，是否使用事务">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-06T03:22:56.295Z">
+<meta property="og:updated_time" content="2020-11-18T05:54:52.647Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql概念">
 <meta name="twitter:description" content="mysql 的引擎 mysql的存储方式由引擎决定，常用的有Innodb和MySiam。  不同的引擎区别在于如何存储和索引数据，是否使用事务">
@@ -288,7 +288,7 @@
 <p>InnoDB存储引擎，表的普通索引都会保存主键的值，主键要尽可能较短的数据类型，有效减少索引占用空间</p>
 </li>
 <li>
-<p>InnoDB用的B-tree索引，数值类型的列在等值判断, &gt;,&lt;, &gt;=,&lt;=,between… and &lt;&gt;时，索引生效</p>
+<p>InnoDB用的B+索引，数值类型的列在等值判断, &gt;,&lt;, &gt;=,&lt;=,between… and &lt;&gt;时，索引生效</p>
 <ol>
 <li>字符串类型的列，如果不是通配符开头的模糊查询，索引也是起作用的</li>
 <li>索引失效，意味着做全表查询</li>
@@ -597,6 +597,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">网络</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
@@ -605,11 +613,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">text classification</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">text classification</a>
+                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -617,7 +625,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">OS</a>
               </li>
              
               <li class="article-tag-list-item">

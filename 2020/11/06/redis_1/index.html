@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Keep Moving">
 <meta property="og:description" content="redis 配置 101服务器上的redis 服务是通过以下命令安装 12sudo apt-get updatesudo apt-get install redis-server">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-07T11:20:13.161Z">
+<meta property="og:updated_time" content="2020-11-18T05:54:52.641Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="redis基础(-)">
 <meta name="twitter:description" content="redis 配置 101服务器上的redis 服务是通过以下命令安装 12sudo apt-get updatesudo apt-get install redis-server">
@@ -213,8 +213,14 @@
 <li>
 <p>redis 单线程原因</p>
 <ul>
-<li>redis是基于内存的操作，CPU不是redis瓶颈，redis瓶颈最有可能是内存大小或者网络带宽</li>
+<li>reids通过I/O多路复用同时监听多个文件描述符(客户端连接)的可读和可写状态，一旦收到网络请求会在内存中快速处理</li>
+<li>redis是基于内存的操作，<strong>CPU不是redis瓶颈</strong>，r<strong>edis瓶颈最有可能是内存大小或者网络带宽</strong></li>
 <li>单线程指的是在处理网络请求的时候只有一个线程处理，起redis server时肯定不止一个线程</li>
+<li>新版redis引入多线程
+<ul>
+<li>DEL 删除一个键对应的值，若删除的key-value很大，redis会在释放内存空间上消耗较多时间，这些操作会阻塞待处理的任务，因此可以改成后台线程异步执行</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -543,6 +549,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">网络</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
@@ -551,11 +565,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">text classification</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">text classification</a>
+                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -563,7 +577,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">OS</a>
               </li>
              
               <li class="article-tag-list-item">

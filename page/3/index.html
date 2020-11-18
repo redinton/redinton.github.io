@@ -146,35 +146,29 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-tree" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-redis持久化" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/05/tree/">树结构</a>
+      <a class="article-title" href="/2020/11/07/redis持久化/">redis持久化</a>
     </h1>
   
 
         
-        <a href="/2020/11/05/tree/" class="archive-article-date">
-  	<time datetime="2020-11-05T06:41:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-05</time>
+        <a href="/2020/11/07/redis持久化/" class="archive-article-date">
+  	<time datetime="2020-11-07T01:46:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-07</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="二叉查找树-bst"><a class="markdownIt-Anchor" href="#二叉查找树-bst"></a> 二叉查找树 BST</h4>
-<ul>
-<li>任意节点，节点左边所有的值小于等于根节点</li>
-<li>任意节点，节点右边的值大于根节点</li>
-</ul>
-<p>局限性:<br>
-某些情况，BST会退化成一个有n个节点的线性链，降低了查找效率，进而引出AVL 平衡二叉查找树</p>
+        <p>重启系统或者关闭系统，之前缓存在内存中的数据都会丢失再也不能找回。因此为了避免这种情况，Redis需要实现持久化将内存中的数据存储起来</p>
         
-          <a class="article-more-a" href="/2020/11/05/tree/#more">more >></a>
+          <a class="article-more-a" href="/2020/11/07/redis持久化/#more">more >></a>
         
       
 
@@ -188,7 +182,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">algorithm</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">redis</a>
         		</li>
       		
 		</ul>
@@ -198,7 +192,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/05/tree/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/11/07/redis持久化/">展开全文 >></a>
         </p>
       
 
@@ -228,49 +222,67 @@
 
 
   
-    <article id="post-SQL优化" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-redis数据结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/05/SQL优化/">SQL优化</a>
+      <a class="article-title" href="/2020/11/06/redis数据结构/">redis数据结构</a>
     </h1>
   
 
         
-        <a href="/2020/11/05/SQL优化/" class="archive-article-date">
-  	<time datetime="2020-11-05T03:26:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-05</time>
+        <a href="/2020/11/06/redis数据结构/" class="archive-article-date">
+  	<time datetime="2020-11-06T05:30:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-06</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>参考深入浅出MySQL 第18章</p>
-<h3 id="各种sql执行效率"><a class="markdownIt-Anchor" href="#各种sql执行效率"></a> 各种SQL执行效率</h3>
-<blockquote>
-<p>show status</p>
-</blockquote>
+        <h4 id="value的数据结构类型"><a class="markdownIt-Anchor" href="#value的数据结构类型"></a> value的数据结构类型</h4>
+<p>Redis 可以存储键和五种不同类型的值之间的映射。键的类型只能为字符串，值支持五种数据类型：字符串、列表、集合、散列表、有序集合。</p>
 <ul>
-<li>show [session | global] status
+<li>string
 <ul>
-<li>session 当前连接</li>
-<li>global 从数据库上次启动至今统计结果</li>
+<li>字符串类型的值实际可以是字符串（<strong>简单的字符串、复杂的字符串</strong>（例如JSON、XML））、<strong>数字</strong><br>
+<strong>（整数、浮点数），甚至是二进制</strong>（图片、音频、视频），但是值最大不能<br>
+<strong>超过512MB</strong>。</li>
+<li>set key_name value</li>
 </ul>
 </li>
-<li>show status like ‘Com_%’;
+<li>hash
 <ul>
-<li>Com_select：执行select 操作的次数，一次查询只累加1。</li>
-<li>Com_insert：执行INSERT 操作的次数，对于批量插入的INSERT 操作，只累加一次。</li>
-<li>Com_update：执行UPDATE 操作的次数。</li>
-<li>Com_delete：执行DELETE 操作的次数。</li>
+<li>hset key_name field value</li>
+</ul>
+</li>
+<li>list
+<ul>
+<li>linkedlist</li>
+<li>ziplist</li>
+<li>lpush key_name v1 v2 … vn list头部添加字符串元素</li>
+<li>rpush key_name v1 v2 … vn</li>
+<li>lrem key_name count value 对应list中删除count个和value相同的元素</li>
+<li>llen key_name 返回对应的list长度</li>
+</ul>
+</li>
+<li>set
+<ul>
+<li>sadd key_name value</li>
+<li>集合通过哈希表实现，添加删除查找的复杂度都是O(1)</li>
+</ul>
+</li>
+<li>zset(有序集合)
+<ul>
+<li>zadd key_name score1 value1</li>
+<li>通过分数从小到大排序，分数可以重复，元素不重复</li>
 </ul>
 </li>
 </ul>
         
-          <a class="article-more-a" href="/2020/11/05/SQL优化/#more">more >></a>
+          <a class="article-more-a" href="/2020/11/06/redis数据结构/#more">more >></a>
         
       
 
@@ -284,7 +296,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">redis</a>
         		</li>
       		
 		</ul>
@@ -294,7 +306,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/05/SQL优化/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/11/06/redis数据结构/">展开全文 >></a>
         </p>
       
 
@@ -324,29 +336,31 @@
 
 
   
-    <article id="post-mysql存储过程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-redis_1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/05/mysql存储过程/">mysql存储过程</a>
+      <a class="article-title" href="/2020/11/06/redis_1/">redis基础(-)</a>
     </h1>
   
 
         
-        <a href="/2020/11/05/mysql存储过程/" class="archive-article-date">
-  	<time datetime="2020-11-05T03:06:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-05</time>
+        <a href="/2020/11/06/redis_1/" class="archive-article-date">
+  	<time datetime="2020-11-06T05:27:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-06</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>存储过程和函数是事先经过编译并存储在数据库中的一段SQL语句集合。调用存储过程和函数，减少数据在db和应用服务器之间的传输。</p>
+        <h3 id="redis-配置"><a class="markdownIt-Anchor" href="#redis-配置"></a> redis 配置</h3>
+<p>101服务器上的redis 服务是通过以下命令安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install redis-server</span><br></pre></td></tr></table></figure>
         
-          <a class="article-more-a" href="/2020/11/05/mysql存储过程/#more">more >></a>
+          <a class="article-more-a" href="/2020/11/06/redis_1/#more">more >></a>
         
       
 
@@ -360,7 +374,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">redis</a>
         		</li>
       		
 		</ul>
@@ -370,7 +384,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/05/mysql存储过程/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/11/06/redis_1/">展开全文 >></a>
         </p>
       
 
@@ -400,269 +414,54 @@
 
 
   
-    <article id="post-mysql索引" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-mysql锁机制" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/05/mysql索引/">mysql索引</a>
+      <a class="article-title" href="/2020/11/06/mysql锁机制/">mysql锁机制</a>
     </h1>
   
 
         
-        <a href="/2020/11/05/mysql索引/" class="archive-article-date">
-  	<time datetime="2020-11-05T02:57:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-05</time>
+        <a href="/2020/11/06/mysql锁机制/" class="archive-article-date">
+  	<time datetime="2020-11-06T02:44:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-06</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>所有mysql列类型都可以被索引。根据engine可以定义每个表的最大索引数和最大索引长度。<br>
-MyiSAM和Innodb表默认都是BTree索引，Mysql支持前缀索引，即对索引字段的前N个字符创建索引</p>
-        
-          <a class="article-more-a" href="/2020/11/05/mysql索引/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/05/mysql索引/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-mysql安装与使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/05/mysql安装与使用/">mysql安装与使用</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/05/mysql安装与使用/" class="archive-article-date">
-  	<time datetime="2020-11-05T02:12:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>ubuntu 18.04 - mysql 5.7</p>
-<h3 id="安装与配置"><a class="markdownIt-Anchor" href="#安装与配置"></a> 安装与配置</h3>
-<h4 id="1-安装"><a class="markdownIt-Anchor" href="#1-安装"></a> 1. 安装</h4>
-        
-          <a class="article-more-a" href="/2020/11/05/mysql安装与使用/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/05/mysql安装与使用/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-django_ORM" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/04/django_ORM/">django_ORM</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/04/django_ORM/" class="archive-article-date">
-  	<time datetime="2020-11-04T08:09:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="annotate和aggregate"><a class="markdownIt-Anchor" href="#annotate和aggregate"></a> annotate和aggregate</h3>
-<p>初级查询方法如filter()和exclude().<br>
-涉及对queryset某些字段进行计算或分组计算排序时</p>
-        
-          <a class="article-more-a" href="/2020/11/04/django_ORM/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">django</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/04/django_ORM/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-mysql事务" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/04/mysql事务/">mysql事务,隔离级别</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/04/mysql事务/" class="archive-article-date">
-  	<time datetime="2020-11-04T05:56:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="事务-transaction"><a class="markdownIt-Anchor" href="#事务-transaction"></a> 事务 (transaction)</h3>
-<p>把多条语句作为一个整体进行操作 – 成为数据库事务</p>
+        <h3 id="乐观锁和悲观锁"><a class="markdownIt-Anchor" href="#乐观锁和悲观锁"></a> 乐观锁和悲观锁</h3>
+<p>悲观锁：假定会发生并发冲突，屏蔽一切可能违反数据完整性的操作</p>
+<p>乐观锁：假设不会发生并发冲突，只在<strong>提交操作时检查是否违反数据完整</strong>性。</p>
+<h3 id="mvcc"><a class="markdownIt-Anchor" href="#mvcc"></a> MVCC</h3>
+<p>全称是Multi-Version Concurrent Control，即多版本并发控制，在MVCC协议下，每个读操作会看到一个一致性的snapshot，并且可以实<strong>现非阻塞的读</strong>。MVCC<strong>允许数据具有多个版本</strong>，这个版本可以是时间戳或者是全局递增的事务ID，在同一个时间点，不同的事务看到的数据是不同的。</p>
+<h3 id="mysql的innodb引擎是如何实现mvcc的"><a class="markdownIt-Anchor" href="#mysql的innodb引擎是如何实现mvcc的"></a> MySQL的innodb引擎是如何实现MVCC的</h3>
+<p>innodb会为每一行添加两个字段，分别表示该行创建的版本和删除的版本，填入的是事务的版本号，这个版本号随着事务的创建不断递增</p>
+<h3 id="锁机制和事务控制"><a class="markdownIt-Anchor" href="#锁机制和事务控制"></a> 锁机制和事务控制</h3>
+<p>Innodb提供行级锁，支持共享锁和排它锁两种锁定模式和四种不同的隔离级别.</p>
 <ul>
-<li>确保该事务范围内的所有操作全部成功或全部失败</li>
-<li>单条SQL语句, 数据库系统自动作为一个事务执行, 这种事务称为<strong>隐式事务</strong>。</li>
-<li>手动将多条SQL语句作为一个事务执行,  使用BEGIN开启一个事务, 使用COMMIT提交一个事务, 成为<strong>显式事务</strong>。</li>
-<li>主动让事务失败,  用ROLLBACK回滚事务, 整个事务会失败。</li>
+<li>表级锁
+<ul>
+<li>开销小，加锁快，不会出现死锁，锁定粒度大，发生锁冲突概率最高，并发度最低</li>
+</ul>
+</li>
+<li>行级锁
+<ul>
+<li>开销大，加锁慢，会出现死锁，锁定粒度小，发生锁冲突概率最低，并发度最高</li>
+</ul>
+</li>
+<li>页面锁
+<ul>
+<li>开销和加锁时间界于表锁和行锁之间；会出现死锁；锁定粒度界于表锁和行锁之间，并发度一般</li>
+</ul>
+</li>
 </ul>
         
-          <a class="article-more-a" href="/2020/11/04/mysql事务/#more">more >></a>
+          <a class="article-more-a" href="/2020/11/06/mysql锁机制/#more">more >></a>
         
       
 
@@ -686,7 +485,7 @@ MyiSAM和Innodb表默认都是BTree索引，Mysql支持前缀索引，即对索�
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/04/mysql事务/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/11/06/mysql锁机制/">展开全文 >></a>
         </p>
       
 
@@ -716,33 +515,59 @@ MyiSAM和Innodb表默认都是BTree索引，Mysql支持前缀索引，即对索�
 
 
   
-    <article id="post-mysql概念" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-mysql优化" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/04/mysql概念/">mysql概念</a>
+      <a class="article-title" href="/2020/11/06/mysql优化/">mysql优化</a>
     </h1>
   
 
         
-        <a href="/2020/11/04/mysql概念/" class="archive-article-date">
-  	<time datetime="2020-11-04T05:54:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-04</time>
+        <a href="/2020/11/06/mysql优化/" class="archive-article-date">
+  	<time datetime="2020-11-06T01:57:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-06</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="mysql-的引擎"><a class="markdownIt-Anchor" href="#mysql-的引擎"></a> mysql 的引擎</h3>
-<p>mysql的存储方式由引擎决定，常用的有Innodb和MySiam。</p>
+        <h4 id="从代码角度优化"><a class="markdownIt-Anchor" href="#从代码角度优化"></a> 从代码角度优化</h4>
 <ul>
-<li>不同的引擎区别在于如何存储和索引数据，是否使用事务</li>
+<li>连接池
+<ul>
+<li>使用持久的连接数据库以避免连接开销。代码中我们一般使用连接池。</li>
+</ul>
+</li>
+<li>减少对MySQL访问
+<ul>
+<li>避免对同一数据做重复检索
+<ul>
+<li>理清取数逻辑，一次连接取出所有结果</li>
+</ul>
+</li>
+<li>查询缓存 MySQL Query Cache
+<ul>
+<li>存储select查询文本以及相应结果，随后收到相同的查询，server直接从查询缓存中取查询结果</li>
+<li>适用更新不频繁的表，当表更改(结构或者数据)时，查询缓存值相关的record也会清除</li>
+<li>需要指定开启
+<ul>
+<li>query_cache_size 表明缓存区大小，单位为M</li>
+<li>query_cache_type 的变量值从0 到2</li>
+<li>Qcache_queries_in_cache  在缓存中已注册的查询数目</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">variables</span> <span class="keyword">like</span> <span class="string">'%query_cache%'</span>;</span><br><span class="line"><span class="keyword">show</span> <span class="keyword">status</span> <span class="keyword">like</span> <span class="string">'query'</span>;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
 </ul>
         
-          <a class="article-more-a" href="/2020/11/04/mysql概念/#more">more >></a>
+          <a class="article-more-a" href="/2020/11/06/mysql优化/#more">more >></a>
         
       
 
@@ -766,7 +591,7 @@ MyiSAM和Innodb表默认都是BTree索引，Mysql支持前缀索引，即对索�
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/04/mysql概念/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/11/06/mysql优化/">展开全文 >></a>
         </p>
       
 
@@ -796,29 +621,30 @@ MyiSAM和Innodb表默认都是BTree索引，Mysql支持前缀索引，即对索�
 
 
   
-    <article id="post-django_auth_user" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-mysql_sql_1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/28/django_auth_user/">django_auth_user</a>
+      <a class="article-title" href="/2020/11/05/mysql_sql_1/">SQL语法</a>
     </h1>
   
 
         
-        <a href="/2020/10/28/django_auth_user/" class="archive-article-date">
-  	<time datetime="2020-10-28T09:30:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-28</time>
+        <a href="/2020/11/05/mysql_sql_1/" class="archive-article-date">
+  	<time datetime="2020-11-05T15:05:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-05</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="user"><a class="markdownIt-Anchor" href="#user"></a> User</h3>
+        <h4 id="常用sql语句"><a class="markdownIt-Anchor" href="#常用sql语句"></a> 常用SQL语句</h4>
+<h5 id="查询table的主键"><a class="markdownIt-Anchor" href="#查询table的主键"></a> 查询table的主键</h5>
         
-          <a class="article-more-a" href="/2020/10/28/django_auth_user/#more">more >></a>
+          <a class="article-more-a" href="/2020/11/05/mysql_sql_1/#more">more >></a>
         
       
 
@@ -832,7 +658,7 @@ MyiSAM和Innodb表默认都是BTree索引，Mysql支持前缀索引，即对索�
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">django</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
         		</li>
       		
 		</ul>
@@ -842,7 +668,7 @@ MyiSAM和Innodb表默认都是BTree索引，Mysql支持前缀索引，即对索�
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/10/28/django_auth_user/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/11/05/mysql_sql_1/">展开全文 >></a>
         </p>
       
 
@@ -872,31 +698,29 @@ MyiSAM和Innodb表默认都是BTree索引，Mysql支持前缀索引，即对索�
 
 
   
-    <article id="post-django_authentication" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-django" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/27/django_authentication/">django authentication</a>
+      <a class="article-title" href="/2020/11/05/django/">django 杂七杂八</a>
     </h1>
   
 
         
-        <a href="/2020/10/27/django_authentication/" class="archive-article-date">
-  	<time datetime="2020-10-27T03:08:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-27</time>
+        <a href="/2020/11/05/django/" class="archive-article-date">
+  	<time datetime="2020-11-05T14:54:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-05</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>鉴权部分 (authentication)</p>
-<p>参考 <a href="https://medium.com/@allwindicaprio/session-vs-token-based-authentication-b1f862dd7ed8" target="_blank" rel="noopener">1</a></p>
-<p>在配置中 <a href="http://base.py" target="_blank" rel="noopener">base.py</a> / <a href="http://development.py" target="_blank" rel="noopener">development.py</a></p>
+        <h3 id="ajax-csrf-cors"><a class="markdownIt-Anchor" href="#ajax-csrf-cors"></a> AJAX CSRF CORS</h3>
         
-          <a class="article-more-a" href="/2020/10/27/django_authentication/#more">more >></a>
+          <a class="article-more-a" href="/2020/11/05/django/#more">more >></a>
         
       
 
@@ -920,7 +744,235 @@ MyiSAM和Innodb表默认都是BTree索引，Mysql支持前缀索引，即对索�
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/10/27/django_authentication/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/11/05/django/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-django_test" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/05/django_test/">django 测试</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/05/django_test/" class="archive-article-date">
+  	<time datetime="2020-11-05T14:53:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="django-unit-test"><a class="markdownIt-Anchor" href="#django-unit-test"></a> Django unit test</h3>
+        
+          <a class="article-more-a" href="/2020/11/05/django_test/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">django</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/05/django_test/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-django_源码" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/05/django_源码/">django_源码</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/05/django_源码/" class="archive-article-date">
+  	<time datetime="2020-11-05T14:52:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="view"><a class="markdownIt-Anchor" href="#view"></a> View</h4>
+        
+          <a class="article-more-a" href="/2020/11/05/django_源码/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">django</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/05/django_源码/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-django_1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/05/django_1/">django基本操作</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/05/django_1/" class="archive-article-date">
+  	<time datetime="2020-11-05T14:51:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="django-基本的操作"><a class="markdownIt-Anchor" href="#django-基本的操作"></a> django 基本的操作</h3>
+        
+          <a class="article-more-a" href="/2020/11/05/django_1/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">django</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/05/django_1/">展开全文 >></a>
         </p>
       
 
@@ -952,7 +1004,7 @@ MyiSAM和Innodb表默认都是BTree索引，Mysql支持前缀索引，即对索�
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
     </nav>
   
 
@@ -1076,6 +1128,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">网络</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
@@ -1084,11 +1144,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">text classification</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">text classification</a>
+                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1096,7 +1156,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">OS</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -146,29 +146,573 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-redis持久化" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-装饰器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/07/redis持久化/">redis持久化</a>
+      <a class="article-title" href="/2020/11/11/装饰器/">装饰器</a>
     </h1>
   
 
         
-        <a href="/2020/11/07/redis持久化/" class="archive-article-date">
-  	<time datetime="2020-11-07T01:46:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-07</time>
+        <a href="/2020/11/11/装饰器/" class="archive-article-date">
+  	<time datetime="2020-11-11T07:08:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-11</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>重启系统或者关闭系统，之前缓存在内存中的数据都会丢失再也不能找回。因此为了避免这种情况，Redis需要实现持久化将内存中的数据存储起来</p>
+        <h4 id="特性"><a class="markdownIt-Anchor" href="#特性"></a> 特性</h4>
+<ul>
+<li>在加载模块时立即执行，在被装饰的函数定义之后立即执行
+<ul>
+<li>下述例子中装饰器register最早执行了两次,就是在加载模块时执行两次</li>
+</ul>
+</li>
+<li>函数装饰器在导入模块时立即执行，而被装饰的函数只在明确调用<br>
+时运行</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">register</span><span class="params">(func)</span>:</span></span><br><span class="line">    print(<span class="string">'running register(%s)'</span> % func)</span><br><span class="line">    registry.append(func) </span><br><span class="line">    <span class="keyword">return</span> func</span><br><span class="line"><span class="meta">@register </span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f1</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'running f1()'</span>)</span><br><span class="line"><span class="meta">@register</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f2</span><span class="params">()</span>:</span></span><br><span class="line">	print(<span class="string">'running f2()'</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f3</span><span class="params">()</span>:</span> </span><br><span class="line">	print(<span class="string">'running f3()'</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'running main()'</span>)</span><br><span class="line">    print(<span class="string">'registry -&gt;'</span>, registry)</span><br><span class="line">    f1()</span><br><span class="line">    f2()</span><br><span class="line">    f3()</span><br><span class="line"><span class="keyword">if</span> __name__==<span class="string">'__main__'</span>:</span><br><span class="line">	main()</span><br><span class="line"></span><br><span class="line">running register(&lt;function f1 at <span class="number">0x100631bf8</span>&gt;)</span><br><span class="line">running register(&lt;function f2 at <span class="number">0x100631c80</span>&gt;)</span><br><span class="line">running main()</span><br><span class="line">registry -&gt; [&lt;function f1 at 0x100631bf8&gt;, &lt;function f2 at 0x100631c80&gt;]</span><br><span class="line">running f1()</span><br><span class="line">running f2()</span><br><span class="line">running f3()</span><br></pre></td></tr></table></figure>
+<h4 id="闭包"><a class="markdownIt-Anchor" href="#闭包"></a> 闭包</h4>
+<ul>
+<li>只有嵌套函数时才有闭包问题</li>
+<li>延伸了作用域的函数，包含函数定义体中引用，但是不在定义体中定义的非全局变量</li>
+<li>关键是它能访问定义体之外定义的非全局变量。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">make_averager</span><span class="params">()</span>:</span></span><br><span class="line">    series = []</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">averager</span><span class="params">(new_value)</span>:</span></span><br><span class="line">        series.append(new_value)</span><br><span class="line">        total = sum(series)</span><br><span class="line">        <span class="keyword">return</span> total/len(series)</span><br><span class="line">	<span class="keyword">return</span> averager</span><br></pre></td></tr></table></figure>
+<p>在averager中, series是自由变量(指未在本地作用域中绑定 的变量)</p>
+<p>但是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">make_averager</span><span class="params">()</span>:</span></span><br><span class="line">    count = <span class="number">0</span></span><br><span class="line">    total = <span class="number">0</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">averager</span><span class="params">(new_value)</span>:</span></span><br><span class="line">        count += <span class="number">1</span></span><br><span class="line">        total += new_value</span><br><span class="line">        <span class="keyword">return</span> total / count</span><br><span class="line">    <span class="keyword">return</span> averager</span><br></pre></td></tr></table></figure>
+<p>报错，因为 count += 1，count是不可变类型，该操作等于把count变成了局部变量。</p>
+<p>series因为是[] 可变类型，并没有给series赋值的操作，而是调用改了append 接口。</p>
+<p>针对不可变两类型，可以用nonlocal 关键字 py3</p>
+<h4 id="叠放装饰器"><a class="markdownIt-Anchor" href="#叠放装饰器"></a> 叠放装饰器</h4>
+<p>操作顺序</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@d1</span></span><br><span class="line"><span class="meta">@d2</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">()</span>:</span></span><br><span class="line">	<span class="keyword">print</span> (<span class="string">"f"</span>)</span><br><span class="line"></span><br><span class="line">f = d1(d2(f))</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/11/装饰器/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
         
-          <a class="article-more-a" href="/2020/11/07/redis持久化/#more">more >></a>
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-位操作技巧" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/11/位操作技巧/">位操作技巧</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/11/位操作技巧/" class="archive-article-date">
+  	<time datetime="2020-11-11T06:30:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>
+<p>判断两个数异号</p>
+<ul>
+<li>((a^b) &lt; 0)</li>
+<li>通过乘积或者商来判断异号可能会有溢出</li>
+</ul>
+</li>
+<li>
+<p>消除数字n二进制表示中最后一个1</p>
+<ul>
+<li>n &amp; (n-1)</li>
+<li>计算汉明权重</li>
+<li>判断一个数是不是2的指数
+<ul>
+<li>如果是，那么其二进制表示一定只含有一个1</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">algorithm</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/11/位操作技巧/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-随机抽样-有无权重" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/11/随机抽样-有无权重/">随机抽样-有无权重</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/11/随机抽样-有无权重/" class="archive-article-date">
+  	<time datetime="2020-11-11T02:45:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>四种类型的随机抽样</p>
+<ul>
+<li>未知长度的数组，只遍历一次，随机返回数组中任意一个数。 (随机指的是均匀随机)</li>
+<li>未知长度的数组，只遍历一次，随机返回数组中任意k个数。 (随机指的是均匀随机)</li>
+<li>已知长度的数组以及对应的权重，按照权重随机抽取索引</li>
+<li>构造一个生成器类，构造函数传⼊⼀个很⻓的数组，请你实现randomGet ⽅法，每次调⽤随机返回数组中的⼀个元素，多次调⽤不能重复返回相同索引的元素。要求不能对该数组进⾏任何形式的修改，且操作的时间复杂度是 O(1)。</li>
+</ul>
+<h4 id="未知长度的数组只遍历一次随机返回数组中任意一个数-随机指的是均匀随机"><a class="markdownIt-Anchor" href="#未知长度的数组只遍历一次随机返回数组中任意一个数-随机指的是均匀随机"></a> 未知长度的数组，只遍历一次，随机返回数组中任意一个数。 (随机指的是均匀随机)</h4>
+<p>即长度为N，保证每个元素被抽中的概率是 1/N<br>
+结论:  当你遇到第 i 个元素时，应该有 1/i 的概率选择该元素， 1 - 1/i 的概率保持原有的选择。</p>
+<img src="/2020/11/11/随机抽样-有无权重/image-20201111105115299.png" title="image-20201111105115299">
+<h4 id="未知长度的数组只遍历一次随机返回数组中任意k个数-随机指的是均匀随机"><a class="markdownIt-Anchor" href="#未知长度的数组只遍历一次随机返回数组中任意k个数-随机指的是均匀随机"></a> 未知长度的数组，只遍历一次，随机返回数组中任意k个数。 (随机指的是均匀随机)</h4>
+<p>要随机选择 k 个数，只要在第 i 个元素处以 k/i 的概率选择该元素，以 1 - k/i 的概率保持原有选择</p>
+<p>因为虽然每次更新选择的概率增⼤了 k 倍，但是选到具体第 i 个元素的概率还是要乘 1/k ，也就回到了上⼀个推导。</p>
+<img src="/2020/11/11/随机抽样-有无权重/image-20201111105306948.png" title="image-20201111105306948">
+<h4 id="已知长度的数组以及对应的权重按照权重随机抽取索引"><a class="markdownIt-Anchor" href="#已知长度的数组以及对应的权重按照权重随机抽取索引"></a> 已知长度的数组以及对应的权重，按照权重随机抽取索引</h4>
+<ul>
+<li>线性扫描，大概过程是先计算出所有道具的权重总和S，然后调用随机函数得到一个区间在[0, S)的随机值，接着从头向后扫描道具列表，并不断从S减掉每个道具的权重值，当S小于某个道具的权重值时，这个道具就是抽中的那一个 复杂度在O(N)</li>
+<li>先计算出总和列表，列表中每**个值是前面N个权重值的总和，**这样这个列表就是有序的，再对这个列表使用二分查找得到权重索引。复杂度是O(logN)</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">algorithm</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/11/随机抽样-有无权重/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-redis场景设计使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/11/redis场景设计使用/">redis场景设计使用</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/11/redis场景设计使用/" class="archive-article-date">
+  	<time datetime="2020-11-11T01:48:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="用redis实现购物车的功能"><a class="markdownIt-Anchor" href="#用redis实现购物车的功能"></a> 用redis实现购物车的功能</h3>
+<p>在修改频繁的情况下，不会用关系型数据库来存储购物车的信息。 可以考虑用redis或者mongodb这种非关系型数据库</p>
+<p>设计: 用户ID作为key,商品ID作为field，商品数量作为value<br>
+增加购物车内商品</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hset cart:1001 10021 1</span><br><span class="line">hset cart:1001 10025 1</span><br><span class="line">hset cart:1001 10079 1</span><br></pre></td></tr></table></figure>
+<ul>
+<li>全选功能
+<ul>
+<li>获取某用户购物车内的所有商品</li>
+<li>
+<blockquote>
+<p>hgetall cart:1001 # 获取某个key下的所有field和value</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>商品数量
+<ul>
+<li>显示购物车内商品总数量</li>
+<li>
+<blockquote>
+<p>hlen cart:1001 # 显示某个key下所有field的数量</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>删除某商品
+<ul>
+<li>删除购物车内的某个商品</li>
+<li>
+<blockquote>
+<p>hdel cart:1001 10079</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>增加或减少商品的数量</li>
+<li>
+<blockquote>
+<p>hincrby cart:1001 10021 1</p>
+</blockquote>
+</li>
+</ul>
+<p>购物车</p>
+<ul>
+<li>未登录时暂存购物车
+<ul>
+<li>如果存在服务端，需要每个暂存购物车有一个全局唯一标识，比较浪费服务端资源</li>
+<li>存客户端，选项是session，cookie，localstorage
+<ul>
+<li>session的保留时间短，且数据实际还是存服务端</li>
+<li>cookie存储实现简单，加减购物车，合并购物车中由于服务端可以读写cookie，全部逻辑都可以在服务端实现，并且客户端和服务端请求的次数也相对少一些。</li>
+<li>LocalStorage 存储，客户端和服务端都要实现一些业务逻辑，但 LocalStorage 的好处是，它的存储容量比 Cookie 的 4KB 上限要大得多，而且不用像 Cookie 那样，无论用不用，每次请求都要带着，可以节省带宽。</li>
+<li>小型电商，那用 Cookie 存储实现起来更简单。再比如，你的电商是面那种批发的行业用户，用户需要加购大量的商品，那 Cookie 可能容量不够用，选择 LocalStorage 就更合适。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>登录后的购物车</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">redis</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/11/redis场景设计使用/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-分布式网站架构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/09/分布式网站架构/">分布式网站架构</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/09/分布式网站架构/" class="archive-article-date">
+  	<time datetime="2020-11-09T09:34:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="副本-replica"><a class="markdownIt-Anchor" href="#副本-replica"></a> 副本 replica</h4>
+<p>分布式系统对数据和服务提供的一种冗余方式,为了对外提供高可用的服务，我们往往会对数据和服务进行副本处理。</p>
+<ul>
+<li>数据副本指在不同节点上持久同一份数据，当<strong>某一个节点上存储的数据丢失时，可以从副本上读取到该数据</strong>，这是解决分布式系统数据丢失问题的有效手段。</li>
+<li>服务副本指多个节点提供同样的服务，每个节点都有能力接受来自外部的请求并进行相应的处理。</li>
+</ul>
+<h4 id="应用服务和数据服务分离"><a class="markdownIt-Anchor" href="#应用服务和数据服务分离"></a> 应用服务和数据服务分离</h4>
+<p>应用和数据分离后整个网站使用 3 台服务器: 应用服务器、文件服务器和数据库服务器。</p>
+<ul>
+<li>应用服务器业务逻辑，需要<strong>强大的CPU</strong></li>
+<li>数据库服务器对磁盘读写操作很多，需要更快的磁盘和更大的内存</li>
+<li>文件服务器存储用户上传的文件，因此需要更大的磁盘空间</li>
+</ul>
+<img src="/2020/11/09/分布式网站架构/image-20201109173854910.png" title="image-20201109173854910">
+<h4 id="使用缓存改善网站性能"><a class="markdownIt-Anchor" href="#使用缓存改善网站性能"></a> 使用缓存改善网站性能</h4>
+<p>大部分业务访问集中在一小部分数据上，那就把这一小部分数据先提前缓存在内存中，而不是每次都去数据库读取，这样就可以减少数据库的访问压力，从而提高整个网站的访问速度。</p>
+<p>网站使用的缓存一般分<strong>为缓存到应用服务器</strong>或者<strong>缓存在专门的分布式缓存服务器</strong></p>
+<ul>
+<li>缓存到应用服务器自己的访问速度快很多，但是受自身内存限制</li>
+<li>远程分布式缓存使用一个集群专门负责缓存服务，当内存不够还可以轻松得动态扩容</li>
+</ul>
+<h4 id="应用服务器集群改善网站的并发处理"><a class="markdownIt-Anchor" href="#应用服务器集群改善网站的并发处理"></a> 应用服务器集群改善网站的并发处理</h4>
+<p>使用缓存后，数据访问压力得到了缓解，但是单一应用服务器能够<strong>处理的请求连接有</strong>限。</p>
+<p>对网站架构而言，只要能通过增加一台服务器的方式改善负载压力，就可以以同样的方式持续增加服务器不断改善系统性能，从而实现系统的可伸缩性。</p>
+<p>通过负载均衡调度服务器，可以将来自用户浏览器的访问请求分发到应用服务器集群中的任何一台服务器上。</p>
+<h4 id="数据库读写分离"><a class="markdownIt-Anchor" href="#数据库读写分离"></a> 数据库读写分离</h4>
+<p>目前大部分的主流数据库都提供<strong>主从热备</strong>功能，通过配置<strong>两台数据库主从</strong>关系，可以将一台数据库服务器的<strong>数据更新同步</strong>到另一台服务器上。</p>
+<p>应用服务器<strong>在写数据的时候，访问主数据库</strong>，主数据库通过<strong>主从复制机制将数据更新同步到从</strong>数据库，这样当应用服务器读数据的时候，就可以通过从数据库获得数据。为了便于应用程序访问读写分离后的数据库，通常<strong>在应用服务器端使用专门的数据访问</strong>模块，使数据库读写分离对应用透明</p>
+<h4 id="使用反向代理和-cdn-加速网站响应"><a class="markdownIt-Anchor" href="#使用反向代理和-cdn-加速网站响应"></a> 使用反向代理和 CDN 加速网站响应</h4>
+<p>网站需要加速网站访问速度。主要手段有使用 CDN 和反向代理。</p>
+<ul>
+<li>反向代理和负载均衡的区别
+<ul>
+<li>反向代理，是把一些静态资源存储在服务器上，当用户有请求的时候，就直接返回反向代理服务器上的资源给用户，而如果反向代理服务器上没有的资源，就转发给后面的负载均衡服务</li>
+<li>反向代理服务器是需要存储资源的，让用户更快速的接收到资源</li>
+<li>负载均衡就是，为了保证后端web服务器的高可用，高并发，是不需要要存储资源，只需要转发用户的请求</li>
+</ul>
+</li>
+</ul>
+<h4 id="分布式文件系统和分布式数据库系统"><a class="markdownIt-Anchor" href="#分布式文件系统和分布式数据库系统"></a> 分布式文件系统和分布式数据库系统</h4>
+<p>分布式数据库是网站数据库拆分的最后手段，只有<strong>在单表数据规模非常庞大的</strong>时候才使用。不到不得已时，网站更常用的数据库拆分手段是业务分库，将不同业务的数据部署在不同的物理服务器上。</p>
+<h4 id="分布式服务"><a class="markdownIt-Anchor" href="#分布式服务"></a> 分布式服务</h4>
+<p>随着业务拆分越来越小，存储系统越来越庞大，应用系统的整体复杂度呈指数级增加，部署维护越来越困难。由于所有应用要和所有数据库系统连接，在数万台服务器规模的网站中，这些连接的数目是服务器规模的平方，导致数据库连接资源不足，拒绝服务。</p>
+<p>既然每一个应用系统都需要执行许多相同的业务操作，比如用户管理、商品管理等，那么可以将这些共用的业务提取出来，独立部署。由这些可复用的业务连接数据库，提供共用业务服务，而应用系统只需要管理用户界面，通过分布式服务调用共用业务服务完成具体业务操作。</p>
+<img src="/2020/11/09/分布式网站架构/image-20201109174905452.png" title="image-20201109174905452">
+<h3 id="相关问题"><a class="markdownIt-Anchor" href="#相关问题"></a> 相关问题</h3>
+<h4 id="集群部署分布式session"><a class="markdownIt-Anchor" href="#集群部署分布式session"></a> 集群部署，分布式session</h4>
+<ul>
+<li>不用session，通过JWT token储存用户身份</li>
+<li>使用redis，写到redis里面</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">develop,分布式</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/09/分布式网站架构/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-redis哨兵机制" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/07/redis哨兵机制/">redis哨兵机制</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/07/redis哨兵机制/" class="archive-article-date">
+  	<time datetime="2020-11-07T09:55:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Redis 的主从复制模式下，一旦主节点由于故障不能提供服务，需要<strong>手动将从节点晋升为主节点</strong>，同时还要通知客户端更新主节点地址，这种故障处理方式从一定程度上是无法接受的。</p>
+        
+          <a class="article-more-a" href="/2020/11/07/redis哨兵机制/#more">more >></a>
         
       
 
@@ -192,7 +736,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/07/redis持久化/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/11/07/redis哨兵机制/">展开全文 >></a>
         </p>
       
 
@@ -222,67 +766,36 @@
 
 
   
-    <article id="post-redis数据结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-redis主从复制" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/06/redis数据结构/">redis数据结构</a>
+      <a class="article-title" href="/2020/11/07/redis主从复制/">redis主从复制</a>
     </h1>
   
 
         
-        <a href="/2020/11/06/redis数据结构/" class="archive-article-date">
-  	<time datetime="2020-11-06T05:30:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-06</time>
+        <a href="/2020/11/07/redis主从复制/" class="archive-article-date">
+  	<time datetime="2020-11-07T09:50:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-07</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="value的数据结构类型"><a class="markdownIt-Anchor" href="#value的数据结构类型"></a> value的数据结构类型</h4>
-<p>Redis 可以存储键和五种不同类型的值之间的映射。键的类型只能为字符串，值支持五种数据类型：字符串、列表、集合、散列表、有序集合。</p>
+        <p>数据的复制是单向的，只能由主节点到从节点</p>
+<p>主从复制的作用</p>
 <ul>
-<li>string
-<ul>
-<li>字符串类型的值实际可以是字符串（<strong>简单的字符串、复杂的字符串</strong>（例如JSON、XML））、<strong>数字</strong><br>
-<strong>（整数、浮点数），甚至是二进制</strong>（图片、音频、视频），但是值最大不能<br>
-<strong>超过512MB</strong>。</li>
-<li>set key_name value</li>
-</ul>
-</li>
-<li>hash
-<ul>
-<li>hset key_name field value</li>
-</ul>
-</li>
-<li>list
-<ul>
-<li>linkedlist</li>
-<li>ziplist</li>
-<li>lpush key_name v1 v2 … vn list头部添加字符串元素</li>
-<li>rpush key_name v1 v2 … vn</li>
-<li>lrem key_name count value 对应list中删除count个和value相同的元素</li>
-<li>llen key_name 返回对应的list长度</li>
-</ul>
-</li>
-<li>set
-<ul>
-<li>sadd key_name value</li>
-<li>集合通过哈希表实现，添加删除查找的复杂度都是O(1)</li>
-</ul>
-</li>
-<li>zset(有序集合)
-<ul>
-<li>zadd key_name score1 value1</li>
-<li>通过分数从小到大排序，分数可以重复，元素不重复</li>
-</ul>
-</li>
+<li>数据冗余：主从复制**实现了数据的热备份，**是持久化之外的一种数据冗余方式。</li>
+<li>故障恢复：当主节点出现问题时，可以由<strong>从节点提供服务</strong>，实现快速的故障恢复；实际上是一种服务的冗余。</li>
+<li>负载均衡：在主从复制的基础上，配合读写分离，可以由主<strong>节点提供写服务，由从节点提供读服务，分担服务器负载</strong>；尤其是在写少<strong>读多的场景下</strong>，通过多个从节点分担读负载，可以大大提高Redis服务器的并发量。</li>
+<li>高可用基石：主从复制还是哨兵和集群能够实施的基础，因此说主从复制是Redis高可用的基础。</li>
 </ul>
         
-          <a class="article-more-a" href="/2020/11/06/redis数据结构/#more">more >></a>
+          <a class="article-more-a" href="/2020/11/07/redis主从复制/#more">more >></a>
         
       
 
@@ -306,7 +819,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/06/redis数据结构/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/11/07/redis主从复制/">展开全文 >></a>
         </p>
       
 
@@ -336,31 +849,30 @@
 
 
   
-    <article id="post-redis_1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-redis事务" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/06/redis_1/">redis基础(-)</a>
+      <a class="article-title" href="/2020/11/07/redis事务/">redis事务</a>
     </h1>
   
 
         
-        <a href="/2020/11/06/redis_1/" class="archive-article-date">
-  	<time datetime="2020-11-06T05:27:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-06</time>
+        <a href="/2020/11/07/redis事务/" class="archive-article-date">
+  	<time datetime="2020-11-07T09:38:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-07</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="redis-配置"><a class="markdownIt-Anchor" href="#redis-配置"></a> redis 配置</h3>
-<p>101服务器上的redis 服务是通过以下命令安装</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install redis-server</span><br></pre></td></tr></table></figure>
+        <p>关系型数据库ACID 中关于原子性的定义</p>
+<p><strong>原子性</strong>:一个事务(transaction)中的所有操作，要么全部完成，要么全部不完成，不会结束在中间某个环节。事务在执行过程中发生错误，会被恢复(Rollback)<strong>到事务开始前的状态</strong>，就像这个事务从来没有执行过一样。</p>
         
-          <a class="article-more-a" href="/2020/11/06/redis_1/#more">more >></a>
+          <a class="article-more-a" href="/2020/11/07/redis事务/#more">more >></a>
         
       
 
@@ -384,7 +896,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/06/redis_1/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/11/07/redis事务/">展开全文 >></a>
         </p>
       
 
@@ -414,47 +926,29 @@
 
 
   
-    <article id="post-mysql锁机制" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-redis内存淘汰机制" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/06/mysql锁机制/">mysql锁机制</a>
+      <a class="article-title" href="/2020/11/07/redis内存淘汰机制/">redis内存淘汰机制</a>
     </h1>
   
 
         
-        <a href="/2020/11/06/mysql锁机制/" class="archive-article-date">
-  	<time datetime="2020-11-06T02:44:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-06</time>
+        <a href="/2020/11/07/redis内存淘汰机制/" class="archive-article-date">
+  	<time datetime="2020-11-07T09:26:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-07</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="锁机制和事务控制"><a class="markdownIt-Anchor" href="#锁机制和事务控制"></a> 锁机制和事务控制</h3>
-<p>Innodb提供行级锁，支持共享锁和排它锁两种锁定模式和四种不同的隔离级别.</p>
-<ul>
-<li>表级锁
-<ul>
-<li>开销小，加锁快，不会出现死锁，锁定粒度大，发生锁冲突概率最高，并发度最低</li>
-</ul>
-</li>
-<li>行级锁
-<ul>
-<li>开销大，枷锁慢，会出现死锁，锁定粒度小，发生锁冲突概率最低，并发度最高</li>
-</ul>
-</li>
-<li>页面锁
-<ul>
-<li>开销和加锁时间界于表锁和行锁之间；会出现死锁；锁定粒度界于表锁和行锁之间，并发度一般</li>
-</ul>
-</li>
-</ul>
+        <p>当缓存内存不足时，通过淘汰旧数据处理新加入数据选择的策略.</p>
         
-          <a class="article-more-a" href="/2020/11/06/mysql锁机制/#more">more >></a>
+          <a class="article-more-a" href="/2020/11/07/redis内存淘汰机制/#more">more >></a>
         
       
 
@@ -468,7 +962,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">redis</a>
         		</li>
       		
 		</ul>
@@ -478,7 +972,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/06/mysql锁机制/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/11/07/redis内存淘汰机制/">展开全文 >></a>
         </p>
       
 
@@ -508,59 +1002,33 @@
 
 
   
-    <article id="post-mysql优化" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-缓存各种问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/06/mysql优化/">mysql优化</a>
+      <a class="article-title" href="/2020/11/07/缓存各种问题/">缓存各种问题</a>
     </h1>
   
 
         
-        <a href="/2020/11/06/mysql优化/" class="archive-article-date">
-  	<time datetime="2020-11-06T01:57:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-06</time>
+        <a href="/2020/11/07/缓存各种问题/" class="archive-article-date">
+  	<time datetime="2020-11-07T09:03:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-07</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="从代码角度优化"><a class="markdownIt-Anchor" href="#从代码角度优化"></a> 从代码角度优化</h4>
+        <h4 id="缓存穿透"><a class="markdownIt-Anchor" href="#缓存穿透"></a> 缓存穿透</h4>
 <ul>
-<li>连接池
-<ul>
-<li>使用持久的连接数据库以避免连接开销。代码中我们一般使用连接池。</li>
-</ul>
-</li>
-<li>减少对MySQL访问
-<ul>
-<li>避免对同一数据做重复检索
-<ul>
-<li>理清取数逻辑，一次连接取出所有结果</li>
-</ul>
-</li>
-<li>查询缓存 MySQL Query Cache
-<ul>
-<li>存储select查询文本以及相应结果，随后收到相同的查询，server直接从查询缓存中取查询结果</li>
-<li>适用更新不频繁的表，当表更改(结构或者数据)时，查询缓存值相关的record也会清除</li>
-<li>需要指定开启
-<ul>
-<li>query_cache_size 表明缓存区大小，单位为M</li>
-<li>query_cache_type 的变量值从0 到2</li>
-<li>Qcache_queries_in_cache  在缓存中已注册的查询数目</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">variables</span> <span class="keyword">like</span> <span class="string">'%query_cache%'</span>;</span><br><span class="line"><span class="keyword">show</span> <span class="keyword">status</span> <span class="keyword">like</span> <span class="string">'query'</span>;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
+<li>缓存穿透是指用户请求的数据在<strong>缓存中不存在即没有命中，同时在数据库中也不存在</strong>，导致用户每次请求该数据都要去数据库中查询一遍，然后返回空</li>
+<li>有恶意攻击者不断请求系统中不存在的数据，会导致短时间大量请求落在数据库上，造成数据库压力过大，甚至击垮数据库系统</li>
 </ul>
         
-          <a class="article-more-a" href="/2020/11/06/mysql优化/#more">more >></a>
+          <a class="article-more-a" href="/2020/11/07/缓存各种问题/#more">more >></a>
         
       
 
@@ -574,7 +1042,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">redis</a>
         		</li>
       		
 		</ul>
@@ -584,388 +1052,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/06/mysql优化/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-mysql_sql_1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/05/mysql_sql_1/">SQL语法</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/05/mysql_sql_1/" class="archive-article-date">
-  	<time datetime="2020-11-05T15:05:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="常用sql语句"><a class="markdownIt-Anchor" href="#常用sql语句"></a> 常用SQL语句</h4>
-<h5 id="查询table的主键"><a class="markdownIt-Anchor" href="#查询table的主键"></a> 查询table的主键</h5>
-        
-          <a class="article-more-a" href="/2020/11/05/mysql_sql_1/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/05/mysql_sql_1/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-django" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/05/django/">django 杂七杂八</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/05/django/" class="archive-article-date">
-  	<time datetime="2020-11-05T14:54:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="ajax-csrf-cors"><a class="markdownIt-Anchor" href="#ajax-csrf-cors"></a> AJAX CSRF CORS</h3>
-        
-          <a class="article-more-a" href="/2020/11/05/django/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">django</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/05/django/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-django_test" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/05/django_test/">django 测试</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/05/django_test/" class="archive-article-date">
-  	<time datetime="2020-11-05T14:53:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="django-unit-test"><a class="markdownIt-Anchor" href="#django-unit-test"></a> Django unit test</h3>
-        
-          <a class="article-more-a" href="/2020/11/05/django_test/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">django</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/05/django_test/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-django_源码" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/05/django_源码/">django_源码</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/05/django_源码/" class="archive-article-date">
-  	<time datetime="2020-11-05T14:52:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="view"><a class="markdownIt-Anchor" href="#view"></a> View</h4>
-        
-          <a class="article-more-a" href="/2020/11/05/django_源码/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">django</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/05/django_源码/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-django_1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/05/django_1/">django基本操作</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/05/django_1/" class="archive-article-date">
-  	<time datetime="2020-11-05T14:51:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="django-基本的操作"><a class="markdownIt-Anchor" href="#django-基本的操作"></a> django 基本的操作</h3>
-        
-          <a class="article-more-a" href="/2020/11/05/django_1/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">django</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/05/django_1/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/11/07/缓存各种问题/">展开全文 >></a>
         </p>
       
 
@@ -997,7 +1084,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
     </nav>
   
 
@@ -1121,6 +1208,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">网络</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
@@ -1129,11 +1224,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">text classification</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">text classification</a>
+                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1141,7 +1236,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">OS</a>
               </li>
              
               <li class="article-tag-list-item">
