@@ -6,20 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://jasonyu.top">
-  <title>django_ORM | Keep Moving</title>
+  <title>Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="annotate和aggregate 初级查询方法如filter()和exclude(). 涉及对queryset某些字段进行计算或分组计算排序时">
-<meta name="keywords" content="django">
+  <meta name="description" content="[TOC]  cookie 一个 cookie 形似 name = value,  存储在浏览器, 但也可以设置多个，因此cookie 是 一组 键值对儿 一个session 理解为一个数据结构，多数情况是映射， 存储在服务器上 cookie字段存在HTTP header中，量一大就占带宽。 cookie可以存储一个sessionID=xxx， 仅传这个cookie给server，server用这">
 <meta property="og:type" content="article">
-<meta property="og:title" content="django_ORM">
-<meta property="og:url" content="http://jasonyu.top/2020/11/04/django_ORM/index.html">
+<meta property="og:title" content="Keep Moving">
+<meta property="og:url" content="http://jasonyu.top/2020/11/20/cookie和session以及安全/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="annotate和aggregate 初级查询方法如filter()和exclude(). 涉及对queryset某些字段进行计算或分组计算排序时">
+<meta property="og:description" content="[TOC]  cookie 一个 cookie 形似 name = value,  存储在浏览器, 但也可以设置多个，因此cookie 是 一组 键值对儿 一个session 理解为一个数据结构，多数情况是映射， 存储在服务器上 cookie字段存在HTTP header中，量一大就占带宽。 cookie可以存储一个sessionID=xxx， 仅传这个cookie给server，server用这">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-05T14:54:56.292Z">
+<meta property="og:updated_time" content="2020-11-20T06:43:26.133Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="django_ORM">
-<meta name="twitter:description" content="annotate和aggregate 初级查询方法如filter()和exclude(). 涉及对queryset某些字段进行计算或分组计算排序时">
+<meta name="twitter:title" content="Keep Moving">
+<meta name="twitter:description" content="[TOC]  cookie 一个 cookie 形似 name = value,  存储在浏览器, 但也可以设置多个，因此cookie 是 一组 键值对儿 一个session 理解为一个数据结构，多数情况是映射， 存储在服务器上 cookie字段存在HTTP header中，量一大就占带宽。 cookie可以存储一个sessionID=xxx， 仅传这个cookie给server，server用这">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -149,58 +148,152 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-django_ORM" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-cookie和session以及安全" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      django_ORM
-    </h1>
-  
-
-        
-        <a href="/2020/11/04/django_ORM/" class="archive-article-date">
-  	<time datetime="2020-11-04T08:09:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-04</time>
-</a>
-        
-      </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="annotate和aggregate"><a class="markdownIt-Anchor" href="#annotate和aggregate"></a> annotate和aggregate</h3>
-<p>初级查询方法如filter()和exclude().<br>
-涉及对queryset某些字段进行计算或分组计算排序时</p>
-<a id="more"></a>
-<p>student和hobby多对多关系</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span><span class="params">(models.Model)</span>:</span></span><br><span class="line"></span><br><span class="line">    name = models.CharField(max_length=<span class="number">20</span>)</span><br><span class="line">    age = models.IntegerField()</span><br><span class="line">    hobbies = models.ManyToManyField(Hobby)</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Hobby</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    name = models.CharField(max_length=<span class="number">20</span>)</span><br></pre></td></tr></table></figure>
+        <p>[TOC]</p>
+<h4 id="cookie"><a class="markdownIt-Anchor" href="#cookie"></a> cookie</h4>
+<p>一个 cookie 形似 name = value,  存储在浏览器, 但也可以设置多个，因此cookie 是 一组 键值对儿</p>
+<p>一个session 理解为一个数据结构，多数情况是映射， 存储在<strong>服务器</strong>上</p>
+<p>cookie字段存在HTTP header中，量一大就占带宽。</p>
+<p>cookie可以存储一个sessionID=xxx， 仅传这个cookie给server，server用这个找到对应的session， 有效解决用户追踪问题。</p>
+<h4 id="session"><a class="markdownIt-Anchor" href="#session"></a> session</h4>
+<p>实现 – 抽离成 Manager , Provider,  Session 三个类</p>
 <ul>
-<li>所有学生的平均年龄</li>
-<li>统计最受学生欢迎的5个爱好</li>
+<li>
+<p>Manager</p>
+<ul>
+<li>session管理，存储配置信息，session存活时间，cookie名字等等</li>
+<li>所有session存在Manager内部的一个provider中</li>
+<li>Manager 把sid(sessionID) 传给 Provider</li>
 </ul>
-<h4 id="学生的平均年龄"><a class="markdownIt-Anchor" href="#学生的平均年龄"></a> 学生的平均年龄</h4>
-<p>利用aggregate可以实现SQL中的一些agg操作</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db.models <span class="keyword">import</span> Avg, Max, Min</span><br><span class="line"></span><br><span class="line">Student.objects.all().aggregate(Avg(<span class="string">'age'</span>)) <span class="comment"># all并非必须的</span></span><br><span class="line"><span class="comment"># &#123; 'age__avg': 12 &#125;</span></span><br><span class="line">Student.objects.aggregate(average_age = Avg(<span class="string">'age'</span>)) <span class="comment">#设置字典的key</span></span><br><span class="line"><span class="comment"># &#123; 'average_age': 12 &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 根据Hobby反查学生最大年龄。查询字段student和age间有双下划线哦。</span></span><br><span class="line">Hobby.objects.aggregate(Max(<span class="string">'student__age'</span>))</span><br><span class="line"><span class="comment"># &#123; 'student__age__max': 12 &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 同时获取学生年龄均值, 最大值和最小值, 返回字典</span></span><br><span class="line">Student.objects.aggregate(Avg(<span class="string">'age'</span>), Max(<span class="string">'age'</span>), Min(<span class="string">'age'</span>))</span><br><span class="line"><span class="comment"># &#123; 'age__avg': 12, 'age__max': 18, 'age__min': 6, &#125;</span></span><br></pre></td></tr></table></figure>
-<h4 id="统计最受学生欢迎的5个爱好"><a class="markdownIt-Anchor" href="#统计最受学生欢迎的5个爱好"></a> 统计最受学生欢迎的5个爱好</h4>
-<p>对数据集先进行分组然后再进行某些聚合操作或排序时，需要使用annotate方法.<br>
-annotate方法返回结果的不仅仅是含有统计结果的一个字典，而是包<strong>含有新增统计字段的查询集</strong>(queryset）.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 按学生分组，统计每个学生的爱好数量</span></span><br><span class="line">Student.objects.annotate(Count(<span class="string">'hobbies'</span>))</span><br><span class="line"><span class="comment"># 返回的结果依然是Student查询集，只不过多了hobbies__count这个字段</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 按爱好分组，再统计每组学生数量。</span></span><br><span class="line">Hobby.objects.annotate(Count(<span class="string">'student'</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 按爱好分组，再统计每组学生最大年龄。</span></span><br><span class="line">Hobby.objects.annotate(Max(<span class="string">'student__age'</span>))</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Annotate方法与Filter方法联用</span><br><span class="line"><span class="comment"># 先按爱好分组，再统计每组学生数量, 然后筛选出学生数量大于1的爱好。</span></span><br><span class="line">Hobby.objects.annotate(student_num=Count(<span class="string">'student'</span>)).filter(student_num__gt=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Annotate与order_by()联用</span><br><span class="line"><span class="comment"># 统计最受学生欢迎的5个爱好。</span></span><br><span class="line">Hobby.objects.annotate(student_num=Count(<span class="string">'student'</span>)).order_by(<span class="string">'-student_num'</span>)[:<span class="number">5</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Annotate与values()联用</span><br><span class="line"><span class="comment"># 按学生名字分组，统计每个学生的爱好数量。</span></span><br><span class="line">Student.objects.values(<span class="string">'name'</span>).annotate(Count(<span class="string">'hobbies'</span>))</span><br><span class="line"><span class="comment"># 在前例中按学生对象进行分组，我们同样可以按学生姓名name来进行分组。唯一区别是本例中，如果两个学生具有相同名字，那么他们的爱好数量将叠加</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># values方法从annotate返回的数据集里提取你所需要的字段</span></span><br><span class="line">Student.objects.annotate(hobby_count=Count(<span class="string">'hobbies'</span>)).values(<span class="string">'name'</span>, <span class="string">'hobby_count'</span>)</span><br></pre></td></tr></table></figure>
-<h3 id="f-表达式"><a class="markdownIt-Anchor" href="#f-表达式"></a> F 表达式</h3>
-<p><a href="https://www.jianshu.com/p/6cad2bf1eb6a" target="_blank" rel="noopener">Django F()表达式</a><br>
-F()用于操作table中的某列值, F()允许Django直接引用模型字段的值并执行数据库操作，不用把他们导入到python的内存中。<br>
-Django使用F()对象生成一个<strong>描述数据库级别所需操作的SQL</strong>表达式。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">reporter = Reporters.objects.get(name=<span class="string">'Tintin'</span>)</span><br><span class="line">reporter.stories_field += <span class="number">1</span></span><br><span class="line">reporter.save()</span><br></pre></td></tr></table></figure>
-<p>从数据库中取出reporter.stories_field的值放入内存中并使用我们熟悉的python运算符操作它，然后把对象保存到数据库中.</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db.models <span class="keyword">import</span> F</span><br><span class="line">reporter = Reporters.objects.get(name=<span class="string">'Tintin'</span>)</span><br><span class="line">reporter.stories_field = F(<span class="string">'stories_field'</span>) + <span class="number">1</span></span><br><span class="line">reporter.save()</span><br></pre></td></tr></table></figure>
-<p>实例对象必须重新加载后才能获取以这种方式保存的值</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">reporter = Reporters.objects.get(pk=reporter.pk)</span><br><span class="line"><span class="comment"># 或者，更简洁的操作</span></span><br><span class="line">reporter.refresh_from_db()</span><br></pre></td></tr></table></figure>
-<p>使用update()来增加多个对象的字段值</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Reporters.objects.all().update(stories_field=F(<span class="string">'stories_field'</span>) + <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-<h4 id="在annotate中使用f"><a class="markdownIt-Anchor" href="#在annotate中使用f"></a> 在annotate中使用F()</h4>
-<p>F()可以使用算术运算组合不同字段在模型中创建动态字段</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">company = Company.objects.annotate(chairs_needed=F(<span class="string">'num_employee'</span>) - F(<span class="string">'num_chairs'</span>))</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Provider</p>
+<ul>
+<li>最常见就是一个散列表， sid 对应 session</li>
+</ul>
+</li>
+<li>
+<p>Session</p>
+<ul>
+<li>存储用户的具体信息</li>
+</ul>
+</li>
+</ul>
+<p>之所以抽象出Manager,Provider,Session  三个类，涉及到设计层面</p>
+<ul>
+<li>
+<p>Session</p>
+<ul>
+<li>虽然session就是键值对，但不直接用hash，因为Session结构不止存储一个hash，还可以存辅助数据，如sid，访问次数，过期时间， 方便实现 LRU， LFU</li>
+<li>session 也可以有不同的存储方式，若用language内置的hash，则session数据存在内存里，数据量大，容易程序crash。 所以可以存入 redis， mysql</li>
+<li>Session 提供一些抽象接口
+<ul>
+<li>set ( key val)</li>
+<li>get ( key )</li>
+<li>delete ( key )</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Provider</p>
+<ul>
+<li>由于时不时要删session, 除了设置存活时间，还有些LRU缓存淘汰</li>
+<li>因此provider 内部要使用 哈希链表</li>
+</ul>
+</li>
+</ul>
+<h3 id="csrf"><a class="markdownIt-Anchor" href="#csrf"></a> CSRF</h3>
+<p>简述: 所谓跨域请求仿造就是，比如当用户登录网上银行后，cookie里会存放用于这个网站的credentials，此时如果用户点击了某个第三方恶意网站，里面的脚本就也是往这个网上银行网站发请求，而这个请求会带上用户的cookie，因此就可以模拟用户了。 注意：<strong>攻击者并不能拿到cookie里的内容，只是可以把cookie发送出去</strong>。<strong>攻击者也不可以修改header的内容</strong>。</p>
+<p>预防措施</p>
+<ul>
+<li>用户在登录某网站期间，用完后及时登出</li>
+</ul>
+<p>另一个场景：</p>
+<p>比如博客删除的接口用的是GET请求，那么攻击者只要在其恶意网站的脚本中模拟GET请求即可。</p>
+<p>原网站 <code>&lt;a href='/delete?id=3'&gt;刪除&lt;/a&gt;</code></p>
+<p>攻击者只要在钓鱼网站上写入 <code>&lt;a href='https://small-min.blog.com/delete?id=3'&gt;開始測驗&lt;/a&gt;</code>, <strong>由于浏览器的运行机制，会一并把samll-min.blog.com的cookie也带</strong>上。</p>
+<p>因为浏览器的机制，只要发送request给某个网域，就会把关联的cookie一起带上去，倘若使用者处于登入状态，那么request中就会包含他的session id。</p>
+<p>如果把删除功能改成post请求，就不能通过<code>&lt;a&gt;</code> 或者 <code>&lt;img&gt;</code> 来攻击(因为这些发GET请求)，但其实可以通过<code>&lt;form&gt;</code>…</p>
+<p>因此建议还是遵守RESTful的规范，删除就用delete</p>
+<h4 id="server的防御"><a class="markdownIt-Anchor" href="#server的防御"></a> Server的防御</h4>
+<ul>
+<li>
+<p>检查refer</p>
+<ul>
+<li>request的header有个refer，代表这个request从哪里来，可用于判断是否是合法的domain
+<ul>
+<li>但有些浏览器可能不会带refer</li>
+<li>有些使用者可能关闭自动带refer</li>
+<li>判断是否是合法domain的程序必须没bug</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>加上验证码 image 或者 sms</p>
+<ul>
+<li>由于攻击者无法知道image 或者 sms，所以可以预防csrf</li>
+</ul>
+</li>
+<li>
+<p>加csrf token</p>
+<ul>
+<li>
+<p>放着csrf攻击，核心在于确保有些信息<strong>只有使用者</strong>知道。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"https://small-min.blog.com/delete"</span> <span class="attr">method</span>=<span class="string">"POST"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">name</span>=<span class="string">"id"</span> <span class="attr">value</span>=<span class="string">"3"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">name</span>=<span class="string">"csrftoken"</span> <span class="attr">value</span>=<span class="string">"fj1iro2jro12ijoi1"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"刪除文章"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>csrftoken由server随机产生，并存在server的session中，点击submit后，server对比表单中的csrftoken和session里的是否一致。 因为攻击者不知道csrftoken的值</p>
+<p>但是！</p>
+<ul>
+<li>如果server支持cross origin的request，那么攻击者就可以在页面发起一个request顺利拿到csrf token，前提是server接受这个domain的request</li>
+<li>一旦是分布式以后，对应的session只存储在某一台server中，不利于扩展。 其他server是不知道session中的这个csrftoken的</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>double submit cookie</p>
+<ul>
+<li>此法不需要server端存储状态</li>
+<li>server产生一组随机的token加在form中，但不用写到session里，而是同时也让client side设定一个csrftoken的cookie，值也是同一组token</li>
+<li>csrf的攻击发出的request与本人发出的request区别在于前者来自不同domain。此时，攻击者想要攻击，他可以在form里写一个csrf token，但由于浏览器限制，他<strong>不能在他的domain设定small-min-blog.com的cookie</strong> (攻击者取不到cookie的内容)，因此他的request的cookie中没有csrftoken</li>
+<li>缺点：倘若攻击者掌握任何一个subdomain，就可以更改cookie了</li>
+<li>此外，也可以在client端生成这个token， 因此该理念核心在于 攻击者无法读写目标网站的cookie</li>
+</ul>
+</li>
+</ul>
+<p><a href="https://blog.techbridge.cc/2017/02/25/csrf-introduction/" target="_blank" rel="noopener">讓我們來談談 CSRF</a></p>
+<p><a href="https://tech.meituan.com/2018/10/11/fe-security-csrf.html" target="_blank" rel="noopener">前端安全系列（二）：如何防止CSRF攻击？</a></p>
+<h4 id="django-csrf"><a class="markdownIt-Anchor" href="#django-csrf"></a> Django CSRF</h4>
+<p>django.middleware.csrf.CsrfViewMiddleware</p>
+<ul>
+<li>
+<p>CSRF_USE_SESSIONS</p>
+<ul>
+<li>
+<p>True的情况 , csrf token存在server端的session里，与每次提交的表单里的csrf_token对比</p>
+</li>
+<li>
+<p>False的情况，放在cookie里，每次只要验证提交上来的cookie里的token和表单里的csrf_token是否一致</p>
+</li>
+</ul>
+</li>
+<li>
+<p>局部</p>
+<ul>
+<li>@csrf_protect，为当前函数强制设置防跨站请求伪造功能，即便settings中没有设置全局中间件。</li>
+<li>@csrf_exempt，取消当前函数防跨站请求伪造功能，即便settings中设置了全局中间件</li>
+</ul>
+</li>
+</ul>
+<h3 id="xss"><a class="markdownIt-Anchor" href="#xss"></a> XSS</h3>
+<p>xss (cross site script)</p>
+<p>xss 攻击是页面被注入恶意代码，利用恶意脚本，攻击者可以获取用户的敏感信息如cookie，SessionID</p>
+<p>[<a href="https://tech.meituan.com/2018/09/27/fe-security.html" target="_blank" rel="noopener">前端安全系列（一）：如何防止XSS攻击？</a>](<a href="https://tech.meituan.com/2018/09/27/fe-security.html" target="_blank" rel="noopener">https://tech.meituan.com/2018/09/27/fe-security.html</a>)</p>
 
       
 
@@ -209,17 +302,6 @@ Django使用F()对象生成一个<strong>描述数据库级别所需操作的SQL
     <div class="article-info article-info-index">
       
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">django</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
       
 
       
@@ -270,7 +352,7 @@ Django使用F()对象生成一个<strong>描述数据库级别所需操作的SQL
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://jasonyu.top/2020/11/04/django_ORM/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://jasonyu.top/2020/11/20/cookie和session以及安全/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -284,18 +366,9 @@ Django使用F()对象生成一个<strong>描述数据库级别所需操作的SQL
   
 <nav id="article-nav">
   
-    <a href="/2020/11/05/mysql安装与使用/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          mysql安装与使用
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/11/04/mysql事务/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">mysql事务,隔离级别</div>
+    <a href="/2020/11/18/python_3/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title"></div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -315,19 +388,6 @@ Django使用F()对象生成一个<strong>描述数据库级别所需操作的SQL
         </div>
         
         
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#annotate和aggregate"><span class="toc-number">1.</span> <span class="toc-text"> annotate和aggregate</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#学生的平均年龄"><span class="toc-number">1.1.</span> <span class="toc-text"> 学生的平均年龄</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#统计最受学生欢迎的5个爱好"><span class="toc-number">1.2.</span> <span class="toc-text"> 统计最受学生欢迎的5个爱好</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#f-表达式"><span class="toc-number">2.</span> <span class="toc-text"> F 表达式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#在annotate中使用f"><span class="toc-number">2.1.</span> <span class="toc-text"> 在annotate中使用F()</span></a></li></ol></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
     </div>
 </aside>
 
@@ -336,7 +396,7 @@ Django使用F()对象生成一个<strong>描述数据库级别所需操作的SQL
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="django_ORM" data-title="django_ORM" data-url="http://jasonyu.top/2020/11/04/django_ORM/"></div>
+	<div class="ds-thread" data-thread-key="cookie和session以及安全" data-title data-url="http://jasonyu.top/2020/11/20/cookie和session以及安全/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
