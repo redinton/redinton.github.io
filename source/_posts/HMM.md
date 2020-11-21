@@ -11,11 +11,7 @@ mathjax: true
 
 
 
-
-
-![image-20190615091128686](http://ww2.sinaimg.cn/large/006tNc79ly1g41m1u2u76j30if09y3zp.jpg)
-
-
+![image-20201105224828123](HMM/image-20201105224828123.png)
 
 #### 定义
 
@@ -58,7 +54,7 @@ $b_{j}(k)=P\left(o_{t}=v_{k} | i_{t}=q_{j}\right), \quad k=1,2, \cdots, M ; j=1,
 
 是在时刻t处于状态$q_j$的条件下生成观测$v_k$的概率。 (同发射概率 emmision)
 
-* $\pi​$ 初始状态概率向量
+* $\pi$ 初始状态概率向量
 
 $\pi = (\pi_{i})$
 
@@ -78,7 +74,7 @@ $\pi_i = P(i_1 = q_i)$, i=1,2,..N
 >
 > 3.预测问题
 >
-> decoding问题，已知$\lambda = (A,B,\pi)​$ 和观测序列O=($o_1,o_2,...o_r​$) ， 给定观测序列，求对应的最有可能的状态序列
+> decoding问题，已知$\lambda = (A,B,\pi)$ 和观测序列O=($o_1,o_2,...o_r$) ， 给定观测序列，求对应的最有可能的状态序列
 
 
 
@@ -103,7 +99,7 @@ $\pi_i = P(i_1 = q_i)$, i=1,2,..N
 
 q(s|u) = $\frac{c(u,s)}{c(u)}$  c(u,s) 指的是training samples中 state u, state s 同时出现的概率
 
-e(x|s) = $\frac{c(s->x)}{c(s)}​$  c(s->x) 指的是训练集中 state s 对应的观测值是 x的次数
+e(x|s) = $\frac{c(s->x)}{c(s)}$  c(s->x) 指的是训练集中 state s 对应的观测值是 x的次数
 
 初始隐状态分布 $\pi$ 的估计
 

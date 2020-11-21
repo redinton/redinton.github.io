@@ -42,6 +42,7 @@ Authorization: Basic U2h1c2hlbmcwMDcldUZGMUFzczAwNw==
 **不安全，http是裸奔状态** ， 一般结合https用BasicAuthen
 
  
+
 ##### TokenAuthentication
 
 也叫Bearer authentication
@@ -68,7 +69,7 @@ Authorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b
 
 ##### SessionAuthentication
 
-![image-20200916233140486](django_authentication.assets/image-20200916233140486.png)
+![image-20200916233140486](django_authentication/image-20200916233140486.png)
 
 用户提交账号密码后，在服务端会有一个session，返回一个session_id,下次请求的时候直接在request中 cookie加入 session_id 。
 

@@ -65,10 +65,10 @@ top: true
 # Miscellaneous
 baidu_analytics: ''
 google_analytics: ''
-favicon: /favicon.png
+favicon: /themes/yilia/source/
 
 #你的头像url
-avatar: /themes/yilia/source/img/head1.jpg
+avatar: /img/head1.jpg
 
 #是否开启分享
 share_jia: true

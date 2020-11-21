@@ -6,12 +6,12 @@ tags:
 toc: true
 ---
 
-
 Django主要部署平台是WSGI，其是web server 和 web application的python 标准
 
 通过startproject command 会生成一个default WSGI configuration，即主目录下有一个WSGI.py文件
 
 <!--more-->
+
 #### application 对象
 
 Server通过application callable 与 代码做交互， application callable 以一个位于 Python 模块中，名为 `application` 的对象的形式提供，且对服务器可见。
