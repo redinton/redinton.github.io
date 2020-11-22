@@ -8,7 +8,7 @@ tags:
 
 
 Bash终端命令
-
+<!--more-->
 * ctrl-r 搜索命令行历史记录
   * 重复按ctrl-r 会向后查找匹配项
   * Enter 会执行当前匹配命令

@@ -1,6 +1,10 @@
-
-
-[TOC]
+---
+title: linux_1
+date: 2020/11/21 21:01:14
+toc: true
+tags:
+- linux
+---
 
 
 

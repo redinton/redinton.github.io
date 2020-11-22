@@ -1,10 +1,4 @@
-'''
-Author: JasonYU
-Date: 2020-10-26 22:02:15
-LastEditTime: 2020-10-27 11:09:53
-FilePath: \redinton.github.io\md2source.py
-'''
-"""--coding--:utf-8"""
+ # -*- coding: utf-8 -*
 import os
 import time
 import json
@@ -13,14 +7,13 @@ from datetime import datetime
 
 markdown_folders = [
     "md/develop/MQ",
-    # "md/develop/mysql",
-    # "md/develop/linux",
-    # "md/algorithm",
-    # "md/develop/redis",
-    # "md/develop/systemDesign",
-    # "md/learn/操作系统",
+    "md/develop/mysql",
+    "md/develop/linux",
+    "md/algorithm",
+    "md/develop/systemDesign",
+    "md/learn/操作系统",
     "md/learn/网络",
-    # "md/language/python"
+    "md/language/python"
     ]
 hexo_des_folder = "source/_posts/"
 time_checkpoint = "last_update_time.txt"

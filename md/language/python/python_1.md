@@ -1,10 +1,12 @@
-[TOC]
+---
+title: python面试题
+date: 2020/11/21 21:16:22
+toc: true
+tags:
+- python
+---
 
-
-
-
-
-##### 装饰器 上下文管理器 什么场景
+#### 装饰器
 
 [装饰器参考](https://stackoverflow.com/questions/739654/how-to-make-a-chain-of-function-decorators/1594484#1594484)
 
@@ -13,8 +15,7 @@
 函数装饰器 和 类装饰器
 
 
-
-##### 上下文管理器 
+#### 上下文管理器 
 
 基本语法
 
@@ -36,9 +37,7 @@ with open("file.txt","r") as f: #上下文表达式
 * 处理异常更优雅
 
 
-
-
-##### list和set查询,谁复杂度低 why
+#### list和set查询,谁复杂度低 why
 
 * list 的底层实现
   * 长度可变的数组，对其他对象的引用组成的连续数组 
@@ -51,7 +50,7 @@ with open("file.txt","r") as f: #上下文表达式
 * if  i in list 和  if  i in set 哪个快
   * set快 set是算哈希 O(1) 平均， 而list是 O(n)
 
-##### dict实现原理
+#### dict实现原理
 
 * dict 实现原理
 
@@ -61,17 +60,13 @@ with open("file.txt","r") as f: #上下文表达式
 
     * python内置的所有不可变的内置类型都是可哈希的，可变类型不可哈希
 
-    
-
-
-
-##### 基础数据类型 可变，不可变
+#### 基础数据类型可变,不可变
 
 * 可变: list, set, dict
   * 可变对象变化后，地址没变 (可以用 id() 来查看地址)
 * 不可变: int , float,string,bool, tuple
 
-##### 深拷贝，浅拷贝
+#### 深拷贝,浅拷贝
 
 * a=b 不算拷贝，a=b只是把a的指针指向b的地址，
 
@@ -136,7 +131,7 @@ t3 is t1 false
 
 
 
-##### is 和 == 的区别
+#### is和==的区别
 
 python中所有都是对象，都有着 id, type, value 属性
 
@@ -171,20 +166,35 @@ python中所有都是对象，都有着 id, type, value 属性
   * 在用 not x  判断不是None的时候，会把 x == []，{}，(),'' 的情况也包含，所以要用 is not None
 
 
+#### is not None
+
+is 是比较 内存地址，而None是单例模式生成的，类型是NoneType  除了None 本身，其余对象 is not None的结果都是True
+
+哪些形式的数据为空
+
+* None ， False
+* 任何形式数值类型 0 , 0.0
+* 空的序列 "" ()  []
+* 空的字典
+* 用户定义类中定义了nonzero() 和 len , 并且该方法返回0或者false
+
+a = []
+
+a is not None -> return True
+
+if a ->  用于判断a是否为空, 调用的是 a自身的 \__nonzero__() 或者 在没有nonezero的时候调用 len()
+
+#### 函数"_"和“__”情况
 
 
 
-##### 函数"_"和“__”情况
-
-
-
-##### 写一下单例设计模式
+#### 写一下单例设计模式
 
 
 
 
 
-##### python中的高阶函数
+#### python中的高阶函数
 
 lambda，map, reduce filter 
 
@@ -220,25 +230,21 @@ lambda，map, reduce filter
 
 
 
-##### pyc文件
+#### pyc文件
 
 
 
-##### C++ python 解释性语言区别
+#### C++ python 解释性语言区别
 
 
 
-##### python 和 java的区别
+#### python 和 java的区别
 
 * 静态类型和动态类型
 * python 一切皆对象,祖先都是Object
 * python有GIL
 
-
-
-
-
-##### 迭代 生成器 generator 如何实现， 怎么理解
+#### 迭代 生成器 generator 如何实现,怎么理解
 
 * 迭代 [参考 ](https://zhuanlan.zhihu.com/p/32162554)
   * iterable 可迭代对象，序列的大小长度已确定
@@ -275,11 +281,7 @@ lambda，map, reduce filter
       * 一种特殊的迭代器
       * 在迭代的过程中可以改变当前迭代值
 
-
-
-
-
-##### 用 python调用系统命令 用什么模块
+#### 用python调用系统命令用什么模块
 
 * os模块
 
@@ -300,13 +302,131 @@ lambda，map, reduce filter
   
   * 对线程的控制和监控
 
-##### python 是单继承还是多继承，子类调用一个父类的方法，怎么做，super关键字的具体实现方式
+#### python是单继承还是多继承,子类调用一个父类的方法,怎么做,super关键字的具体实现方式
 
 支持多继承
 
 
+#### type和object的关系
+
+* 面向对象中存在两种关系
+  * 父子关系，即继承关系，子类继承于父类，查看一个类型的父类，使用`__bases__`属性
+  * 类型实例关系，表现为某个类型的实例化，查看实例的类型, 使用`__class__`属性，或者用type()函数
+
+```
+>>> object
+<type 'object'>
+>>> type
+<type 'type'>
+它们都是type的一个实例，表示它们都是类型对象。
+```
+
+* object是父子关系的顶端，所有的数据类型的父类都是它；
+
+* type是类型实例关系的顶端，所有对象都是它的实例的
+
+object是一个type，object is and instance of type。即Object是type的一个实例。
 
 
+#### 函数的参数
 
+* 不要使用可变类型作为参数的默认值
+
+```python
+class HauntedBus:
+	def __init__(self, passengers=[]):
+		self.passengers = passengers
+	def pick(self, name):
+		self.passengers.append(name)
+	
+	
+
+bus2 = HauntedBus()
+bus2.pick('Carrie')
+bus2.passengers
+['Carrie']
+bus3 = HauntedBus()
+bus3.passengers
+['Carrie']
+	
+	# 修改版
+    def __init__(self, passengers=None):
+        if passengers is None:
+        	self.passengers = []
+        else:
+        	self.passengers = passengers
+ 
+	# 修改版
+    def __init__(self, passengers=None):
+        if passengers is None:
+        	self.passengers = []
+        else:
+            # 通过创建副本维护自己的list
+        	self.passengers = list(passengers)
+ 
+```
+
+#### python特殊方法
+* `__slots__` 节省内存
+  * 默认下，python在实例中`__dict__`的字典中存储实例属性，底层是用散列表来提升速度，会消耗大量内存。如果数百万个属性不多的实例，用`__slots__` ，在元组中存储实例属性，而不是字典。那么实例就不会有 `__slots__` 属性
+  * 每个子类需要定义`__slots__`属性，解释器会忽略继承的`__slots__`属性
+* `__format__` 会被内置的format()函数和str.format()调用，使用特殊格式代码显示对象的字符串表示
+* py3中 `__repr__`,`__str__`,`__format__` 都必须返回Unicode字符串(str类型)， `__bytes__` 返回字节序列(bytes 类型)
+* `__iter__` 变成可迭代的对象
+* `__dict__` 实例的`__dict__` 只会显示实例的属性
+* `__dir__`  显示所有的method
+* `__getiterm__`  支持迭代
+* `__contains__`  支持in运算符
+* `__mro__` method resolution order 方法解析顺序。 按顺序列出类及其超类。 多重继承的时候，一般是从左到右，再往上(往父类)
+
+#### 运算符重载
+
+* `__eq__`  ==
+* `__pos__` +
+* `__neg__` - 
+
+
+#### 序列迭代
+
+* 解释器需要迭代对象x时，会自动调用 iter(x) 
+* 内置 iter 函数
+  * 检查对象是否有`__iter__` 方法，有的话就调用它获取迭代器
+  * 若没有`__iter__` 但有`__getitem__` , python 会创建一个迭代器，按顺序(索引0开始) 获取元素
+  * 尝试失败就抛出 TypeError 异常
+* 检查对象是否可迭代
+  * 最好用iter () 还会考虑 `__getitem__`
+  * 不用 isinstance(x,abc.iterable) 只考虑有无`__iter__`
+
+#### 标准迭代器Iterator接口
+
+* `__next__` 返回下一个元素，如果没有抛出StopIteration
+* `__iter__` 返回self
+
+
+#### itertools 库
+
+* chain(it1,it2, ... ,itN)
+  * 先产出 it1 中的所有元素，然后it2的 ，然后所有都连接在一起
+* zip_longest(it1,it2m fillvalue=None)
+  * zip 取最长的iterator，剩余确实的补全
+
+#### else 与 for/while/try 使用
+
+* for 
+  * 当for循环运行完(即for循环没有被break语句中止) 才运行else模块
+* while
+  * while 循环因为条件为false退出(不是因为break退出)才运行else
+* try
+  * try 中没有异常抛出时运行else
+
+所有情况下，如果异常或return，break，continue导致控制权跳到了复合语句的主块之外，else也会被跳过
+
+
+#### eval 函数
+* str to list/dict/tuple
+  * 实现把字符串常量转成变量
+* 慎用的原因是 针对不可信的str，转化成命令后可能造成漏洞，如rm 数据
+* 有这个函数的原因:
+  * 动态语言支持动态地产生代码，对于已经部署好的工程，也可以只做很小的局部修改，就实现 bug 修复
 
 
