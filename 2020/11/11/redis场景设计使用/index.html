@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Keep Moving">
 <meta property="og:description" content="用redis实现购物车的功能 在修改频繁的情况下，不会用关系型数据库来存储购物车的信息。 可以考虑用redis或者mongodb这种非关系型数据库 设计: 用户ID作为key,商品ID作为field，商品数量作为value 增加购物车内商品 123hset cart:1001 10021 1hset cart:1001 10025 1hset cart:1001 10079 1  全选功能  获">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-20T06:31:40.176Z">
+<meta property="og:updated_time" content="2020-11-26T08:13:32.620Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="redis场景设计使用">
 <meta name="twitter:description" content="用redis实现购物车的功能 在修改频繁的情况下，不会用关系型数据库来存储购物车的信息。 可以考虑用redis或者mongodb这种非关系型数据库 设计: 用户ID作为key,商品ID作为field，商品数量作为value 增加购物车内商品 123hset cart:1001 10021 1hset cart:1001 10025 1hset cart:1001 10079 1  全选功能  获">
@@ -322,8 +322,8 @@
     </a>
   
   
-    <a href="/2020/11/09/分布式网站架构/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">分布式网站架构</div>
+    <a href="/2020/11/07/redis哨兵机制/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">redis哨兵机制</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -499,47 +499,7 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">HMM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">nlp</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">NER</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">网络</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">text classification</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -547,11 +507,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OS</a>
+                <a href="javascript:void(0)" class="js-tag color3">mq</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">kafka,mq</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">redis</a>
               </li>
             
             <div class="clearfix"></div>
