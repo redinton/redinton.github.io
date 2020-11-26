@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>概念 | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="虚拟内存和物理内存  物理内存指的是实际内存大小 虚拟内存- 内存加磁盘存储  虚拟内存和物理内存的对应关系   现在编写的程序都是操作虚拟内存地址   虚拟内存地址和物理内存地址的映射通过页映射  页映射将内存和磁盘中数据和指令按照&amp;quot;Page(4M)&amp;quot;单位分成若干页    虚拟内存可以结合磁盘和物理内存的优势为进程提供看起来速度足够快并且容量足够大的存储   虚拟内存可以为">
+  <meta name="description" content="虚拟内存和物理内存用户态和内核态计算机存储结构select和epoll的区别僵尸进程和孤儿进程并发和并行">
 <meta name="keywords" content="OS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="概念">
 <meta property="og:url" content="http://jasonyu.top/2020/11/18/概念/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="虚拟内存和物理内存  物理内存指的是实际内存大小 虚拟内存- 内存加磁盘存储  虚拟内存和物理内存的对应关系   现在编写的程序都是操作虚拟内存地址   虚拟内存地址和物理内存地址的映射通过页映射  页映射将内存和磁盘中数据和指令按照&amp;quot;Page(4M)&amp;quot;单位分成若干页    虚拟内存可以结合磁盘和物理内存的优势为进程提供看起来速度足够快并且容量足够大的存储   虚拟内存可以为">
+<meta property="og:description" content="虚拟内存和物理内存用户态和内核态计算机存储结构select和epoll的区别僵尸进程和孤儿进程并发和并行">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-18T05:54:52.686Z">
+<meta property="og:updated_time" content="2020-11-26T08:21:45.516Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="概念">
-<meta name="twitter:description" content="虚拟内存和物理内存  物理内存指的是实际内存大小 虚拟内存- 内存加磁盘存储  虚拟内存和物理内存的对应关系   现在编写的程序都是操作虚拟内存地址   虚拟内存地址和物理内存地址的映射通过页映射  页映射将内存和磁盘中数据和指令按照&amp;quot;Page(4M)&amp;quot;单位分成若干页    虚拟内存可以结合磁盘和物理内存的优势为进程提供看起来速度足够快并且容量足够大的存储   虚拟内存可以为">
+<meta name="twitter:description" content="虚拟内存和物理内存用户态和内核态计算机存储结构select和epoll的区别僵尸进程和孤儿进程并发和并行">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -169,31 +169,110 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="虚拟内存和物理内存"><a class="markdownIt-Anchor" href="#虚拟内存和物理内存"></a> 虚拟内存和物理内存</h4>
-<ul>
+        <p><a href="#虚拟内存和物理内存">虚拟内存和物理内存</a><br><a href="#用户态和内核态">用户态和内核态</a><br><a href="#计算机存储结构">计算机存储结构</a><br><a href="#select和epoll的区别">select和epoll的区别</a><br><a href="#僵尸进程和孤儿进程">僵尸进程和孤儿进程</a><br><a href="#并发和并行">并发和并行</a><br><a id="more"></a></p>
+<h4 id="虚拟内存和物理内存"><a href="#虚拟内存和物理内存" class="headerlink" title="虚拟内存和物理内存"></a>虚拟内存和物理内存</h4><ul>
 <li>物理内存指的是实际内存大小</li>
 <li>虚拟内存- 内存加磁盘存储</li>
 </ul>
 <p>虚拟内存和物理内存的对应关系</p>
 <ul>
-<li>
-<p>现在编写的程序都是操作虚拟内存地址</p>
-</li>
-<li>
-<p>虚拟内存地址和物理内存地址的映射通过页映射</p>
+<li>现在编写的程序都是操作虚拟内存地址</li>
+<li><p>虚拟内存地址和物理内存地址的映射通过页映射</p>
 <ul>
-<li>页映射将内存和磁盘中数据和指令按照&quot;Page(4M)&quot;单位分成若干页</li>
+<li>页映射将内存和磁盘中数据和指令按照”Page(4M)”单位分成若干页</li>
 </ul>
 </li>
-<li>
-<p>虚拟内存可以结合磁盘和物理内存的优势为进程提供看起来速度足够快并且容量足够大的存储</p>
+<li><p>虚拟内存可以结合磁盘和物理内存的优势为进程提供看起来速度足够快并且容量足够大的存储</p>
 </li>
-<li>
-<p>虚拟内存可以为进程提供独立的内存空间并引入多层的页表结构将虚拟内存翻译成物理内存，进程之间可以共享物理内存减少开销，也能简化程序的链接、装载以及内存分配过程；</p>
+<li>虚拟内存可以为进程提供独立的内存空间并引入多层的页表结构将虚拟内存翻译成物理内存，进程之间可以共享物理内存减少开销，也能简化程序的链接、装载以及内存分配过程；</li>
+<li>虚拟内存可以控制进程对物理内存的访问，<strong>隔离不同进程的访问权限</strong>，提高系统的安全</li>
+</ul>
+<h4 id="计算机存储结构"><a href="#计算机存储结构" class="headerlink" title="计算机存储结构"></a>计算机存储结构</h4><ul>
+<li>寄存器<ul>
+<li>材料和CPU相同，CPU访问寄存器没有时延</li>
+</ul>
 </li>
-<li>
-<p>虚拟内存可以控制进程对物理内存的访问，隔离不同进程的访问权限，提高系统的安全</p>
+<li>高速缓存<ul>
+<li>L1,L2,L3,一般L1是每个CPU独享,L3是全部CPU共享</li>
+</ul>
 </li>
+<li>主存<ul>
+<li>RAM,与CPU直接交换数据的内部存储</li>
+</ul>
+</li>
+<li>磁盘</li>
+</ul>
+<p>计算机对多程序内存访问的管理经历了</p>
+<ul>
+<li>静态重定位</li>
+<li>动态重定位</li>
+<li><p>交换swapping</p>
+<ul>
+<li>简单来说就是动态得把程序在内存和磁盘之间进行交换保存</li>
+<li>要运行一个进程的时候，就把程序代码和数据load进内存，然后再把程序封存，存入磁盘，如此反复</li>
+</ul>
+</li>
+<li><p>虚拟内存</p>
+<ul>
+<li>每个程序设置一段连续的虚拟地址空间，这个地址空间分割成多个具有连续地址范围的页</li>
+<li>把这些页和物理内存映射，程序运行期间动态映射到物理内存<ul>
+<li>程序引用到物理内存的地址空间，硬件立刻执行必要映射</li>
+<li>若引用到不在物理内存中的地址空间，由OS负责将<strong>缺失的部分装入物理内存</strong>，并重新执行失败的指令</li>
+<li>MMU 内存管理单元 将虚拟地址映射成物理内存</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="用户态和内核态"><a href="#用户态和内核态" class="headerlink" title="用户态和内核态"></a>用户态和内核态</h4><ul>
+<li>用户态<ul>
+<li>上层应用程序(进程)的运行空间</li>
+<li>进程的执行依赖于内核提供的资源，包括不限于CPU资源，存储资源，I/O资源</li>
+</ul>
+</li>
+<li>内核<ul>
+<li>控制计算机硬件资源</li>
+</ul>
+</li>
+</ul>
+<p>用户进程如何切换到内核态去使用内核资源</p>
+<ul>
+<li>系统调用 trap<ul>
+<li>用户进程主动发起的操作，主动要求切换到内核态，进入内核态由操作系统来操作系统资源，完成之后返回进程</li>
+</ul>
+</li>
+<li>异常<ul>
+<li>被动的操作，用户进程运行期间发生异常(如某条指令出了问题)，触发由当前运行进程切换到处理此异常的内核相关进程，切换到了内核态</li>
+</ul>
+</li>
+<li>中断<ul>
+<li>外围设备完成用户请求的操作后，向CPU发出相应的中断信号</li>
+<li>CPU暂停执行下一条指令，转而执行中断信号对应的处理程序</li>
+</ul>
+</li>
+</ul>
+<h4 id="僵尸进程和孤儿进程"><a href="#僵尸进程和孤儿进程" class="headerlink" title="僵尸进程和孤儿进程"></a>僵尸进程和孤儿进程</h4><p>在unix/linux中，正常情况下，子进程是通过父进程创建的，子进程在创建新的进程。子进程的结束和父进程的运行是一个<strong>异步过程</strong>即父进程永远无法预测子进程到底什么时候结束。 当一个进程完成它的工作终止之后，它的<strong>父进程需要调用wait()或者waitpid()</strong>系统调用取得子进程的终止状态。</p>
+<ul>
+<li><p>僵尸进程</p>
+<ul>
+<li>一个进程使用fork创建子进程，如果<strong>子进程退出</strong>，而<strong>父进程并没有调用wait或waitpid获取子进程的状态信息</strong>，那么子进程的<strong>进程描述符仍然保存在系统</strong>中。这种进程称之为僵尸进程</li>
+<li>危害: 进程号就会一直被占用,没有可用的进程号导致不能产生新的进程</li>
+<li>措施：kill产生僵尸进程的那个父进程，该父进程被kill后，其产生的僵尸进程变成孤儿进程被init收集，init进程通过wait()释放这些孤儿进程</li>
+</ul>
+</li>
+<li><p>孤儿进程</p>
+<ul>
+<li>一个父进程退出，而它的一个或多个子进程还在运行，那么那些子进程将成为孤儿进程。孤儿进程将被init进程(进程号为1)所收养，并由init进程对它们完成状态收集工作</li>
+</ul>
+</li>
+</ul>
+<h4 id="select和epoll的区别"><a href="#select和epoll的区别" class="headerlink" title="select和epoll的区别"></a>select和epoll的区别</h4><ul>
+<li>select 复杂度O(n) 遍历所有的文件描述符，查看对应的状态读写是否就绪</li>
+<li>epoll 把哪个流发生了怎样的I/O事件通知我们。所以我们说epoll实际上是事件驱动（每个事件关联上fd）复杂度降低到了O(1)</li>
+</ul>
+<h4 id="并发和并行"><a href="#并发和并行" class="headerlink" title="并发和并行"></a>并发和并行</h4><ul>
+<li>单核的CPU，不能真正同时进行一个以上的进程，只能把CPU运行时间分成若干个时间段，在某个时间段只有一个进程运行，其余处于挂起状态，这种称为并发。</li>
+<li>系统有多核CPU，可以实现一个CPU执行一个进程，另一个CPU执行另一个进程，两个进程互不抢占CPU资源，可以同时进行，称为并行。</li>
 </ul>
 
       
@@ -278,18 +357,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/11/18/python_1/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2020/11/20/redis相关问题/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          (no title)
+          redis相关问题
         
       </div>
     </a>
   
   
-    <a href="/2020/11/17/python反射/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">python反射</div>
+    <a href="/2020/11/17/TCP/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">TCP</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -316,7 +395,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#虚拟内存和物理内存"><span class="toc-number">1.</span> <span class="toc-text"> 虚拟内存和物理内存</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#虚拟内存和物理内存"><span class="toc-number">1.</span> <span class="toc-text">虚拟内存和物理内存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#计算机存储结构"><span class="toc-number">2.</span> <span class="toc-text">计算机存储结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#用户态和内核态"><span class="toc-number">3.</span> <span class="toc-text">用户态和内核态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#僵尸进程和孤儿进程"><span class="toc-number">4.</span> <span class="toc-text">僵尸进程和孤儿进程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#select和epoll的区别"><span class="toc-number">5.</span> <span class="toc-text">select和epoll的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#并发和并行"><span class="toc-number">6.</span> <span class="toc-text">并发和并行</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -465,19 +544,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">网络</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">mysql</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">HMM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">nlp</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">NER</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -485,27 +556,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">网络</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">text classification</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">redis</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -513,11 +564,35 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mq</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">kafka,mq</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">develop</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">OS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
               </li>
             
             <div class="clearfix"></div>

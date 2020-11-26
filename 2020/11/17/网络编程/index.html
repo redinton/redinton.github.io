@@ -8,20 +8,20 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>网络编程 | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="IP地址 分为IPv4和IPv6. IPv4一共32位地址, IPv6 128位(32 bytes)， IPv4地址 2^32 已用完。 IP地址分为公网IP和内网IP。 一般通过ipconfig看到的是内网IP，公网IP需要在线查。 内网地址: 类似于 192.168. x. x ， 10. x . x . x   两台机器位于同一网络，则他们之间可以直接通信   同一网路- IP地址前段相同">
+  <meta name="description" content="IP地址分为IPv4和IPv6. IPv4一共32位地址, IPv6 128位(32 bytes)， IPv4地址 2^32 已用完。">
 <meta name="keywords" content="网络">
 <meta property="og:type" content="article">
 <meta property="og:title" content="网络编程">
 <meta property="og:url" content="http://jasonyu.top/2020/11/17/网络编程/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="IP地址 分为IPv4和IPv6. IPv4一共32位地址, IPv6 128位(32 bytes)， IPv4地址 2^32 已用完。 IP地址分为公网IP和内网IP。 一般通过ipconfig看到的是内网IP，公网IP需要在线查。 内网地址: 类似于 192.168. x. x ， 10. x . x . x   两台机器位于同一网络，则他们之间可以直接通信   同一网路- IP地址前段相同">
+<meta property="og:description" content="IP地址分为IPv4和IPv6. IPv4一共32位地址, IPv6 128位(32 bytes)， IPv4地址 2^32 已用完。">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://jasonyu.top/2020/11/17/网络编程/image-20200312095124275.png">
 <meta property="og:image" content="http://jasonyu.top/2020/11/17/网络编程/image-20200408145619279.png">
-<meta property="og:updated_time" content="2020-11-20T06:43:26.139Z">
+<meta property="og:updated_time" content="2020-11-26T08:21:45.541Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="网络编程">
-<meta name="twitter:description" content="IP地址 分为IPv4和IPv6. IPv4一共32位地址, IPv6 128位(32 bytes)， IPv4地址 2^32 已用完。 IP地址分为公网IP和内网IP。 一般通过ipconfig看到的是内网IP，公网IP需要在线查。 内网地址: 类似于 192.168. x. x ， 10. x . x . x   两台机器位于同一网络，则他们之间可以直接通信   同一网路- IP地址前段相同">
+<meta name="twitter:description" content="IP地址分为IPv4和IPv6. IPv4一共32位地址, IPv6 128位(32 bytes)， IPv4地址 2^32 已用完。">
 <meta name="twitter:image" content="http://jasonyu.top/2020/11/17/网络编程/image-20200312095124275.png">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
@@ -172,102 +172,79 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="ip地址"><a class="markdownIt-Anchor" href="#ip地址"></a> IP地址</h4>
-<p>分为IPv4和IPv6. IPv4一共32位地址, IPv6 128位(32 bytes)， IPv4地址 2^32 已用完。</p>
-<p>IP地址分为公网IP和内网IP。 一般通过ipconfig看到的是内网IP，公网IP需要在线查。</p>
+        <h4 id="IP地址"><a href="#IP地址" class="headerlink" title="IP地址"></a>IP地址</h4><p>分为IPv4和IPv6. IPv4一共32位地址, IPv6 128位(32 bytes)， IPv4地址 2^32 已用完。<br><a id="more"></a><br>IP地址分为公网IP和内网IP。 一般通过ipconfig看到的是内网IP，公网IP需要在线查。</p>
 <p>内网地址: 类似于 192.168. x. x ， 10. x . x . x</p>
 <ul>
-<li>
-<p>两台机器位于同一网络，则他们之间可以直接通信</p>
+<li><p>两台机器位于同一网络，则他们之间可以直接通信</p>
 <ul>
-<li>
-<p>同一网路- IP地址前段相同，也就是网络号相同</p>
+<li><p>同一网路- IP地址前段相同，也就是网络号相同</p>
 </li>
-<li>
-<p>网络号 : IP &amp; network mask</p>
+<li><p>网络号 : IP &amp; network mask</p>
 <blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; IP = 101.202.99.2</span><br><span class="line">&gt; Mask = 255.255.255.0</span><br><span class="line">&gt; Network = IP &amp; Mask = 101.202.99.0</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
 </blockquote>
 </li>
 </ul>
 </li>
-<li>
-<p>对于在不同网络的机器，就要通过路由器或者交换机这种设备(网关)进行通信。</p>
+<li><p>对于在不同网络的机器，就要通过路由器或者交换机这种设备(网关)进行通信。</p>
 </li>
 </ul>
-<h4 id="网络模型"><a class="markdownIt-Anchor" href="#网络模型"></a> 网络模型</h4>
-<p>OSI(Open system Interconnect) 网络模型是ISO组织定义的， 七层模型。</p>
-<h4 id="常用协议"><a class="markdownIt-Anchor" href="#常用协议"></a> 常用协议</h4>
-<ul>
-<li>IP协议
-<ul>
+<h4 id="网络模型"><a href="#网络模型" class="headerlink" title="网络模型"></a>网络模型</h4><p>OSI(Open system Interconnect) 网络模型是ISO组织定义的， 七层模型。</p>
+<h4 id="常用协议"><a href="#常用协议" class="headerlink" title="常用协议"></a>常用协议</h4><ul>
+<li>IP协议<ul>
 <li>分组协议，不保证可靠传输</li>
 <li>IP协议只负责分发数据包，不保证顺序和正确性</li>
 </ul>
 </li>
-<li>TCP协议
-<ul>
+<li>TCP协议<ul>
 <li>传输控制协议，支持可靠传输和双向通信，TCP协议建立在IP协议基础上</li>
 <li>很多高级协议 http，SMTP都是建立在TCP协议之上</li>
 </ul>
 </li>
-<li>UDP协议
-<ul>
+<li>UDP协议<ul>
 <li>User Datagram Protocol，数据报文协议， 无连接协议， 不保证可靠传输</li>
 <li>通信前不用像TCP那样建立连接，因此传输效率高于TCP协议</li>
 <li>选用UDP协议，传输的数据通常容忍丢失，如音频会议</li>
 </ul>
 </li>
 </ul>
-<h4 id="tcp-编程"><a class="markdownIt-Anchor" href="#tcp-编程"></a> TCP 编程</h4>
-<p>一个应用程序通过一个<strong>socket</strong>来建立远程连接，Socket内部通过TCP/IP协议把数据传输。</p>
+<h4 id="TCP-编程"><a href="#TCP-编程" class="headerlink" title="TCP 编程"></a>TCP 编程</h4><p>一个应用程序通过一个<strong>socket</strong>来建立远程连接，Socket内部通过TCP/IP协议把数据传输。</p>
 <p>Socket、TCP和部分IP的功能都是由操作系统提供的，不同的编程语言只是提供了对操作系统调用的简单的封装</p>
 <ul>
-<li>
-<p>用Socket进行网络通信的原因</p>
+<li><p>用Socket进行网络通信的原因</p>
 </li>
-<li>
-<p>仅通过IP地址通信不够，一台PC同一时间会运行多个网络程序，当操作系统接到一个数据包，若只有IP地址，无法判断发给哪个程序</p>
+<li><p>仅通过IP地址通信不够，一台PC同一时间会运行多个网络程序，当操作系统接到一个数据包，若只有IP地址，无法判断发给哪个程序</p>
 </li>
-<li>
-<p>Socket</p>
+<li><p>Socket</p>
 <ul>
-<li>由IP地址和端口号(0-65535)  – 端口由OS分配</li>
+<li>由IP地址和端口号(0-65535)  — 端口由OS分配</li>
 <li>小于1024的端口属于特权端口，需要管理员权限</li>
 </ul>
 </li>
-<li>
-<p>Socket网络编程</p>
+<li><p>Socket网络编程</p>
 </li>
-<li>
-<p>本质是两个进程之间的网络通信，其中一个进程充当服务器端，会主动监听某个指定的端口，另一个进程充当客户端，主动连接上服务器端IP和端口，连接成功后，就建立了TCP连接</p>
+<li><p>本质是两个进程之间的网络通信，其中一个进程充当服务器端，会主动监听某个指定的端口，另一个进程充当客户端，主动连接上服务器端IP和端口，连接成功后，就建立了TCP连接</p>
 </li>
-<li>
-<p>TCP的“三次握手”，“四次挥手”  <a href="https://zhuanlan.zhihu.com/p/53374516" target="_blank" rel="noopener">“三次握手，四次挥手”你真的懂吗？</a></p>
+<li><p>TCP的“三次握手”，“四次挥手”  <a href="https://zhuanlan.zhihu.com/p/53374516" target="_blank" rel="noopener">“三次握手，四次挥手”你真的懂吗？</a></p>
 <ul>
-<li>三次握手发生在，建立client和server端之间的连接
-<ul>
+<li>三次握手发生在，建立client和server端之间的连接<ul>
 <li>双方都能明确自己和对方的数据收，发能力正常</li>
-<li>第一次握手，client -&gt; syn -&gt; server
-<ul>
+<li>第一次握手，client -&gt; syn -&gt; server  <ul>
 <li>server知道, client能发，server能收</li>
 </ul>
 </li>
-<li>第二次握手,server -&gt; syn + ack -&gt; client
-<ul>
-<li>client知道，client能收发，server能收发</li>
+<li>第二次握手,server -&gt; syn + ack -&gt; client<ul>
+<li>client知道，client能收发，server能收发 </li>
 </ul>
 </li>
-<li>第三次握手,  client -&gt; ack -&gt; server
-<ul>
+<li>第三次握手,  client -&gt; ack -&gt; server<ul>
 <li>server知道，client能收, server能发 结合第一次 知道 双方都能收发</li>
 </ul>
 </li>
 <li>建立连接，开始传输数据</li>
 </ul>
 </li>
-<li>四次挥手发生在，断开client和server端连接
-<ul>
+<li>四次挥手发生在，断开client和server端连接<ul>
 <li>第一次挥手，client  -&gt; fin -&gt; server 告诉server自己要关闭连接了，不再发送数据但可以接收数据</li>
 <li>第二次挥手，server -&gt;ack -&gt; client ，表示自己收到client的消息，然后server端上层应用程序也被告知另一端发起关闭操作</li>
 <li>第三次挥手，server  -&gt; fin -&gt; client 表示server自己这边也关闭连接</li>
@@ -277,56 +254,45 @@
 </ul>
 <img src="/2020/11/17/网络编程/image-20200312095124275.png" title="image-20200312095124275">
 </li>
-<li>
-<p>为何关闭连接要四次握手</p>
+<li><p>为何关闭连接要四次握手</p>
 <ul>
 <li>起初建立连接前，server在listen状态，收到要建立连接的syn报文后，把ack和syn放在一个报文里发送给client</li>
 <li>关闭连接时，当收到client的fin时，仅表示client端不再发送数据， 己方(server)是否关闭发送数据通道，需要上层应用决定，因此，FIN和ACK是分开发送的。</li>
 </ul>
 </li>
 </ul>
-<h4 id="http-协议"><a class="markdownIt-Anchor" href="#http-协议"></a> HTTP 协议</h4>
-<p>一个http服务器 本质上就是一个TCP服务器</p>
+<h4 id="HTTP-协议"><a href="#HTTP-协议" class="headerlink" title="HTTP 协议"></a>HTTP 协议</h4><p>一个http服务器 本质上就是一个TCP服务器</p>
 <ul>
-<li>http1.0
-<ul>
+<li>http1.0<ul>
 <li>browser 每次建立TCP连接后，只发送一个http请求并接受一个http 响应，然后就关闭TCP连接</li>
 </ul>
 </li>
-<li>http1.1
-<ul>
+<li>http1.1<ul>
 <li>允许server和browser在同一个TCP连接上反复传送，接受多个HTTP请求响应</li>
 <li>由于创建一个TCP连接本身需要一定时间</li>
 </ul>
 </li>
-<li>http2.0
-<ul>
+<li>http2.0<ul>
 <li>http协议是请求-响应协议，总是发送一个请求，接受一个响应</li>
 <li>http2.0允许browser同时发出多个请求，但每个请求需要有唯一标识，服务器可以不按请求的顺序返回多个响应。</li>
 <li>提高传输效率，因为browser在发出一个请求后，不必等待响应，就可以继续发下一个请求</li>
 </ul>
 </li>
-<li>http3.0
-<ul>
+<li>http3.0<ul>
 <li>为提升速度，抛弃TCP协议，改为使用无需创建连接的UDP协议</li>
 </ul>
 </li>
 </ul>
-<h4 id="http连接和socket连接"><a class="markdownIt-Anchor" href="#http连接和socket连接"></a> http连接和socket连接</h4>
-<ul>
-<li>
-<p>http连接是“请求-- 响应模式”,  请求前先需要建立连接，还需要客户端向服务器发出请求，服务器才能回复数据</p>
+<h4 id="http连接和socket连接"><a href="#http连接和socket连接" class="headerlink" title="http连接和socket连接"></a>http连接和socket连接</h4><ul>
+<li><p>http连接是“请求— 响应模式”,  请求前先需要建立连接，还需要客户端向服务器发出请求，服务器才能回复数据</p>
 </li>
-<li>
-<p>socket 连接是 服务器端可以主动推数据给客户端来保持客户端与服务器数据的实时同步</p>
+<li><p>socket 连接是 服务器端可以主动推数据给客户端来保持客户端与服务器数据的实时同步</p>
 </li>
 </ul>
-<p>TCP 单纯建立连接，不涉及任何我们需要请求的实际数据，简单的传输 – 传输层</p>
+<p>TCP 单纯建立连接，不涉及任何我们需要请求的实际数据，简单的传输 — 传输层</p>
 <p>http 用来收发数据， 实际应用上， 属于应用层</p>
-<h4 id="web服务器"><a class="markdownIt-Anchor" href="#web服务器"></a> Web服务器</h4>
-<ul>
-<li>
-<p>完整的功能 (HTTP/1.1 为例)</p>
+<h4 id="Web服务器"><a href="#Web服务器" class="headerlink" title="Web服务器"></a>Web服务器</h4><ul>
+<li><p>完整的功能 (HTTP/1.1 为例)</p>
 <ul>
 <li>识别正确/错误的 HTTP请求</li>
 <li>识别正确/错误的HTTP头</li>
@@ -335,22 +301,19 @@
 <li>IO异常处理</li>
 </ul>
 </li>
-<li>
-<p>通过py代码可以构建一个web服务器</p>
+<li><p>通过py代码可以构建一个web服务器</p>
 <ul>
 <li>覆写 do_GET / do_POST 等函数来处理request</li>
 </ul>
 </li>
-<li>
-<p>但不希望每次给server增加新功能时，都是在server源码里修改</p>
+<li><p>但不希望每次给server增加新功能时，都是在server源码里修改</p>
 <ul>
 <li>如果程序能独立在另一个脚本文件运行，就是说每次加一个新功能都是新建一个py脚本，然后加在这个里面，然后server也能同步增加上这个功能。</li>
 <li>通过CGI 实现</li>
 </ul>
 </li>
 </ul>
-<h5 id="cgi"><a class="markdownIt-Anchor" href="#cgi"></a> CGI</h5>
-<ul>
+<h5 id="CGI"><a href="#CGI" class="headerlink" title="CGI"></a>CGI</h5><ul>
 <li>CGI即<strong>通用网关接口</strong>(Common Gateway Interface)，是<strong>外部应用程序</strong>（CGI程序）与<strong>Web服务器之间的接口</strong>标准，是在CGI程序和Web服务器之间传递信息的规程。</li>
 <li>允许Web服务器<strong>执行外部程序</strong>，并将它们的输出发送给Web浏览器</li>
 <li>CGI方式在遇到连接请求（用户请求）先要创建cgi的子进程，激活一个CGI进程，然后处理请求，处理完后结束这个子进程。这就是fork-and-execute模式</li>
@@ -365,67 +328,49 @@
 <li>CGI应用程序把结果格式化为网络服务器和浏览器能够理解的文档（通常是HTML网页）。</li>
 <li>网络服务器把结果返回到浏览器中。</li>
 </ol>
-<h5 id="servlet"><a class="markdownIt-Anchor" href="#servlet"></a> Servlet</h5>
-<p>JavaEE提供servelet处理HTTP请求。</p>
+<h5 id="Servlet"><a href="#Servlet" class="headerlink" title="Servlet"></a>Servlet</h5><p>JavaEE提供servelet处理HTTP请求。</p>
 <ul>
 <li>继承HttpServlet，<strong>覆写doGet()或doPost()</strong></li>
 <li>doGet 传入HttpServeletRequest  和 HttpServletResponse两个对象， 对应请求和响应</li>
 <li>使用Servlet ApI，并不直接与底层TCP交互，不需要解析HTTP协议</li>
-<li>支持Servlet API 的Web服务器
-<ul>
+<li>支持Servlet API 的Web服务器 <ul>
 <li>Tomcat, Jetty , GlassFish</li>
 </ul>
 </li>
-<li>Servlet 容器中运行的servlet
-<ul>
+<li>Servlet 容器中运行的servlet<ul>
 <li>无法在代码中直接通过new创建servlet实例，必须由servlet容器自动创建servlet实例</li>
 <li>servlet容器只会给每个servlet类创建唯一实例</li>
 <li>servlet容器会使用多线程执行doGet() 或doPost()</li>
 </ul>
 </li>
-<li>重定向和转发
-<ul>
-<li>重定向 redirect
-<ul>
-<li>指当浏览器请求一个URL时, 服务器返回一个重定向指令，告诉浏览器地址已经变了，麻烦<strong>使用新的URL重新发送新</strong>请求 – 相当于有两次HTTP请求</li>
+<li>重定向和转发<ul>
+<li>重定向 redirect<ul>
+<li>指当浏览器请求一个URL时, 服务器返回一个重定向指令，告诉浏览器地址已经变了，麻烦<strong>使用新的URL重新发送新</strong>请求 — 相当于有两次HTTP请求</li>
 <li>302 临时重定向，301永久重定向，301，浏览器会缓存/hi到/hello这个重定向的关联，下次请求/hi，浏览器直接发送/hello请求</li>
 </ul>
 </li>
-<li>转发 forward
-<ul>
+<li>转发 forward<ul>
 <li>内部转发，发生在服务器内部</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<h5 id="jsp"><a class="markdownIt-Anchor" href="#jsp"></a> JSP</h5>
-<p>JSP- java server pages，整个文件与html无太大区别，后缀是.jsp，需要插入变量，或动态输出的地方用 &lt;% … %&gt;</p>
+<h5 id="JSP"><a href="#JSP" class="headerlink" title="JSP"></a>JSP</h5><p>JSP- java server pages，整个文件与html无太大区别，后缀是.jsp，需要插入变量，或动态输出的地方用 &lt;% … %&gt;</p>
 <ul>
-<li>
-<p>&lt;%--  --%&gt; 之间是jsp注释</p>
+<li>&lt;%—  —%&gt; 之间是jsp注释</li>
+<li>&lt;% %&gt;之间是java代码</li>
+<li><p>&lt;%=  xxx %&gt; 可以快捷输出一个变量的值</p>
 </li>
-<li>
-<p>&lt;% %&gt;之间是java代码</p>
-</li>
-<li>
-<p>&lt;%=  xxx %&gt; 可以快捷输出一个变量的值</p>
-</li>
-<li>
-<p>JSP 执行前首先被编译成一个Servlet，JSP本质就是一个servlet，但无需配置映射路径，web server 根据路径查找对应的jsp 文件</p>
+<li><p>JSP 执行前首先被编译成一个Servlet，JSP本质就是一个servlet，但无需配置映射路径，web server 根据路径查找对应的jsp 文件</p>
 </li>
 </ul>
-<h5 id="mvc开发"><a class="markdownIt-Anchor" href="#mvc开发"></a> MVC开发</h5>
+<h5 id="MVC开发"><a href="#MVC开发" class="headerlink" title="MVC开发"></a>MVC开发</h5><ul>
+<li>servlet 适合编写java代码，但不适合输出复杂的html</li>
+<li>jsp适合编写html，并在其中插入动态内容，但不适合写复杂java代码</li>
+</ul>
 <ul>
-<li>
-<p>servlet 适合编写java代码，但不适合输出复杂的html</p>
-</li>
-<li>
-<p>jsp适合编写html，并在其中插入动态内容，但不适合写复杂java代码</p>
-</li>
-<li>
-<p>MVC - M(model) , V(view), C(controller)</p>
-<ul>
+<li>MVC - M(model) , V(view), C(controller)<ul>
 <li>C - 业务逻辑</li>
 <li>M- 数据模型</li>
 <li>V - 渲染视图</li>
@@ -433,14 +378,12 @@
 </li>
 </ul>
 <img src="/2020/11/17/网络编程/image-20200408145619279.png" title="image-20200408145619279">
-<h4 id="同源策略-same-origin-policy"><a class="markdownIt-Anchor" href="#同源策略-same-origin-policy"></a> 同源策略 same-origin policy</h4>
-<ul>
+<h4 id="同源策略-same-origin-policy"><a href="#同源策略-same-origin-policy" class="headerlink" title="同源策略 same-origin policy"></a>同源策略 same-origin policy</h4><ul>
 <li>允许来自同一站点的资源进行相互访问而不受限制，但会阻止其他不同站点对文档/资源的访问。</li>
 <li>同源的文档必须有相同的<strong>协议，主机名和端口号</strong></li>
 <li>作用是可以防范会话劫持</li>
 </ul>
-<h4 id="跨域资源共享"><a class="markdownIt-Anchor" href="#跨域资源共享"></a> 跨域资源共享</h4>
-<p>CORS 是一种机制，允许我们绕过同源策略，从一个域名向另一个域名的资源发起请求.</p>
+<h4 id="跨域资源共享"><a href="#跨域资源共享" class="headerlink" title="跨域资源共享"></a>跨域资源共享</h4><p>CORS 是一种机制，允许我们绕过同源策略，从一个域名向另一个域名的资源发起请求.</p>
 <ul>
 <li>原理是添加新的HTTP头部，来对一些域名授权，那这些域名就可以发起对本页面的资源的请求。</li>
 </ul>
@@ -537,8 +480,8 @@
     </a>
   
   
-    <a href="/2020/11/13/gevent源码/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">gevent源码</div>
+    <a href="/2020/11/12/bash技巧/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">bash技巧</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -565,7 +508,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#ip地址"><span class="toc-number">1.</span> <span class="toc-text"> IP地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#网络模型"><span class="toc-number">2.</span> <span class="toc-text"> 网络模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#常用协议"><span class="toc-number">3.</span> <span class="toc-text"> 常用协议</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#tcp-编程"><span class="toc-number">4.</span> <span class="toc-text"> TCP 编程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#http-协议"><span class="toc-number">5.</span> <span class="toc-text"> HTTP 协议</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#http连接和socket连接"><span class="toc-number">6.</span> <span class="toc-text"> http连接和socket连接</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#web服务器"><span class="toc-number">7.</span> <span class="toc-text"> Web服务器</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#cgi"><span class="toc-number">7.1.</span> <span class="toc-text"> CGI</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#servlet"><span class="toc-number">7.2.</span> <span class="toc-text"> Servlet</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#jsp"><span class="toc-number">7.3.</span> <span class="toc-text"> JSP</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#mvc开发"><span class="toc-number">7.4.</span> <span class="toc-text"> MVC开发</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#同源策略-same-origin-policy"><span class="toc-number">8.</span> <span class="toc-text"> 同源策略 same-origin policy</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#跨域资源共享"><span class="toc-number">9.</span> <span class="toc-text"> 跨域资源共享</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#IP地址"><span class="toc-number">1.</span> <span class="toc-text">IP地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#网络模型"><span class="toc-number">2.</span> <span class="toc-text">网络模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#常用协议"><span class="toc-number">3.</span> <span class="toc-text">常用协议</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TCP-编程"><span class="toc-number">4.</span> <span class="toc-text">TCP 编程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HTTP-协议"><span class="toc-number">5.</span> <span class="toc-text">HTTP 协议</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#http连接和socket连接"><span class="toc-number">6.</span> <span class="toc-text">http连接和socket连接</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Web服务器"><span class="toc-number">7.</span> <span class="toc-text">Web服务器</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#CGI"><span class="toc-number">7.1.</span> <span class="toc-text">CGI</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Servlet"><span class="toc-number">7.2.</span> <span class="toc-text">Servlet</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#JSP"><span class="toc-number">7.3.</span> <span class="toc-text">JSP</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#MVC开发"><span class="toc-number">7.4.</span> <span class="toc-text">MVC开发</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#同源策略-same-origin-policy"><span class="toc-number">8.</span> <span class="toc-text">同源策略 same-origin policy</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#跨域资源共享"><span class="toc-number">9.</span> <span class="toc-text">跨域资源共享</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -714,19 +657,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">网络</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">mysql</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">HMM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">nlp</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">NER</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -734,27 +669,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">网络</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">text classification</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">redis</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -762,11 +677,35 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mq</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">kafka,mq</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">develop</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">OS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
               </li>
             
             <div class="clearfix"></div>

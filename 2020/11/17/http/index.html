@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>http | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="http有哪些头部？详细介绍一下Cookie  General Header Fields  Cache-control  max-age 客户端最多保存缓存多少秒 no-cache 可以缓存，但使用前必须去服务器验证是否过期 no-store 响应不缓存，适合变化频繁的页面如秒杀页面   Connection  keep-alive http/1.1 默认启用长连接 close 过多长连接会占">
+  <meta name="description" content="http有哪些头部https的加密过程详细讲一下put和post什么区别get和post有什么区别http幂等性是什么有哪些加密输入url整个过程">
 <meta name="keywords" content="网络">
 <meta property="og:type" content="article">
 <meta property="og:title" content="http">
 <meta property="og:url" content="http://jasonyu.top/2020/11/17/http/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="http有哪些头部？详细介绍一下Cookie  General Header Fields  Cache-control  max-age 客户端最多保存缓存多少秒 no-cache 可以缓存，但使用前必须去服务器验证是否过期 no-store 响应不缓存，适合变化频繁的页面如秒杀页面   Connection  keep-alive http/1.1 默认启用长连接 close 过多长连接会占">
+<meta property="og:description" content="http有哪些头部https的加密过程详细讲一下put和post什么区别get和post有什么区别http幂等性是什么有哪些加密输入url整个过程">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-20T06:43:26.135Z">
+<meta property="og:updated_time" content="2020-11-26T08:21:45.537Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="http">
-<meta name="twitter:description" content="http有哪些头部？详细介绍一下Cookie  General Header Fields  Cache-control  max-age 客户端最多保存缓存多少秒 no-cache 可以缓存，但使用前必须去服务器验证是否过期 no-store 响应不缓存，适合变化频繁的页面如秒杀页面   Connection  keep-alive http/1.1 默认启用长连接 close 过多长连接会占">
+<meta name="twitter:description" content="http有哪些头部https的加密过程详细讲一下put和post什么区别get和post有什么区别http幂等性是什么有哪些加密输入url整个过程">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -169,19 +169,17 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="http有哪些头部详细介绍一下cookie"><a class="markdownIt-Anchor" href="#http有哪些头部详细介绍一下cookie"></a> http有哪些头部？详细介绍一下Cookie</h4>
-<ul>
-<li>General Header Fields
-<ul>
-<li>Cache-control
-<ul>
+        <p><a href="#http有哪些头部">http有哪些头部</a><br><a href="#https的加密过程详细讲一下">https的加密过程详细讲一下</a><br><a href="#put和post什么区别">put和post什么区别</a><br><a href="#get和post有什么区别">get和post有什么区别</a><br><a href="#http幂等性是什么">http幂等性是什么</a><br><a href="#加密">有哪些加密</a><br><a href="#输入url的全过程">输入url整个过程</a></p>
+<a id="more"></a>
+<h4 id="http有哪些头部"><a href="#http有哪些头部" class="headerlink" title="http有哪些头部"></a>http有哪些头部</h4><ul>
+<li>General Header Fields<ul>
+<li>Cache-control<ul>
 <li>max-age 客户端最多保存缓存多少秒</li>
 <li>no-cache 可以缓存，但使用前必须去服务器验证是否过期</li>
 <li>no-store 响应不缓存，适合变化频繁的页面如秒杀页面</li>
 </ul>
 </li>
-<li>Connection
-<ul>
+<li>Connection<ul>
 <li>keep-alive http/1.1 默认启用长连接</li>
 <li>close 过多长连接会占用服务器资源，客户端主动通知服务器关闭连接</li>
 </ul>
@@ -189,45 +187,36 @@
 <li>Transfer-encoding</li>
 </ul>
 </li>
-<li>Request Header Fields
-<ul>
-<li>Accept
-<ul>
+<li>Request Header Fields<ul>
+<li>Accept<ul>
 <li>客户端希望接收的数据类型</li>
 <li>text / iamge/ audio/video/aplication:json,key value</li>
 </ul>
 </li>
-<li>Refer
-<ul>
+<li>Refer<ul>
 <li>代表这个request从哪里来，可用于判断是否是合法的domain</li>
 </ul>
 </li>
-<li>Range
-<ul>
+<li>Range<ul>
 <li>断点传输</li>
 </ul>
 </li>
-<li>Host
-<ul>
+<li>Host<ul>
 <li>指定资源所在服务器</li>
 </ul>
 </li>
-<li>User-Agent
-<ul>
+<li>User-Agent<ul>
 <li>客户端程序信息</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>Response Header Fields
-<ul>
+<li>Response Header Fields<ul>
 <li>http-version</li>
 <li>status-code</li>
 <li>accept-range</li>
-<li>location
-<ul>
-<li>响应码
-<ul>
+<li>location<ul>
+<li>响应码<ul>
 <li>301 永久重定向</li>
 <li>302 临时重定向</li>
 </ul>
@@ -236,55 +225,45 @@
 </li>
 </ul>
 </li>
-<li>Entity Header Fields
-<ul>
+<li>Entity Header Fields<ul>
 <li>content-type</li>
 <li>content-length</li>
 <li>last-modified</li>
 </ul>
 </li>
-<li>Cookie
-<ul>
+<li>Cookie<ul>
 <li>key-value格式</li>
 <li>量一大就占带宽</li>
 </ul>
 </li>
 </ul>
-<h4 id="加密"><a class="markdownIt-Anchor" href="#加密"></a> 加密</h4>
-<ul>
-<li>对称性加密
-<ul>
-<li>加密解密用同一个密钥，难点在于密钥的传送</li>
+<h4 id="加密"><a href="#加密" class="headerlink" title="加密"></a>加密</h4><ul>
+<li>对称性加密<ul>
+<li>加密解密用同一个密钥，<strong>难点在于密钥的传送</strong></li>
 </ul>
 </li>
-<li>密钥交换
-<ul>
+<li>密钥交换<ul>
 <li>Diffie-Hellman</li>
 </ul>
 </li>
-<li>非对称性加密
-<ul>
+<li>非对称性加密<ul>
 <li>公钥加密，私钥解密</li>
-<li>RSA就是典型的非对称加密，速度比较慢
-<ul>
+<li>RSA就是典型的非对称加密，<strong>速度比较慢</strong>,耗时<ul>
 <li>传大量数据时，一般不用公钥直接加密数据，而是加密对称性加密的密钥</li>
 </ul>
 </li>
 <li>无法确定通信双方的身份，依然有中间人攻击</li>
 </ul>
 </li>
-<li>数字签名
-<ul>
+<li>数字签名<ul>
 <li>公布公钥，用私钥加密数据，把加密的数据公布出去</li>
 <li>对于RSA算法，私钥加密的数据只有公钥可以解开</li>
 <li>目的是为了证明身份，证明这些数据是由本人发出的</li>
 </ul>
 </li>
-<li>公钥证书
-<ul>
-<li>证书就是公钥和签名，由第三方机构颁发</li>
-<li>证书认证的流程
-<ul>
+<li>公钥证书<ul>
+<li>证书就是<strong>公钥和签名</strong>，由第三方机构颁发</li>
+<li>证书认证的流程<ul>
 <li>Bob 去可信任的认证机构证实本⼈真实⾝份，并提供⾃⼰的公钥。</li>
 <li>Alice 想跟 Bob 通信，⾸先向认证机构请求 Bob 的公钥，认证机构会把⼀张证书（Bob 的公钥以及⾃⼰对其公钥的签名）发送给 Alice。</li>
 <li>Alice 检查签名，确定该公钥确实由这家认证机构发送，中途未被篡改。(安装的正规浏览器中都预存了正规认证机构的证书（包含其公钥），⽤于确认机构⾝份，所以说证书的认证是可信的)</li>
@@ -294,13 +273,12 @@
 </ul>
 </li>
 </ul>
-<h4 id="https的加密过程详细讲一下"><a class="markdownIt-Anchor" href="#https的加密过程详细讲一下"></a> https的加密过程，详细讲一下</h4>
-<p>在 HTTP 协议和 TCP 协议之间加了⼀个 SSL/TLS 安全层.<br>
-在你的浏览器和⽹站服务器完成 TCP 握⼿后，SSL 协议层也会进⾏** SSL 握⼿交换安全参数**，其中就包含该<strong>⽹站的证书</strong>，以便浏览器验证站点⾝份。SSL 安全层验证完成之后，上层的 <strong>HTTP 协议内容都会被加</strong>密，保证数据的安全传输。</p>
+<h4 id="https的加密过程，详细讲一下"><a href="#https的加密过程，详细讲一下" class="headerlink" title="https的加密过程，详细讲一下"></a>https的加密过程，详细讲一下</h4><p>在 HTTP 协议和 TCP 协议之间加了⼀个 <strong>SSL/TLS</strong> 安全层.</p>
 <ul>
+<li>SSL(secure socket layer)</li>
+<li>TLS(transport layer security)<br>在你的浏览器和⽹站服务器完成 TCP 握⼿后，SSL 协议层也会进⾏<strong>SSL握⼿交换安全参数</strong>，其中就包含该<strong>⽹站的证书</strong>, 以便浏览器验证站点⾝份。SSL 安全层验证完成之后，上层的 <strong>HTTP 协议内容都会被加</strong>密，保证数据的安全传输。</li>
 <li>客户端请求服务器获取证书公钥和签名</li>
-<li>客户端(SSL/TLS)解析证书，验证证书是否有效
-<ul>
+<li>客户端(SSL/TLS)解析证书，验证证书是否有效<ul>
 <li>用公钥解密签名值和原始内容(签名也是由私钥针对明文加密得到的)对比来验证证书的合法性</li>
 </ul>
 </li>
@@ -310,29 +288,20 @@
 <li>将信息和随机值混合在一起 进行对称加密</li>
 <li>将加密的内容发送给客户端</li>
 </ul>
-<h4 id="get和post有什么区别put和post呢幂等性是什么"><a class="markdownIt-Anchor" href="#get和post有什么区别put和post呢幂等性是什么"></a> get和post有什么区别？put和post呢？幂等性是什么？</h4>
-<ul>
-<li>
-<p>HTTP方法的幂等性是指<strong>一次和多次请求某一个资源应该具有同样的副作用</strong>, 强调的是一次和N次具有相同的副作用，而不是每次结果相同</p>
-</li>
-<li>
-<p>强调的是一次和N次具有相同的副作用，而不是每次GET的结果相同。不会改变资源的状态，不论调用一次还是N次都没有副作用。GET <code>http://www.news.com/latest-news</code>这个HTTP请求可能会每次得到不同的结果，但它本身并没有产生任何副作用，因而是满足幂等性的。</p>
-</li>
-<li>
-<p>DELETE方法用于删除资源，有副作用，但它应该满足幂等性。比如：DELETE <code>http://www.forum.com/article/4231</code>，调用一次和N次对系统产生的副作用是相同的，即删掉id为4231的帖子；因此，调用者可以多次调用或刷新页面而不必担心引起错误</p>
-</li>
-<li>
-<p>get和post有什么区别 <a href="https://blog.fundebug.com/2019/02/22/compare-http-method-get-and-post/" target="_blank" rel="noopener">参考</a></p>
-<ul>
+<h4 id="http幂等性是什么"><a href="#http幂等性是什么" class="headerlink" title="http幂等性是什么"></a>http幂等性是什么</h4><ul>
+<li>HTTP方法的幂等性是指<strong>一次和多次请求某一个资源应该具有同样的副作用</strong>, 强调的是一次和N次具有相同的副作用，而不是每次结果相同</li>
+<li>强调的是一次和N次具有相同的副作用，而不是每次GET的结果相同。不会改变资源的状态，不论调用一次还是N次都没有副作用。GET <code>http://www.news.com/latest-news</code>这个HTTP请求可能会每次得到不同的结果，但它本身并没有产生任何副作用，因而是满足幂等性的。</li>
+<li>DELETE方法用于删除资源，有副作用，但它应该满足幂等性。比如：DELETE <code>http://www.forum.com/article/4231</code>，调用一次和N次对系统产生的副作用是相同的，即删掉id为4231的帖子；因此，调用者可以多次调用或刷新页面而不必担心引起错误</li>
+</ul>
+<h4 id="get和post有什么区别"><a href="#get和post有什么区别" class="headerlink" title="get和post有什么区别"></a>get和post有什么区别</h4><ul>
+<li>get和post有什么区别 <a href="https://blog.fundebug.com/2019/02/22/compare-http-method-get-and-post/" target="_blank" rel="noopener">参考</a><ul>
 <li>GET 用于获取信息，是无副作用的，是幂等的，且可缓存</li>
 <li>POST 用于修改服务器上的数据，有副作用，非幂等，不可缓存</li>
 <li>GET把参数包含在URL中，POST通过request body</li>
 <li>GET请求在URL中传送的参数是有长度限制的，而POST么有 (和http无关，与浏览器服务器有关)</li>
-<li>GET产生一个TCP数据包；POST产生两个TCP数据包 <strong>不对</strong>
-<ul>
+<li>GET产生一个TCP数据包；POST产生两个TCP数据包 <strong>不对</strong><ul>
 <li>对于GET方式的请求，浏览器会把http header和data一并发送出去，服务器响应200（返回数据</li>
-<li>对于POST，浏览器先发送header，服务器响应100 continue，浏览器再发送data，服务器响应200 ok（返回数据）
-<ul>
+<li>对于POST，浏览器先发送header，服务器响应100 continue，浏览器再发送data，服务器响应200 ok（返回数据） <ul>
 <li>在网络环境好的情况下，发一次包的时间和发两次包的时间差别基本可以无视。而在网络环境差的情况下，两次包的TCP<strong>在验证数据包完整性</strong>上，有非常大的优点</li>
 </ul>
 </li>
@@ -340,15 +309,22 @@
 </li>
 </ul>
 </li>
-<li>
-<p>POST和PUT的区别容易被简单地误认为“POST表示创建资源，PUT表示更新资源”；而实际上，<strong>二者均可用于创建资源</strong>，更为本质的差别是<strong>在幂等性</strong>方面</p>
-<ul>
+</ul>
+<h4 id="put和post什么区别"><a href="#put和post什么区别" class="headerlink" title="put和post什么区别"></a>put和post什么区别</h4><ul>
+<li>POST和PUT的区别容易被简单地误认为“POST表示创建资源，PUT表示更新资源”；而实际上，<strong>二者均可用于创建资源</strong>，更为本质的差别是<strong>在幂等性</strong>方面<ul>
 <li>POST所对应的URI并非创建的资源本身，而是<strong>资源的接收者</strong>。比如：POST <code>http://www.forum.com/articles的语义是在http://www.forum.com/articles</code>下创建一篇帖子，HTTP响应中应包含帖子的创建状态以及帖子的URI。两次相同的POST请求会在服务器端<strong>创建两份资源</strong>，它们具有不同的URI；所以，POST方法不具备幂等性</li>
 <li>PUT所对应的URI是要创建或更新的资源本身。比如：PUT <code>http://www.forum/articles/4231</code>的语义是创建或更新ID为4231的帖子。对同一URI进行多次PUT的副作用和一次PUT是相同的；因此，PUT方法具有幂等性</li>
 </ul>
 </li>
 </ul>
-<h4 id="输入url的全过程"><a class="markdownIt-Anchor" href="#输入url的全过程"></a> 输入url的全过程</h4>
+<h4 id="输入url的全过程"><a href="#输入url的全过程" class="headerlink" title="输入url的全过程"></a>输入url的全过程</h4><ul>
+<li>DNS 解析:将域名解析成 IP 地址</li>
+<li>TCP 连接：TCP 三次握手</li>
+<li>发送 HTTP 请求</li>
+<li>服务器处理请求并返回 HTTP 报文</li>
+<li>浏览器解析渲染页面</li>
+<li>断开连接：TCP 四次挥手</li>
+</ul>
 
       
 
@@ -470,7 +446,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#http有哪些头部详细介绍一下cookie"><span class="toc-number">1.</span> <span class="toc-text"> http有哪些头部？详细介绍一下Cookie</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#加密"><span class="toc-number">2.</span> <span class="toc-text"> 加密</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#https的加密过程详细讲一下"><span class="toc-number">3.</span> <span class="toc-text"> https的加密过程，详细讲一下</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#get和post有什么区别put和post呢幂等性是什么"><span class="toc-number">4.</span> <span class="toc-text"> get和post有什么区别？put和post呢？幂等性是什么？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#输入url的全过程"><span class="toc-number">5.</span> <span class="toc-text"> 输入url的全过程</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#http有哪些头部"><span class="toc-number">1.</span> <span class="toc-text">http有哪些头部</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#加密"><span class="toc-number">2.</span> <span class="toc-text">加密</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#https的加密过程，详细讲一下"><span class="toc-number">3.</span> <span class="toc-text">https的加密过程，详细讲一下</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#http幂等性是什么"><span class="toc-number">4.</span> <span class="toc-text">http幂等性是什么</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#get和post有什么区别"><span class="toc-number">5.</span> <span class="toc-text">get和post有什么区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#put和post什么区别"><span class="toc-number">6.</span> <span class="toc-text">put和post什么区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#输入url的全过程"><span class="toc-number">7.</span> <span class="toc-text">输入url的全过程</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -619,19 +595,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">网络</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">mysql</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">HMM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">nlp</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">NER</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -639,27 +607,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">网络</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">text classification</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">redis</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -667,11 +615,35 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mq</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">kafka,mq</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">develop</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">OS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
               </li>
             
             <div class="clearfix"></div>
