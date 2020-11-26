@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>装饰器 | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="特性  在加载模块时立即执行，在被装饰的函数定义之后立即执行  下述例子中装饰器register最早执行了两次,就是在加载模块时执行两次   函数装饰器在导入模块时立即执行，而被装饰的函数只在明确调用 时运行  12345678910111213141516171819202122232425262728def register(func):    print(&apos;running register">
+  <meta name="description" content="特性 在加载模块时立即执行，在被装饰的函数定义之后立即执行 下述例子中装饰器register最早执行了两次,就是在加载模块时执行两次   函数装饰器在导入模块时立即执行，而被装饰的函数只在明确调用时运行">
 <meta name="keywords" content="python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="装饰器">
 <meta property="og:url" content="http://jasonyu.top/2020/11/11/装饰器/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="特性  在加载模块时立即执行，在被装饰的函数定义之后立即执行  下述例子中装饰器register最早执行了两次,就是在加载模块时执行两次   函数装饰器在导入模块时立即执行，而被装饰的函数只在明确调用 时运行  12345678910111213141516171819202122232425262728def register(func):    print(&apos;running register">
+<meta property="og:description" content="特性 在加载模块时立即执行，在被装饰的函数定义之后立即执行 下述例子中装饰器register最早执行了两次,就是在加载模块时执行两次   函数装饰器在导入模块时立即执行，而被装饰的函数只在明确调用时运行">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-18T05:54:52.712Z">
+<meta property="og:updated_time" content="2020-11-26T08:54:51.593Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="装饰器">
-<meta name="twitter:description" content="特性  在加载模块时立即执行，在被装饰的函数定义之后立即执行  下述例子中装饰器register最早执行了两次,就是在加载模块时执行两次   函数装饰器在导入模块时立即执行，而被装饰的函数只在明确调用 时运行  12345678910111213141516171819202122232425262728def register(func):    print(&apos;running register">
+<meta name="twitter:description" content="特性 在加载模块时立即执行，在被装饰的函数定义之后立即执行 下述例子中装饰器register最早执行了两次,就是在加载模块时执行两次   函数装饰器在导入模块时立即执行，而被装饰的函数只在明确调用时运行">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -169,19 +169,16 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="特性"><a class="markdownIt-Anchor" href="#特性"></a> 特性</h4>
-<ul>
-<li>在加载模块时立即执行，在被装饰的函数定义之后立即执行
-<ul>
+        <h4 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h4><ul>
+<li><strong>在加载模块时立即执</strong>行，在被装饰的函数定义之后立即执行<ul>
 <li>下述例子中装饰器register最早执行了两次,就是在加载模块时执行两次</li>
 </ul>
 </li>
-<li>函数装饰器在导入模块时立即执行，而被装饰的函数只在明确调用<br>
-时运行</li>
+<li>函数装饰器在导入模块时立即执行，而被装饰的函数只在明确调用<br>时运行</li>
 </ul>
+<a id="more"></a>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">register</span><span class="params">(func)</span>:</span></span><br><span class="line">    print(<span class="string">'running register(%s)'</span> % func)</span><br><span class="line">    registry.append(func) </span><br><span class="line">    <span class="keyword">return</span> func</span><br><span class="line"><span class="meta">@register </span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f1</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'running f1()'</span>)</span><br><span class="line"><span class="meta">@register</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f2</span><span class="params">()</span>:</span></span><br><span class="line">	print(<span class="string">'running f2()'</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f3</span><span class="params">()</span>:</span> </span><br><span class="line">	print(<span class="string">'running f3()'</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'running main()'</span>)</span><br><span class="line">    print(<span class="string">'registry -&gt;'</span>, registry)</span><br><span class="line">    f1()</span><br><span class="line">    f2()</span><br><span class="line">    f3()</span><br><span class="line"><span class="keyword">if</span> __name__==<span class="string">'__main__'</span>:</span><br><span class="line">	main()</span><br><span class="line"></span><br><span class="line">running register(&lt;function f1 at <span class="number">0x100631bf8</span>&gt;)</span><br><span class="line">running register(&lt;function f2 at <span class="number">0x100631c80</span>&gt;)</span><br><span class="line">running main()</span><br><span class="line">registry -&gt; [&lt;function f1 at 0x100631bf8&gt;, &lt;function f2 at 0x100631c80&gt;]</span><br><span class="line">running f1()</span><br><span class="line">running f2()</span><br><span class="line">running f3()</span><br></pre></td></tr></table></figure>
-<h4 id="闭包"><a class="markdownIt-Anchor" href="#闭包"></a> 闭包</h4>
-<ul>
+<h4 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h4><ul>
 <li>只有嵌套函数时才有闭包问题</li>
 <li>延伸了作用域的函数，包含函数定义体中引用，但是不在定义体中定义的非全局变量</li>
 <li>关键是它能访问定义体之外定义的非全局变量。</li>
@@ -193,8 +190,7 @@
 <p>报错，因为 count += 1，count是不可变类型，该操作等于把count变成了局部变量。</p>
 <p>series因为是[] 可变类型，并没有给series赋值的操作，而是调用改了append 接口。</p>
 <p>针对不可变两类型，可以用nonlocal 关键字 py3</p>
-<h4 id="叠放装饰器"><a class="markdownIt-Anchor" href="#叠放装饰器"></a> 叠放装饰器</h4>
-<p>操作顺序</p>
+<h4 id="叠放装饰器"><a href="#叠放装饰器" class="headerlink" title="叠放装饰器"></a>叠放装饰器</h4><p>操作顺序</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@d1</span></span><br><span class="line"><span class="meta">@d2</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">()</span>:</span></span><br><span class="line">	<span class="keyword">print</span> (<span class="string">"f"</span>)</span><br><span class="line"></span><br><span class="line">f = d1(d2(f))</span><br></pre></td></tr></table></figure>
 
       
@@ -279,11 +275,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/11/11/进程线程协程/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2020/11/11/python_动态加载/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          进程线程协程
+          python_动态加载
         
       </div>
     </a>
@@ -317,7 +313,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#特性"><span class="toc-number">1.</span> <span class="toc-text"> 特性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#闭包"><span class="toc-number">2.</span> <span class="toc-text"> 闭包</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#叠放装饰器"><span class="toc-number">3.</span> <span class="toc-text"> 叠放装饰器</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#特性"><span class="toc-number">1.</span> <span class="toc-text">特性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#闭包"><span class="toc-number">2.</span> <span class="toc-text">闭包</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#叠放装饰器"><span class="toc-number">3.</span> <span class="toc-text">叠放装饰器</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -470,15 +466,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">HMM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">nlp</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">NER</a>
+                <a href="javascript:void(0)" class="js-tag color3">网络</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -486,19 +474,27 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mq</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">网络</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">text classification</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">kafka,mq</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -510,7 +506,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">develop</a>
               </li>
              
               <li class="article-tag-list-item">
