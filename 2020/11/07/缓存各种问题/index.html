@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>缓存各种问题 | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="缓存穿透 缓存击穿 缓存雪崩 缓存降级 缓存预热">
+  <meta name="description" content="缓存穿透缓存击穿缓存雪崩缓存降级缓存预热">
 <meta name="keywords" content="redis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="缓存各种问题">
 <meta property="og:url" content="http://jasonyu.top/2020/11/07/缓存各种问题/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="缓存穿透 缓存击穿 缓存雪崩 缓存降级 缓存预热">
+<meta property="og:description" content="缓存穿透缓存击穿缓存雪崩缓存降级缓存预热">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-26T08:13:32.626Z">
+<meta property="og:updated_time" content="2020-11-26T08:18:18.098Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="缓存各种问题">
-<meta name="twitter:description" content="缓存穿透 缓存击穿 缓存雪崩 缓存降级 缓存预热">
+<meta name="twitter:description" content="缓存穿透缓存击穿缓存雪崩缓存降级缓存预热">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -169,24 +169,16 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><a href="#%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F">缓存穿透</a><br>
-<a href="#%E7%BC%93%E5%AD%98%E5%87%BB%E7%A9%BF">缓存击穿</a><br>
-<a href="#%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9">缓存雪崩</a><br>
-<a href="#%E7%BC%93%E5%AD%98%E9%99%8D%E7%BA%A7">缓存降级</a><br>
-<a href="#%E7%BC%93%E5%AD%98%E9%A2%84%E7%83%AD">缓存预热</a></p>
-<a id="more"></a>
-<h4 id="缓存穿透"><a class="markdownIt-Anchor" href="#缓存穿透"></a> 缓存穿透</h4>
-<ul>
+        <p><a href="#缓存穿透">缓存穿透</a><br><a href="#缓存击穿">缓存击穿</a><br><a href="#缓存雪崩">缓存雪崩</a><br><a href="#缓存降级">缓存降级</a><br><a href="#缓存预热">缓存预热</a><br><a id="more"></a></p>
+<h4 id="缓存穿透"><a href="#缓存穿透" class="headerlink" title="缓存穿透"></a>缓存穿透</h4><ul>
 <li>缓存穿透是指用户请求的数据在<strong>缓存中不存在即没有命中，同时在数据库中也不存在</strong>，导致用户每次请求该数据都要去数据库中查询一遍，然后返回空</li>
 <li>有恶意攻击者不断请求系统中不存在的数据，会导致短时间大量请求落在数据库上，造成数据库压力过大，甚至击垮数据库系统</li>
 </ul>
 <p>解决方案</p>
 <ul>
-<li>
-<p>布隆过滤器</p>
+<li><p>布隆过滤器</p>
 <ul>
-<li>布隆过滤器认为不在的，一定不会在集合中；布隆过滤器认为在的，可能在也可能不在集合中。
-<ul>
+<li>布隆过滤器认为不在的，一定不会在集合中；布隆过滤器认为在的，可能在也可能不在集合中。<ul>
 <li>爬虫系统url去重；垃圾邮件过滤；黑名单</li>
 <li>节省空间：不需要存储数据本身</li>
 <li>时间复杂度低：插入和查找的时间复杂度都为O(k)，k为哈希函数的个数</li>
@@ -195,12 +187,10 @@
 </li>
 </ul>
 </li>
-<li>
-<p>返回空对象</p>
+<li><p>返回空对象</p>
 <ul>
 <li>当缓存未命中，查询持久层也为空，可以将返回的<strong>空对象写到缓存中</strong>，这样下次请求该key时直接从缓存中查询返回空对象，请求不会落到持久层数据库。为了避免存储过多空对象，通常会给空对象设置一个<strong>过期时间</strong>。</li>
-<li>问题
-<ul>
+<li>问题<ul>
 <li>有大量的key穿透，缓存空对象会占用宝贵的内存空间</li>
 <li>空对象的key设置了过期时间，在这段时间可能会存在缓存和持久层数据不一致的场景</li>
 </ul>
@@ -208,67 +198,57 @@
 </ul>
 </li>
 </ul>
-<h4 id="缓存击穿"><a class="markdownIt-Anchor" href="#缓存击穿"></a> 缓存击穿</h4>
-<ul>
+<h4 id="缓存击穿"><a href="#缓存击穿" class="headerlink" title="缓存击穿"></a>缓存击穿</h4><ul>
 <li>一个key非常热点，在不停的扛着大并发，大并发集中对这一个点进行访问，当这个key在失效的瞬间，持续的大并发就穿破缓存，直接请求数据库，就像在一个屏障上凿开了一个洞。</li>
 <li>数据库瞬时压力骤增，造成大量请求阻塞</li>
 </ul>
 <p>解决方案</p>
 <ul>
-<li>互斥锁 mutex key
-<ul>
+<li>互斥锁 mutex key<ul>
 <li>一个线程回写缓存，其他线程等待回写缓存线程执行完，重新读缓存即可。</li>
 <li>同一时间只有一个线程读数据库然后回写缓存，其他线程都处于阻塞状态。如果是高并发场景，大量线程阻塞势必会降低吞吐量</li>
 <li>分布式应用就需要使用分布式锁</li>
 </ul>
 </li>
-<li>热点数据永不过期
-<ul>
+<li>热点数据永不过期<ul>
 <li>物理不过期，针对热点key不设置过期时间</li>
 <li>逻辑过期，把过期时间存在key对应的value里，如果发现要过期了，通过一个后台的异步线程进行缓存的构建</li>
 <li>对性能友好，对不追求强一致性的系统可以接受</li>
 </ul>
 </li>
 </ul>
-<h4 id="缓存雪崩"><a class="markdownIt-Anchor" href="#缓存雪崩"></a> 缓存雪崩</h4>
-<ul>
+<h4 id="缓存雪崩"><a href="#缓存雪崩" class="headerlink" title="缓存雪崩"></a>缓存雪崩</h4><ul>
 <li>缓存中数据大批量到过期时间，而查询数据量巨大，请求直接落到数据库上，引起数据库压力过大甚至宕机</li>
 <li>缓存击穿指并发查同一条数据，缓存雪崩是不同数据都过期了，很多数据都查不到从而查数据库</li>
 </ul>
 <p>解决方案</p>
 <ul>
-<li>均匀过期
-<ul>
+<li>均匀过期<ul>
 <li>设置不同的过期时间，让缓存失效的时间点尽量均匀。通常可以为有效期增加随机值或者统一规划有效期。</li>
 </ul>
 </li>
-<li>加互斥锁
-<ul>
+<li>加互斥锁<ul>
 <li>同一时间只让一个线程构建缓存，其他线程阻塞排队。</li>
 <li>针对要求强一致性的系统</li>
 </ul>
 </li>
-<li>缓存永不过期
-<ul>
+<li>缓存永不过期<ul>
 <li>缓存击穿解决思路一致，缓存在物理上永远不过期，用一个异步的线程更新缓存</li>
 </ul>
 </li>
-<li>双层缓存策略
-<ul>
+<li>双层缓存策略<ul>
 <li>主缓存：有效期按照经验值设置，设置为主读取的缓存，主缓存失效后从数据库加载最新值。</li>
 <li>备份缓存：有效期长，获取锁失败时读取的缓存，主缓存更新时需要同步更新备份缓存。</li>
 </ul>
 </li>
 </ul>
-<h4 id="缓存预热"><a class="markdownIt-Anchor" href="#缓存预热"></a> 缓存预热</h4>
-<p>系统上线后，将相关的缓存数据直接加载到缓存系统，这样就可以避免在用户请求的时候，先查询数据库，然后再将数据回写到缓存</p>
+<h4 id="缓存预热"><a href="#缓存预热" class="headerlink" title="缓存预热"></a>缓存预热</h4><p>系统上线后，将相关的缓存数据直接加载到缓存系统，这样就可以避免在用户请求的时候，先查询数据库，然后再将数据回写到缓存</p>
 <ul>
 <li>数据量不大的时候，工程启动的时候进行加载缓存动作；</li>
 <li>数据量大的时候，设置一个定时任务脚本，进行缓存的刷新</li>
 <li>数据量太大的时候，优先保证热点数据进行提前加载到缓存</li>
 </ul>
-<h4 id="缓存降级"><a class="markdownIt-Anchor" href="#缓存降级"></a> 缓存降级</h4>
-<p>缓存失效或缓存服务器挂掉的情况下，不去访问数据库，直接返回默认数据或访问服务的内存数据</p>
+<h4 id="缓存降级"><a href="#缓存降级" class="headerlink" title="缓存降级"></a>缓存降级</h4><p>缓存失效或缓存服务器挂掉的情况下，不去访问数据库，直接返回默认数据或访问服务的内存数据</p>
 <p>将部分热点数据缓存到服务的内存中，这样一旦缓存出现异常，可以直接使用服务的内存数据，从而避免数据库遭受巨大压力</p>
 
       
@@ -391,7 +371,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#缓存穿透"><span class="toc-number">1.</span> <span class="toc-text"> 缓存穿透</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#缓存击穿"><span class="toc-number">2.</span> <span class="toc-text"> 缓存击穿</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#缓存雪崩"><span class="toc-number">3.</span> <span class="toc-text"> 缓存雪崩</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#缓存预热"><span class="toc-number">4.</span> <span class="toc-text"> 缓存预热</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#缓存降级"><span class="toc-number">5.</span> <span class="toc-text"> 缓存降级</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#缓存穿透"><span class="toc-number">1.</span> <span class="toc-text">缓存穿透</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#缓存击穿"><span class="toc-number">2.</span> <span class="toc-text">缓存击穿</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#缓存雪崩"><span class="toc-number">3.</span> <span class="toc-text">缓存雪崩</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#缓存预热"><span class="toc-number">4.</span> <span class="toc-text">缓存预热</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#缓存降级"><span class="toc-number">5.</span> <span class="toc-text">缓存降级</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -540,11 +520,7 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -556,11 +532,31 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">kafka,mq</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">develop</a>
               </li>
             
             <div class="clearfix"></div>

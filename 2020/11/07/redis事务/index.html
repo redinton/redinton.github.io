@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Keep Moving">
 <meta property="og:description" content="关系型数据库ACID 中关于原子性的定义 原子性:一个事务(transaction)中的所有操作，要么全部完成，要么全部不完成，不会结束在中间某个环节。事务在执行过程中发生错误，会被恢复(Rollback)到事务开始前的状态，就像这个事务从来没有执行过一样。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-26T08:13:32.615Z">
+<meta property="og:updated_time" content="2020-11-26T08:18:18.089Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="redis事务">
 <meta name="twitter:description" content="关系型数据库ACID 中关于原子性的定义 原子性:一个事务(transaction)中的所有操作，要么全部完成，要么全部不完成，不会结束在中间某个环节。事务在执行过程中发生错误，会被恢复(Rollback)到事务开始前的状态，就像这个事务从来没有执行过一样。">
@@ -170,22 +170,18 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>关系型数据库ACID 中关于原子性的定义</p>
-<p><strong>原子性</strong>:一个事务(transaction)中的所有操作，要么全部完成，要么全部不完成，不会结束在中间某个环节。事务在执行过程中发生错误，会被恢复(Rollback)<strong>到事务开始前的状态</strong>，就像这个事务从来没有执行过一样。</p>
-<a id="more"></a>
-<p>官方文档对事务的定义：</p>
+<p><strong>原子性</strong>:一个事务(transaction)中的所有操作，要么全部完成，要么全部不完成，不会结束在中间某个环节。事务在执行过程中发生错误，会被恢复(Rollback)<strong>到事务开始前的状态</strong>，就像这个事务从来没有执行过一样。<br><a id="more"></a><br>官方文档对事务的定义：</p>
 <ul>
 <li>事务是一个单独的隔离操作：事务中的所有命令都会序列化、按顺序地执行。<strong>事务在执行的过程中，不会被其他客户端发送来的命</strong>令请求所打断。</li>
 <li>事务是一个原子操作：事务中的命令要<strong>么全部被执行，要么全部都不执行</strong>。EXEC 命令负责触发并执行事务中的所有命令：如果客户端在使用 MULTI 开启了一个事务之后，<strong>却因为断线而没有成功执行 EXEC ，那么事务中的所有命令都不会被执行</strong>。另一方面，如果客户端成功在开启事务之后执行 EXEC ，那么事务中的所有命令都会被执行。</li>
 </ul>
 <p>从ACID原子性定义来看，严格意义上讲Redis事务是非原子型的，因为在命<strong>令顺序执行过程中，一旦发生命令执行错误Redis是不会停止执行然后回滚</strong>数据</p>
-<h4 id="redis事务生命周期"><a class="markdownIt-Anchor" href="#redis事务生命周期"></a> redis事务生命周期：</h4>
-<ul>
+<h4 id="redis事务生命周期："><a href="#redis事务生命周期：" class="headerlink" title="redis事务生命周期："></a>redis事务生命周期：</h4><ul>
 <li>开启事务：使用MULTI开启一个事务</li>
 <li>命令入队列：每次操作的命令都会加入到一个队列中，但命令此时不会真正被执行</li>
 <li>提交事务：使用EXEC命令提交事务，开始顺序执行队列中的命令</li>
 </ul>
-<h4 id="redis-为什么不支持rollback"><a class="markdownIt-Anchor" href="#redis-为什么不支持rollback"></a> Redis 为什么不支持Rollback</h4>
-<p>在<strong>事务运行期间</strong>虽然Redis命令可能会执行失败，但是Redis依然<strong>会执行事务内剩余的命令而不会执行回滚</strong>操作</p>
+<h4 id="Redis-为什么不支持Rollback"><a href="#Redis-为什么不支持Rollback" class="headerlink" title="Redis 为什么不支持Rollback"></a>Redis 为什么不支持Rollback</h4><p>在<strong>事务运行期间</strong>虽然Redis命令可能会执行失败，但是Redis依然<strong>会执行事务内剩余的命令而不会执行回滚</strong>操作</p>
 <blockquote>
 <p>只有当被调用的Redis命令有语法错误时，这条命令才会执行失败（在将这个命令放入事务队列期间，Redis能够发现此类问题），或者对某个键执行不符合其数据类型的操作：实际上，这就意味着只有程序错误才会导致Redis命令执行失败，这种错误很有可能在程序开发期间发现，一般很少在生产环境发现。支持事务回滚能力会导致设计复杂，这与Redis的初衷相违背，Redis的设计目标是功能简化及确保更快的运行速度</p>
 </blockquote>
@@ -322,7 +318,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#redis事务生命周期"><span class="toc-number">1.</span> <span class="toc-text"> redis事务生命周期：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#redis-为什么不支持rollback"><span class="toc-number">2.</span> <span class="toc-text"> Redis 为什么不支持Rollback</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#redis事务生命周期："><span class="toc-number">1.</span> <span class="toc-text">redis事务生命周期：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Redis-为什么不支持Rollback"><span class="toc-number">2.</span> <span class="toc-text">Redis 为什么不支持Rollback</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -471,11 +467,7 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -487,11 +479,31 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">kafka,mq</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">develop</a>
               </li>
             
             <div class="clearfix"></div>

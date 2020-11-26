@@ -8,13 +8,13 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>树结构 | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="二叉查找树 BST  任意节点，节点左边所有的值小于等于根节点 任意节点，节点右边的值大于根节点  局限性: 某些情况，BST会退化成一个有n个节点的线性链，降低了查找效率，进而引出AVL 平衡二叉查找树">
+  <meta name="description" content="二叉查找树 BST 任意节点，节点左边所有的值小于等于根节点 任意节点，节点右边的值大于根节点  局限性:某些情况，BST会退化成一个有n个节点的线性链，降低了查找效率，进而引出AVL 平衡二叉查找树">
 <meta name="keywords" content="algorithm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="树结构">
 <meta property="og:url" content="http://jasonyu.top/2020/11/05/tree/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="二叉查找树 BST  任意节点，节点左边所有的值小于等于根节点 任意节点，节点右边的值大于根节点  局限性: 某些情况，BST会退化成一个有n个节点的线性链，降低了查找效率，进而引出AVL 平衡二叉查找树">
+<meta property="og:description" content="二叉查找树 BST 任意节点，节点左边所有的值小于等于根节点 任意节点，节点右边的值大于根节点  局限性:某些情况，BST会退化成一个有n个节点的线性链，降低了查找效率，进而引出AVL 平衡二叉查找树">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://jasonyu.top/2020/11/05/tree/image-20201105144424251.png">
 <meta property="og:image" content="http://jasonyu.top/2020/11/05/tree/image-20201105154843079.png">
@@ -22,10 +22,10 @@
 <meta property="og:image" content="http://jasonyu.top/2020/11/05/tree/image-20201116163721814.png">
 <meta property="og:image" content="http://jasonyu.top/2020/11/05/tree/image-20201116163747072.png">
 <meta property="og:image" content="http://jasonyu.top/2020/11/05/tree/image-20201116163936907.png">
-<meta property="og:updated_time" content="2020-11-26T08:13:32.547Z">
+<meta property="og:updated_time" content="2020-11-26T08:18:18.041Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="树结构">
-<meta name="twitter:description" content="二叉查找树 BST  任意节点，节点左边所有的值小于等于根节点 任意节点，节点右边的值大于根节点  局限性: 某些情况，BST会退化成一个有n个节点的线性链，降低了查找效率，进而引出AVL 平衡二叉查找树">
+<meta name="twitter:description" content="二叉查找树 BST 任意节点，节点左边所有的值小于等于根节点 任意节点，节点右边的值大于根节点  局限性:某些情况，BST会退化成一个有n个节点的线性链，降低了查找效率，进而引出AVL 平衡二叉查找树">
 <meta name="twitter:image" content="http://jasonyu.top/2020/11/05/tree/image-20201105144424251.png">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
@@ -176,32 +176,23 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="二叉查找树-bst"><a class="markdownIt-Anchor" href="#二叉查找树-bst"></a> 二叉查找树 BST</h4>
-<ul>
+        <h4 id="二叉查找树-BST"><a href="#二叉查找树-BST" class="headerlink" title="二叉查找树 BST"></a>二叉查找树 BST</h4><ul>
 <li>任意节点，节点左边所有的值小于等于根节点</li>
 <li>任意节点，节点右边的值大于根节点</li>
 </ul>
-<p>局限性:<br>
-某些情况，BST会退化成一个有n个节点的线性链，降低了查找效率，进而引出AVL 平衡二叉查找树</p>
-<a id="more"></a>
-<img src="/2020/11/05/tree/image-20201105144424251.png" title="image-20201105144424251">
-<h4 id="平衡二叉查找树-avl"><a class="markdownIt-Anchor" href="#平衡二叉查找树-avl"></a> 平衡二叉查找树 AVL</h4>
-<ul>
+<p>局限性:<br>某些情况，BST会退化成一个有n个节点的线性链，降低了查找效率，进而引出AVL 平衡二叉查找树<br><a id="more"></a><br><img src="/2020/11/05/tree/image-20201105144424251.png" title="image-20201105144424251"></p>
+<h4 id="平衡二叉查找树-AVL"><a href="#平衡二叉查找树-AVL" class="headerlink" title="平衡二叉查找树 AVL"></a>平衡二叉查找树 AVL</h4><ul>
 <li>满足二叉查找树的条件</li>
 <li>任意节点，左右子树的高度差不超过1</li>
-<li>因为每次删除或者插入，都要通过旋转保证平衡性
-<ul>
+<li>因为每次删除或者插入，都要通过旋转保证平衡性<ul>
 <li>适合插入删除次数少，查找次数多的情况</li>
 </ul>
 </li>
-<li>很多时候，并不需要追求全局的平衡性，只要局部平衡性就够了，因此引出红黑树<br>
-<a href="https://blog.coder.si/2014/02/how-to-implement-avl-tree-in-python.html" target="_blank" rel="noopener">AVL树python实现</a></li>
+<li>很多时候，并不需要追求全局的平衡性，只要局部平衡性就够了，因此引出红黑树<br><a href="https://blog.coder.si/2014/02/how-to-implement-avl-tree-in-python.html" target="_blank" rel="noopener">AVL树python实现</a></li>
 </ul>
-<h4 id="2-3查找树"><a class="markdownIt-Anchor" href="#2-3查找树"></a> 2-3查找树</h4>
-<ul>
+<h4 id="2-3查找树"><a href="#2-3查找树" class="headerlink" title="2-3查找树"></a>2-3查找树</h4><ul>
 <li>2-节点 定义同BST</li>
-<li>3-节点 含有两个键和三条链接
-<ul>
+<li>3-节点 含有两个键和三条链接<ul>
 <li>左链接指向的键都小于改节点，中链接指向的键都位于两个点之间</li>
 </ul>
 </li>
@@ -209,8 +200,7 @@
 </ul>
 <img src="/2020/11/05/tree/image-20201105154843079.png" title="image-20201105154843079">
 <p>在一棵大小为N的2-3树中，查找和插入操作访问的节点必然不超过lgN个。例如在10亿个节点中一个2-3树的高度仅在19-30之间。最多只需访问30个节点实现10亿个键中进行任意查找和插入的操作。</p>
-<h4 id="红黑树"><a class="markdownIt-Anchor" href="#红黑树"></a> 红黑树</h4>
-<ul>
+<h4 id="红黑树"><a href="#红黑树" class="headerlink" title="红黑树"></a>红黑树</h4><ul>
 <li>针对2-3树的改写，用标准二叉查找树和一些额外信息来表示2-3树。</li>
 <li>红连接-将两个2节点连接起来构成一个3-节点</li>
 <li>黑连接-2-3树中的普通连接</li>
@@ -232,59 +222,43 @@
 <li>HashMap底层是数组加链表，链表是散列冲突后，加在链表上。当链表上的节点数超过8个后，就会转换成红黑树，因为红黑树更方便查询。</li>
 </ul>
 <p>以上大多数的树都是作为内存中的数据结构。</p>
-<h4 id="b树b树"><a class="markdownIt-Anchor" href="#b树b树"></a> B树/B+树</h4>
-<ul>
-<li>
-<p>B树和B-树是一致的。MySQL中的数据一般是放在磁盘中，读取数据会涉及访问磁盘的操作。其中定位数据在磁盘中的哪一块是一个很耗时的工作。</p>
+<h4 id="B树-B-树"><a href="#B树-B-树" class="headerlink" title="B树/B+树"></a>B树/B+树</h4><ul>
+<li><p>B树和B-树是一致的。MySQL中的数据一般是放在磁盘中，读取数据会涉及访问磁盘的操作。其中定位数据在磁盘中的哪一块是一个很耗时的工作。  </p>
 </li>
-<li>
-<p><strong>B/B+树是N叉平衡树</strong>(平衡多路查找树)，每个节点可以有更多的孩子，新的值可以插在已有的节点里，而不改变树的高度，从而大量减少重新平衡和数据迁移的次数。适合做db索引这种需要持久化在磁盘，同时需要大量查询和插入操作的应用。</p>
+<li><p><strong>B/B+树是N叉平衡树</strong>(平衡多路查找树)，每个节点可以有更多的孩子，新的值可以插在已有的节点里，而不改变树的高度，从而大量减少重新平衡和数据迁移的次数。适合做db索引这种需要持久化在磁盘，同时需要大量查询和插入操作的应用。</p>
 </li>
-<li>
-<p>B/B+树上操作时间由读取磁盘时间和CPU计算时间构成，B树操作效率主要取决于访问磁盘的次数。</p>
+<li><p>B/B+树上操作时间由读取磁盘时间和CPU计算时间构成，B树操作效率主要取决于访问磁盘的次数。</p>
 </li>
-<li>
-<p>B+树应文件系统(文件的目录一级一级索引，但只有最底层的叶子结点(文件)保存数据,非叶子节点只存索引</p>
+<li><p>B+树应文件系统(文件的目录一级一级索引，但只有最底层的叶子结点(文件)保存数据,非叶子节点只存索引</p>
 </li>
-<li>
-<p>B+树比B树更适合db索引</p>
+<li><p>B+树比B树更适合db索引</p>
 <ul>
 <li>B+树的<strong>磁盘读写代价更低</strong>：B+树的内部节点并没有指向关键字具体信息的指针，因此其内部节点相对B树更小，如果把所有同一内部节点的关键字存放在同一盘块中，那么盘块所能容纳的关键字数量也越多，一次性读入内存的需要查找的关键字也就越多，<strong>相对IO读写次数</strong>就降低了。</li>
 <li><strong>B+树的查询效率更加稳</strong>定：由于非终结点并不是最终指向文件内容的结点，而只是叶子结点中关键字的索引。所以任何关键字的查找必须走一条从根结点到叶子结点的路。所有关键字查询的路径长度相同，导致每一个数据的查询效率相当。</li>
 <li>由于B+树的数据都存储在叶子结点中，<strong>分支结点均为索引</strong>，方便扫库，只需要扫一遍叶子结点即可，但是B树因为其分支结点同样存储着数据，我们要找到具体的数据，需要进行一次中序遍历按序来扫，所以B+树<strong>更加适合在区间查询</strong>的情况，所以通常B+树用于数据库索引。</li>
 </ul>
 </li>
-<li>
-<p>B树和B+树的区别</p>
+<li><p>B树和B+树的区别</p>
 <ul>
-<li>
-<p>B树如下</p>
+<li><p>B树如下</p>
 </li>
-<li>
-<img src="/2020/11/05/tree/image-20201116163721814.png" title="image-20201116163721814">
+<li><img src="/2020/11/05/tree/image-20201116163721814.png" title="image-20201116163721814">
 </li>
-<li>
-<p>B+树如下</p>
+<li><p>B+树如下</p>
 </li>
-<li>
-<img src="/2020/11/05/tree/image-20201116163747072.png" title="image-20201116163747072">
+<li><img src="/2020/11/05/tree/image-20201116163747072.png" title="image-20201116163747072">
 </li>
-<li>
-<p>B+Tree比B-Tree更适合实现外存储索引结构</p>
+<li><p>B+Tree比B-Tree更适合实现外存储索引结构</p>
 </li>
-<li>
-<p>与B-Tree相比，B+Tree有以下不同点：</p>
+<li><p>与B-Tree相比，B+Tree有以下不同点：</p>
 <ul>
-<li>
-<p>每个节点的指针上限为2d而不是2d+1。</p>
+<li><p>每个节点的指针上限为2d而不是2d+1。</p>
 </li>
-<li>
-<p>内节点不存储data，只存储key；叶子节点不存储指针</p>
+<li><p>内节点不存储data，只存储key；叶子节点不存储指针</p>
 </li>
 </ul>
 </li>
-<li>
-<img src="/2020/11/05/tree/image-20201116163936907.png" title="image-20201116163936907">
+<li><img src="/2020/11/05/tree/image-20201116163936907.png" title="image-20201116163936907">
 <ul>
 <li>带有顺序访问指针的B+Tree 要查询key为从18到49的所有数据记录，当找到18后，只需顺着节点和指针顺序遍历就可以一次性访问到所有数据节点，极大提到了区间查询效率</li>
 </ul>
@@ -294,15 +268,12 @@
 </ul>
 <p>以上的树都是有序的，因此在有数据库索引的情况下，order by索引的值速度会特别快，因为只是在遍历树。</p>
 <p><a href="http://blog.codinglabs.org/articles/theory-of-mysql-index.html" target="_blank" rel="noopener">参考</a></p>
-<h4 id="trie树"><a class="markdownIt-Anchor" href="#trie树"></a> Trie树</h4>
-<ul>
+<h4 id="Trie树"><a href="#Trie树" class="headerlink" title="Trie树"></a>Trie树</h4><ul>
 <li>Trie并不是平衡树，也不一定非要有序</li>
 <li>主要用于前缀匹配，比如字符串，比如说ip地址，如果字符串长度是固定或者说有限的，那么Trie的深度是可控制的，你可以得到很好的搜索效果</li>
 </ul>
-<h4 id="面试题"><a class="markdownIt-Anchor" href="#面试题"></a> 面试题</h4>
-<ul>
-<li>红黑树与B+树区别
-<ul>
+<h4 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h4><ul>
+<li>红黑树与B+树区别<ul>
 <li>应用场景不同</li>
 <li>一个是二叉，一个是N叉</li>
 <li>相同节点下，B+树高度远小于红黑树,因此索引用B+不是红黑</li>
@@ -310,118 +281,89 @@
 </ul>
 </li>
 </ul>
-<h4 id="重建二叉树"><a class="markdownIt-Anchor" href="#重建二叉树"></a> 重建二叉树</h4>
-<hr>
+<h4 id="重建二叉树"><a href="#重建二叉树" class="headerlink" title="重建二叉树"></a>重建二叉树</h4><hr>
 <p>给定二叉树的前序，中序遍历结果，重建二叉树</p>
 <ul>
-<li>前序结果，第一个节点总是根节点的值, 根据该值在中序遍历结果找到对应的位置，进而找到左右子树的节点数目。
-<ul>
+<li>前序结果，第一个节点总是根节点的值, 根据该值在中序遍历结果找到对应的位置，进而找到左右子树的节点数目。<ul>
 <li>前序: <strong>1</strong> 2 4 7 3 5 6 8，中序 4 7 2 <strong>1</strong> 5 3 8 6 -&gt; 左子树三个节点，右子树四个节点</li>
 <li>2 4 7  4 7 2   |   3 5 6 8  5 3 8 6</li>
 </ul>
 </li>
 </ul>
-<h4 id="二叉树的下一个节点"><a class="markdownIt-Anchor" href="#二叉树的下一个节点"></a> 二叉树的下一个节点</h4>
-<hr>
+<h4 id="二叉树的下一个节点"><a href="#二叉树的下一个节点" class="headerlink" title="二叉树的下一个节点"></a>二叉树的下一个节点</h4><hr>
 <p>给定一个二叉树和其中的一个结点，请找出中序遍历顺序的下一个结点并且返回。注意，树中的结点不仅包含左右子结点，同时包含指向父结点的指针。</p>
 <ul>
-<li>
-<p>若该节点有右子树，找到该右子树的最左端</p>
+<li><p>若该节点有右子树，找到该右子树的最左端</p>
 </li>
-<li>
-<p>若该节点没有右子树，找到该节点的父节点</p>
+<li><p>若该节点没有右子树，找到该节点的父节点</p>
 <ul>
-<li>
-<p>若该节点是父节点的左节点,打印父节点</p>
+<li><p>若该节点是父节点的左节点,打印父节点</p>
 </li>
-<li>
-<p>若该节点是父节点的右节点, 借助父节点指针往上，一直到找个节点是其父节点的左节点为止</p>
+<li><p>若该节点是父节点的右节点, 借助父节点指针往上，一直到找个节点是其父节点的左节点为止</p>
 </li>
 </ul>
 </li>
 </ul>
-<h4 id="树的子结构"><a class="markdownIt-Anchor" href="#树的子结构"></a> 树的子结构</h4>
-<hr>
+<h4 id="树的子结构"><a href="#树的子结构" class="headerlink" title="树的子结构"></a>树的子结构</h4><hr>
 <p>输入两棵二叉树A,B，判断B是不是A的子结构</p>
 <ul>
 <li>递归</li>
 </ul>
-<h4 id="二叉树的镜像"><a class="markdownIt-Anchor" href="#二叉树的镜像"></a> 二叉树的镜像</h4>
-<hr>
+<h4 id="二叉树的镜像"><a href="#二叉树的镜像" class="headerlink" title="二叉树的镜像"></a>二叉树的镜像</h4><hr>
 <p>输入一颗二叉树，输出其镜像</p>
 <ul>
 <li>前序遍历树的每个节点，如果遍历到的节点有子节点，交换其两个子节点</li>
 </ul>
-<h4 id="对称的二叉树"><a class="markdownIt-Anchor" href="#对称的二叉树"></a> 对称的二叉树</h4>
-<hr>
+<h4 id="对称的二叉树"><a href="#对称的二叉树" class="headerlink" title="对称的二叉树"></a>对称的二叉树</h4><hr>
 <p>先前序遍历得到一个结果。</p>
 <p>然后自定义一种遍历算法，先看父节点，再看父节点的右节点，再看父节点的左节点</p>
-<h5 id="recurisve-way"><a class="markdownIt-Anchor" href="#recurisve-way"></a> recurisve way</h5>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isSymmetric</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    <span class="keyword">return</span> isSymmetricHelper(root.left,root.right);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">isSymmetricHelper</span><span class="params">(TreeNode left, TreeNode right)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (left == <span class="keyword">null</span> &amp;&amp; right == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    <span class="keyword">if</span> (left == <span class="keyword">null</span> || right == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">if</span> (left.val != right.val) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">return</span> isSymmetricHelper(left.left,right.right) &amp;&amp; isSymmetricHelper(left.right,right.left);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="iterative-way"><a class="markdownIt-Anchor" href="#iterative-way"></a> iterative way</h5>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isSymmetric</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    Stack&lt;TreeNode&gt; stack =  <span class="keyword">new</span> Stack&lt;TreeNode&gt;();</span><br><span class="line">    stack.push(root.left);</span><br><span class="line">    stack.push(root.right);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (!stack.isEmpty()) &#123;</span><br><span class="line">        TreeNode n1 = stack.pop();</span><br><span class="line">        TreeNode n2 = stack.pop();</span><br><span class="line">        <span class="keyword">if</span> (n1 == <span class="keyword">null</span> &amp;&amp; n2 == <span class="keyword">null</span>) <span class="keyword">continue</span>;</span><br><span class="line">        <span class="keyword">if</span> (n1 == <span class="keyword">null</span> || n2 == <span class="keyword">null</span> || n1.val != n2.val) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        stack.push(n1.left);</span><br><span class="line">        stack.push(n2.right);</span><br><span class="line">        stack.push(n1.right);</span><br><span class="line">        stack.push(n2.left);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="树的高度"><a class="markdownIt-Anchor" href="#树的高度"></a> 树的高度</h4>
-<h5 id="bottom-up"><a class="markdownIt-Anchor" href="#bottom-up"></a> bottom up</h5>
-<hr>
+<h5 id="recurisve-way"><a href="#recurisve-way" class="headerlink" title="recurisve way"></a>recurisve way</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isSymmetric</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    <span class="keyword">return</span> isSymmetricHelper(root.left,root.right);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">isSymmetricHelper</span><span class="params">(TreeNode left, TreeNode right)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (left == <span class="keyword">null</span> &amp;&amp; right == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    <span class="keyword">if</span> (left == <span class="keyword">null</span> || right == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">if</span> (left.val != right.val) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">return</span> isSymmetricHelper(left.left,right.right) &amp;&amp; isSymmetricHelper(left.right,right.left);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="iterative-way"><a href="#iterative-way" class="headerlink" title="iterative way"></a>iterative way</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isSymmetric</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    Stack&lt;TreeNode&gt; stack =  <span class="keyword">new</span> Stack&lt;TreeNode&gt;();</span><br><span class="line">    stack.push(root.left);</span><br><span class="line">    stack.push(root.right);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (!stack.isEmpty()) &#123;</span><br><span class="line">        TreeNode n1 = stack.pop();</span><br><span class="line">        TreeNode n2 = stack.pop();</span><br><span class="line">        <span class="keyword">if</span> (n1 == <span class="keyword">null</span> &amp;&amp; n2 == <span class="keyword">null</span>) <span class="keyword">continue</span>;</span><br><span class="line">        <span class="keyword">if</span> (n1 == <span class="keyword">null</span> || n2 == <span class="keyword">null</span> || n1.val != n2.val) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        stack.push(n1.left);</span><br><span class="line">        stack.push(n2.right);</span><br><span class="line">        stack.push(n1.right);</span><br><span class="line">        stack.push(n2.left);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="树的高度"><a href="#树的高度" class="headerlink" title="树的高度"></a>树的高度</h4><h5 id="bottom-up"><a href="#bottom-up" class="headerlink" title="bottom up"></a>bottom up</h5><hr>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">maxDepth</span><span class="params">(self, root)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> root <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    left = self.maxDepth(root.left)</span><br><span class="line">    right = self.maxDepth(root.right)</span><br><span class="line">    <span class="keyword">return</span> max(left , right) + <span class="number">1</span></span><br></pre></td></tr></table></figure>
-<h5 id="top-down"><a class="markdownIt-Anchor" href="#top-down"></a> top down</h5>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">answer = <span class="number">0</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">maxDepth</span><span class="params">(self, root)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    :type root: TreeNode</span></span><br><span class="line"><span class="string">    :rtype: int</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">find_depth</span><span class="params">(root,depth)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> root <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">if</span> root.left <span class="keyword">is</span> <span class="literal">None</span> <span class="keyword">and</span> root.right <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            self.answer = max(self.answer,depth)</span><br><span class="line">            find_depth(root.left,depth+<span class="number">1</span>)</span><br><span class="line">            find_depth(root.right,depth+<span class="number">1</span>)</span><br><span class="line">            find_depth(root,<span class="number">1</span>)</span><br><span class="line">            <span class="keyword">return</span> self.answer</span><br></pre></td></tr></table></figure>
-<h4 id="树的path-sum-root到leave"><a class="markdownIt-Anchor" href="#树的path-sum-root到leave"></a> 树的path sum (root到leave)</h4>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// recursive</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasPathSum</span><span class="params">(TreeNode root, <span class="keyword">int</span> sum)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">if</span> (root.left == <span class="keyword">null</span> &amp;&amp; root.right == <span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">return</span> sum == root.val;</span><br><span class="line">    <span class="keyword">return</span> hasPathSum(root.left,sum-root.val) || hasPathSum(root.right,sum-root.val); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="top-down"><a href="#top-down" class="headerlink" title="top down"></a>top down</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">answer = <span class="number">0</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">maxDepth</span><span class="params">(self, root)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    :type root: TreeNode</span></span><br><span class="line"><span class="string">    :rtype: int</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">find_depth</span><span class="params">(root,depth)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> root <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">if</span> root.left <span class="keyword">is</span> <span class="literal">None</span> <span class="keyword">and</span> root.right <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            self.answer = max(self.answer,depth)</span><br><span class="line">            find_depth(root.left,depth+<span class="number">1</span>)</span><br><span class="line">            find_depth(root.right,depth+<span class="number">1</span>)</span><br><span class="line">            find_depth(root,<span class="number">1</span>)</span><br><span class="line">            <span class="keyword">return</span> self.answer</span><br></pre></td></tr></table></figure>
+<h4 id="树的path-sum-root到leave"><a href="#树的path-sum-root到leave" class="headerlink" title="树的path sum (root到leave)"></a>树的path sum (root到leave)</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// recursive</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasPathSum</span><span class="params">(TreeNode root, <span class="keyword">int</span> sum)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">if</span> (root.left == <span class="keyword">null</span> &amp;&amp; root.right == <span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">return</span> sum == root.val;</span><br><span class="line">    <span class="keyword">return</span> hasPathSum(root.left,sum-root.val) || hasPathSum(root.right,sum-root.val); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// iterative</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasPathSum</span><span class="params">(TreeNode root, <span class="keyword">int</span> sum)</span> </span>&#123;</span><br><span class="line">    Stack &lt;TreeNode&gt; stack = <span class="keyword">new</span> Stack&lt;&gt; ();	    </span><br><span class="line">    stack.push(root) ;	    </span><br><span class="line">    <span class="keyword">while</span> (!stack.isEmpty() &amp;&amp; root != <span class="keyword">null</span>)&#123;</span><br><span class="line">        TreeNode cur = stack.pop() ;	</span><br><span class="line">        <span class="keyword">if</span> (cur.left == <span class="keyword">null</span> &amp;&amp; cur.right == <span class="keyword">null</span>)&#123;	    		</span><br><span class="line">            <span class="keyword">if</span> (cur.val == sum ) <span class="keyword">return</span> <span class="keyword">true</span> ;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (cur.right != <span class="keyword">null</span>) &#123;</span><br><span class="line">            cur.right.val = cur.val + cur.right.val ;</span><br><span class="line">            stack.push(cur.right) ;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (cur.left != <span class="keyword">null</span>) &#123;</span><br><span class="line">            cur.left.val = cur.val + cur.left.val;</span><br><span class="line">            stack.push(cur.left);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;	    </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span> ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="平衡二叉树"><a class="markdownIt-Anchor" href="#平衡二叉树"></a> 平衡二叉树</h4>
-<hr>
-<p>思路</p>
+<h4 id="平衡二叉树"><a href="#平衡二叉树" class="headerlink" title="平衡二叉树"></a>平衡二叉树</h4><hr>
+<p>思路 </p>
 <ul>
-<li>对每个node的左右子树分别调用上述求高度的公式，然后判断左右子树的高度之差是否大于1
-<ul>
+<li>对每个node的左右子树分别调用上述求高度的公式，然后判断左右子树的高度之差是否大于1<ul>
 <li>复杂度 O(Nlog(N))</li>
 </ul>
 </li>
-<li>修改计算高度的函数
-<ul>
+<li>修改计算高度的函数<ul>
 <li>计算高度本身也是递归，因此在该函数里就可以判断 左右子树高度之差是否大于1</li>
 <li>O(N) 复杂度</li>
 </ul>
 </li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">TreeDepth</span><span class="params">(self, pRoot)</span>:</span></span><br><span class="line">    <span class="comment"># write code here</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> pRoot:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    left = self.TreeDepth(pRoot.left)</span><br><span class="line">    right = self.TreeDepth(pRoot.right)</span><br><span class="line">    <span class="keyword">if</span> abs(left-right) &gt; <span class="number">1</span>:</span><br><span class="line">        self.flag = <span class="literal">False</span></span><br><span class="line">        <span class="comment">#return 0</span></span><br><span class="line">    <span class="keyword">return</span> max(left,right) + <span class="number">1</span></span><br></pre></td></tr></table></figure>
-<h4 id="间隔遍历"><a class="markdownIt-Anchor" href="#间隔遍历"></a> <a href="https://leetcode.com/problems/house-robber-iii/" target="_blank" rel="noopener">间隔遍历</a></h4>
-<hr>
+<h4 id="间隔遍历"><a href="#间隔遍历" class="headerlink" title="间隔遍历"></a><a href="https://leetcode.com/problems/house-robber-iii/" target="_blank" rel="noopener">间隔遍历</a></h4><hr>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">rob</span><span class="params">(self, root)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    :type root: TreeNode</span></span><br><span class="line"><span class="string">    :rtype: int</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">return</span> max(self.helper(root))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">helper</span><span class="params">(self,root)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> root:</span><br><span class="line">        <span class="keyword">return</span> (<span class="number">0</span>,<span class="number">0</span>)</span><br><span class="line">    </span><br><span class="line">    left = self.helper(root.left)</span><br><span class="line">    right = self.helper(root.right)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># rob the current root now</span></span><br><span class="line">    now = root.val + left[<span class="number">1</span>] + right[<span class="number">1</span>]</span><br><span class="line">    <span class="comment"># don't rob the current root</span></span><br><span class="line">    later = max(left) + max(right)</span><br><span class="line">    <span class="keyword">return</span> (now,later)</span><br></pre></td></tr></table></figure>
-<h4 id="二叉树输出根节点到叶子的路径"><a class="markdownIt-Anchor" href="#二叉树输出根节点到叶子的路径"></a> <a href="https://leetcode.com/problems/binary-tree-paths/" target="_blank" rel="noopener">二叉树：输出根节点到叶子的路径</a></h4>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">result = []</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">binaryTreePaths</span><span class="params">(self, root)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    :type root: TreeNode</span></span><br><span class="line"><span class="string">    :rtype: List[str]</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    self.result = []</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> root:</span><br><span class="line">        <span class="keyword">return</span> []</span><br><span class="line"></span><br><span class="line">    self.helper(root,str(root.val))</span><br><span class="line">    <span class="keyword">return</span> self.result</span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">helper</span><span class="params">(self,node,tmp_path)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> node.left:</span><br><span class="line">        self.helper(node.left,tmp_path + <span class="string">"-&gt;"</span> + str(node.left.val))</span><br><span class="line">    <span class="keyword">if</span> node.right:</span><br><span class="line">        self.helper(node.right,tmp_path + <span class="string">"-&gt;"</span> + str(node.right.val))</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> node.left <span class="keyword">and</span> <span class="keyword">not</span> node.right:</span><br><span class="line">        self.result.append(tmp_path)</span><br><span class="line">        <span class="keyword">return</span></span><br></pre></td></tr></table></figure>
+<h4 id="二叉树：输出根节点到叶子的路径"><a href="#二叉树：输出根节点到叶子的路径" class="headerlink" title="二叉树：输出根节点到叶子的路径"></a><a href="https://leetcode.com/problems/binary-tree-paths/" target="_blank" rel="noopener">二叉树：输出根节点到叶子的路径</a></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">result = []</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">binaryTreePaths</span><span class="params">(self, root)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    :type root: TreeNode</span></span><br><span class="line"><span class="string">    :rtype: List[str]</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    self.result = []</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> root:</span><br><span class="line">        <span class="keyword">return</span> []</span><br><span class="line"></span><br><span class="line">    self.helper(root,str(root.val))</span><br><span class="line">    <span class="keyword">return</span> self.result</span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">helper</span><span class="params">(self,node,tmp_path)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> node.left:</span><br><span class="line">        self.helper(node.left,tmp_path + <span class="string">"-&gt;"</span> + str(node.left.val))</span><br><span class="line">    <span class="keyword">if</span> node.right:</span><br><span class="line">        self.helper(node.right,tmp_path + <span class="string">"-&gt;"</span> + str(node.right.val))</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> node.left <span class="keyword">and</span> <span class="keyword">not</span> node.right:</span><br><span class="line">        self.result.append(tmp_path)</span><br><span class="line">        <span class="keyword">return</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>非递归的解法就是同时维护“一个node的stack”，和一个对应路径的“stack”</li>
 </ul>
-<h4 id="trie树的构建"><a class="markdownIt-Anchor" href="#trie树的构建"></a> Trie树的构建</h4>
-<hr>
-<h4 id="前序中序后序遍历的非递归形式"><a class="markdownIt-Anchor" href="#前序中序后序遍历的非递归形式"></a> 前序中序后序遍历的非递归形式</h4>
-<hr>
+<h4 id="Trie树的构建"><a href="#Trie树的构建" class="headerlink" title="Trie树的构建"></a>Trie树的构建</h4><hr>
+<h4 id="前序中序后序遍历的非递归形式"><a href="#前序中序后序遍历的非递归形式" class="headerlink" title="前序中序后序遍历的非递归形式"></a>前序中序后序遍历的非递归形式</h4><hr>
 <ul>
-<li>
-<p>前序 root -left -right，后序是 left- right -root, 通过修改前序遍历的顺序为 root-right-left, 然后对结果reverse，就可以得到left-right-root即后序遍历的结果。</p>
+<li><p>前序 root -left -right，后序是 left- right -root, 通过修改前序遍历的顺序为 root-right-left, 然后对结果reverse，就可以得到left-right-root即后序遍历的结果。</p>
 </li>
-<li>
-<p>前序遍历利用stack 的特性，先压右子树再压左子树</p>
+<li><p>前序遍历利用stack 的特性，先压右子树再压左子树</p>
 </li>
-<li>
-<p>中序遍历</p>
+<li><p>中序遍历 </p>
 <ul>
 <li>每次先找到节点的最左端，往上走一格，然后跳转到right child</li>
 </ul>
 </li>
 </ul>
-<h4 id="完全二叉树的总节点数"><a class="markdownIt-Anchor" href="#完全二叉树的总节点数"></a> <a href="https://leetcode.com/problems/count-complete-tree-nodes/" target="_blank" rel="noopener">完全二叉树的总节点数</a></h4>
-<p>完全二叉树：除了最后一层可能不满，其余都是满的。 要是所有层都是满的，就是满二叉树。</p>
+<h4 id="完全二叉树的总节点数"><a href="#完全二叉树的总节点数" class="headerlink" title="完全二叉树的总节点数"></a><a href="https://leetcode.com/problems/count-complete-tree-nodes/" target="_blank" rel="noopener">完全二叉树的总节点数</a></h4><p>完全二叉树：除了最后一层可能不满，其余都是满的。 要是所有层都是满的，就是满二叉树。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">countNodes</span><span class="params">(self, root)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    :type root: TreeNode</span></span><br><span class="line"><span class="string">    :rtype: int</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> root:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    left_len = self.height(root.left)</span><br><span class="line">    right_len = self.height(root.right)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">## last in the right</span></span><br><span class="line">    <span class="keyword">if</span> left_len == right_len:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">2</span>**left_len <span class="number">-1</span> + self.countNodes(root.right) + <span class="number">1</span></span><br><span class="line">    <span class="comment">## lase in the left</span></span><br><span class="line">    <span class="keyword">elif</span> left_len == right_len + <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">2</span>**right_len <span class="number">-1</span> + self.countNodes(root.left) + <span class="number">1</span></span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">height</span><span class="params">(self,node)</span>:</span></span><br><span class="line">    cnt = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> node:</span><br><span class="line">        cnt += <span class="number">1</span></span><br><span class="line">        node = node.left</span><br><span class="line">    <span class="keyword">return</span> cnt</span><br></pre></td></tr></table></figure>
 <p>思路就是找出叶子节点最后一个不满足的位置，对于子树是满二叉树，则直接用公式求节点数目</p>
 <p>复杂度就是logN* logN</p>
-<h4 id="n个结点的二叉搜索树有多少种组成方式"><a class="markdownIt-Anchor" href="#n个结点的二叉搜索树有多少种组成方式"></a> <a href="https://leetcode.com/problems/unique-binary-search-trees/submissions/" target="_blank" rel="noopener">N个结点的二叉搜索树有多少种组成方式</a></h4>
-<p>递推， 3个节点可以有 左边0个，右边2个，左边一个，右边一个，左2个，右边0个</p>
+<h4 id="N个结点的二叉搜索树有多少种组成方式"><a href="#N个结点的二叉搜索树有多少种组成方式" class="headerlink" title="N个结点的二叉搜索树有多少种组成方式"></a><a href="https://leetcode.com/problems/unique-binary-search-trees/submissions/" target="_blank" rel="noopener">N个结点的二叉搜索树有多少种组成方式</a></h4><p>递推， 3个节点可以有 左边0个，右边2个，左边一个，右边一个，左2个，右边0个</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">numTrees</span><span class="params">(self, n)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    :type n: int</span></span><br><span class="line"><span class="string">    :rtype: int</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    g = [<span class="number">1</span>,<span class="number">1</span>]</span><br><span class="line">    i = <span class="number">2</span></span><br><span class="line">    <span class="keyword">while</span> len(g) &lt; n+<span class="number">1</span>:</span><br><span class="line">        tmp = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">1</span>,i+<span class="number">1</span>):</span><br><span class="line">            tmp += g[j<span class="number">-1</span>]*g[i-j]</span><br><span class="line">        g.append(tmp)</span><br><span class="line">        i += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> g[n]</span><br></pre></td></tr></table></figure>
-<h4 id="树的层级遍历"><a class="markdownIt-Anchor" href="#树的层级遍历"></a> 树的层级遍历</h4>
-<ul>
+<h4 id="树的层级遍历"><a href="#树的层级遍历" class="headerlink" title="树的层级遍历"></a>树的层级遍历</h4><ul>
 <li>通常需要两个stack来记录前后两层的节点</li>
 <li>但是可以通过 一个变量记录进入该层之前stack中的节点数，变成只需要一个stack</li>
 </ul>
@@ -519,8 +461,8 @@
     </a>
   
   
-    <a href="/2020/11/04/django_ORM/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">django_ORM</div>
+    <a href="/2020/11/05/SQL优化/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">SQL优化</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -547,7 +489,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#二叉查找树-bst"><span class="toc-number">1.</span> <span class="toc-text"> 二叉查找树 BST</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#平衡二叉查找树-avl"><span class="toc-number">2.</span> <span class="toc-text"> 平衡二叉查找树 AVL</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3查找树"><span class="toc-number">3.</span> <span class="toc-text"> 2-3查找树</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#红黑树"><span class="toc-number">4.</span> <span class="toc-text"> 红黑树</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#b树b树"><span class="toc-number">5.</span> <span class="toc-text"> B树/B+树</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#trie树"><span class="toc-number">6.</span> <span class="toc-text"> Trie树</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#面试题"><span class="toc-number">7.</span> <span class="toc-text"> 面试题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#重建二叉树"><span class="toc-number">8.</span> <span class="toc-text"> 重建二叉树</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#二叉树的下一个节点"><span class="toc-number">9.</span> <span class="toc-text"> 二叉树的下一个节点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#树的子结构"><span class="toc-number">10.</span> <span class="toc-text"> 树的子结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#二叉树的镜像"><span class="toc-number">11.</span> <span class="toc-text"> 二叉树的镜像</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#对称的二叉树"><span class="toc-number">12.</span> <span class="toc-text"> 对称的二叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#recurisve-way"><span class="toc-number">12.1.</span> <span class="toc-text"> recurisve way</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#iterative-way"><span class="toc-number">12.2.</span> <span class="toc-text"> iterative way</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#树的高度"><span class="toc-number">13.</span> <span class="toc-text"> 树的高度</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#bottom-up"><span class="toc-number">13.1.</span> <span class="toc-text"> bottom up</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#top-down"><span class="toc-number">13.2.</span> <span class="toc-text"> top down</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#树的path-sum-root到leave"><span class="toc-number">14.</span> <span class="toc-text"> 树的path sum (root到leave)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#平衡二叉树"><span class="toc-number">15.</span> <span class="toc-text"> 平衡二叉树</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#间隔遍历"><span class="toc-number">16.</span> <span class="toc-text"> 间隔遍历</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#二叉树输出根节点到叶子的路径"><span class="toc-number">17.</span> <span class="toc-text"> 二叉树：输出根节点到叶子的路径</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#trie树的构建"><span class="toc-number">18.</span> <span class="toc-text"> Trie树的构建</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#前序中序后序遍历的非递归形式"><span class="toc-number">19.</span> <span class="toc-text"> 前序中序后序遍历的非递归形式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#完全二叉树的总节点数"><span class="toc-number">20.</span> <span class="toc-text"> 完全二叉树的总节点数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#n个结点的二叉搜索树有多少种组成方式"><span class="toc-number">21.</span> <span class="toc-text"> N个结点的二叉搜索树有多少种组成方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#树的层级遍历"><span class="toc-number">22.</span> <span class="toc-text"> 树的层级遍历</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#二叉查找树-BST"><span class="toc-number">1.</span> <span class="toc-text">二叉查找树 BST</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#平衡二叉查找树-AVL"><span class="toc-number">2.</span> <span class="toc-text">平衡二叉查找树 AVL</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3查找树"><span class="toc-number">3.</span> <span class="toc-text">2-3查找树</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#红黑树"><span class="toc-number">4.</span> <span class="toc-text">红黑树</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#B树-B-树"><span class="toc-number">5.</span> <span class="toc-text">B树/B+树</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Trie树"><span class="toc-number">6.</span> <span class="toc-text">Trie树</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#面试题"><span class="toc-number">7.</span> <span class="toc-text">面试题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#重建二叉树"><span class="toc-number">8.</span> <span class="toc-text">重建二叉树</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#二叉树的下一个节点"><span class="toc-number">9.</span> <span class="toc-text">二叉树的下一个节点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#树的子结构"><span class="toc-number">10.</span> <span class="toc-text">树的子结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#二叉树的镜像"><span class="toc-number">11.</span> <span class="toc-text">二叉树的镜像</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#对称的二叉树"><span class="toc-number">12.</span> <span class="toc-text">对称的二叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#recurisve-way"><span class="toc-number">12.1.</span> <span class="toc-text">recurisve way</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#iterative-way"><span class="toc-number">12.2.</span> <span class="toc-text">iterative way</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#树的高度"><span class="toc-number">13.</span> <span class="toc-text">树的高度</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#bottom-up"><span class="toc-number">13.1.</span> <span class="toc-text">bottom up</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#top-down"><span class="toc-number">13.2.</span> <span class="toc-text">top down</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#树的path-sum-root到leave"><span class="toc-number">14.</span> <span class="toc-text">树的path sum (root到leave)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#平衡二叉树"><span class="toc-number">15.</span> <span class="toc-text">平衡二叉树</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#间隔遍历"><span class="toc-number">16.</span> <span class="toc-text">间隔遍历</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#二叉树：输出根节点到叶子的路径"><span class="toc-number">17.</span> <span class="toc-text">二叉树：输出根节点到叶子的路径</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Trie树的构建"><span class="toc-number">18.</span> <span class="toc-text">Trie树的构建</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#前序中序后序遍历的非递归形式"><span class="toc-number">19.</span> <span class="toc-text">前序中序后序遍历的非递归形式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#完全二叉树的总节点数"><span class="toc-number">20.</span> <span class="toc-text">完全二叉树的总节点数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#N个结点的二叉搜索树有多少种组成方式"><span class="toc-number">21.</span> <span class="toc-text">N个结点的二叉搜索树有多少种组成方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#树的层级遍历"><span class="toc-number">22.</span> <span class="toc-text">树的层级遍历</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -696,11 +638,7 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -712,11 +650,31 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">kafka,mq</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">develop</a>
               </li>
             
             <div class="clearfix"></div>

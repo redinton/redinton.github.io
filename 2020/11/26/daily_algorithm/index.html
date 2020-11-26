@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Keep Moving">
 <meta property="og:description" content="5. 最长回文子串">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-26T08:13:32.537Z">
+<meta property="og:updated_time" content="2020-11-26T08:18:18.031Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="daily_algorithm">
 <meta name="twitter:description" content="5. 最长回文子串">
@@ -169,48 +169,39 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="5-最长回文子串"><a class="markdownIt-Anchor" href="#5-最长回文子串"></a> 5. 最长回文子串</h4>
-<a id="more"></a>
+        <h4 id="5-最长回文子串"><a href="#5-最长回文子串" class="headerlink" title="5. 最长回文子串"></a>5. 最长回文子串</h4><a id="more"></a>
 <p>子串是连续的</p>
 <ul>
-<li>
-<p>方法一: 暴力匹配</p>
+<li><p>方法一: 暴力匹配</p>
 </li>
-<li>
-<p>方法二: 输入s，与倒转过后的s1之间求最长公共子串</p>
+<li><p>方法二: 输入s，与倒转过后的s1之间求最长公共子串</p>
 </li>
-<li>
-<p>方法三: 动态规划</p>
+<li><p>方法三: 动态规划 </p>
 <ul>
-<li>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dp[i][j] = dp[i+1][j-1] &amp;&amp; s[i] == s[j]  dp[i][j] 位置i到位置j之间是否是回文字符串</span><br></pre></td></tr></table></figure>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dp[i][j] = dp[i+1][j-1] &amp;&amp; s[i] == s[j]  dp[i][j] 位置i到位置j之间是否是回文字符串</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
-<li>
-<p>方法四: 中间往外扩散的思路，以每个position为回文字符串的中点 往两边扩散</p>
+<li><p>方法四: 中间往外扩散的思路，以每个position为回文字符串的中点 往两边扩散</p>
 <ul>
 <li>time: O(n*n)  space: O(1)</li>
 </ul>
 </li>
-<li>
-<p>方法五: Manacher</p>
+<li><p>方法五: Manacher  </p>
 <ul>
 <li>time: O(n)</li>
 </ul>
 </li>
 </ul>
-<h4 id="10正则表达式匹配"><a class="markdownIt-Anchor" href="#10正则表达式匹配"></a> 10.正则表达式匹配</h4>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&apos;.&apos; 匹配任意单个字符</span><br><span class="line">&apos;*&apos; 0个或多个前面的元素</span><br></pre></td></tr></table></figure>
-<p>写出递归结构，考虑只有一个&quot;.&quot;存在的情况</p>
+<h4 id="10-正则表达式匹配"><a href="#10-正则表达式匹配" class="headerlink" title="10.正则表达式匹配"></a>10.正则表达式匹配</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&apos;.&apos; 匹配任意单个字符</span><br><span class="line">&apos;*&apos; 0个或多个前面的元素</span><br></pre></td></tr></table></figure>
+<p>写出递归结构，考虑只有一个”.”存在的情况</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">isMatch</span><span class="params">(text,pattern)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> pattern <span class="keyword">is</span> empty: <span class="keyword">return</span> text <span class="keyword">is</span> empty</span><br><span class="line">    <span class="comment"># 考虑第一个字符是否匹配</span></span><br><span class="line">    first_match = (text <span class="keyword">not</span> empty) <span class="keyword">and</span> (pattern[<span class="number">0</span>] <span class="keyword">in</span> (text[<span class="number">0</span>],<span class="string">'.'</span>))</span><br><span class="line">    <span class="keyword">return</span> first_match <span class="keyword">and</span> isMatch(text[<span class="number">1</span>:],pattern[<span class="number">1</span>:])</span><br></pre></td></tr></table></figure>
-<p>考虑’*’ 和 '.'都存在的情况</p>
+<p>考虑’*’ 和 ‘.’都存在的情况</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 暴力递归</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">isMatch</span><span class="params">(text,pattern)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> pattern <span class="keyword">is</span> empty: <span class="keyword">return</span> text <span class="keyword">is</span> empty</span><br><span class="line">    first_match = (text <span class="keyword">not</span> empty) <span class="keyword">and</span> (pattern[<span class="number">0</span>] <span class="keyword">in</span> (text[<span class="number">0</span>],<span class="string">'.'</span>))</span><br><span class="line">    <span class="comment"># 考虑*的情况</span></span><br><span class="line">    <span class="keyword">if</span> len(pattern) &gt;= <span class="number">2</span> <span class="keyword">and</span> pattern[<span class="number">1</span>] == <span class="string">"*"</span>:</span><br><span class="line">        <span class="comment"># "*" 匹配0次</span></span><br><span class="line">        match_0 = isMatch(text,pattern[<span class="number">2</span>:])</span><br><span class="line">        <span class="comment"># "*" 匹配1次</span></span><br><span class="line">        match_1 = first_match <span class="keyword">and</span> isMatch(text[<span class="number">1</span>:],pattern)</span><br><span class="line">        <span class="keyword">return</span> match_0 <span class="keyword">or</span> match_1</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> first_match <span class="keyword">and</span> isMatch(text[<span class="number">1</span>:],pattern[<span class="number">1</span>:])</span><br></pre></td></tr></table></figure>
 <p>上述问题存在重复子问题</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dp</span><span class="params">(i,j)</span>:</span></span><br><span class="line">	<span class="comment"># i是text中index, j是pattern中的index</span></span><br><span class="line">    dp(i,j+<span class="number">2</span>) <span class="comment"># "*" 匹配0次</span></span><br><span class="line">    dp(i+<span class="number">1</span>,j) <span class="comment"># "*" 匹配1次</span></span><br><span class="line">    dp(i+<span class="number">1</span>,j+<span class="number">1</span>) <span class="comment"># 没有 "*"</span></span><br></pre></td></tr></table></figure>
 <ul>
-<li>
-<p>带memo的递归</p>
+<li><p>带memo的递归</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">isMatch</span><span class="params">(text,pattern)</span>:</span></span><br><span class="line">    memo = dict()	</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">dp</span><span class="params">(i,j)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> (i,j) <span class="keyword">in</span> memo: <span class="keyword">return</span> memo[(i,j)]</span><br><span class="line">    	<span class="keyword">if</span> j == len(pattern): <span class="keyword">return</span> i == len(text)</span><br><span class="line">        first_match = ( i &lt; len(text)) <span class="keyword">and</span> (pattern[j] <span class="keyword">in</span> (text[i],<span class="string">'.'</span>))</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> len(patten) - j &gt; <span class="number">2</span> <span class="keyword">and</span> pattern[j+<span class="number">1</span>] == <span class="string">"*"</span>:</span><br><span class="line">            match_0 = fisrt_match <span class="keyword">and</span> dp(i,j+<span class="number">2</span>)</span><br><span class="line">           	match_1 = dp(i+<span class="number">1</span>,j)</span><br><span class="line">            ans = match_0 <span class="keyword">or</span> match_1</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            ans = first_match <span class="keyword">and</span> dp(i+<span class="number">1</span>,j+<span class="number">1</span>)</span><br><span class="line">       	memo[(i,j)] = ans</span><br><span class="line">        <span class="keyword">return</span> ans</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> dp(<span class="number">0</span>,<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
@@ -335,7 +326,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-最长回文子串"><span class="toc-number">1.</span> <span class="toc-text"> 5. 最长回文子串</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10正则表达式匹配"><span class="toc-number">2.</span> <span class="toc-text"> 10.正则表达式匹配</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-最长回文子串"><span class="toc-number">1.</span> <span class="toc-text">5. 最长回文子串</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-正则表达式匹配"><span class="toc-number">2.</span> <span class="toc-text">10.正则表达式匹配</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -484,11 +475,7 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -500,11 +487,31 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">kafka,mq</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">develop</a>
               </li>
             
             <div class="clearfix"></div>

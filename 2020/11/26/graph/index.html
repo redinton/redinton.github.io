@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>graph | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="图的基本概念  图的表示  1.邻接矩阵  n*n的邻接矩阵   2.邻接表  为每个点建立一个链表(数组)存放与之相连的点     图的搜索  BFS  双向BFS  graph中，从起点和终点分别开始走，直到相遇 - 树形搜索结构变成纺锤形 这样更&amp;quot;快&amp;quot;，因为经典BFS中，树形结构高度较高时，叶子非常多，将一颗高度为h的树用两个近似为 h/2的树代替，宽度相对小。">
+  <meta name="description" content="图的基本概念 图的表示 1.邻接矩阵 n*n的邻接矩阵   2.邻接表 为每个点建立一个链表(数组)存放与之相连的点     图的搜索 BFS 双向BFS graph中，从起点和终点分别开始走，直到相遇 - 树形搜索结构变成纺锤形 这样更”快”，因为经典BFS中，树形结构高度较高时，叶子非常多，将一颗高度为h的树用两个近似为 h/2的树代替，宽度相对小。     DFS">
 <meta name="keywords" content="algorithm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="graph">
 <meta property="og:url" content="http://jasonyu.top/2020/11/26/graph/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="图的基本概念  图的表示  1.邻接矩阵  n*n的邻接矩阵   2.邻接表  为每个点建立一个链表(数组)存放与之相连的点     图的搜索  BFS  双向BFS  graph中，从起点和终点分别开始走，直到相遇 - 树形搜索结构变成纺锤形 这样更&amp;quot;快&amp;quot;，因为经典BFS中，树形结构高度较高时，叶子非常多，将一颗高度为h的树用两个近似为 h/2的树代替，宽度相对小。">
+<meta property="og:description" content="图的基本概念 图的表示 1.邻接矩阵 n*n的邻接矩阵   2.邻接表 为每个点建立一个链表(数组)存放与之相连的点     图的搜索 BFS 双向BFS graph中，从起点和终点分别开始走，直到相遇 - 树形搜索结构变成纺锤形 这样更”快”，因为经典BFS中，树形结构高度较高时，叶子非常多，将一颗高度为h的树用两个近似为 h/2的树代替，宽度相对小。     DFS">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-26T08:13:32.540Z">
+<meta property="og:updated_time" content="2020-11-26T08:18:18.033Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="graph">
-<meta name="twitter:description" content="图的基本概念  图的表示  1.邻接矩阵  n*n的邻接矩阵   2.邻接表  为每个点建立一个链表(数组)存放与之相连的点     图的搜索  BFS  双向BFS  graph中，从起点和终点分别开始走，直到相遇 - 树形搜索结构变成纺锤形 这样更&amp;quot;快&amp;quot;，因为经典BFS中，树形结构高度较高时，叶子非常多，将一颗高度为h的树用两个近似为 h/2的树代替，宽度相对小。">
+<meta name="twitter:description" content="图的基本概念 图的表示 1.邻接矩阵 n*n的邻接矩阵   2.邻接表 为每个点建立一个链表(数组)存放与之相连的点     图的搜索 BFS 双向BFS graph中，从起点和终点分别开始走，直到相遇 - 树形搜索结构变成纺锤形 这样更”快”，因为经典BFS中，树形结构高度较高时，叶子非常多，将一颗高度为h的树用两个近似为 h/2的树代替，宽度相对小。     DFS">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -169,68 +169,53 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="图的基本概念"><a class="markdownIt-Anchor" href="#图的基本概念"></a> 图的基本概念</h3>
-<ul>
-<li>图的表示
-<ul>
-<li>1.邻接矩阵
-<ul>
+        <h3 id="图的基本概念"><a href="#图的基本概念" class="headerlink" title="图的基本概念"></a>图的基本概念</h3><ul>
+<li>图的表示<ul>
+<li>1.邻接矩阵<ul>
 <li>n*n的邻接矩阵</li>
 </ul>
 </li>
-<li>2.邻接表
-<ul>
+<li>2.邻接表<ul>
 <li>为每个点建立一个链表(数组)存放与之相连的点</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>图的搜索
-<ul>
-<li>BFS
-<ul>
-<li>双向BFS
-<ul>
+<li>图的搜索<ul>
+<li>BFS<ul>
+<li>双向BFS<ul>
 <li>graph中，从起点和终点分别开始走，直到相遇 - 树形搜索结构变成纺锤形</li>
-<li>这样更&quot;快&quot;，因为经典BFS中，树形结构高度较高时，叶子非常多，将一颗高度为h的树用两个近似为 h/2的树代替，宽度相对小。</li>
+<li>这样更”快”，因为经典BFS中，树形结构高度较高时，叶子非常多，将一颗高度为h的树用两个近似为 h/2的树代替，宽度相对小。</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>DFS</li>
+<li>DFS<a id="more"></a>
+</li>
 </ul>
 </li>
 </ul>
-<a id="more"></a>
-<h3 id="最短路径"><a class="markdownIt-Anchor" href="#最短路径"></a> 最短路径</h3>
-<hr>
+<h3 id="最短路径"><a href="#最短路径" class="headerlink" title="最短路径"></a>最短路径</h3><hr>
 <p>针对n节点的有向图</p>
-<p>####迪杰斯特拉(Dijkstra)</p>
-<p>伪代码如下</p>
+<h4 id="迪杰斯特拉-Dijkstra"><a href="#迪杰斯特拉-Dijkstra" class="headerlink" title="迪杰斯特拉(Dijkstra)"></a>迪杰斯特拉(Dijkstra)</h4><p>伪代码如下</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">bool S(<span class="number">1</span>:n) <span class="comment"># 记录n个节点是否被访问过</span></span><br><span class="line">cost(n*n) <span class="comment"># 邻接矩阵</span></span><br><span class="line">dist(<span class="number">1</span>:n) <span class="comment"># dist(j) 记录从起始节点v到节点j的最短路径长度</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># step1:</span></span><br><span class="line"><span class="comment"># 根据cost(n*n) 初始化 dist(1:n), </span></span><br><span class="line">	<span class="comment"># 若j与起始节点v存在link, dist(j)=cost[v][j] 否则dist(j)=正无穷。 </span></span><br><span class="line"> 	<span class="comment"># 同时 s[v] = 1, dist[v] = 0</span></span><br><span class="line"><span class="comment"># step2:</span></span><br><span class="line"><span class="comment"># 1.选出 dist(u) = min(dist(w)) which s[w] = 0 就是在没有访问过的点中找出最小的距离</span></span><br><span class="line"><span class="comment"># 2.s[u] = 1</span></span><br><span class="line"><span class="comment"># 3.针对剩余的s[w] = 0(即没有访问过的点)</span></span><br><span class="line"><span class="comment">#		dist(w) = mmin(dist(w) , dist(u)+cost(u,w))</span></span><br></pre></td></tr></table></figure>
 <ul>
-<li>
-<p>不能有负权值边</p>
+<li><p>不能有负权值边</p>
 <ul>
 <li>算法中，已经访问过的点是不会被更新的，若存在负权边，则可能出现后面遇到的点的带上负权边后权重小于原来的，但是因为已经被访问过了，无法被更新。</li>
 </ul>
 </li>
 </ul>
-<h4 id="弗洛伊德算法-floyd"><a class="markdownIt-Anchor" href="#弗洛伊德算法-floyd"></a> 弗洛伊德算法 (FLOYD)</h4>
-<ul>
-<li>
-<p>寻找给定的加权图中多源点之间最短路径的算法</p>
+<h4 id="弗洛伊德算法-FLOYD"><a href="#弗洛伊德算法-FLOYD" class="headerlink" title="弗洛伊德算法 (FLOYD)"></a>弗洛伊德算法 (FLOYD)</h4><ul>
+<li><p>寻找给定的加权图中多源点之间最短路径的算法</p>
 </li>
-<li>
-<p>如果图中存在负的权值，算法也是适用的。</p>
+<li><p>如果图中存在负的权值，算法也是适用的。</p>
 </li>
-<li>
-<p>map[i,j] = min{ map[i,k] + map[k,j], map[i,j]} k是所有结点  — 复杂度 O(<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>n</mi><mn>3</mn></msup></mrow><annotation encoding="application/x-tex">n^3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span></span></span></span>)</p>
+<li><p>map[i,j] = min{ map[i,k] + map[k,j], map[i,j]} k是所有结点  — 复杂度 O($n^3$) </p>
 </li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">D[u,v] = A[u,v]</span><br><span class="line">for k:= 1 to n</span><br><span class="line">	for i:= 1 to n</span><br><span class="line">		for j:= 1 to n</span><br><span class="line">			if D[i,j] &gt; D[i,k] + D[k,j]</span><br><span class="line">				D[i,j] = D[i,k] + D[k,j]</span><br></pre></td></tr></table></figure>
-<h4 id="bellman-ford算法"><a class="markdownIt-Anchor" href="#bellman-ford算法"></a> Bellman-ford算法</h4>
-<ul>
+<h4 id="Bellman-ford算法"><a href="#Bellman-ford算法" class="headerlink" title="Bellman-ford算法"></a>Bellman-ford算法</h4><ul>
 <li>适用: 单源结点到其他所有节点的最短路径</li>
 <li>若 u-&gt;v 是有向边, 则 d[v] &lt;= d[u] + dis[u,v]</li>
 <li>对边的权重没有要求，可以发现负环</li>
@@ -238,22 +223,17 @@
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> each vertex v <span class="keyword">in</span> G do</span><br><span class="line">	d[v] = 正无穷</span><br><span class="line">d[s] = <span class="number">0</span> </span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i = <span class="number">1</span> to n<span class="number">-1</span> do</span><br><span class="line">	<span class="comment">### 以下的循环一共作 n-1次，第一次找从s出发走一步能到的那些结点的最短路径，第二次找从s出发</span></span><br><span class="line">  <span class="comment">### 走两步能到的那些结点的最短路径 ，因此至多 |V|-1 次循环 生成以源点S为根的最短路径树</span></span><br><span class="line">	<span class="keyword">for</span> each edge(u,v) <span class="keyword">in</span> G do</span><br><span class="line">		<span class="keyword">if</span> d[v] &gt; d[u] + w(u,v) </span><br><span class="line">			d[v] = d[u] + w(u,v)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> each edge(u,v) <span class="keyword">in</span> G do</span><br><span class="line">	<span class="keyword">if</span> d[v] &gt; d[u] + w(u,v)</span><br><span class="line">		<span class="keyword">return</span> false   <span class="comment">## 检查是否存在回路</span></span><br><span class="line"> 	<span class="keyword">return</span> true</span><br></pre></td></tr></table></figure>
 <p>改进: 如果第k次循环后，最短路径没有得到更新，显然之后也任然无法更新，因此可以提前退出，并且如果k&lt;n-1，一定不存在负环。</p>
-<h3 id="最小生成树mst-minimum-spanning-tree"><a class="markdownIt-Anchor" href="#最小生成树mst-minimum-spanning-tree"></a> 最小生成树(MST minimum spanning tree)</h3>
-<hr>
+<h3 id="最小生成树-MST-minimum-spanning-tree"><a href="#最小生成树-MST-minimum-spanning-tree" class="headerlink" title="最小生成树(MST minimum spanning tree)"></a>最小生成树(MST minimum spanning tree)</h3><hr>
 <p>从一个带权值无向图中选择n-1条边，并使这个图仍然连通(即得到了一颗生成树)，同时考虑树的权重最小。</p>
 <p>连通加权无向图中一棵权值最小的生成树。</p>
 <p>应用：比如说有N个城市需要建立互联的通信网路，如何使得需要铺设的通信电缆的总长度最小呢？这就需要用到最小生成树的思想了。</p>
-<p>####普里姆算法(Prim)</p>
-<p>O(<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>n</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">n^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span>)</p>
-<h4 id="库鲁斯卡尔kruskal"><a class="markdownIt-Anchor" href="#库鲁斯卡尔kruskal"></a> 库鲁斯卡尔(Kruskal)</h4>
-<p>O(nlogn)</p>
-<p>####<a href="https://leetcode.com/problems/is-graph-bipartite/submissions/" target="_blank" rel="noopener">判断是否是二部图</a></p>
-<blockquote>
+<h4 id="普里姆算法-Prim"><a href="#普里姆算法-Prim" class="headerlink" title="普里姆算法(Prim)"></a>普里姆算法(Prim)</h4><p>O($n^2$) </p>
+<h4 id="库鲁斯卡尔-Kruskal"><a href="#库鲁斯卡尔-Kruskal" class="headerlink" title="库鲁斯卡尔(Kruskal)"></a>库鲁斯卡尔(Kruskal)</h4><p>O(nlogn)</p>
+<h4 id="判断是否是二部图"><a href="#判断是否是二部图" class="headerlink" title="判断是否是二部图"></a><a href="https://leetcode.com/problems/is-graph-bipartite/submissions/" target="_blank" rel="noopener">判断是否是二部图</a></h4><blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; Input: [[1,3], [0,2], [1,3], [0,2]]</span><br><span class="line">&gt; 下标i表示节点到对应的graph[i中存在着边</span><br><span class="line">&gt; 用涂色的方法，相邻节点涂不一样的颜色，如果同一个点可以被涂不一样的颜色，证明不是二部图</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">isBipartite</span><span class="params">(self, graph)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    :type graph: List[List[int]]</span></span><br><span class="line"><span class="string">    :rtype: bool</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    color = &#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(graph)):</span><br><span class="line">        <span class="comment">#print (i)</span></span><br><span class="line">        <span class="keyword">if</span> i <span class="keyword">not</span> <span class="keyword">in</span> color:</span><br><span class="line">            color[i] = <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self.dfs(graph,i,color):</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dfs</span><span class="params">(self,graph,i,color)</span>:</span></span><br><span class="line">    col = color[i]</span><br><span class="line">    <span class="keyword">for</span> num <span class="keyword">in</span> graph[i]:</span><br><span class="line">        <span class="keyword">if</span> num <span class="keyword">in</span> color:</span><br><span class="line">            <span class="keyword">if</span> color[num] != -col:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            color[num] = -col</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> self.dfs(graph,num,color):</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure>
-<h4 id="拷贝图"><a class="markdownIt-Anchor" href="#拷贝图"></a> <a href="https://leetcode.com/problems/clone-graph/submissions/" target="_blank" rel="noopener">拷贝图</a></h4>
-<ul>
+<h4 id="拷贝图"><a href="#拷贝图" class="headerlink" title="拷贝图"></a><a href="https://leetcode.com/problems/clone-graph/submissions/" target="_blank" rel="noopener">拷贝图</a></h4><ul>
 <li>用一个dict来存节点</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">class Node(object):</span></span><br><span class="line"><span class="string">    def __init__(self, val, neighbors):</span></span><br><span class="line"><span class="string">        self.val = val</span></span><br><span class="line"><span class="string">        self.neighbors = neighbors</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">cloneGraph</span><span class="params">(self, node)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type node: Node</span></span><br><span class="line"><span class="string">        :rtype: Node</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        re = dummy = Node(node.val,[])</span><br><span class="line">        <span class="keyword">from</span> collections <span class="keyword">import</span> deque</span><br><span class="line">        queue = deque([node])</span><br><span class="line">        store = dict()</span><br><span class="line">        store[node] = re</span><br><span class="line">        <span class="keyword">while</span> queue:</span><br><span class="line">            node = queue.popleft()</span><br><span class="line">            <span class="keyword">for</span> neighbor <span class="keyword">in</span> node.neighbors:</span><br><span class="line">                <span class="keyword">if</span> neighbor <span class="keyword">not</span> <span class="keyword">in</span> store:</span><br><span class="line">                    nodecopy = Node(neighbor.val,[])</span><br><span class="line">                    store[neighbor] = nodecopy</span><br><span class="line">                    store[node].neighbors.append(nodecopy)</span><br><span class="line">                    queue.append(neighbor)</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    store[node].neighbors.append(store[neighbor])</span><br><span class="line">        <span class="keyword">return</span> re</span><br></pre></td></tr></table></figure>
@@ -378,7 +358,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#图的基本概念"><span class="toc-number">1.</span> <span class="toc-text"> 图的基本概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最短路径"><span class="toc-number">2.</span> <span class="toc-text"> 最短路径</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#弗洛伊德算法-floyd"><span class="toc-number">2.1.</span> <span class="toc-text"> 弗洛伊德算法 (FLOYD)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bellman-ford算法"><span class="toc-number">2.2.</span> <span class="toc-text"> Bellman-ford算法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最小生成树mst-minimum-spanning-tree"><span class="toc-number">3.</span> <span class="toc-text"> 最小生成树(MST minimum spanning tree)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#库鲁斯卡尔kruskal"><span class="toc-number">3.1.</span> <span class="toc-text"> 库鲁斯卡尔(Kruskal)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#拷贝图"><span class="toc-number">3.2.</span> <span class="toc-text"> 拷贝图</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#图的基本概念"><span class="toc-number">1.</span> <span class="toc-text">图的基本概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最短路径"><span class="toc-number">2.</span> <span class="toc-text">最短路径</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#迪杰斯特拉-Dijkstra"><span class="toc-number">2.1.</span> <span class="toc-text">迪杰斯特拉(Dijkstra)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#弗洛伊德算法-FLOYD"><span class="toc-number">2.2.</span> <span class="toc-text">弗洛伊德算法 (FLOYD)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Bellman-ford算法"><span class="toc-number">2.3.</span> <span class="toc-text">Bellman-ford算法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最小生成树-MST-minimum-spanning-tree"><span class="toc-number">3.</span> <span class="toc-text">最小生成树(MST minimum spanning tree)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#普里姆算法-Prim"><span class="toc-number">3.1.</span> <span class="toc-text">普里姆算法(Prim)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#库鲁斯卡尔-Kruskal"><span class="toc-number">3.2.</span> <span class="toc-text">库鲁斯卡尔(Kruskal)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#判断是否是二部图"><span class="toc-number">3.3.</span> <span class="toc-text">判断是否是二部图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#拷贝图"><span class="toc-number">3.4.</span> <span class="toc-text">拷贝图</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -527,11 +507,7 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -543,11 +519,31 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">kafka,mq</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">develop</a>
               </li>
             
             <div class="clearfix"></div>

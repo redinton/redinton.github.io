@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>linux_1 | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="linux-守护进程 linux-直接查看某个进程的占用端口-命令 ubuntu下使用apt-get-install安装的软件的相关位置">
+  <meta name="description" content="linux-守护进程linux-直接查看某个进程的占用端口-命令ubuntu下使用apt-get-install安装的软件的相关位置">
 <meta name="keywords" content="linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux_1">
 <meta property="og:url" content="http://jasonyu.top/2020/11/21/linux_1/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="linux-守护进程 linux-直接查看某个进程的占用端口-命令 ubuntu下使用apt-get-install安装的软件的相关位置">
+<meta property="og:description" content="linux-守护进程linux-直接查看某个进程的占用端口-命令ubuntu下使用apt-get-install安装的软件的相关位置">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-26T08:13:32.658Z">
+<meta property="og:updated_time" content="2020-11-26T08:18:18.104Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux_1">
-<meta name="twitter:description" content="linux-守护进程 linux-直接查看某个进程的占用端口-命令 ubuntu下使用apt-get-install安装的软件的相关位置">
+<meta name="twitter:description" content="linux-守护进程linux-直接查看某个进程的占用端口-命令ubuntu下使用apt-get-install安装的软件的相关位置">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -169,33 +169,25 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><a href="#linux-%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B">linux-守护进程</a><br>
-<a href="#linux-%E7%9B%B4%E6%8E%A5%E6%9F%A5%E7%9C%8B%E6%9F%90%E4%B8%AA%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%8D%A0%E7%94%A8%E7%AB%AF%E5%8F%A3-%E5%91%BD%E4%BB%A4">linux-直接查看某个进程的占用端口-命令</a><br>
-<a href="#ubuntu%E4%B8%8B%E4%BD%BF%E7%94%A8apt-get-install%E5%AE%89%E8%A3%85%E7%9A%84%E8%BD%AF%E4%BB%B6%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BD%8D%E7%BD%AE">ubuntu下使用apt-get-install安装的软件的相关位置</a></p>
-<a id="more"></a>
-<h4 id="linux-守护进程"><a class="markdownIt-Anchor" href="#linux-守护进程"></a> Linux 守护进程</h4>
-<p>“守护进程”  daemon 就是一直在<strong>后台运行</strong>的进程</p>
+        <p><a href="#linux-守护进程">linux-守护进程</a><br><a href="#linux-直接查看某个进程的占用端口-命令">linux-直接查看某个进程的占用端口-命令</a><br><a href="#ubuntu下使用apt-get-install安装的软件的相关位置">ubuntu下使用apt-get-install安装的软件的相关位置</a><br><a id="more"></a></p>
+<h4 id="Linux-守护进程"><a href="#Linux-守护进程" class="headerlink" title="Linux 守护进程"></a>Linux 守护进程</h4><p>“守护进程”  daemon 就是一直在<strong>后台运行</strong>的进程</p>
 <p>如何让web应用变成系统的守护进程daemon,成为一种服务，一直运行</p>
 <p>成为守护进程</p>
 <ul>
-<li>
-<p>step 1</p>
+<li><p>step 1</p>
 <ul>
-<li>
-<p>改成 “后台任务”</p>
+<li><p>改成 “后台任务”</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blabla &amp;</span><br></pre></td></tr></table></figure>
-<p>命令的尾部加上符号<code>&amp;</code>，启动的进程就会成为&quot;后台任务&quot;</p>
+<p>命令的尾部加上符号<code>&amp;</code>，启动的进程就会成为”后台任务”</p>
 </li>
 </ul>
 </li>
 </ul>
-<p>&quot;后台任务&quot;有两个特点。</p>
+<p>“后台任务”有两个特点。</p>
 <ul>
-<li>
-<p>继承当前 session （对话）的标准输出（stdout）和标准错误（stderr）。因此，后台任务的所有输出依然会同步地在命令行下显示。 – 加了 &amp;后 其实，输出结果还会在命令行中</p>
+<li><p>继承当前 session （对话）的标准输出（stdout）和标准错误（stderr）。因此，后台任务的所有输出依然会同步地在命令行下显示。 — 加了 &amp;后 其实，输出结果还会在命令行中</p>
 </li>
-<li>
-<p>不再继承当前 session 的标准输入（stdin）。**你无法向这个任务输入指令了。**如果它试图读取标准输入，就会暂停执行（halt）。</p>
+<li><p>不再继承当前 session 的标准输入（stdin）。<strong>你无法向这个任务输入指令了。</strong>如果它试图读取标准输入，就会暂停执行（halt）。</p>
 </li>
 </ul>
 <p>后台任务的标准I/O也要重定向</p>
@@ -206,13 +198,11 @@
 <li>关闭标准输入。该进程不再能够接收任何输入，即使运行在前台。</li>
 <li>重定向标准输出和标准错误到文件<code>nohup.out</code>。</li>
 </ul>
-<h4 id="linux-直接查看某个进程的占用端口-命令"><a class="markdownIt-Anchor" href="#linux-直接查看某个进程的占用端口-命令"></a> Linux 直接查看某个进程的占用端口 命令</h4>
-<p>查看端口被哪个进程占用</p>
+<h4 id="Linux-直接查看某个进程的占用端口-命令"><a href="#Linux-直接查看某个进程的占用端口-命令" class="headerlink" title="Linux 直接查看某个进程的占用端口 命令"></a>Linux 直接查看某个进程的占用端口 命令</h4><p>查看端口被哪个进程占用</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">lsof -i:端口号</span><br><span class="line">或者</span><br><span class="line">netstat -tunpl | grep 端口号</span><br></pre></td></tr></table></figure>
 <p>查看进程占用端口</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">查看对应的进程号 ps -ef|grep 进程名</span><br><span class="line">查看进程号所占用的端口号 netstat -nltp | grep 进程号</span><br></pre></td></tr></table></figure>
-<h4 id="ubuntu下使用apt-get-install安装的软件的相关位置"><a class="markdownIt-Anchor" href="#ubuntu下使用apt-get-install安装的软件的相关位置"></a> ubuntu下使用apt-get install安装的软件的相关位置</h4>
-<p>有时候需要配置ubuntu安装的软件，一般安装软件都是使用apt-get install。那么安装完后，软件的安装目录在哪里呢，可执行文件又放在哪里呢。</p>
+<h4 id="ubuntu下使用apt-get-install安装的软件的相关位置"><a href="#ubuntu下使用apt-get-install安装的软件的相关位置" class="headerlink" title="ubuntu下使用apt-get install安装的软件的相关位置"></a>ubuntu下使用apt-get install安装的软件的相关位置</h4><p>有时候需要配置ubuntu安装的软件，一般安装软件都是使用apt-get install。那么安装完后，软件的安装目录在哪里呢，可执行文件又放在哪里呢。</p>
 <p>A、下载的软件的存放位置：/var/cache/apt/archives</p>
 <p>B、安装后软件的默认位置：/usr/share</p>
 <p>C、可执行文件位置：/usr/bin</p>
@@ -311,8 +301,8 @@
     </a>
   
   
-    <a href="/2020/11/20/redis相关问题/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">redis相关问题</div>
+    <a href="/2020/11/21/mysql问题/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">mysql问题</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -339,7 +329,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#linux-守护进程"><span class="toc-number">1.</span> <span class="toc-text"> Linux 守护进程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#linux-直接查看某个进程的占用端口-命令"><span class="toc-number">2.</span> <span class="toc-text"> Linux 直接查看某个进程的占用端口 命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ubuntu下使用apt-get-install安装的软件的相关位置"><span class="toc-number">3.</span> <span class="toc-text"> ubuntu下使用apt-get install安装的软件的相关位置</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux-守护进程"><span class="toc-number">1.</span> <span class="toc-text">Linux 守护进程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux-直接查看某个进程的占用端口-命令"><span class="toc-number">2.</span> <span class="toc-text">Linux 直接查看某个进程的占用端口 命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ubuntu下使用apt-get-install安装的软件的相关位置"><span class="toc-number">3.</span> <span class="toc-text">ubuntu下使用apt-get install安装的软件的相关位置</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -488,11 +478,7 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -504,11 +490,31 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">kafka,mq</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">develop</a>
               </li>
             
             <div class="clearfix"></div>

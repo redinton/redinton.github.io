@@ -166,7 +166,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="消息队列"><a class="markdownIt-Anchor" href="#消息队列"></a> 消息队列</h4>
+        <h4 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h4>
         
           <a class="article-more-a" href="/2020/11/26/kafka/#more">more >></a>
         
@@ -244,26 +244,20 @@
       
         <p>消息队列</p>
 <p>对实时一致性要求没那么高的请求，通过MQ异步的方式处理</p>
-<h4 id="问题"><a class="markdownIt-Anchor" href="#问题"></a> 问题</h4>
-<ul>
-<li>
-<p>异步带来的不一致问题</p>
+<h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><ul>
+<li><p>异步带来的不一致问题</p>
 <ul>
 <li>通过job去重试保证接口调用成功</li>
 </ul>
 </li>
-<li>
-<p>消息可靠性的保证</p>
+<li><p>消息可靠性的保证</p>
 <p>消息的丢失</p>
 <ul>
-<li>生产者丢失
-<ul>
+<li>生产者丢失<ul>
 <li>程序发送失败抛异常没有重试处理，或者发送过程成功，但过程中网络问题MQ没收到</li>
-<li>异步发送消息的方式
-<ul>
+<li>异步发送消息的方式<ul>
 <li>异步有回调</li>
-<li>异步无回调
-<ul>
+<li>异步无回调<ul>
 <li>生产者发送完消息后不管结果就可能会造成消息丢失</li>
 </ul>
 </li>
@@ -272,30 +266,24 @@
 <li>异步发送 + 回调通知 + 本地消息表</li>
 </ul>
 </li>
-<li>MQ丢失
-<ul>
+<li>MQ丢失<ul>
 <li>生产者保证消息发送到MQ，但MQ收到消息后还在内存中，这时宕机了来不及同步到从节点没导致消息丢失</li>
 </ul>
 </li>
-<li>消费者丢失
-<ul>
+<li>消费者丢失<ul>
 <li>消费者刚收到消息，此时server宕机，MQ人为消费者已经消费，不重复发送消息</li>
 <li>消费方不返回ACK确认，重发的机制根据MQ类型的不同发送时间间隔，次数不尽相同，重试超过次数之后进入死信队列，需要手动处理</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>
-<p>消费者消费失败，一直消费失败导致消息积压</p>
+<li><p>消费者消费失败，一直消费失败导致消息积压</p>
 <ul>
-<li>
-<p>如果容易修复，先把问题修复，让consumer恢复正常消费</p>
+<li><p>如果容易修复，先把问题修复，让consumer恢复正常消费</p>
 </li>
-<li>
-<p>如果时间来不及处理很麻烦，做转发处理，写一个临时的consumer消费方案，先把消息消费，然后再转发到一个新的topic和MQ资源，这个新的topic的机器资源单独申请，要能承载住当前积压的消息</p>
+<li><p>如果时间来不及处理很麻烦，做转发处理，写一个临时的consumer消费方案，先把消息消费，然后再转发到一个新的topic和MQ资源，这个新的topic的机器资源单独申请，要能承载住当前积压的消息</p>
 </li>
-<li>
-<p>处理完积压数据后，修复consumer，去消费新的MQ和现有的MQ数据，新MQ消费完成后恢复原状</p>
+<li><p>处理完积压数据后，修复consumer，去消费新的MQ和现有的MQ数据，新MQ消费完成后恢复原状</p>
 </li>
 </ul>
 </li>
@@ -374,15 +362,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="celery-简介"><a class="markdownIt-Anchor" href="#celery-简介"></a> Celery 简介</h3>
-<p>专注于实时处理和任务调度的分布式任务队列, 任务就是消息。</p>
+        <h3 id="Celery-简介"><a href="#Celery-简介" class="headerlink" title="Celery 简介"></a>Celery 简介</h3><p>专注于实时处理和任务调度的分布式任务队列, 任务就是消息。<br>
         
           <a class="article-more-a" href="/2020/11/26/celery/#more">more >></a>
         
       
 
       
-    </div>
+    </p></div>
     <div class="article-info article-info-index">
       
       
@@ -451,15 +438,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="union-find"><a class="markdownIt-Anchor" href="#union-find"></a> Union find</h3>
-<p>并查集</p>
+        <h3 id="Union-find"><a href="#Union-find" class="headerlink" title="Union find"></a>Union find</h3><p>并查集<br>
         
           <a class="article-more-a" href="/2020/11/26/并查集/#more">more >></a>
         
       
 
       
-    </div>
+    </p></div>
     <div class="article-info article-info-index">
       
       
@@ -528,8 +514,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="数组"><a class="markdownIt-Anchor" href="#数组"></a> 数组</h3>
-<h4 id="数据流中的中位数"><a class="markdownIt-Anchor" href="#数据流中的中位数"></a> 数据流中的中位数</h4>
+        <h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><h4 id="数据流中的中位数"><a href="#数据流中的中位数" class="headerlink" title="数据流中的中位数"></a>数据流中的中位数</h4>
         
           <a class="article-more-a" href="/2020/11/26/array/#more">more >></a>
         
@@ -605,7 +590,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="5-最长回文子串"><a class="markdownIt-Anchor" href="#5-最长回文子串"></a> 5. 最长回文子串</h4>
+        <h4 id="5-最长回文子串"><a href="#5-最长回文子串" class="headerlink" title="5. 最长回文子串"></a>5. 最长回文子串</h4>
         
           <a class="article-more-a" href="/2020/11/26/daily_algorithm/#more">more >></a>
         
@@ -681,45 +666,35 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="图的基本概念"><a class="markdownIt-Anchor" href="#图的基本概念"></a> 图的基本概念</h3>
-<ul>
-<li>图的表示
-<ul>
-<li>1.邻接矩阵
-<ul>
+        <h3 id="图的基本概念"><a href="#图的基本概念" class="headerlink" title="图的基本概念"></a>图的基本概念</h3><ul>
+<li>图的表示<ul>
+<li>1.邻接矩阵<ul>
 <li>n*n的邻接矩阵</li>
 </ul>
 </li>
-<li>2.邻接表
-<ul>
+<li>2.邻接表<ul>
 <li>为每个点建立一个链表(数组)存放与之相连的点</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>图的搜索
-<ul>
-<li>BFS
-<ul>
-<li>双向BFS
-<ul>
+<li>图的搜索<ul>
+<li>BFS<ul>
+<li>双向BFS<ul>
 <li>graph中，从起点和终点分别开始走，直到相遇 - 树形搜索结构变成纺锤形</li>
-<li>这样更&quot;快&quot;，因为经典BFS中，树形结构高度较高时，叶子非常多，将一颗高度为h的树用两个近似为 h/2的树代替，宽度相对小。</li>
+<li>这样更”快”，因为经典BFS中，树形结构高度较高时，叶子非常多，将一颗高度为h的树用两个近似为 h/2的树代替，宽度相对小。</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>DFS</li>
-</ul>
-</li>
-</ul>
+<li>DFS
         
           <a class="article-more-a" href="/2020/11/26/graph/#more">more >></a>
         
       
 
       
-    </div>
+    </li></ul></li></ul></div>
     <div class="article-info article-info-index">
       
       
@@ -788,8 +763,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="链表整个反转"><a class="markdownIt-Anchor" href="#链表整个反转"></a> 链表整个反转</h3>
-<h2 id="-more-"><a class="markdownIt-Anchor" href="#-more-"></a>
+        <h3 id="链表整个反转"><a href="#链表整个反转" class="headerlink" title="链表整个反转"></a>链表整个反转</h3><h2 id><a href="#" class="headerlink" title></a>
         
           <a class="article-more-a" href="/2020/11/26/listnode/#more">more >></a>
         
@@ -865,7 +839,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="素数分解"><a class="markdownIt-Anchor" href="#素数分解"></a> 素数分解</h4>
+        <h4 id="素数分解"><a href="#素数分解" class="headerlink" title="素数分解"></a>素数分解</h4>
         
           <a class="article-more-a" href="/2020/11/26/math/#more">more >></a>
         
@@ -941,19 +915,16 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="字符串"><a class="markdownIt-Anchor" href="#字符串"></a> 字符串</h3>
-<h4 id="两个字符串之间的最大相同子串"><a class="markdownIt-Anchor" href="#两个字符串之间的最大相同子串"></a> 两个字符串之间的最大相同子串</h4>
-<ul>
+        <h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><h4 id="两个字符串之间的最大相同子串"><a href="#两个字符串之间的最大相同子串" class="headerlink" title="两个字符串之间的最大相同子串"></a>两个字符串之间的最大相同子串</h4><ul>
 <li>子串连续</li>
-<li>子串可以不连续</li>
-</ul>
+<li>子串可以不连续
         
           <a class="article-more-a" href="/2020/11/26/string/#more">more >></a>
         
       
 
       
-    </div>
+    </li></ul></div>
     <div class="article-info article-info-index">
       
       
@@ -1004,7 +975,7 @@
   
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 
@@ -1116,11 +1087,7 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1132,11 +1099,31 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">kafka,mq</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">develop</a>
               </li>
             
             <div class="clearfix"></div>

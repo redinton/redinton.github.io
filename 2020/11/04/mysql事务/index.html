@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>mysql事务,隔离级别 | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="事务 (transaction) 把多条语句作为一个整体进行操作 – 成为数据库事务  确保该事务范围内的所有操作全部成功或全部失败 单条SQL语句, 数据库系统自动作为一个事务执行, 这种事务称为隐式事务。 手动将多条SQL语句作为一个事务执行,  使用BEGIN开启一个事务, 使用COMMIT提交一个事务, 成为显式事务。 主动让事务失败,  用ROLLBACK回滚事务, 整个事务会失败。">
+  <meta name="description" content="事务 (transaction)把多条语句作为一个整体进行操作 — 成为数据库事务  确保该事务范围内的所有操作全部成功或全部失败 单条SQL语句, 数据库系统自动作为一个事务执行, 这种事务称为隐式事务。 手动将多条SQL语句作为一个事务执行,  使用BEGIN开启一个事务, 使用COMMIT提交一个事务, 成为显式事务。 主动让事务失败,  用ROLLBACK回滚事务, 整个事务会失败。">
 <meta name="keywords" content="mysql">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql事务,隔离级别">
 <meta property="og:url" content="http://jasonyu.top/2020/11/04/mysql事务/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="事务 (transaction) 把多条语句作为一个整体进行操作 – 成为数据库事务  确保该事务范围内的所有操作全部成功或全部失败 单条SQL语句, 数据库系统自动作为一个事务执行, 这种事务称为隐式事务。 手动将多条SQL语句作为一个事务执行,  使用BEGIN开启一个事务, 使用COMMIT提交一个事务, 成为显式事务。 主动让事务失败,  用ROLLBACK回滚事务, 整个事务会失败。">
+<meta property="og:description" content="事务 (transaction)把多条语句作为一个整体进行操作 — 成为数据库事务  确保该事务范围内的所有操作全部成功或全部失败 单条SQL语句, 数据库系统自动作为一个事务执行, 这种事务称为隐式事务。 手动将多条SQL语句作为一个事务执行,  使用BEGIN开启一个事务, 使用COMMIT提交一个事务, 成为显式事务。 主动让事务失败,  用ROLLBACK回滚事务, 整个事务会失败。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-06T03:22:56.289Z">
+<meta property="og:updated_time" content="2020-11-26T08:18:18.108Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql事务,隔离级别">
-<meta name="twitter:description" content="事务 (transaction) 把多条语句作为一个整体进行操作 – 成为数据库事务  确保该事务范围内的所有操作全部成功或全部失败 单条SQL语句, 数据库系统自动作为一个事务执行, 这种事务称为隐式事务。 手动将多条SQL语句作为一个事务执行,  使用BEGIN开启一个事务, 使用COMMIT提交一个事务, 成为显式事务。 主动让事务失败,  用ROLLBACK回滚事务, 整个事务会失败。">
+<meta name="twitter:description" content="事务 (transaction)把多条语句作为一个整体进行操作 — 成为数据库事务  确保该事务范围内的所有操作全部成功或全部失败 单条SQL语句, 数据库系统自动作为一个事务执行, 这种事务称为隐式事务。 手动将多条SQL语句作为一个事务执行,  使用BEGIN开启一个事务, 使用COMMIT提交一个事务, 成为显式事务。 主动让事务失败,  用ROLLBACK回滚事务, 整个事务会失败。">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -169,67 +169,54 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="事务-transaction"><a class="markdownIt-Anchor" href="#事务-transaction"></a> 事务 (transaction)</h3>
-<p>把多条语句作为一个整体进行操作 – 成为数据库事务</p>
+        <h3 id="事务-transaction"><a href="#事务-transaction" class="headerlink" title="事务 (transaction)"></a>事务 (transaction)</h3><p>把多条语句作为一个整体进行操作 — 成为数据库事务</p>
 <ul>
 <li>确保该事务范围内的所有操作全部成功或全部失败</li>
 <li>单条SQL语句, 数据库系统自动作为一个事务执行, 这种事务称为<strong>隐式事务</strong>。</li>
 <li>手动将多条SQL语句作为一个事务执行,  使用BEGIN开启一个事务, 使用COMMIT提交一个事务, 成为<strong>显式事务</strong>。</li>
-<li>主动让事务失败,  用ROLLBACK回滚事务, 整个事务会失败。</li>
-</ul>
-<a id="more"></a>
+<li>主动让事务失败,  用ROLLBACK回滚事务, 整个事务会失败。<a id="more"></a>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">BEGIN</span>;</span><br><span class="line"><span class="keyword">UPDATE</span> accounts <span class="keyword">SET</span> balance = balance - <span class="number">100</span> <span class="keyword">WHERE</span> <span class="keyword">id</span> = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">UPDATE</span> accounts <span class="keyword">SET</span> balance = balance + <span class="number">100</span> <span class="keyword">WHERE</span> <span class="keyword">id</span> = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">ROLLBACK</span>;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
 <p>数据库事务具有ACID 四个属性</p>
 <ul>
-<li>A: Atomic ,  原子性
-<ul>
+<li>A: Atomic ,  原子性 <ul>
 <li>所有SQL作为原子工作单元执行, 要么全部执行, 要么全部不执行</li>
 </ul>
 </li>
-<li>C: Consistent  一致性
-<ul>
+<li>C: Consistent  一致性<ul>
 <li>事务完成后,  所有数据状态都是一致 , A账户减去100,  B账户肯定加上100</li>
 </ul>
 </li>
-<li>I: Isolation  隔离性
-<ul>
+<li>I: Isolation  隔离性 <ul>
 <li>多个事务并发, 每个事务作出的修改必须与其他事务隔离</li>
 </ul>
 </li>
-<li>D: Duration  持久性
-<ul>
+<li>D: Duration  持久性<ul>
 <li>事务完成后,  对数据库数据的修改被持久化存储</li>
 </ul>
 </li>
 </ul>
-<h3 id="事务隔离级别"><a class="markdownIt-Anchor" href="#事务隔离级别"></a> 事务隔离级别</h3>
-<p>事务支持并发执行。 但若涉及到操作同一条记录的时候, 可能会有问题。</p>
+<h3 id="事务隔离级别"><a href="#事务隔离级别" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h3><p>事务支持并发执行。 但若涉及到操作同一条记录的时候, 可能会有问题。</p>
 <p>并发操作会带来数据的不一致性, 包括<strong>脏读(dirty read), 不可重复读(Non repeatable read ), 幻读(phantom  read)</strong>.</p>
 
-<h4 id="read-uncommitted"><a class="markdownIt-Anchor" href="#read-uncommitted"></a> read uncommitted</h4>
-<blockquote>
+<h4 id="read-uncommitted"><a href="#read-uncommitted" class="headerlink" title="read uncommitted"></a>read uncommitted</h4><blockquote>
 <p>SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;</p>
 </blockquote>
 <p>一个事务可能读取到另一个事务更新但未提交的数据, 这个数据有可能是脏数据。 例如一个事务更新了数据, 然后这个时候另一个事务读了就可以读到,  但是原来那个事务可能下一步就回滚导致数据更新失效。</p>
-<p><strong>脏读</strong><br>
-对于两个事务 T1,T2, T1读取了已经被T2更新但还没有提交的字段。之后, 若T2 rollback, 则T1读取的内容就是临时且无效的。</p>
-<h4 id="read-commited"><a class="markdownIt-Anchor" href="#read-commited"></a> read commited</h4>
-<p>在这个级别, 事务对其余事务更新数据的操作只能读到commit后的结果。</p>
+<p><strong>脏读</strong><br>对于两个事务 T1,T2, T1读取了已经被T2更新但还没有提交的字段。之后, 若T2 rollback, 则T1读取的内容就是临时且无效的。</p>
+<h4 id="read-commited"><a href="#read-commited" class="headerlink" title="read commited"></a>read commited</h4><p>在这个级别, 事务对其余事务更新数据的操作只能读到commit后的结果。</p>
 <p>事务可能遇到不可重复读情况。 即指, 在一个事务内, 多次读同一数据。</p>
 <p>在这个事务还没有结束时, 如果另一个事务恰好修改了这个数据, 那么, 在第一个事务中, 两次读取的数据就可能不一致。</p>
-<p><strong>不可重复读</strong><br>
-对于两个事务T1, T2, T1读取了一个字段, 然后T2<strong>更新</strong>了该字段, 之后, T1再次读取同一个字段, 值就不同了</p>
-<h4 id="repeatable-read"><a class="markdownIt-Anchor" href="#repeatable-read"></a> repeatable read</h4>
-<p>这个级别就是, 某个事务在读数据的时候保持一致, 例如起初事务A读数据的时候是空, 然后在这期间事务B插入并commit了这条数据,  这个之后事务A再读数据的时候也是空的。这就是保持 repeatable read。(同样的select的语句保证结果一样 ) 但是这个时候如果事务A去update 这条数据, 是可以成功的, 并且之后再读这条数据也是成功的。--  这个情形就是幻读。</p>
-<p><strong>幻读</strong><br>
-对于两个事务T1,T2,  T1从一个表中读取了一个字段, 然后T2在该表中<strong>插入</strong>了一些新的行, 之后如果T1再次读取同一个表, 就会多出几行。</p>
+<p><strong>不可重复读</strong><br>对于两个事务T1, T2, T1读取了一个字段, 然后T2<strong>更新</strong>了该字段, 之后, T1再次读取同一个字段, 值就不同了</p>
+<h4 id="repeatable-read"><a href="#repeatable-read" class="headerlink" title="repeatable read"></a>repeatable read</h4><p>这个级别就是, 某个事务在读数据的时候保持一致, 例如起初事务A读数据的时候是空, 然后在这期间事务B插入并commit了这条数据,  这个之后事务A再读数据的时候也是空的。这就是保持 repeatable read。(同样的select的语句保证结果一样 ) 但是这个时候如果事务A去update 这条数据, 是可以成功的, 并且之后再读这条数据也是成功的。—  这个情形就是幻读。</p>
+<p><strong>幻读</strong><br>对于两个事务T1,T2,  T1从一个表中读取了一个字段, 然后T2在该表中<strong>插入</strong>了一些新的行, 之后如果T1再次读取同一个表, 就会多出几行。</p>
 <ul>
-<li>不可重复读重点在于update和delete, 而幻读重点在insert</li>
+<li>不可重复读重点在于update和delete, 而幻读重点在insert  </li>
 </ul>
 <p>在RR(repeatable read)级别, 解决了脏读(读到uncomitted data)和不可重复读(同一个事务中对同一份数据多次读到结果不一样,由于另一个事务修改了这个数据),但还是会有幻读。样例如下，事务T1先读取数据发现没有id=1的数据，然后准备insert数据之前，另一个干扰事务T2插入了id=1的数据并且commit了。此时事务T1插入数据不成功，但读取id=1的时候也读取不到id=1的数据。因为解决不可重复读的问题就是保证一个事务中读到的数据一致。 但在RR级别，可以通过对SQL加锁来避免幻读。</p>
 
-<h4 id="serializable"><a class="markdownIt-Anchor" href="#serializable"></a> Serializable</h4>
-<p>确保事务可以从一个表中读取相同的行</p>
+<h4 id="Serializable"><a href="#Serializable" class="headerlink" title="Serializable"></a>Serializable</h4><p>确保事务可以从一个表中读取相同的行</p>
 
       
 
@@ -351,7 +338,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#事务-transaction"><span class="toc-number">1.</span> <span class="toc-text"> 事务 (transaction)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事务隔离级别"><span class="toc-number">2.</span> <span class="toc-text"> 事务隔离级别</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#read-uncommitted"><span class="toc-number">2.1.</span> <span class="toc-text"> read uncommitted</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#read-commited"><span class="toc-number">2.2.</span> <span class="toc-text"> read commited</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#repeatable-read"><span class="toc-number">2.3.</span> <span class="toc-text"> repeatable read</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#serializable"><span class="toc-number">2.4.</span> <span class="toc-text"> Serializable</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#事务-transaction"><span class="toc-number">1.</span> <span class="toc-text">事务 (transaction)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事务隔离级别"><span class="toc-number">2.</span> <span class="toc-text">事务隔离级别</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#read-uncommitted"><span class="toc-number">2.1.</span> <span class="toc-text">read uncommitted</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#read-commited"><span class="toc-number">2.2.</span> <span class="toc-text">read commited</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#repeatable-read"><span class="toc-number">2.3.</span> <span class="toc-text">repeatable read</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Serializable"><span class="toc-number">2.4.</span> <span class="toc-text">Serializable</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -504,15 +491,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">HMM</a>
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">nlp</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">NER</a>
+                <a href="javascript:void(0)" class="js-tag color3">mq</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -520,23 +503,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
+                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">网络</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">text classification</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
+                <a href="javascript:void(0)" class="js-tag color4">kafka,mq</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -544,7 +515,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -552,7 +523,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OS</a>
+                <a href="javascript:void(0)" class="js-tag color3">develop</a>
               </li>
             
             <div class="clearfix"></div>

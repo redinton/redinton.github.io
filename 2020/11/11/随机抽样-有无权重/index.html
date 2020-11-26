@@ -18,7 +18,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://jasonyu.top/2020/11/11/随机抽样-有无权重/image-20201111105115299.png">
 <meta property="og:image" content="http://jasonyu.top/2020/11/11/随机抽样-有无权重/image-20201111105306948.png">
-<meta property="og:updated_time" content="2020-11-26T08:13:32.557Z">
+<meta property="og:updated_time" content="2020-11-26T08:18:18.052Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="随机抽样-有无权重">
 <meta name="twitter:description" content="四种类型的随机抽样  未知长度的数组，只遍历一次，随机返回数组中任意一个数。 (随机指的是均匀随机) 未知长度的数组，只遍历一次，随机返回数组中任意k个数。 (随机指的是均匀随机) 已知长度的数组以及对应的权重，按照权重随机抽取索引 构造一个生成器类，构造函数传⼊⼀个很⻓的数组，请你实现randomGet ⽅法，每次调⽤随机返回数组中的⼀个元素，多次调⽤不能重复返回相同索引的元素。要求不能对该数组">
@@ -177,21 +177,17 @@
 <li>未知长度的数组，只遍历一次，随机返回数组中任意一个数。 (随机指的是均匀随机)</li>
 <li>未知长度的数组，只遍历一次，随机返回数组中任意k个数。 (随机指的是均匀随机)</li>
 <li>已知长度的数组以及对应的权重，按照权重随机抽取索引</li>
-<li>构造一个生成器类，构造函数传⼊⼀个很⻓的数组，请你实现randomGet ⽅法，每次调⽤随机返回数组中的⼀个元素，多次调⽤不能重复返回相同索引的元素。要求不能对该数组进⾏任何形式的修改，且操作的时间复杂度是 O(1)。</li>
+<li>构造一个生成器类，构造函数传⼊⼀个很⻓的数组，请你实现randomGet ⽅法，每次调⽤随机返回数组中的⼀个元素，多次调⽤不能重复返回相同索引的元素。要求不能对该数组进⾏任何形式的修改，且操作的时间复杂度是 O(1)。<a id="more"></a>
+</li>
 </ul>
-<a id="more"></a>
-<h4 id="未知长度的数组只遍历一次随机返回数组中任意一个数-随机指的是均匀随机"><a class="markdownIt-Anchor" href="#未知长度的数组只遍历一次随机返回数组中任意一个数-随机指的是均匀随机"></a> 未知长度的数组，只遍历一次，随机返回数组中任意一个数。 (随机指的是均匀随机)</h4>
-<p>即长度为N，保证每个元素被抽中的概率是 1/N<br>
-结论:  当你遇到第 i 个元素时，应该有 1/i 的概率选择该元素， 1 - 1/i 的概率保持原有的选择。</p>
+<h4 id="未知长度的数组，只遍历一次，随机返回数组中任意一个数。-随机指的是均匀随机"><a href="#未知长度的数组，只遍历一次，随机返回数组中任意一个数。-随机指的是均匀随机" class="headerlink" title="未知长度的数组，只遍历一次，随机返回数组中任意一个数。 (随机指的是均匀随机)"></a>未知长度的数组，只遍历一次，随机返回数组中任意一个数。 (随机指的是均匀随机)</h4><p>即长度为N，保证每个元素被抽中的概率是 1/N<br>结论:  当你遇到第 i 个元素时，应该有 1/i 的概率选择该元素， 1 - 1/i 的概率保持原有的选择。</p>
 <img src="/2020/11/11/随机抽样-有无权重/image-20201111105115299.png" title="image-20201111105115299">
-<h4 id="未知长度的数组只遍历一次随机返回数组中任意k个数-随机指的是均匀随机"><a class="markdownIt-Anchor" href="#未知长度的数组只遍历一次随机返回数组中任意k个数-随机指的是均匀随机"></a> 未知长度的数组，只遍历一次，随机返回数组中任意k个数。 (随机指的是均匀随机)</h4>
-<p>要随机选择 k 个数，只要在第 i 个元素处以 k/i 的概率选择该元素，以 1 - k/i 的概率保持原有选择</p>
+<h4 id="未知长度的数组，只遍历一次，随机返回数组中任意k个数。-随机指的是均匀随机"><a href="#未知长度的数组，只遍历一次，随机返回数组中任意k个数。-随机指的是均匀随机" class="headerlink" title="未知长度的数组，只遍历一次，随机返回数组中任意k个数。 (随机指的是均匀随机)"></a>未知长度的数组，只遍历一次，随机返回数组中任意k个数。 (随机指的是均匀随机)</h4><p>要随机选择 k 个数，只要在第 i 个元素处以 k/i 的概率选择该元素，以 1 - k/i 的概率保持原有选择   </p>
 <p>因为虽然每次更新选择的概率增⼤了 k 倍，但是选到具体第 i 个元素的概率还是要乘 1/k ，也就回到了上⼀个推导。</p>
 <img src="/2020/11/11/随机抽样-有无权重/image-20201111105306948.png" title="image-20201111105306948">
-<h4 id="已知长度的数组以及对应的权重按照权重随机抽取索引"><a class="markdownIt-Anchor" href="#已知长度的数组以及对应的权重按照权重随机抽取索引"></a> 已知长度的数组以及对应的权重，按照权重随机抽取索引</h4>
-<ul>
+<h4 id="已知长度的数组以及对应的权重，按照权重随机抽取索引"><a href="#已知长度的数组以及对应的权重，按照权重随机抽取索引" class="headerlink" title="已知长度的数组以及对应的权重，按照权重随机抽取索引"></a>已知长度的数组以及对应的权重，按照权重随机抽取索引</h4><ul>
 <li>线性扫描，大概过程是先计算出所有道具的权重总和S，然后调用随机函数得到一个区间在[0, S)的随机值，接着从头向后扫描道具列表，并不断从S减掉每个道具的权重值，当S小于某个道具的权重值时，这个道具就是抽中的那一个 复杂度在O(N)</li>
-<li>先计算出总和列表，列表中每**个值是前面N个权重值的总和，**这样这个列表就是有序的，再对这个列表使用二分查找得到权重索引。复杂度是O(logN)</li>
+<li>先计算出总和列表，列表中每<strong>个值是前面N个权重值的总和，</strong>这样这个列表就是有序的，再对这个列表使用二分查找得到权重索引。复杂度是O(logN)</li>
 </ul>
 
       
@@ -314,7 +310,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#未知长度的数组只遍历一次随机返回数组中任意一个数-随机指的是均匀随机"><span class="toc-number">1.</span> <span class="toc-text"> 未知长度的数组，只遍历一次，随机返回数组中任意一个数。 (随机指的是均匀随机)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#未知长度的数组只遍历一次随机返回数组中任意k个数-随机指的是均匀随机"><span class="toc-number">2.</span> <span class="toc-text"> 未知长度的数组，只遍历一次，随机返回数组中任意k个数。 (随机指的是均匀随机)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#已知长度的数组以及对应的权重按照权重随机抽取索引"><span class="toc-number">3.</span> <span class="toc-text"> 已知长度的数组以及对应的权重，按照权重随机抽取索引</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#未知长度的数组，只遍历一次，随机返回数组中任意一个数。-随机指的是均匀随机"><span class="toc-number">1.</span> <span class="toc-text">未知长度的数组，只遍历一次，随机返回数组中任意一个数。 (随机指的是均匀随机)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#未知长度的数组，只遍历一次，随机返回数组中任意k个数。-随机指的是均匀随机"><span class="toc-number">2.</span> <span class="toc-text">未知长度的数组，只遍历一次，随机返回数组中任意k个数。 (随机指的是均匀随机)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#已知长度的数组以及对应的权重，按照权重随机抽取索引"><span class="toc-number">3.</span> <span class="toc-text">已知长度的数组以及对应的权重，按照权重随机抽取索引</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -463,11 +459,7 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -479,11 +471,31 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">kafka,mq</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">develop</a>
               </li>
             
             <div class="clearfix"></div>

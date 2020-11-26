@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>redis基础(-) | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="redis 配置 101服务器上的redis 服务是通过以下命令安装 12sudo apt-get updatesudo apt-get install redis-server">
+  <meta name="description" content="redis 配置101服务器上的redis 服务是通过以下命令安装 12sudo apt-get updatesudo apt-get install redis-server">
 <meta name="keywords" content="redis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="redis基础(-)">
 <meta property="og:url" content="http://jasonyu.top/2020/11/06/redis_1/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="redis 配置 101服务器上的redis 服务是通过以下命令安装 12sudo apt-get updatesudo apt-get install redis-server">
+<meta property="og:description" content="redis 配置101服务器上的redis 服务是通过以下命令安装 12sudo apt-get updatesudo apt-get install redis-server">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-26T08:13:32.611Z">
+<meta property="og:updated_time" content="2020-11-26T08:18:18.086Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="redis基础(-)">
-<meta name="twitter:description" content="redis 配置 101服务器上的redis 服务是通过以下命令安装 12sudo apt-get updatesudo apt-get install redis-server">
+<meta name="twitter:description" content="redis 配置101服务器上的redis 服务是通过以下命令安装 12sudo apt-get updatesudo apt-get install redis-server">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -169,42 +169,32 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="redis-配置"><a class="markdownIt-Anchor" href="#redis-配置"></a> redis 配置</h3>
-<p>101服务器上的redis 服务是通过以下命令安装</p>
+        <h3 id="redis-配置"><a href="#redis-配置" class="headerlink" title="redis 配置"></a>redis 配置</h3><p>101服务器上的redis 服务是通过以下命令安装</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install redis-server</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
 <ul>
-<li>
-<p>启动 redis</p>
+<li><p>启动 redis</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-server</span><br></pre></td></tr></table></figure>
 </li>
-<li>
-<p>启动客户端</p>
+<li><p>启动客户端</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli</span><br></pre></td></tr></table></figure>
 </li>
-<li>
-<p>redis 的配置文件位置</p>
+<li><p>redis 的配置文件位置</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/etc/redis/redis.conf</span><br><span class="line">需要用ip访问的话</span><br><span class="line">#bind 127.0.0.1 ::1</span><br><span class="line">protected-mode no</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h4 id="python-操作-redis"><a class="markdownIt-Anchor" href="#python-操作-redis"></a> python 操作 redis</h4>
-<p><a href="https://segmentfault.com/a/1190000014416025" target="_blank" rel="noopener">参考连接</a></p>
-<h4 id="redis介绍"><a class="markdownIt-Anchor" href="#redis介绍"></a> Redis介绍</h4>
-<ul>
+<h4 id="python-操作-redis"><a href="#python-操作-redis" class="headerlink" title="python 操作 redis"></a>python 操作 redis</h4><p><a href="https://segmentfault.com/a/1190000014416025" target="_blank" rel="noopener">参考连接</a></p>
+<h4 id="Redis介绍"><a href="#Redis介绍" class="headerlink" title="Redis介绍"></a>Redis介绍</h4><ul>
 <li>Redis是开源的内存中的数据结构存储系统，可以用作：数据库，缓存和消息中间件。</li>
 <li>Redis 内置了复制(replication), LUA脚本，LRU驱动事件(LRU eviction), 事务和不同级别的磁盘持久化(Persistence),并通过Redis 哨兵(Sentinel)和自动分区(Cluster)提供高可用性。</li>
 </ul>
-<h4 id="redis-cli操作"><a class="markdownIt-Anchor" href="#redis-cli操作"></a> redis-cli操作</h4>
-<p><a href="https://mp.weixin.qq.com/s?__biz=MzI3ODcxMzQzMw==&amp;mid=2247487010&amp;idx=2&amp;sn=5ef9a8e55b19f2b2d3e0237356c52347&amp;chksm=eb538b14dc2402023cb03c6cd63fd320d21e0854f8f78fccb0e970b4a04a379ccda25f1da334&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">设置密码</a></p>
+<h4 id="redis-cli操作"><a href="#redis-cli操作" class="headerlink" title="redis-cli操作"></a>redis-cli操作</h4><p><a href="https://mp.weixin.qq.com/s?__biz=MzI3ODcxMzQzMw==&amp;mid=2247487010&amp;idx=2&amp;sn=5ef9a8e55b19f2b2d3e0237356c52347&amp;chksm=eb538b14dc2402023cb03c6cd63fd320d21e0854f8f78fccb0e970b4a04a379ccda25f1da334&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">设置密码</a></p>
 <ul>
-<li>
-<p><code>redis-cli</code> 刚进入的时候是默认db 0， 一共是16个db</p>
+<li><p><code>redis-cli</code> 刚进入的时候是默认db 0， 一共是16个db</p>
 </li>
-<li>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; select 6</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379[6]&gt; keys *</span><br></pre></td></tr></table></figure>
+<li><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; select 6</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379[6]&gt; keys *</span><br></pre></td></tr></table></figure>
 </li>
-<li>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379[6]&gt; TYPE rq:workers</span><br><span class="line">set</span><br><span class="line">127.0.0.1:6379[6]&gt; smembers rq:workers</span><br><span class="line">1) &quot;rq:worker:156ffde747464e0f877b940a9d515a7d&quot;</span><br><span class="line">127.0.0.1:6379[6]&gt; TYPE rq:worker:156ffde747464e0f877b940a9d515a7d</span><br><span class="line">hash</span><br><span class="line">127.0.0.1:6379[6]&gt; HGETALL rq:worker:156ffde747464e0f877b940a9d515a7d</span><br><span class="line"> 1) &quot;hostname&quot;</span><br><span class="line"> 2) &quot;xyu3&quot;</span><br><span class="line"> 3) &quot;pid&quot;</span><br><span class="line"> 4) &quot;32228&quot;</span><br><span class="line"> 5) &quot;birth&quot;</span><br><span class="line"> 6) &quot;2020-10-19T03:02:02.953304Z&quot;</span><br><span class="line"> 7) &quot;total_working_time&quot;</span><br><span class="line"> 8) &quot;1.792315&quot;</span><br><span class="line"> 9) &quot;queues&quot;</span><br><span class="line">10) &quot;cpu_high,cpu_default,cpu_low&quot;</span><br><span class="line">11) &quot;successful_job_count&quot;</span><br><span class="line">12) &quot;16&quot;</span><br><span class="line">13) &quot;last_heartbeat&quot;</span><br><span class="line">14) &quot;2020-10-19T03:33:46.949179Z&quot;</span><br><span class="line">15) &quot;state&quot;</span><br><span class="line">16) &quot;idle&quot;</span><br><span class="line">127.0.0.1:6379[6]&gt;</span><br></pre></td></tr></table></figure>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379[6]&gt; TYPE rq:workers</span><br><span class="line">set</span><br><span class="line">127.0.0.1:6379[6]&gt; smembers rq:workers</span><br><span class="line">1) &quot;rq:worker:156ffde747464e0f877b940a9d515a7d&quot;</span><br><span class="line">127.0.0.1:6379[6]&gt; TYPE rq:worker:156ffde747464e0f877b940a9d515a7d</span><br><span class="line">hash</span><br><span class="line">127.0.0.1:6379[6]&gt; HGETALL rq:worker:156ffde747464e0f877b940a9d515a7d</span><br><span class="line"> 1) &quot;hostname&quot;</span><br><span class="line"> 2) &quot;xyu3&quot;</span><br><span class="line"> 3) &quot;pid&quot;</span><br><span class="line"> 4) &quot;32228&quot;</span><br><span class="line"> 5) &quot;birth&quot;</span><br><span class="line"> 6) &quot;2020-10-19T03:02:02.953304Z&quot;</span><br><span class="line"> 7) &quot;total_working_time&quot;</span><br><span class="line"> 8) &quot;1.792315&quot;</span><br><span class="line"> 9) &quot;queues&quot;</span><br><span class="line">10) &quot;cpu_high,cpu_default,cpu_low&quot;</span><br><span class="line">11) &quot;successful_job_count&quot;</span><br><span class="line">12) &quot;16&quot;</span><br><span class="line">13) &quot;last_heartbeat&quot;</span><br><span class="line">14) &quot;2020-10-19T03:33:46.949179Z&quot;</span><br><span class="line">15) &quot;state&quot;</span><br><span class="line">16) &quot;idle&quot;</span><br><span class="line">127.0.0.1:6379[6]&gt;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <p><a href="https://my.oschina.net/letiantian/blog/526024" target="_blank" rel="noopener">如何使用redis构建异步任务处理程序</a></p>
@@ -301,8 +291,8 @@
     </a>
   
   
-    <a href="/2020/11/05/django/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">django 杂七杂八</div>
+    <a href="/2020/11/06/mysql锁机制/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">mysql锁机制</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -329,7 +319,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#redis-配置"><span class="toc-number">1.</span> <span class="toc-text"> redis 配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#python-操作-redis"><span class="toc-number">1.1.</span> <span class="toc-text"> python 操作 redis</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#redis介绍"><span class="toc-number">1.2.</span> <span class="toc-text"> Redis介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#redis-cli操作"><span class="toc-number">1.3.</span> <span class="toc-text"> redis-cli操作</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#redis-配置"><span class="toc-number">1.</span> <span class="toc-text">redis 配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#python-操作-redis"><span class="toc-number">1.1.</span> <span class="toc-text">python 操作 redis</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Redis介绍"><span class="toc-number">1.2.</span> <span class="toc-text">Redis介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#redis-cli操作"><span class="toc-number">1.3.</span> <span class="toc-text">redis-cli操作</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -478,11 +468,7 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -494,11 +480,31 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">kafka,mq</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">develop</a>
               </li>
             
             <div class="clearfix"></div>

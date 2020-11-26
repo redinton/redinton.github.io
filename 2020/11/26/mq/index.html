@@ -8,19 +8,19 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>mq | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="消息队列 对实时一致性要求没那么高的请求，通过MQ异步的方式处理  问题   异步带来的不一致问题  通过job去重试保证接口调用成功    消息可靠性的保证 消息的丢失  生产者丢失  程序发送失败抛异常没有重试处理，或者发送过程成功，但过程中网络问题MQ没收到 异步发送消息的方式  异步有回调 异步无回调  生产者发送完消息后不管结果就可能会造成消息丢失     异步发送 + 回调通知 + 本">
+  <meta name="description" content="消息队列 对实时一致性要求没那么高的请求，通过MQ异步的方式处理 问题 异步带来的不一致问题  通过job去重试保证接口调用成功   消息可靠性的保证 消息的丢失  生产者丢失 程序发送失败抛异常没有重试处理，或者发送过程成功，但过程中网络问题MQ没收到 异步发送消息的方式 异步有回调 异步无回调 生产者发送完消息后不管结果就可能会造成消息丢失     异步发送 + 回调通知 + 本地消息表">
 <meta name="keywords" content="mq">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mq">
 <meta property="og:url" content="http://jasonyu.top/2020/11/26/mq/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="消息队列 对实时一致性要求没那么高的请求，通过MQ异步的方式处理  问题   异步带来的不一致问题  通过job去重试保证接口调用成功    消息可靠性的保证 消息的丢失  生产者丢失  程序发送失败抛异常没有重试处理，或者发送过程成功，但过程中网络问题MQ没收到 异步发送消息的方式  异步有回调 异步无回调  生产者发送完消息后不管结果就可能会造成消息丢失     异步发送 + 回调通知 + 本">
+<meta property="og:description" content="消息队列 对实时一致性要求没那么高的请求，通过MQ异步的方式处理 问题 异步带来的不一致问题  通过job去重试保证接口调用成功   消息可靠性的保证 消息的丢失  生产者丢失 程序发送失败抛异常没有重试处理，或者发送过程成功，但过程中网络问题MQ没收到 异步发送消息的方式 异步有回调 异步无回调 生产者发送完消息后不管结果就可能会造成消息丢失     异步发送 + 回调通知 + 本地消息表">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://jasonyu.top/2020/11/26/mq/image-20201019102337531.png">
-<meta property="og:updated_time" content="2020-11-26T08:13:32.609Z">
+<meta property="og:updated_time" content="2020-11-26T08:18:18.084Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mq">
-<meta name="twitter:description" content="消息队列 对实时一致性要求没那么高的请求，通过MQ异步的方式处理  问题   异步带来的不一致问题  通过job去重试保证接口调用成功    消息可靠性的保证 消息的丢失  生产者丢失  程序发送失败抛异常没有重试处理，或者发送过程成功，但过程中网络问题MQ没收到 异步发送消息的方式  异步有回调 异步无回调  生产者发送完消息后不管结果就可能会造成消息丢失     异步发送 + 回调通知 + 本">
+<meta name="twitter:description" content="消息队列 对实时一致性要求没那么高的请求，通过MQ异步的方式处理 问题 异步带来的不一致问题  通过job去重试保证接口调用成功   消息可靠性的保证 消息的丢失  生产者丢失 程序发送失败抛异常没有重试处理，或者发送过程成功，但过程中网络问题MQ没收到 异步发送消息的方式 异步有回调 异步无回调 生产者发送完消息后不管结果就可能会造成消息丢失     异步发送 + 回调通知 + 本地消息表">
 <meta name="twitter:image" content="http://jasonyu.top/2020/11/26/mq/image-20201019102337531.png">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
@@ -173,26 +173,20 @@
       
         <p>消息队列</p>
 <p>对实时一致性要求没那么高的请求，通过MQ异步的方式处理</p>
-<h4 id="问题"><a class="markdownIt-Anchor" href="#问题"></a> 问题</h4>
-<ul>
-<li>
-<p>异步带来的不一致问题</p>
+<h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><ul>
+<li><p>异步带来的不一致问题</p>
 <ul>
 <li>通过job去重试保证接口调用成功</li>
 </ul>
 </li>
-<li>
-<p>消息可靠性的保证</p>
+<li><p>消息可靠性的保证</p>
 <p>消息的丢失</p>
 <ul>
-<li>生产者丢失
-<ul>
+<li>生产者丢失<ul>
 <li>程序发送失败抛异常没有重试处理，或者发送过程成功，但过程中网络问题MQ没收到</li>
-<li>异步发送消息的方式
-<ul>
+<li>异步发送消息的方式<ul>
 <li>异步有回调</li>
-<li>异步无回调
-<ul>
+<li>异步无回调<ul>
 <li>生产者发送完消息后不管结果就可能会造成消息丢失</li>
 </ul>
 </li>
@@ -201,30 +195,24 @@
 <li>异步发送 + 回调通知 + 本地消息表</li>
 </ul>
 </li>
-<li>MQ丢失
-<ul>
+<li>MQ丢失<ul>
 <li>生产者保证消息发送到MQ，但MQ收到消息后还在内存中，这时宕机了来不及同步到从节点没导致消息丢失</li>
 </ul>
 </li>
-<li>消费者丢失
-<ul>
+<li>消费者丢失<ul>
 <li>消费者刚收到消息，此时server宕机，MQ人为消费者已经消费，不重复发送消息</li>
 <li>消费方不返回ACK确认，重发的机制根据MQ类型的不同发送时间间隔，次数不尽相同，重试超过次数之后进入死信队列，需要手动处理</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>
-<p>消费者消费失败，一直消费失败导致消息积压</p>
+<li><p>消费者消费失败，一直消费失败导致消息积压</p>
 <ul>
-<li>
-<p>如果容易修复，先把问题修复，让consumer恢复正常消费</p>
+<li><p>如果容易修复，先把问题修复，让consumer恢复正常消费</p>
 </li>
-<li>
-<p>如果时间来不及处理很麻烦，做转发处理，写一个临时的consumer消费方案，先把消息消费，然后再转发到一个新的topic和MQ资源，这个新的topic的机器资源单独申请，要能承载住当前积压的消息</p>
+<li><p>如果时间来不及处理很麻烦，做转发处理，写一个临时的consumer消费方案，先把消息消费，然后再转发到一个新的topic和MQ资源，这个新的topic的机器资源单独申请，要能承载住当前积压的消息</p>
 </li>
-<li>
-<p>处理完积压数据后，修复consumer，去消费新的MQ和现有的MQ数据，新MQ消费完成后恢复原状</p>
+<li><p>处理完积压数据后，修复consumer，去消费新的MQ和现有的MQ数据，新MQ消费完成后恢复原状</p>
 </li>
 </ul>
 </li>
@@ -351,7 +339,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#问题"><span class="toc-number">1.</span> <span class="toc-text"> 问题</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#问题"><span class="toc-number">1.</span> <span class="toc-text">问题</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -500,11 +488,7 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -516,11 +500,31 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">kafka,mq</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">develop</a>
               </li>
             
             <div class="clearfix"></div>

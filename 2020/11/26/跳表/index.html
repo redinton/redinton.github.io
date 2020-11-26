@@ -18,7 +18,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://jasonyu.top/2020/11/26/跳表/image-20200826150602697.png">
 <meta property="og:image" content="http://jasonyu.top/2020/11/26/跳表/image-20200826155331278.png">
-<meta property="og:updated_time" content="2020-11-26T08:13:32.556Z">
+<meta property="og:updated_time" content="2020-11-26T08:18:18.050Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="跳表">
 <meta name="twitter:description" content="有序链表的查找，可以利用跳表的减少时间复杂度。">
@@ -176,15 +176,13 @@
 <a id="more"></a>
 <img src="/2020/11/26/跳表/image-20200826150602697.png" title="image-20200826150602697">
 <p>假设原始链表有n个结点，那么索引的层级就是log(n)-1，在每一层的访问次数是常量，因此查找结点的平均时间复杂度是<strong>O（logn）</strong>。这比起常规的查找方式，也就是线性依次访问链表节点的方式，效率要高得多。</p>
-<p>基于链表的优化增加了额外的空间开销。假设原始链表有n个结点，那么各层索引的结点总数是n/2+n/4+n/8+n/16+…2，约等于n。</p>
-<h4 id="新节点的插入"><a class="markdownIt-Anchor" href="#新节点的插入"></a> 新节点的插入</h4>
-<ul>
+<p>基于链表的优化增加了额外的空间开销。假设原始链表有n个结点，那么各层索引的结点总数是n/2+n/4+n/8+n/16+……2，约等于n。</p>
+<h4 id="新节点的插入"><a href="#新节点的插入" class="headerlink" title="新节点的插入"></a>新节点的插入</h4><ul>
 <li>先按照索引一步步往下，找到待插入节点的前置节点(仅小于待插入节点)</li>
 <li>按照一般链表插入方式，把待插入节点，插入前置节点之后</li>
-<li>调整索引 – 让新插入的节点 随机晋升，也就是成为索引节点，成功后仍有机会向上一层晋升，失败后，插入结束</li>
+<li>调整索引 — 让新插入的节点 随机晋升，也就是成为索引节点，成功后仍有机会向上一层晋升，失败后，插入结束</li>
 </ul>
-<h4 id="旧节点删除"><a class="markdownIt-Anchor" href="#旧节点删除"></a> 旧节点删除</h4>
-<ul>
+<h4 id="旧节点删除"><a href="#旧节点删除" class="headerlink" title="旧节点删除"></a>旧节点删除</h4><ul>
 <li>先按照索引，找到要删除的节点</li>
 <li>然后把原始链表，索引层中的这个节点都删除</li>
 </ul>
@@ -311,7 +309,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#新节点的插入"><span class="toc-number">1.</span> <span class="toc-text"> 新节点的插入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#旧节点删除"><span class="toc-number">2.</span> <span class="toc-text"> 旧节点删除</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#新节点的插入"><span class="toc-number">1.</span> <span class="toc-text">新节点的插入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#旧节点删除"><span class="toc-number">2.</span> <span class="toc-text">旧节点删除</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -460,11 +458,7 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -476,11 +470,31 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">kafka,mq</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">develop</a>
               </li>
             
             <div class="clearfix"></div>

@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>mysql索引 | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="所有mysql列类型都可以被索引。根据engine可以定义每个表的最大索引数和最大索引长度。 MyiSAM和Innodb表默认都是BTree索引，Mysql支持前缀索引，即对索引字段的前N个字符创建索引">
+  <meta name="description" content="所有mysql列类型都可以被索引。根据engine可以定义每个表的最大索引数和最大索引长度。MyiSAM和Innodb表默认都是BTree索引，Mysql支持前缀索引，即对索引字段的前N个字符创建索引">
 <meta name="keywords" content="mysql">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql索引">
 <meta property="og:url" content="http://jasonyu.top/2020/11/05/mysql索引/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="所有mysql列类型都可以被索引。根据engine可以定义每个表的最大索引数和最大索引长度。 MyiSAM和Innodb表默认都是BTree索引，Mysql支持前缀索引，即对索引字段的前N个字符创建索引">
+<meta property="og:description" content="所有mysql列类型都可以被索引。根据engine可以定义每个表的最大索引数和最大索引长度。MyiSAM和Innodb表默认都是BTree索引，Mysql支持前缀索引，即对索引字段的前N个字符创建索引">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-18T05:54:52.649Z">
+<meta property="og:updated_time" content="2020-11-26T08:18:18.126Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql索引">
-<meta name="twitter:description" content="所有mysql列类型都可以被索引。根据engine可以定义每个表的最大索引数和最大索引长度。 MyiSAM和Innodb表默认都是BTree索引，Mysql支持前缀索引，即对索引字段的前N个字符创建索引">
+<meta name="twitter:description" content="所有mysql列类型都可以被索引。根据engine可以定义每个表的最大索引数和最大索引长度。MyiSAM和Innodb表默认都是BTree索引，Mysql支持前缀索引，即对索引字段的前N个字符创建索引">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -169,50 +169,39 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>所有mysql列类型都可以被索引。根据engine可以定义每个表的最大索引数和最大索引长度。<br>
-MyiSAM和Innodb表默认都是BTree索引，Mysql支持前缀索引，即对索引字段的前N个字符创建索引</p>
-<a id="more"></a>
-<h3 id="索引的设计"><a class="markdownIt-Anchor" href="#索引的设计"></a> 索引的设计</h3>
-<ul>
+        <p>所有mysql列类型都可以被索引。根据engine可以定义每个表的最大索引数和最大索引长度。<br>MyiSAM和Innodb表默认都是BTree索引，Mysql支持前缀索引，即对索引字段的前N个字符创建索引<br><a id="more"></a></p>
+<h3 id="索引的设计"><a href="#索引的设计" class="headerlink" title="索引的设计"></a>索引的设计</h3><ul>
 <li>经常出现在where中作为筛选条件或者join中作为表连接条件</li>
-<li>重复值较多的列，索引效果差</li>
+<li>重复值较多的列，索引效果差  </li>
 <li>字符串类型的索引,最好指定前缀长度,创建短索引, 减少磁盘I/O而且在做比较时性能也更好,MySQL底层的高速索引缓存能够缓存更多的键值.</li>
-<li>查询条件2个及以上，可以多个单列索引或者一个联合索引,创建包含N列的联合索引(多列索引),利用最左前缀匹配<br>
-当创建 (a,b,c)联合索引时，相当于创建了(a)单列索引，(a,b)联合索引以及(a,b,c)联合索引** 想要索引生效的话,只能使用 a和a,b和a,b,c三种组合；当然，我们上面测试过，a,c组合也可以，但实际上只用到了a的索引，c并没有用到！</li>
+<li>查询条件2个及以上，可以多个单列索引或者一个联合索引,创建包含N列的联合索引(多列索引),利用最左前缀匹配<br>当创建 (a,b,c)联合索引时，相当于创建了(a)单列索引，(a,b)联合索引以及(a,b,c)联合索引** 想要索引生效的话,只能使用 a和a,b和a,b,c三种组合；当然，我们上面测试过，a,c组合也可以，但实际上只用到了a的索引，c并没有用到！  </li>
 <li>不要过度使用索引。索引并不是越多越好，索引需要占用额外的存储空间而且会影响写操作的性能（插入、删除、更新数据时索引也需要更新</li>
 <li>要注意可能使索引失效的场景，例如：模糊查询使用了前置通配符 like %…</li>
 </ul>
-<p>BTree索引<br>
-当使用比较操作符(&gt;,&lt;,&gt;=,&lt;=,!=,&lt;&gt;),between,like ‘pattern’(pattern不以通配符开始), 可以使用上述相关列索引</p>
-<h4 id="索引的分类"><a class="markdownIt-Anchor" href="#索引的分类"></a> 索引的分类</h4>
-<ul>
-<li>普通索引
-<ul>
+<p>BTree索引<br>当使用比较操作符(&gt;,&lt;,&gt;=,&lt;=,!=,&lt;&gt;),between,like ‘pattern’(pattern不以通配符开始), 可以使用上述相关列索引</p>
+<h4 id="索引的分类"><a href="#索引的分类" class="headerlink" title="索引的分类"></a>索引的分类</h4><ul>
+<li>普通索引<ul>
 <li>直接创建: create index index_name on table(column(length))</li>
 <li>修改表结构添加: alter table add index index_name on (column(length))</li>
 <li>创建表的过程中直接创建</li>
 </ul>
 </li>
-<li>唯一索引
-<ul>
+<li>唯一索引<ul>
 <li>索引列的值必须唯一，但允许空值，如果是组合索引，则列值的组合必须是唯一的</li>
 <li>直接创建 create unique index index_name on table(column(length))</li>
 <li>修改表结构 alter table add unique index index_name on (column(length))</li>
 </ul>
 </li>
-<li>组合索引
-<ul>
+<li>组合索引<ul>
 <li>多个字段上创建的索引</li>
 </ul>
 </li>
 </ul>
-<h4 id="索引的缺点"><a class="markdownIt-Anchor" href="#索引的缺点"></a> 索引的缺点</h4>
-<ul>
+<h4 id="索引的缺点"><a href="#索引的缺点" class="headerlink" title="索引的缺点"></a>索引的缺点</h4><ul>
 <li>虽然加快查询的速度，但同时也降低更新的速度， insert，update，delete</li>
 <li>建索引会占用磁盘空间的索引文件。 一般不严重，但如果在一个表上创建了多种组合索引，索引文件增长会非常快</li>
 </ul>
-<h4 id="mysql建索引规则"><a class="markdownIt-Anchor" href="#mysql建索引规则"></a> mysql建索引规则</h4>
-<ul>
+<h4 id="mysql建索引规则"><a href="#mysql建索引规则" class="headerlink" title="mysql建索引规则"></a>mysql建索引规则</h4><ul>
 <li>主键，外键必须</li>
 <li>数据量超过300必须</li>
 <li>经常与其他表join的表，join字段应该</li>
@@ -221,8 +210,7 @@ MyiSAM和Innodb表默认都是BTree索引，Mysql支持前缀索引，即对索�
 <li>复合索引建立要慎重</li>
 <li>频繁数据操作的表，不用建太多的索引</li>
 </ul>
-<h3 id="聚簇索引-非聚簇索引"><a class="markdownIt-Anchor" href="#聚簇索引-非聚簇索引"></a> 聚簇索引 &amp; 非聚簇索引</h3>
-<p>区别在于叶节点是否存放一整行记录。</p>
+<h3 id="聚簇索引-amp-非聚簇索引"><a href="#聚簇索引-amp-非聚簇索引" class="headerlink" title="聚簇索引 &amp; 非聚簇索引"></a>聚簇索引 &amp; 非聚簇索引</h3><p>区别在于叶节点是否存放一整行记录。</p>
 <ul>
 <li>InnoDB 主键用的是聚簇索引</li>
 <li>MyISAM 不管是主键索引还是二级索引都是非聚簇索引</li>
@@ -231,42 +219,36 @@ MyiSAM和Innodb表默认都是BTree索引，Mysql支持前缀索引，即对索�
 <ul>
 <li>表数据和索引分成两部分存储,叶子结点索引节点，有指向对应数据块的指针</li>
 </ul>
-<p>聚簇索引</p>
+<p>聚簇索引 </p>
 <ul>
 <li>表数据和主键一起存储，主键索引的叶节点存储行数据，包括主键值</li>
 <li>二级索引的叶结点存储行的主键值</li>
-<li>优点
-<ul>
+<li>优点<ul>
 <li>取出一定范围内的数据，聚簇索引更好</li>
 <li>理论上聚簇索引查找目标数据比非聚簇索引更快，因为非聚簇索引定位到主键还要多一次I/O取数据</li>
 </ul>
 </li>
-<li>缺点
-<ul>
+<li>缺点<ul>
 <li>插入速度严重依赖于插入顺序，按照主键的顺序插入是最快的方式，否则将会出现页分裂，严重影响性能。因此，对于InnoDB表，我们一般都会定义一<strong>个自增的ID列为主键</strong></li>
 <li>更新主键的代价很高，因为将会导致被更新的行移动</li>
 <li>二级索引访问需要两次索引查找，第一次找到主键值，第二次根据主键值找到行数据。<strong>二级索引的叶节点存储的是主键值</strong>，而不是行指针（<strong>非聚簇索引存储的是指针或者说是地址</strong>），这是为了减少当出现行移动或数据页分裂时二级索引的维护工作，但会让二级索引占用更多的空间</li>
 </ul>
 </li>
 </ul>
-<h4 id="b树的搜索次数-为什么不用二叉树为什么不用哈希表不用b树"><a class="markdownIt-Anchor" href="#b树的搜索次数-为什么不用二叉树为什么不用哈希表不用b树"></a> B+树的搜索次数、为什么不用二叉树，为什么不用哈希表，不用B树</h4>
-<ul>
-<li>不用哈希表
-<ul>
+<h4 id="B-树的搜索次数、为什么不用二叉树，为什么不用哈希表，不用B树"><a href="#B-树的搜索次数、为什么不用二叉树，为什么不用哈希表，不用B树" class="headerlink" title="B+树的搜索次数、为什么不用二叉树，为什么不用哈希表，不用B树"></a>B+树的搜索次数、为什么不用二叉树，为什么不用哈希表，不用B树</h4><ul>
+<li>不用哈希表<ul>
 <li>哈希表虽然更快，但是Hash 索引仅仅能满足”=”,”IN”和”&lt;=&gt;”查询， <strong>不支持范围查询</strong></li>
 <li>Hash索引不能用<strong>来优化排序</strong>操作</li>
 <li>在有大量重复键值情况下，因为存在哈希碰撞，所以哈希索引效率也低</li>
 </ul>
 </li>
-<li>不用二叉树
-<ul>
+<li>不用二叉树<ul>
 <li>AVL 树（平衡二叉树）和红黑树（二叉查找树）基本都是存储在内存中才会使用的数据结构</li>
 <li>大规模数据存储的时候，红黑树往往出现由于<strong>树的深度过大而造成磁盘IO读写过于频繁</strong>，进而导致效率低下的情况</li>
 <li>磁盘IO代价主要花费在查找所需的柱面上，树的深度过大会造成磁盘IO频繁读写。根据磁盘查找存取的次数往往由树的高度所决定</li>
 </ul>
 </li>
-<li>不用B树
-<ul>
+<li>不用B树<ul>
 <li>B 树能够在非叶节点中存储数据，但是这也导致在<strong>查询连续数据时</strong>可能会带来更多的随机 I/O</li>
 <li>B+ 树的所<strong>有叶节点可以通过指针相互连接</strong>，能够减少顺序遍历时产生的额外随机 I/O</li>
 </ul>
@@ -393,7 +375,7 @@ MyiSAM和Innodb表默认都是BTree索引，Mysql支持前缀索引，即对索�
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#索引的设计"><span class="toc-number">1.</span> <span class="toc-text"> 索引的设计</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#索引的分类"><span class="toc-number">1.1.</span> <span class="toc-text"> 索引的分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#索引的缺点"><span class="toc-number">1.2.</span> <span class="toc-text"> 索引的缺点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mysql建索引规则"><span class="toc-number">1.3.</span> <span class="toc-text"> mysql建索引规则</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#聚簇索引-非聚簇索引"><span class="toc-number">2.</span> <span class="toc-text"> 聚簇索引 &amp; 非聚簇索引</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#b树的搜索次数-为什么不用二叉树为什么不用哈希表不用b树"><span class="toc-number">2.1.</span> <span class="toc-text"> B+树的搜索次数、为什么不用二叉树，为什么不用哈希表，不用B树</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#索引的设计"><span class="toc-number">1.</span> <span class="toc-text">索引的设计</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#索引的分类"><span class="toc-number">1.1.</span> <span class="toc-text">索引的分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#索引的缺点"><span class="toc-number">1.2.</span> <span class="toc-text">索引的缺点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mysql建索引规则"><span class="toc-number">1.3.</span> <span class="toc-text">mysql建索引规则</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#聚簇索引-amp-非聚簇索引"><span class="toc-number">2.</span> <span class="toc-text">聚簇索引 &amp; 非聚簇索引</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#B-树的搜索次数、为什么不用二叉树，为什么不用哈希表，不用B树"><span class="toc-number">2.1.</span> <span class="toc-text">B+树的搜索次数、为什么不用二叉树，为什么不用哈希表，不用B树</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -546,15 +528,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">HMM</a>
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">nlp</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">NER</a>
+                <a href="javascript:void(0)" class="js-tag color3">mq</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -562,23 +540,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
+                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">网络</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">text classification</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
+                <a href="javascript:void(0)" class="js-tag color4">kafka,mq</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -586,7 +552,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -594,7 +560,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OS</a>
+                <a href="javascript:void(0)" class="js-tag color3">develop</a>
               </li>
             
             <div class="clearfix"></div>

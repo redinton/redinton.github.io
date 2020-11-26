@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>redis相关问题 | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="redis是单线程为什么这么快 redis单线程原因 redis与memcached,mongodb区别 memcache与redis的区别 如果有大量的key需要设置同一时间过期一般需要注意什么">
+  <meta name="description" content="redis是单线程为什么这么快redis单线程原因redis与memcached,mongodb区别memcache与redis的区别如果有大量的key需要设置同一时间过期一般需要注意什么">
 <meta name="keywords" content="redis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="redis相关问题">
 <meta property="og:url" content="http://jasonyu.top/2020/11/20/redis相关问题/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="redis是单线程为什么这么快 redis单线程原因 redis与memcached,mongodb区别 memcache与redis的区别 如果有大量的key需要设置同一时间过期一般需要注意什么">
+<meta property="og:description" content="redis是单线程为什么这么快redis单线程原因redis与memcached,mongodb区别memcache与redis的区别如果有大量的key需要设置同一时间过期一般需要注意什么">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-26T08:13:32.624Z">
+<meta property="og:updated_time" content="2020-11-26T08:18:18.097Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="redis相关问题">
-<meta name="twitter:description" content="redis是单线程为什么这么快 redis单线程原因 redis与memcached,mongodb区别 memcache与redis的区别 如果有大量的key需要设置同一时间过期一般需要注意什么">
+<meta name="twitter:description" content="redis是单线程为什么这么快redis单线程原因redis与memcached,mongodb区别memcache与redis的区别如果有大量的key需要设置同一时间过期一般需要注意什么">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -169,101 +169,78 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><a href="#redis%E6%98%AF%E5%8D%95%E7%BA%BF%E7%A8%8B%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%B9%88%E5%BF%AB">redis是单线程为什么这么快</a><br>
-<a href="#redis%E5%8D%95%E7%BA%BF%E7%A8%8B%E5%8E%9F%E5%9B%A0">redis单线程原因</a><br>
-<a href="#redis%E4%B8%8Ememcached,mongodb%E5%8C%BA%E5%88%AB">redis与memcached,mongodb区别</a><br>
-<a href="#memcache%E4%B8%8Eredis%E7%9A%84%E5%8C%BA%E5%88%AB">memcache与redis的区别</a><br>
-<a href="#%E5%A6%82%E6%9E%9C%E6%9C%89%E5%A4%A7%E9%87%8F%E7%9A%84key%E9%9C%80%E8%A6%81%E8%AE%BE%E7%BD%AE%E5%90%8C%E4%B8%80%E6%97%B6%E9%97%B4%E8%BF%87%E6%9C%9F%E4%B8%80%E8%88%AC%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E4%BB%80%E4%B9%88">如果有大量的key需要设置同一时间过期一般需要注意什么</a></p>
+        <p><a href="#redis是单线程为什么这么快">redis是单线程为什么这么快</a><br><a href="#redis单线程原因">redis单线程原因</a><br><a href="#redis与memcached,mongodb区别">redis与memcached,mongodb区别</a><br><a href="#memcache与redis的区别">memcache与redis的区别</a><br><a href="#如果有大量的key需要设置同一时间过期一般需要注意什么">如果有大量的key需要设置同一时间过期一般需要注意什么</a>  </p>
 <a id="more"></a>
-<h4 id="redis是单线程为什么这么快"><a class="markdownIt-Anchor" href="#redis是单线程为什么这么快"></a> redis是单线程,为什么这么快</h4>
-<ul>
+<h4 id="redis是单线程-为什么这么快"><a href="#redis是单线程-为什么这么快" class="headerlink" title="redis是单线程,为什么这么快"></a>redis是单线程,为什么这么快</h4><ul>
 <li>完全<strong>基于内存</strong>，内存操作比较快</li>
-<li>单线程，避免了不必要的上下文切换和竞争条件，不存在多进程或多线程导致的切换消耗CPU，不考虑各种锁的时间
-<ul>
-<li>CPU上下文指的是寄存器和程序计数器
-<ul>
+<li>单线程，避免了不必要的上下文切换和竞争条件，不存在多进程或多线程导致的切换消耗CPU，不考虑各种锁的时间<ul>
+<li>CPU上下文指的是寄存器和程序计数器<ul>
 <li>寄存器一般存临时变量,程序计数器存当前运行的指定的地址</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>多路I/O复用，非阻塞IO
-<ul>
+<li>多路I/O复用，非阻塞IO<ul>
 <li>多路指的是<strong>多个网络连</strong>接</li>
 <li>复用指的是<strong>复用同一个线</strong>程</li>
 <li>利用select,poll,epoll同时监察多个流的I/O事件的能力</li>
 </ul>
 </li>
 </ul>
-<h4 id="redis-单线程原因"><a class="markdownIt-Anchor" href="#redis-单线程原因"></a> redis 单线程原因</h4>
-<ul>
+<h4 id="redis-单线程原因"><a href="#redis-单线程原因" class="headerlink" title="redis 单线程原因"></a>redis 单线程原因</h4><ul>
 <li>reids通过I/O多路复用同时<strong>监听多个文件描述符(客户端连接)的可读和可写状态</strong>，一旦收到网络请求会在内存中快速处理</li>
 <li>redis是基于内存的操作，<strong>CPU不是redis瓶颈</strong>，r<strong>edis瓶颈最有可能是内存大小或者网络带宽</strong></li>
 <li>单线程指的是在处理网络请求的时候只有一个线程处理，起redis server时肯定不止一个线程</li>
-<li>新版redis引入多线程
-<ul>
+<li>新版redis引入多线程<ul>
 <li>DEL 删除一个键对应的值，若删除的key-value很大，redis会在释放内存空间上消耗较多时间，这些操作会阻塞待处理的任务，因此可以改成后台线程异步执行</li>
 </ul>
 </li>
 </ul>
-<h4 id="redis与memcachedmongodb区别"><a class="markdownIt-Anchor" href="#redis与memcachedmongodb区别"></a> redis与memcached，mongodb区别</h4>
-<ul>
+<h4 id="redis与memcached，mongodb区别"><a href="#redis与memcached，mongodb区别" class="headerlink" title="redis与memcached，mongodb区别"></a>redis与memcached，mongodb区别</h4><ul>
 <li>memcached中key和value都是<strong>字符串</strong></li>
 <li>mongodb由Json组成的文档</li>
 <li>redis的value有多种类型 string,list,hash,set,zset</li>
 </ul>
-<h4 id="memcache与redis的区别"><a class="markdownIt-Anchor" href="#memcache与redis的区别"></a> Memcache与Redis的区别</h4>
-<ul>
-<li>存储方式
-<ul>
+<h4 id="Memcache与Redis的区别"><a href="#Memcache与Redis的区别" class="headerlink" title="Memcache与Redis的区别"></a>Memcache与Redis的区别</h4><ul>
+<li>存储方式<ul>
 <li>Memecache把数据<strong>全部存在内存</strong>之中，断电后会挂掉，数据不能超过内存大小。</li>
 <li>Redis有部份存在硬盘上，这样能保证数据的持久性。</li>
 </ul>
 </li>
-<li>数据支持类型
-<ul>
+<li>数据支持类型<ul>
 <li>Memcache对数据类型支持相对简单。</li>
 <li>Redis有丰富的数据类型。</li>
 </ul>
 </li>
-<li>使用底层模型不同
-<ul>
+<li>使用底层模型不同<ul>
 <li>它们之间底层实现方式 以及与客户端之间通信的应用协议不一样。</li>
 <li>Redis直接自己构建了VM 机制 ，因为一般的系统调用系统函数的话，会浪费一定的时间去移动和请求。</li>
 </ul>
 </li>
 </ul>
-<h4 id="如果有大量的key需要设置同一时间过期一般需要注意什么"><a class="markdownIt-Anchor" href="#如果有大量的key需要设置同一时间过期一般需要注意什么"></a> 如果有大量的key需要设置同一时间过期，一般需要注意什么</h4>
-<p>大量的key过期时间设置的过于集中，到过期的那个时间点，Redis可能会出现短暂的卡顿现象(因为redis是单线程的)。严重的话可能会导致服务器雪崩，所以我们一般<strong>在过期时间上加一个随机值，让过期时间尽量分</strong>散。</p>
-<h4 id="redis缓存刷新策略"><a class="markdownIt-Anchor" href="#redis缓存刷新策略"></a> redis缓存刷新策略</h4>
-<ul>
+<h4 id="如果有大量的key需要设置同一时间过期，一般需要注意什么"><a href="#如果有大量的key需要设置同一时间过期，一般需要注意什么" class="headerlink" title="如果有大量的key需要设置同一时间过期，一般需要注意什么"></a>如果有大量的key需要设置同一时间过期，一般需要注意什么</h4><p>大量的key过期时间设置的过于集中，到过期的那个时间点，Redis可能会出现短暂的卡顿现象(因为redis是单线程的)。严重的话可能会导致服务器雪崩，所以我们一般<strong>在过期时间上加一个随机值，让过期时间尽量分</strong>散。</p>
+<h4 id="redis缓存刷新策略"><a href="#redis缓存刷新策略" class="headerlink" title="redis缓存刷新策略"></a>redis缓存刷新策略</h4><ul>
 <li>内存不够时</li>
 <li>设置的时间过期时</li>
 </ul>
-<h4 id="redis过期时间和过期删除机制"><a class="markdownIt-Anchor" href="#redis过期时间和过期删除机制"></a> redis过期时间和过期删除机制</h4>
-<ul>
-<li>KEY的过期时间设置
-<ul>
+<h4 id="redis过期时间和过期删除机制"><a href="#redis过期时间和过期删除机制" class="headerlink" title="redis过期时间和过期删除机制"></a>redis过期时间和过期删除机制</h4><ul>
+<li>KEY的过期时间设置<ul>
 <li>EXPIRE KEY TTL</li>
 </ul>
 </li>
-<li>过期键的删除策略
-<ul>
-<li>立即删除
-<ul>
+<li>过期键的删除策略<ul>
+<li>立即删除<ul>
 <li>设置键的过期时间时，创建一个回调事件，过期时间到达时，由处理器自动执行键的删除操作</li>
 <li>对CPU不友好, 删除操作会占用CPU的时间，好处是节省内存</li>
-<li>redis事件处理器对时间事件处理方式–无序链表，查找一个key复杂度O(n)</li>
+<li>redis事件处理器对时间事件处理方式—无序链表，查找一个key复杂度O(n)</li>
 </ul>
 </li>
-<li>惰性删除
-<ul>
+<li>惰性删除<ul>
 <li>每次从dict字典中按key取值时，先检查此key是否已经过期，如果过期就删除它并返回NIL，若没有过期，就返回value</li>
 <li>浪费内存</li>
 </ul>
 </li>
-<li>定时删除
-<ul>
+<li>定时删除<ul>
 <li>每隔一段时间，对expires字典进行检查，删除里面的过期key-value</li>
 </ul>
 </li>
@@ -271,28 +248,22 @@
 </ul>
 </li>
 </ul>
-<h4 id="redis用rdb的方式做持久化将内存中的数据复制到磁盘中时对redis的读写会受到影响吗"><a class="markdownIt-Anchor" href="#redis用rdb的方式做持久化将内存中的数据复制到磁盘中时对redis的读写会受到影响吗"></a> redis用rdb的方式做持久化,将内存中的数据复制到磁盘中时,对redis的读写会受到影响吗</h4>
-<p>RDB保存快照的方式有SAVE和BGSAVE</p>
+<h4 id="redis用rdb的方式做持久化-将内存中的数据复制到磁盘中时-对redis的读写会受到影响吗"><a href="#redis用rdb的方式做持久化-将内存中的数据复制到磁盘中时-对redis的读写会受到影响吗" class="headerlink" title="redis用rdb的方式做持久化,将内存中的数据复制到磁盘中时,对redis的读写会受到影响吗"></a>redis用rdb的方式做持久化,将内存中的数据复制到磁盘中时,对redis的读写会受到影响吗</h4><p>RDB保存快照的方式有SAVE和BGSAVE</p>
 <ul>
-<li>SAVE
-<ul>
+<li>SAVE<ul>
 <li>直接阻塞当前的线程，直接阻塞来自客户端的其他请求。</li>
 </ul>
 </li>
-<li>BGSAVE
-<ul>
-<li>fork 出一个子进程，子进程会执行『将内存中的数据以 RDB 格式保存到磁盘中』这一过程
-<ul>
+<li>BGSAVE<ul>
+<li>fork 出一个子进程，子进程会执行『将内存中的数据以 RDB 格式保存到磁盘中』这一过程<ul>
 <li>通过 fork 生成的父子进程会共享包括内存空间在内的资源</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<h4 id="当aof文件太大的时候怎么办aof文件的压缩怎么实现的"><a class="markdownIt-Anchor" href="#当aof文件太大的时候怎么办aof文件的压缩怎么实现的"></a> 当aof文件太大的时候，怎么办？aof文件的压缩怎么实现的？</h4>
-<ul>
-<li>AOF重写文件会开一个子进程重写
-<ul>
+<h4 id="当aof文件太大的时候，怎么办？aof文件的压缩怎么实现的？"><a href="#当aof文件太大的时候，怎么办？aof文件的压缩怎么实现的？" class="headerlink" title="当aof文件太大的时候，怎么办？aof文件的压缩怎么实现的？"></a>当aof文件太大的时候，怎么办？aof文件的压缩怎么实现的？</h4><ul>
+<li>AOF重写文件会开一个子进程重写<ul>
 <li>子进程进行AOF重写期间，主进程可以继续处理命令请求</li>
 </ul>
 </li>
@@ -381,11 +352,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/11/21/linux_1/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2020/11/21/mysql问题/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          linux_1
+          mysql问题
         
       </div>
     </a>
@@ -419,7 +390,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#redis是单线程为什么这么快"><span class="toc-number">1.</span> <span class="toc-text"> redis是单线程,为什么这么快</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#redis-单线程原因"><span class="toc-number">2.</span> <span class="toc-text"> redis 单线程原因</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#redis与memcachedmongodb区别"><span class="toc-number">3.</span> <span class="toc-text"> redis与memcached，mongodb区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#memcache与redis的区别"><span class="toc-number">4.</span> <span class="toc-text"> Memcache与Redis的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#如果有大量的key需要设置同一时间过期一般需要注意什么"><span class="toc-number">5.</span> <span class="toc-text"> 如果有大量的key需要设置同一时间过期，一般需要注意什么</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#redis缓存刷新策略"><span class="toc-number">6.</span> <span class="toc-text"> redis缓存刷新策略</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#redis过期时间和过期删除机制"><span class="toc-number">7.</span> <span class="toc-text"> redis过期时间和过期删除机制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#redis用rdb的方式做持久化将内存中的数据复制到磁盘中时对redis的读写会受到影响吗"><span class="toc-number">8.</span> <span class="toc-text"> redis用rdb的方式做持久化,将内存中的数据复制到磁盘中时,对redis的读写会受到影响吗</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#当aof文件太大的时候怎么办aof文件的压缩怎么实现的"><span class="toc-number">9.</span> <span class="toc-text"> 当aof文件太大的时候，怎么办？aof文件的压缩怎么实现的？</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#redis是单线程-为什么这么快"><span class="toc-number">1.</span> <span class="toc-text">redis是单线程,为什么这么快</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#redis-单线程原因"><span class="toc-number">2.</span> <span class="toc-text">redis 单线程原因</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#redis与memcached，mongodb区别"><span class="toc-number">3.</span> <span class="toc-text">redis与memcached，mongodb区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Memcache与Redis的区别"><span class="toc-number">4.</span> <span class="toc-text">Memcache与Redis的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#如果有大量的key需要设置同一时间过期，一般需要注意什么"><span class="toc-number">5.</span> <span class="toc-text">如果有大量的key需要设置同一时间过期，一般需要注意什么</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#redis缓存刷新策略"><span class="toc-number">6.</span> <span class="toc-text">redis缓存刷新策略</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#redis过期时间和过期删除机制"><span class="toc-number">7.</span> <span class="toc-text">redis过期时间和过期删除机制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#redis用rdb的方式做持久化-将内存中的数据复制到磁盘中时-对redis的读写会受到影响吗"><span class="toc-number">8.</span> <span class="toc-text">redis用rdb的方式做持久化,将内存中的数据复制到磁盘中时,对redis的读写会受到影响吗</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#当aof文件太大的时候，怎么办？aof文件的压缩怎么实现的？"><span class="toc-number">9.</span> <span class="toc-text">当aof文件太大的时候，怎么办？aof文件的压缩怎么实现的？</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -568,11 +539,7 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -584,11 +551,31 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">kafka,mq</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">develop</a>
               </li>
             
             <div class="clearfix"></div>
