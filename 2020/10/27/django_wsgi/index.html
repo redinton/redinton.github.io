@@ -8,19 +8,19 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>django wsgi | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Django主要部署平台是WSGI，其是web server 和 web application的python 标准 通过startproject command 会生成一个default WSGI configuration，即主目录下有一个WSGI.py文件">
+  <meta name="description" content="WSGI Django通过startproject command 会生成一个default WSGI configuration，即主目录下有一个WSGI.py文件">
 <meta name="keywords" content="django">
 <meta property="og:type" content="article">
 <meta property="og:title" content="django wsgi">
 <meta property="og:url" content="http://jasonyu.top/2020/10/27/django_wsgi/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="Django主要部署平台是WSGI，其是web server 和 web application的python 标准 通过startproject command 会生成一个default WSGI configuration，即主目录下有一个WSGI.py文件">
+<meta property="og:description" content="WSGI Django通过startproject command 会生成一个default WSGI configuration，即主目录下有一个WSGI.py文件">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://jasonyu.top/2020/10/27/django_wsgi/image-20200508175352456.png">
-<meta property="og:updated_time" content="2020-11-05T14:44:40.407Z">
+<meta property="og:updated_time" content="2020-11-26T08:07:07.512Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="django wsgi">
-<meta name="twitter:description" content="Django主要部署平台是WSGI，其是web server 和 web application的python 标准 通过startproject command 会生成一个default WSGI configuration，即主目录下有一个WSGI.py文件">
+<meta name="twitter:description" content="WSGI Django通过startproject command 会生成一个default WSGI configuration，即主目录下有一个WSGI.py文件">
 <meta name="twitter:image" content="http://jasonyu.top/2020/10/27/django_wsgi/image-20200508175352456.png">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
@@ -171,12 +171,12 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Django主要部署平台是WSGI，其是web server 和 web application的python 标准</p>
-<p>通过startproject command 会生成一个default WSGI configuration，即主目录下有一个WSGI.py文件</p>
+        <p><a href="#WSGI">WSGI</a></p>
+<p>Django通过startproject command 会生成一个default WSGI configuration，即主目录下有一个WSGI.py文件</p>
 <a id="more"></a>
 <h4 id="application-对象"><a class="markdownIt-Anchor" href="#application-对象"></a> application 对象</h4>
 <p>Server通过application callable 与 代码做交互， application callable 以一个位于 Python 模块中，名为 <code>application</code> 的对象的形式提供，且对服务器可见。</p>
-<p>通过<strong>runserver</strong>命令起的是<strong>django默认服务器。</strong></p>
+<p>通过<strong>runserver</strong>命令起的是<strong>django默认服务器。</strong> 用的是python http server.</p>
 <p><a href="https://docs.djangoproject.com/zh-hans/3.0/howto/deployment/wsgi/" target="_blank" rel="noopener">参考</a></p>
 <img src="/2020/10/27/django_wsgi/image-20200508175352456.png" title="image-20200508175352456">
 <p>client  &lt;----&gt;  nginx  &lt;----&gt; socket  &lt;----&gt; uwsgi  &lt;-----&gt; django</p>
@@ -185,6 +185,61 @@
 <blockquote>
 <p>DO NOT USE THIS SERVER IN A PRODUCTION SETTING. It has not gone through security audits or performance tests. (And that’s how it’s gonna stay.</p>
 </blockquote>
+<h4 id="wsgi-a-namewsgi-a"><a class="markdownIt-Anchor" href="#wsgi-a-namewsgi-a"></a> WSGI <a name="WSGI"> </a></h4>
+<ul>
+<li>让web服务器知道如何调用Python应用程序，并把用户请求告诉应用程序</li>
+<li>让Python应用程序(application)知道用户的具体请求是什么,以及如何返回结果给Web服务器</li>
+</ul>
+<h4 id="server如何调用application"><a class="markdownIt-Anchor" href="#server如何调用application"></a> Server如何调用application</h4>
+<ul>
+<li>
+<p>每个application的入口只有一个，就是<strong>所有客户端请求都同一个入口</strong>进入到应用程序</p>
+</li>
+<li>
+<p>server需要知道从哪里找application的入口</p>
+<ul>
+<li>application的可调用对象(函数或类)</li>
+<li>WSGI定义了application对象的形式</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">simple_app</span><span class="params">(environ,start_response)</span>:</span></span><br><span class="line">  <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>django中就是在wsgi.py中有 application = get_wsgi_application()</li>
+<li>environ
+<ul>
+<li>dict,存放了所有和客户端相关的信息,就能知道客户端请求的资源是什么，请求中带了什么数据
+<ul>
+<li>REQUEST_METHOD,QUERY_STRING:HTTP请求中的查询字符串，URL中?后面的内容,CONTENT_TYPEHTTP headers中的content-type内容 等等</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>start_response
+<ul>
+<li>可调用的对象</li>
+<li>接收两个必选一个可选参数
+<ul>
+<li>status</li>
+<li>response_headers</li>
+<li>exc_info</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>application的返回值用于为HTTP提供body</li>
+</ul>
+</li>
+</ul>
+<p><a href="https://www.xncoding.com/2016/04/22/python/wsgi.html" target="_blank" rel="noopener">WGSI简易教程</a></p>
+<h4 id="wsgi-中间件"><a class="markdownIt-Anchor" href="#wsgi-中间件"></a> WSGI 中间件</h4>
+<ul>
+<li>middleware 运行在server和application中间
+<ul>
+<li>对server来说,middleware就是application</li>
+<li>对application来说,middleware就是server</li>
+</ul>
+</li>
+<li>middleware能处理所有经过的request和response</li>
+</ul>
 <h5 id="gunicorn-和-uwsgi的区别"><a class="markdownIt-Anchor" href="#gunicorn-和-uwsgi的区别"></a> Gunicorn 和 uWSGI的区别</h5>
 <p>都算WSGI web server，区别不太大， Gunicorn用的更广一点，ins有用</p>
 <ul>
@@ -318,8 +373,8 @@
     </a>
   
   
-    <a href="/2020/10/26/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Hello World</div>
+    <a href="/2020/10/26/django_serializer/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">django serializer</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -346,7 +401,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#application-对象"><span class="toc-number">1.</span> <span class="toc-text"> application 对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#django起服务"><span class="toc-number">2.</span> <span class="toc-text"> django起服务</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#gunicorn-和-uwsgi的区别"><span class="toc-number">2.1.</span> <span class="toc-text"> Gunicorn 和 uWSGI的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#gunicorn"><span class="toc-number">2.1.1.</span> <span class="toc-text"> Gunicorn</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#配置nginx"><span class="toc-number">2.1.2.</span> <span class="toc-text"> 配置nginx</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#uwsgi"><span class="toc-number">2.1.3.</span> <span class="toc-text"> uWSGI</span></a></li></ol></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#application-对象"><span class="toc-number">1.</span> <span class="toc-text"> application 对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#django起服务"><span class="toc-number">2.</span> <span class="toc-text"> django起服务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#wsgi-a-namewsgi-a"><span class="toc-number">3.</span> <span class="toc-text"> WSGI  </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#server如何调用application"><span class="toc-number">4.</span> <span class="toc-text"> Server如何调用application</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#wsgi-中间件"><span class="toc-number">5.</span> <span class="toc-text"> WSGI 中间件</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#gunicorn-和-uwsgi的区别"><span class="toc-number">5.1.</span> <span class="toc-text"> Gunicorn 和 uWSGI的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#gunicorn"><span class="toc-number">5.1.1.</span> <span class="toc-text"> Gunicorn</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#配置nginx"><span class="toc-number">5.1.2.</span> <span class="toc-text"> 配置nginx</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#uwsgi"><span class="toc-number">5.1.3.</span> <span class="toc-text"> uWSGI</span></a></li></ol></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -495,59 +550,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">HMM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">nlp</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">NER</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">网络</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">text classification</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OS</a>
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
             
             <div class="clearfix"></div>

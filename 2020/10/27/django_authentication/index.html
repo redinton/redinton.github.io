@@ -17,7 +17,7 @@
 <meta property="og:description" content="鉴权部分 (authentication) 参考 1 在配置中 base.py / development.py">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://jasonyu.top/2020/10/27/django_authentication/image-20200916233140486.png">
-<meta property="og:updated_time" content="2020-11-05T14:54:56.289Z">
+<meta property="og:updated_time" content="2020-11-26T08:07:07.504Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="django authentication">
 <meta name="twitter:description" content="鉴权部分 (authentication) 参考 1 在配置中 base.py / development.py">
@@ -218,7 +218,7 @@
 </li>
 </ul>
 <h6 id="服务器验证"><a class="markdownIt-Anchor" href="#服务器验证"></a> 服务器验证</h6>
-<p>收到token后，先decode出JWT三个部分，得到sign的算法和payload，然后结合<strong>secretkey再次生成Signat</strong>ure，与原来的Signature对比验证token是否有效，验证通过才会用payload数据</p>
+<p>收到token后，先decode出JWT三个部分，得到sign的算法和payload，然后结合<strong>secretkey再次生成Signature</strong>，与原来的Signature对比验证token是否有效，验证通过才会用payload数据。</p>
 
       
 
@@ -489,59 +489,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">HMM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">nlp</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">NER</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">网络</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">text classification</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OS</a>
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
             
             <div class="clearfix"></div>

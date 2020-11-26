@@ -16,10 +16,12 @@
 <meta property="og:site_name" content="Keep Moving">
 <meta property="og:description" content="AJAX CSRF CORS">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-05T14:54:56.286Z">
+<meta property="og:image" content="http://jasonyu.top/2020/11/05/django/image-20201006115737242.png">
+<meta property="og:updated_time" content="2020-11-26T08:07:07.501Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="django 杂七杂八">
 <meta name="twitter:description" content="AJAX CSRF CORS">
+<meta name="twitter:image" content="http://jasonyu.top/2020/11/05/django/image-20201006115737242.png">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -515,7 +517,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MIDDLEWARE = [&apos;django.middleware.cache.UpdateCacheMiddleware&apos;, </span><br><span class="line">			  &apos;django.middleware.common.CommonMiddleware&apos;， &apos;django.middleware.cache.FetchFromCacheMiddleware&apos;,]</span><br></pre></td></tr></table></figure>
 <p>除此以外Django还提供了压缩网站内容的<strong>GZipMiddleware，<strong>根据用户请求语言返回不同内容的</strong>LocaleMiddleware</strong>和给GET请求附加条件的**ConditionalGetMiddleware。**这些中间件都是可选的。</p>
 <p>当你在settings.py注册中间件时一定要要考虑中间件的执行顺序，中间件在request到达view之前是从上向下执行的，在view执行完后返回reponse过程中是从下向上执行的，如下图所示。举个例子，如果你自定义的中间件有依赖于request.user（比如判断用户是否登录)，那么你自定义的中间件一定要放在AuthenticationMiddleware的后面。</p>
-
+<img src="/2020/11/05/django/image-20201006115737242.png" title="image-20201006115737242">
 <h4 id="自定义中间件"><a class="markdownIt-Anchor" href="#自定义中间件"></a> 自定义中间件</h4>
 <p>支持 函数和类 两种方式定义</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">simple_middleware</span><span class="params">(get_response)</span>:</span></span><br><span class="line"><span class="comment"># One-time configuration and initialization. 一次性设置和初始化</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">middleware</span><span class="params">(request)</span>:</span></span><br><span class="line">        <span class="comment"># Code to be executed for each request before the view (and later middleware) are called.</span></span><br><span class="line">        <span class="comment"># request请求到达视图函数执行前的代码</span></span><br><span class="line"></span><br><span class="line">        response = get_response(request)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Code to be executed for each request/response after</span></span><br><span class="line">        <span class="comment"># the view is called. 视图函数执行后的代码</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> middleware</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SimpleMiddleware</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, get_response)</span>:</span></span><br><span class="line">        self.get_response = get_response</span><br><span class="line">        <span class="comment"># One-time configuration and initialization.一次性设置和初始化</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, request)</span>:</span></span><br><span class="line">        <span class="comment"># Code to be executed for each request before the view (and later middleware) are called.</span></span><br><span class="line">        <span class="comment"># 视图函数执行前的代码</span></span><br><span class="line"></span><br><span class="line">        response = self.get_response(request)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Code to be executed for each request/response after</span></span><br><span class="line">        <span class="comment"># the view is called. 视图函数执行后的代码</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> response</span><br></pre></td></tr></table></figure>
@@ -659,11 +661,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/11/05/mysql_sql_1/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2020/11/11/随机抽样-有无权重/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          SQL语法
+          随机抽样-有无权重
         
       </div>
     </a>
@@ -846,59 +848,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">HMM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">nlp</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">NER</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">网络</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">text classification</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OS</a>
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
             
             <div class="clearfix"></div>
