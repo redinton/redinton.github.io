@@ -18,7 +18,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://jasonyu.top/2020/11/11/随机抽样-有无权重/image-20201111105115299.png">
 <meta property="og:image" content="http://jasonyu.top/2020/11/11/随机抽样-有无权重/image-20201111105306948.png">
-<meta property="og:updated_time" content="2020-11-12T02:18:43.656Z">
+<meta property="og:updated_time" content="2020-11-26T07:59:24.928Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="随机抽样-有无权重">
 <meta name="twitter:description" content="四种类型的随机抽样  未知长度的数组，只遍历一次，随机返回数组中任意一个数。 (随机指的是均匀随机) 未知长度的数组，只遍历一次，随机返回数组中任意k个数。 (随机指的是均匀随机) 已知长度的数组以及对应的权重，按照权重随机抽取索引 构造一个生成器类，构造函数传⼊⼀个很⻓的数组，请你实现randomGet ⽅法，每次调⽤随机返回数组中的⼀个元素，多次调⽤不能重复返回相同索引的元素。要求不能对该数组">
@@ -179,6 +179,7 @@
 <li>已知长度的数组以及对应的权重，按照权重随机抽取索引</li>
 <li>构造一个生成器类，构造函数传⼊⼀个很⻓的数组，请你实现randomGet ⽅法，每次调⽤随机返回数组中的⼀个元素，多次调⽤不能重复返回相同索引的元素。要求不能对该数组进⾏任何形式的修改，且操作的时间复杂度是 O(1)。</li>
 </ul>
+<a id="more"></a>
 <h4 id="未知长度的数组只遍历一次随机返回数组中任意一个数-随机指的是均匀随机"><a class="markdownIt-Anchor" href="#未知长度的数组只遍历一次随机返回数组中任意一个数-随机指的是均匀随机"></a> 未知长度的数组，只遍历一次，随机返回数组中任意一个数。 (随机指的是均匀随机)</h4>
 <p>即长度为N，保证每个元素被抽中的概率是 1/N<br>
 结论:  当你遇到第 i 个元素时，应该有 1/i 的概率选择该元素， 1 - 1/i 的概率保持原有的选择。</p>
@@ -285,8 +286,8 @@
     </a>
   
   
-    <a href="/2020/11/11/redis场景设计使用/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">redis场景设计使用</div>
+    <a href="/2020/11/05/tree/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">树结构</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -462,59 +463,7 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">HMM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">nlp</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">NER</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">网络</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">text classification</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OS</a>
               </li>
             
             <div class="clearfix"></div>

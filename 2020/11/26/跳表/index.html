@@ -6,15 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://jasonyu.top">
-  <title>Archives: 2020/10 | Keep Moving</title>
+  <title>跳表 | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Keep Moving">
-<meta property="og:url" content="http://jasonyu.top/archives/2020/10/index.html">
+  <meta name="description" content="有序链表的查找，可以利用跳表的减少时间复杂度。">
+<meta name="keywords" content="algorithm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="跳表">
+<meta property="og:url" content="http://jasonyu.top/2020/11/26/跳表/index.html">
 <meta property="og:site_name" content="Keep Moving">
+<meta property="og:description" content="有序链表的查找，可以利用跳表的减少时间复杂度。">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://jasonyu.top/2020/11/26/跳表/image-20200826150602697.png">
+<meta property="og:image" content="http://jasonyu.top/2020/11/26/跳表/image-20200826155331278.png">
+<meta property="og:updated_time" content="2020-11-26T07:59:24.926Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Keep Moving">
+<meta name="twitter:title" content="跳表">
+<meta name="twitter:description" content="有序链表的查找，可以利用跳表的减少时间复杂度。">
+<meta name="twitter:image" content="http://jasonyu.top/2020/11/26/跳表/image-20200826150602697.png">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -144,36 +152,52 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-跳表" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/10/31/tree_1/" class="archive-article-date">
-  	<time datetime="2020-10-31T05:39:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-31</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/10/31/tree_1/">tree_1</a>
+    <h1 class="article-title" itemprop="name">
+      跳表
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2020/11/26/跳表/" class="archive-article-date">
+  	<time datetime="2020-11-26T06:14:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>有序链表的查找，可以利用跳表的减少时间复杂度。</p>
+<a id="more"></a>
+<img src="/2020/11/26/跳表/image-20200826150602697.png" title="image-20200826150602697">
+<p>假设原始链表有n个结点，那么索引的层级就是log(n)-1，在每一层的访问次数是常量，因此查找结点的平均时间复杂度是<strong>O（logn）</strong>。这比起常规的查找方式，也就是线性依次访问链表节点的方式，效率要高得多。</p>
+<p>基于链表的优化增加了额外的空间开销。假设原始链表有n个结点，那么各层索引的结点总数是n/2+n/4+n/8+n/16+…2，约等于n。</p>
+<h4 id="新节点的插入"><a class="markdownIt-Anchor" href="#新节点的插入"></a> 新节点的插入</h4>
+<ul>
+<li>先按照索引一步步往下，找到待插入节点的前置节点(仅小于待插入节点)</li>
+<li>按照一般链表插入方式，把待插入节点，插入前置节点之后</li>
+<li>调整索引 – 让新插入的节点 随机晋升，也就是成为索引节点，成功后仍有机会向上一层晋升，失败后，插入结束</li>
+</ul>
+<h4 id="旧节点删除"><a class="markdownIt-Anchor" href="#旧节点删除"></a> 旧节点删除</h4>
+<ul>
+<li>先按照索引，找到要删除的节点</li>
+<li>然后把原始链表，索引层中的这个节点都删除</li>
+</ul>
+<img src="/2020/11/26/跳表/image-20200826155331278.png" title="image-20200826155331278">
+<p><a href="https://mp.weixin.qq.com/s/-1_jchMgIVeUdDhlTQCnnA" target="_blank" rel="noopener">参考  附有跳表实现的代码</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -185,57 +209,148 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://jasonyu.top/2020/11/26/跳表/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/10/29/binary_search/" class="archive-article-date">
-  	<time datetime="2020-10-29T01:33:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-29</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2020/11/26/常见算法/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          常见算法
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/11/11/位操作技巧/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">位操作技巧</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/10/29/binary_search/">binary_search</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">algorithm</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#新节点的插入"><span class="toc-number">1.</span> <span class="toc-text"> 新节点的插入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#旧节点删除"><span class="toc-number">2.</span> <span class="toc-text"> 旧节点删除</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
+  
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="跳表" data-title="跳表" data-url="http://jasonyu.top/2020/11/26/跳表/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
   
   
-    </div></section>
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -258,8 +373,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,

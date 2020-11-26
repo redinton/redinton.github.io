@@ -6,15 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://jasonyu.top">
-  <title>Archives: 2020/10 | Keep Moving</title>
+  <title>tree_1 | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Keep Moving">
-<meta property="og:url" content="http://jasonyu.top/archives/2020/10/index.html">
+  <meta name="description" content="BST 二叉搜索树">
+<meta name="keywords" content="algorithm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tree_1">
+<meta property="og:url" content="http://jasonyu.top/2020/10/31/tree_1/index.html">
 <meta property="og:site_name" content="Keep Moving">
+<meta property="og:description" content="BST 二叉搜索树">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-11-26T07:59:24.919Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Keep Moving">
+<meta name="twitter:title" content="tree_1">
+<meta name="twitter:description" content="BST 二叉搜索树">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -144,36 +149,44 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-tree_1" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      tree_1
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/10/31/tree_1/" class="archive-article-date">
+
+        
+        <a href="/2020/10/31/tree_1/" class="archive-article-date">
   	<time datetime="2020-10-31T05:39:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-31</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/10/31/tree_1/">tree_1</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="bst-二叉搜索树"><a class="markdownIt-Anchor" href="#bst-二叉搜索树"></a> BST 二叉搜索树</h3>
+<a id="more"></a>
+<h4 id="二叉搜索树的判定"><a class="markdownIt-Anchor" href="#二叉搜索树的判定"></a> <a href="https://leetcode-cn.com/problems/validate-binary-search-tree/" target="_blank" rel="noopener">二叉搜索树的判定</a></h4>
+<h4 id="二叉搜索树的删除指定节点"><a class="markdownIt-Anchor" href="#二叉搜索树的删除指定节点"></a> <a href="https://leetcode-cn.com/problems/delete-node-in-a-bst/" target="_blank" rel="noopener">二叉搜索树的删除指定节点</a></h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">TreeNode deleteNode(TreeNode root, int key) &#123;</span><br><span class="line">    <span class="keyword">if</span> (root == null) <span class="keyword">return</span> null;</span><br><span class="line">    <span class="keyword">if</span> (root.val == key) &#123;</span><br><span class="line">        // 这两个 <span class="keyword">if</span> 把情况 <span class="number">1</span> 和 <span class="number">2</span> 都正确处理了</span><br><span class="line">        <span class="keyword">if</span> (root.left == null) <span class="keyword">return</span> root.right;</span><br><span class="line">        <span class="keyword">if</span> (root.right == null) <span class="keyword">return</span> root.left;</span><br><span class="line">        // 处理情况 <span class="number">3</span></span><br><span class="line">        TreeNode minNode = getMin(root.right);</span><br><span class="line">        root.val = minNode.val;</span><br><span class="line">        root.right = deleteNode(root.right, minNode.val);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (root.val &gt; key) &#123;</span><br><span class="line">        root.left = deleteNode(root.left, key);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (root.val &lt; key) &#123;</span><br><span class="line">        root.right = deleteNode(root.right, key);</span><br><span class="line">    &#125;</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">TreeNode getMin(TreeNode node) &#123;</span><br><span class="line">    // BST 最左边的就是最⼩的</span><br><span class="line">    <span class="keyword">while</span> (node.left != null) node = node.left;</span><br><span class="line">    <span class="keyword">return</span> node;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="二叉搜索树第k小的元素"><a class="markdownIt-Anchor" href="#二叉搜索树第k小的元素"></a> <a href="https://leetcode-cn.com/problems/kth-smallest-element-in-a-bst/" target="_blank" rel="noopener">二叉搜索树第k小的元素</a></h4>
+<p>中序遍历第k个点。 最坏情况为O(N)<br>
+改进: 因为红黑树这种改良的自平衡BST,CRUD都是O(logN)的复杂度。因此, 我们可以通过在每个节点额外记录以当前节点作为根的二叉树有多少节点。这样每次搜索的时候,就可以知道当前节点是排第几了。</p>
+<h4 id="完全二叉树计算节点数目"><a class="markdownIt-Anchor" href="#完全二叉树计算节点数目"></a> <a href="https://leetcode-cn.com/problems/count-complete-tree-nodes/" target="_blank" rel="noopener">完全二叉树计算节点数目</a></h4>
+<p>O(logN * logN) 的复杂度</p>
 
-        <div class="article-info info-on-right">
-          
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -185,57 +198,148 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://jasonyu.top/2020/10/31/tree_1/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/10/29/binary_search/" class="archive-article-date">
-  	<time datetime="2020-10-29T01:33:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-29</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2020/11/01/dp/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          dp
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/10/29/binary_search/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">binary_search</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/10/29/binary_search/">binary_search</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">algorithm</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#bst-二叉搜索树"><span class="toc-number">1.</span> <span class="toc-text"> BST 二叉搜索树</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#二叉搜索树的判定"><span class="toc-number">1.1.</span> <span class="toc-text"> 二叉搜索树的判定</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#二叉搜索树的删除指定节点"><span class="toc-number">1.2.</span> <span class="toc-text"> 二叉搜索树的删除指定节点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#二叉搜索树第k小的元素"><span class="toc-number">1.3.</span> <span class="toc-text"> 二叉搜索树第k小的元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#完全二叉树计算节点数目"><span class="toc-number">1.4.</span> <span class="toc-text"> 完全二叉树计算节点数目</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
+  
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="tree_1" data-title="tree_1" data-url="http://jasonyu.top/2020/10/31/tree_1/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
   
   
-    </div></section>
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -258,8 +362,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,

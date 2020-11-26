@@ -146,701 +146,68 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-cookie和session以及安全" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>[TOC]</p>
-<h4 id="cookie"><a class="markdownIt-Anchor" href="#cookie"></a> cookie</h4>
-<p>一个 cookie 形似 name = value,  存储在浏览器, 但也可以设置多个，因此cookie 是 一组 键值对儿</p>
-<p>一个session 理解为一个数据结构，多数情况是映射， 存储在<strong>服务器</strong>上</p>
-<p>cookie字段存在HTTP header中，量一大就占带宽。</p>
-<p>cookie可以存储一个sessionID=xxx， 仅传这个cookie给server，server用这个找到对应的session， 有效解决用户追踪问题。</p>
-<h4 id="session"><a class="markdownIt-Anchor" href="#session"></a> session</h4>
-<p>实现 – 抽离成 Manager , Provider,  Session 三个类</p>
-<ul>
-<li>
-<p>Manager</p>
-<ul>
-<li>session管理，存储配置信息，session存活时间，cookie名字等等</li>
-<li>所有session存在Manager内部的一个provider中</li>
-<li>Manager 把sid(sessionID) 传给 Provider</li>
-</ul>
-</li>
-<li>
-<p>Provider</p>
-<ul>
-<li>最常见就是一个散列表， sid 对应 session</li>
-</ul>
-</li>
-<li>
-<p>Session</p>
-<ul>
-<li>存储用户的具体信息</li>
-</ul>
-</li>
-</ul>
-<p>之所以抽象出Manager,Provider,Session  三个类，涉及到设计层面</p>
-<ul>
-<li>
-<p>Session</p>
-<ul>
-<li>虽然session就是键值对，但不直接用hash，因为Session结构不止存储一个hash，还可以存辅助数据，如sid，访问次数，过期时间， 方便实现 LRU， LFU</li>
-<li>session 也可以有不同的存储方式，若用language内置的hash，则session数据存在内存里，数据量大，容易程序crash。 所以可以存入 redis， mysql</li>
-<li>Session 提供一些抽象接口
-<ul>
-<li>set ( key val)</li>
-<li>get ( key )</li>
-<li>delete ( key )</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p>Provider</p>
-<ul>
-<li>由于时不时要删session, 除了设置存活时间，还有些LRU缓存淘汰</li>
-<li>因此provider 内部要使用 哈希链表</li>
-</ul>
-</li>
-</ul>
-<h3 id="csrf"><a class="markdownIt-Anchor" href="#csrf"></a> CSRF</h3>
-<p>简述: 所谓跨域请求仿造就是，比如当用户登录网上银行后，cookie里会存放用于这个网站的credentials，此时如果用户点击了某个第三方恶意网站，里面的脚本就也是往这个网上银行网站发请求，而这个请求会带上用户的cookie，因此就可以模拟用户了。 注意：<strong>攻击者并不能拿到cookie里的内容，只是可以把cookie发送出去</strong>。<strong>攻击者也不可以修改header的内容</strong>。</p>
-<p>预防措施</p>
-<ul>
-<li>用户在登录某网站期间，用完后及时登出</li>
-</ul>
-<p>另一个场景：</p>
-<p>比如博客删除的接口用的是GET请求，那么攻击者只要在其恶意网站的脚本中模拟GET请求即可。</p>
-<p>原网站 <code>&lt;a href='/delete?id=3'&gt;刪除&lt;/a&gt;</code></p>
-<p>攻击者只要在钓鱼网站上写入 <code>&lt;a href='https://small-min.blog.com/delete?id=3'&gt;開始測驗&lt;/a&gt;</code>, <strong>由于浏览器的运行机制，会一并把samll-min.blog.com的cookie也带</strong>上。</p>
-<p>因为浏览器的机制，只要发送request给某个网域，就会把关联的cookie一起带上去，倘若使用者处于登入状态，那么request中就会包含他的session id。</p>
-<p>如果把删除功能改成post请求，就不能通过<code>&lt;a&gt;</code> 或者 <code>&lt;img&gt;</code> 来攻击(因为这些发GET请求)，但其实可以通过<code>&lt;form&gt;</code>…</p>
-<p>因此建议还是遵守RESTful的规范，删除就用delete</p>
-<h4 id="server的防御"><a class="markdownIt-Anchor" href="#server的防御"></a> Server的防御</h4>
-<ul>
-<li>
-<p>检查refer</p>
-<ul>
-<li>request的header有个refer，代表这个request从哪里来，可用于判断是否是合法的domain
-<ul>
-<li>但有些浏览器可能不会带refer</li>
-<li>有些使用者可能关闭自动带refer</li>
-<li>判断是否是合法domain的程序必须没bug</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p>加上验证码 image 或者 sms</p>
-<ul>
-<li>由于攻击者无法知道image 或者 sms，所以可以预防csrf</li>
-</ul>
-</li>
-<li>
-<p>加csrf token</p>
-<ul>
-<li>
-<p>放着csrf攻击，核心在于确保有些信息<strong>只有使用者</strong>知道。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"https://small-min.blog.com/delete"</span> <span class="attr">method</span>=<span class="string">"POST"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">name</span>=<span class="string">"id"</span> <span class="attr">value</span>=<span class="string">"3"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">name</span>=<span class="string">"csrftoken"</span> <span class="attr">value</span>=<span class="string">"fj1iro2jro12ijoi1"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"刪除文章"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>csrftoken由server随机产生，并存在server的session中，点击submit后，server对比表单中的csrftoken和session里的是否一致。 因为攻击者不知道csrftoken的值</p>
-<p>但是！</p>
-<ul>
-<li>如果server支持cross origin的request，那么攻击者就可以在页面发起一个request顺利拿到csrf token，前提是server接受这个domain的request</li>
-<li>一旦是分布式以后，对应的session只存储在某一台server中，不利于扩展。 其他server是不知道session中的这个csrftoken的</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p>double submit cookie</p>
-<ul>
-<li>此法不需要server端存储状态</li>
-<li>server产生一组随机的token加在form中，但不用写到session里，而是同时也让client side设定一个csrftoken的cookie，值也是同一组token</li>
-<li>csrf的攻击发出的request与本人发出的request区别在于前者来自不同domain。此时，攻击者想要攻击，他可以在form里写一个csrf token，但由于浏览器限制，他<strong>不能在他的domain设定small-min-blog.com的cookie</strong> (攻击者取不到cookie的内容)，因此他的request的cookie中没有csrftoken</li>
-<li>缺点：倘若攻击者掌握任何一个subdomain，就可以更改cookie了</li>
-<li>此外，也可以在client端生成这个token， 因此该理念核心在于 攻击者无法读写目标网站的cookie</li>
-</ul>
-</li>
-</ul>
-<p><a href="https://blog.techbridge.cc/2017/02/25/csrf-introduction/" target="_blank" rel="noopener">讓我們來談談 CSRF</a></p>
-<p><a href="https://tech.meituan.com/2018/10/11/fe-security-csrf.html" target="_blank" rel="noopener">前端安全系列（二）：如何防止CSRF攻击？</a></p>
-<h4 id="django-csrf"><a class="markdownIt-Anchor" href="#django-csrf"></a> Django CSRF</h4>
-<p>django.middleware.csrf.CsrfViewMiddleware</p>
-<ul>
-<li>
-<p>CSRF_USE_SESSIONS</p>
-<ul>
-<li>
-<p>True的情况 , csrf token存在server端的session里，与每次提交的表单里的csrf_token对比</p>
-</li>
-<li>
-<p>False的情况，放在cookie里，每次只要验证提交上来的cookie里的token和表单里的csrf_token是否一致</p>
-</li>
-</ul>
-</li>
-<li>
-<p>局部</p>
-<ul>
-<li>@csrf_protect，为当前函数强制设置防跨站请求伪造功能，即便settings中没有设置全局中间件。</li>
-<li>@csrf_exempt，取消当前函数防跨站请求伪造功能，即便settings中设置了全局中间件</li>
-</ul>
-</li>
-</ul>
-<h3 id="xss"><a class="markdownIt-Anchor" href="#xss"></a> XSS</h3>
-<p>xss (cross site script)</p>
-<p>xss 攻击是页面被注入恶意代码，利用恶意脚本，攻击者可以获取用户的敏感信息如cookie，SessionID</p>
-<p>[<a href="https://tech.meituan.com/2018/09/27/fe-security.html" target="_blank" rel="noopener">前端安全系列（一）：如何防止XSS攻击？</a>](<a href="https://tech.meituan.com/2018/09/27/fe-security.html" target="_blank" rel="noopener">https://tech.meituan.com/2018/09/27/fe-security.html</a>)</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/20/cookie和session以及安全/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-python_3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>[TOC]</p>
-<h4 id="is-not-none"><a class="markdownIt-Anchor" href="#is-not-none"></a> is not None</h4>
-<p>is 是比较 内存地址，而None是单例模式生成的，类型是NoneType  除了None 本身，其余对象 is not None的结果都是True</p>
-<p>哪些形式的数据为空</p>
-<ul>
-<li>None ， False</li>
-<li>任何形式数值类型 0 , 0.0</li>
-<li>空的序列 “” ()  []</li>
-<li>空的字典</li>
-<li>用户定义类中定义了nonzero() 和 len , 并且该方法返回0或者false</li>
-</ul>
-<p>a = []</p>
-<p>a is not None -&gt; return True</p>
-<p>if a -&gt;  用于判断a是否为空, 调用的是 a自身的 _<em>nonzero</em>_() 或者 在没有nonezero的时候调用 len()</p>
-<h4 id="eval-函数"><a class="markdownIt-Anchor" href="#eval-函数"></a> eval 函数</h4>
-<ul>
-<li>str to list/dict/tuple
-<ul>
-<li>实现把字符串常量转成变量</li>
-</ul>
-</li>
-<li>慎用的原因是 针对不可信的str，转化成命令后可能造成漏洞，如rm 数据</li>
-<li>有这个函数的原因:
-<ul>
-<li>动态语言支持动态地产生代码，对于已经部署好的工程，也可以只做很小的局部修改，就实现 bug 修复</li>
-</ul>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/18/python_3/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-python_1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>[TOC]</p>
-<h5 id="装饰器-上下文管理器-什么场景"><a class="markdownIt-Anchor" href="#装饰器-上下文管理器-什么场景"></a> 装饰器 上下文管理器 什么场景</h5>
-<p><a href="https://stackoverflow.com/questions/739654/how-to-make-a-chain-of-function-decorators/1594484#1594484" target="_blank" rel="noopener">装饰器参考</a></p>
-<p>例如统计函数运行时间，打印日志</p>
-<p>函数装饰器 和 类装饰器</p>
-<h5 id="上下文管理器"><a class="markdownIt-Anchor" href="#上下文管理器"></a> 上下文管理器</h5>
-<p>基本语法</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> EXPR <span class="keyword">as</span> VAR:</span><br><span class="line">	BLOCK</span><br><span class="line"><span class="keyword">with</span> open(<span class="string">"file.txt"</span>,<span class="string">"r"</span>) <span class="keyword">as</span> f: <span class="comment">#上下文表达式</span></span><br><span class="line">    lines = f.readlines()</span><br><span class="line"><span class="comment"># 上下文管理器: open("file.txt","r")</span></span><br></pre></td></tr></table></figure>
-<p>上下文管理协议</p>
-<ul>
-<li>一个类中实现了 <code>__enter__</code> ,  <code>__exit__</code></li>
-</ul>
-<p>场景</p>
-<ul>
-<li>更优雅的方式操作(创建/获取/释放)资源 如文件操作，数据库连接</li>
-<li>处理异常更优雅</li>
-</ul>
-<h5 id="list和set查询谁复杂度低-why"><a class="markdownIt-Anchor" href="#list和set查询谁复杂度低-why"></a> list和set查询,谁复杂度低 why</h5>
-<ul>
-<li>list 的底层实现
-<ul>
-<li>长度可变的数组，对其他对象的引用组成的连续数组</li>
-<li>index() 查找元素 O(N),  pop(i) O(N)</li>
-</ul>
-</li>
-<li>集合的底层实现
-<ul>
-<li>集合有两种
-<ul>
-<li>set() 可变，无序，有限</li>
-<li>frozenset() 不可变 可哈希 无序</li>
-</ul>
-</li>
-<li>带<strong>有空值的字典</strong>，只<strong>有键才是集合</strong>的元素</li>
-</ul>
-</li>
-<li>if  i in list 和  if  i in set 哪个快
-<ul>
-<li>set快 set是算哈希 O(1) 平均， 而list是 O(n)</li>
-</ul>
-</li>
-</ul>
-<h5 id="dict实现原理"><a class="markdownIt-Anchor" href="#dict实现原理"></a> dict实现原理</h5>
-<ul>
-<li>
-<p>dict 实现原理</p>
-<ul>
-<li>
-<p>伪随机探测(pseudo-random probing)的散列表(hash table)作为字典的底层数据结构</p>
-</li>
-<li>
-<p>可哈希的对象作为字典的键</p>
-<ul>
-<li>python内置的所有不可变的内置类型都是可哈希的，可变类型不可哈希</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h5 id="基础数据类型-可变不可变"><a class="markdownIt-Anchor" href="#基础数据类型-可变不可变"></a> 基础数据类型 可变，不可变</h5>
-<ul>
-<li>可变: list, set, dict
-<ul>
-<li>可变对象变化后，地址没变 (可以用 id() 来查看地址)</li>
-</ul>
-</li>
-<li>不可变: int , float,string,bool, tuple</li>
-</ul>
-<h5 id="深拷贝浅拷贝"><a class="markdownIt-Anchor" href="#深拷贝浅拷贝"></a> 深拷贝，浅拷贝</h5>
-<ul>
-<li>
-<p>a=b 不算拷贝，a=b只是把a的指针指向b的地址，</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;a = (1, 2, 3)</span><br><span class="line">&gt;&gt;&gt;id(a)</span><br><span class="line">2139167074776</span><br><span class="line">&gt;&gt;&gt; b = a</span><br><span class="line">&gt;&gt;&gt; a = (4, 5, 6) 这个赋值会让 a指向另一个地址，而b只是指向原来那个地址</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">(4, 5, 6)</span><br><span class="line">&gt;&gt;&gt; b</span><br><span class="line">(1, 2, 3)</span><br><span class="line">&gt;&gt;&gt; id(a)</span><br><span class="line">2139167075928</span><br><span class="line">&gt;&gt;&gt; id(b)</span><br><span class="line">2139167074776</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a = &apos;123&apos;</span><br><span class="line">b = a</span><br><span class="line"># 浅拷贝</span><br><span class="line">c = copy.copy(a)</span><br><span class="line"># 深拷贝</span><br><span class="line">d = copy.deepcopy(a)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>
-<p>浅拷贝 按被拷贝的对象区分</p>
-<ul>
-<li>
-<p>不可变 (int tuple，string)</p>
-<ul>
-<li>情况等价于 “=” 对象的id值与浅拷贝原来的值相同</li>
-</ul>
-</li>
-<li>
-<p>针对不可变对象，浅拷贝也是创建一个引用</p>
-</li>
-</ul>
-</li>
-<li>
-<p>可变对象 list,dict set</p>
-<ul>
-<li>
-<p>当对象内无复杂子对象</p>
-<ul>
-<li>原来对象的id值 和 浅拷贝后的 不同</li>
-</ul>
-</li>
-<li>
-<p>浅拷贝后的对象值变化，不影响原来的值 反之</p>
-</li>
-<li>
-<p>有复杂子对象 如list嵌套list</p>
-<ul>
-<li>改变原来对象中的 复杂子对象的值，会影响 浅拷贝后的值
-<ul>
-<li>浅复制 ，复杂子对象的保存方式是 作为 引用 方式存储的</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p>要想不影响 就用 深拷贝</p>
-</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">t1 = (1,2,3)</span><br><span class="line">t2 = tuple(t1)</span><br><span class="line">t2 is t1 true</span><br><span class="line">t3 = t1[:]</span><br><span class="line">t3 is t1 true</span><br><span class="line"></span><br><span class="line">t1 = [1,2,3]</span><br><span class="line">t2 = list(t1)</span><br><span class="line">t2 is t1 false</span><br><span class="line">t3 = t1[:]</span><br><span class="line">t3 is t1 false</span><br></pre></td></tr></table></figure>
-<h5 id="is-和-的区别"><a class="markdownIt-Anchor" href="#is-和-的区别"></a> is 和 == 的区别</h5>
-<p>python中所有都是对象，都有着 id, type, value 属性</p>
-<ul>
-<li>
-<p>最大区别</p>
-<ul>
-<li>is 比较的是内存地址(id)是否一致， == 比较的是对象的值是否一致，会调<code>__eq__</code> 方法</li>
-</ul>
-</li>
-<li>
-<p>特殊情况</p>
-<ul>
-<li>
-<p>int型 [-5,256] 之间常用的小数在内存中已经分配了地址，所以</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="number">10</span></span><br><span class="line">b = <span class="number">10</span> </span><br><span class="line">a <span class="keyword">is</span> b <span class="keyword">return</span> true</span><br><span class="line">a = <span class="number">1000</span></span><br><span class="line">b = <span class="number">1000</span></span><br><span class="line">a <span class="keyword">is</span> b <span class="keyword">return</span> false</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li>
-<p>tuple set, list, dict类中</p>
-<ul>
-<li>通常 == return true 而 is 返回 false 因为都会重新开辟内存</li>
-</ul>
-</li>
-<li>
-<p>bool 类型</p>
-<ul>
-<li>True 和 False是python两个内建的对象，不会再有其他的bool对象</li>
-</ul>
-</li>
-<li>
-<p>None 类型</p>
-<ul>
-<li>None有自己的类型 type(None) return  NoneType</li>
-<li>None 是一个常量，表示一个空对象，数据空并不代表是空对象垃圾回收机制</li>
-<li>None 是一个单例对象，一个变量是None 那么一定和 None是同一个内存空间</li>
-<li>在用 not x  判断不是None的时候，会把 x == []，{}，(),’’ 的情况也包含，所以要用 is not None</li>
-</ul>
-</li>
-</ul>
-<h5 id="说一说gc"><a class="markdownIt-Anchor" href="#说一说gc"></a> 说一说gc</h5>
-<p>python默认的gc机制是 引用计数法</p>
-<ul>
-<li>
-<p>每个对象维护一个字段记录当前对象被引用的次数，一旦对象引用计数为0，该对象立即被回收，内存空间被释放</p>
-</li>
-<li>
-<p>缺点</p>
-<ul>
-<li>
-<p><strong>无法解决对象的循环引用问题</strong></p>
-<ul>
-<li>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">a=[<span class="number">1</span>,<span class="number">2</span>]</span><br><span class="line">b=[<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line">a.append(b)</span><br><span class="line">b.append(a)</span><br><span class="line">DEL a</span><br><span class="line">DEL b</span><br><span class="line"><span class="comment">#a，b的被引用次数都是1 无法被gc</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li>
-<p>需要额外的空间维护引用计数</p>
-</li>
-</ul>
-</li>
-<li>
-<p>引用计数+1的情况</p>
-<ul>
-<li>对象被创建  a=23, ; 对象被引用 b = a,</li>
-<li>对象被作为参数，传入一个函数 func(a);</li>
-<li>对象作为一个元素，被存储到容器中 list = [a]</li>
-</ul>
-</li>
-<li>
-<p>引用计数 - 1</p>
-<ul>
-<li>对象别名被显示销毁  del a;</li>
-<li>对象别名被赋予新的对象 a = 24</li>
-<li>对象离开作用域例如f函数执行完毕后，func中的局部变量(全局变量不会)</li>
-<li>对象所在的容器被销毁，或者从容器中删除对象</li>
-</ul>
-</li>
-<li>
-<p>标记清除</p>
-<ul>
-<li>用来解决 循环引用</li>
-<li>每个容器对象维护两个额外的指针，</li>
-</ul>
-</li>
-</ul>
-<h5 id="函数_和__情况"><a class="markdownIt-Anchor" href="#函数_和__情况"></a> 函数&quot;_&quot;和“__”情况</h5>
-<h5 id="写一下单例设计模式"><a class="markdownIt-Anchor" href="#写一下单例设计模式"></a> 写一下单例设计模式</h5>
-<h5 id="python中的高阶函数"><a class="markdownIt-Anchor" href="#python中的高阶函数"></a> python中的高阶函数</h5>
-<p>lambda，map, reduce filter</p>
-<p>以函数作为参数进行传递，或者返回对象是函数</p>
-<ul>
-<li>
-<p>map</p>
-<ul>
-<li>
-<p>map(function, iterable,…)</p>
-</li>
-<li>
-<p>Python 2.x 返回列表。</p>
-<p>Python 3.x 返回迭代器。</p>
-</li>
-<li>
-<p>根据提供的函数对指定序列做映射</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">map(<span class="keyword">lambda</span> x, y: x + y, [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">9</span>], [<span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">8</span>, <span class="number">10</span>])</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li>
-<p>filter</p>
-<ul>
-<li>用法同 map类似，只是function 返回bool 用于筛选</li>
-</ul>
-</li>
-<li>
-<p>reduce</p>
-<ul>
-<li>
-<p>把一个函数作用在一个序列[x1,x2,x3,…]上，这个函数必须接受两个参数， reduce把结果继续和序列的下一个元素做累积计算</p>
-</li>
-<li>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reduce(f,[x1,x2,x3,x4]) = f(f(f(x1,x2),x3),x4)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-<h5 id="pyc文件"><a class="markdownIt-Anchor" href="#pyc文件"></a> pyc文件</h5>
-<h5 id="c-python-解释性语言区别"><a class="markdownIt-Anchor" href="#c-python-解释性语言区别"></a> C++ python 解释性语言区别</h5>
-<h5 id="python-和-java的区别"><a class="markdownIt-Anchor" href="#python-和-java的区别"></a> python 和 java的区别</h5>
-<ul>
-<li>静态类型和动态类型</li>
-<li>python 一切皆对象,祖先都是Object</li>
-<li>python有GIL</li>
-</ul>
-<h5 id="迭代-生成器-generator-如何实现-怎么理解"><a class="markdownIt-Anchor" href="#迭代-生成器-generator-如何实现-怎么理解"></a> 迭代 生成器 generator 如何实现， 怎么理解</h5>
-<ul>
-<li>
-<p>迭代 <a href="https://zhuanlan.zhihu.com/p/32162554" target="_blank" rel="noopener">参考 </a></p>
-<ul>
-<li>iterable 可迭代对象，序列的大小长度已确定
-<ul>
-<li>list,tuple,dict,string</li>
-<li>含 <code>__iter__</code> () 方法，且返回的是<strong>一个对应的迭代器</strong>(list返回list_iterator)
-<ul>
-<li>例如 iter( list 或者 tuple 对象) 返回的结果就是个迭代器 就可以调 next</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>iterator 迭代器的对象，特点是不知道要执行多少次
-<ul>
-<li><code>__iter__</code>() 返回<strong>iterator对象本身</strong></li>
-<li><code>__next_</code>() 返回下一个值，直到没有值返回抛出stopIteration异常</li>
-<li>实现中 class Iterator(Iterable)</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p>生成器</p>
-<ul>
-<li>
-<p>由于内存限制，创建列表的大小受限</p>
-<ul>
-<li>生成器的思想边循环边计算</li>
-<li>generator保存的是算法，调用的话用next(g)， 直到最后一个元素 抛出StopIteration</li>
-<li>generator 也可以用 for 来遍历 generator 也是一个迭代器？</li>
-</ul>
-</li>
-<li>
-<p>定义的两种方式</p>
-<ul>
-<li>
-<p>列表生成式 把[ ] 改成 ( )  就是返回生成器</p>
-</li>
-<li>
-<p>复杂的算法 就表示成函数的形式 加入 yield  ， 每一次起点就是从yield 后一行开始到下一次yield结束</p>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<img src="/2020/11/18/python_1/image-20201117143012148.png" title="image-20201117143012148">
-<p>三者区别</p>
-<ul>
-<li>可迭代对象 Iterable
-<ul>
-<li>含 <code>__iter__</code> () 方法，且返回的是<strong>一个对应的迭代器</strong>(list返回list_iterator)</li>
-<li>迭代器
-<ul>
-<li>除了<code>__iter__</code> 还要有 <code>__next__</code>方法</li>
-<li>生成器
-<ul>
-<li>一种特殊的迭代器</li>
-<li>在迭代的过程中可以改变当前迭代值</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h5 id="用-python调用系统命令-用什么模块"><a class="markdownIt-Anchor" href="#用-python调用系统命令-用什么模块"></a> 用 python调用系统命令 用什么模块</h5>
-<ul>
-<li>
-<p>os模块</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 子终端运行系统命令，不能获取命令执行后的返回信息以及执行返回的状态</span></span><br><span class="line">os.system(cmd)</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">os.system(<span class="string">'date'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 不仅执行命令而且返回执行后的信息对象(常用于需要获取执行命令后的返回信息)</span></span><br><span class="line">os.popen(cmd)</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">nowtime = os.popen(<span class="string">'date'</span>)</span><br><span class="line"><span class="keyword">print</span> nowtime.read()</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>subprocess模块</p>
-<ul>
-<li>对线程的控制和监控</li>
-</ul>
-</li>
-</ul>
-<h5 id="python-是单继承还是多继承子类调用一个父类的方法怎么做super关键字的具体实现方式"><a class="markdownIt-Anchor" href="#python-是单继承还是多继承子类调用一个父类的方法怎么做super关键字的具体实现方式"></a> python 是单继承还是多继承，子类调用一个父类的方法，怎么做，super关键字的具体实现方式</h5>
-<p>支持多继承</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/18/python_1/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-概念" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-并查集" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/18/概念/">概念</a>
+      <a class="article-title" href="/2020/11/26/并查集/">并查集</a>
     </h1>
   
 
         
-        <a href="/2020/11/18/概念/" class="archive-article-date">
-  	<time datetime="2020-11-18T02:41:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-18</time>
+        <a href="/2020/11/26/并查集/" class="archive-article-date">
+  	<time datetime="2020-11-26T06:39:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-26</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="虚拟内存和物理内存"><a class="markdownIt-Anchor" href="#虚拟内存和物理内存"></a> 虚拟内存和物理内存</h4>
+        <h3 id="union-find"><a class="markdownIt-Anchor" href="#union-find"></a> Union find</h3>
+<p>并查集</p>
+<p>dynamic connectivity problem - 动态连通性</p>
+<p>several implementations</p>
 <ul>
-<li>物理内存指的是实际内存大小</li>
-<li>虚拟内存- 内存加磁盘存储</li>
+<li>quick find</li>
+<li>quick union</li>
+<li>weighted quick union</li>
+<li>weighted quick union with path compression</li>
 </ul>
-<p>虚拟内存和物理内存的对应关系</p>
+<p>percolation(渗流) problem</p>
+<h4 id="dynamic-connectivity"><a class="markdownIt-Anchor" href="#dynamic-connectivity"></a> dynamic connectivity</h4>
+<p>给定 a set of N objects， 有一些object直接是connect的， (union command就是 connect two objects), 问题是 问 某两个object 之间是否 connect.</p>
 <ul>
-<li>
-<p>现在编写的程序都是操作虚拟内存地址</p>
-</li>
-<li>
-<p>虚拟内存地址和物理内存地址的映射通过页映射</p>
+<li>应用点:</li>
+</ul>
+<img src="/2020/11/26/并查集/image-20200109203151686.png" title="image-20200109203151686">
 <ul>
-<li>页映射将内存和磁盘中数据和指令按照&quot;Page(4M)&quot;单位分成若干页</li>
+<li>connected components</li>
+</ul>
+<p>maximal set of  objects that are mutually  connected</p>
+<img src="/2020/11/26/并查集/image-20200109203523778.png" title="image-20200109203523778">
+<h4 id="解决方法"><a class="markdownIt-Anchor" href="#解决方法"></a> 解决方法</h4>
+<ul>
+<li>quick find</li>
+<li>quick union</li>
+<li>weighted quick union
+<ul>
+<li>quick union 的弊端在于 最后的树可能会很深</li>
+<li>weighted 的策略就是在合并的时候，把 large tree 放在 small tree 上面。</li>
 </ul>
 </li>
-<li>
-<p>虚拟内存可以结合磁盘和物理内存的优势为进程提供看起来速度足够快并且容量足够大的存储</p>
-</li>
-<li>
-<p>虚拟内存可以为进程提供独立的内存空间并引入多层的页表结构将虚拟内存翻译成物理内存，进程之间可以共享物理内存减少开销，也能简化程序的链接、装载以及内存分配过程；</p>
-</li>
-<li>
-<p>虚拟内存可以控制进程对物理内存的访问，隔离不同进程的访问权限，提高系统的安全</p>
-</li>
 </ul>
+<img src="/2020/11/26/并查集/image-20200109213836865.png" title="image-20200109213836865">
+<h4 id="percolation-problem"><a class="markdownIt-Anchor" href="#percolation-problem"></a> Percolation problem</h4>
+<img src="/2020/11/26/并查集/image-20200109215215269.png" title="image-20200109215215269">
+<p>随机开启区域(每一个block可能开启也可能关闭)， check botton block是否和 top block 有连接 (connect),</p>
+<p>随机开启了block就是一个union 的操作</p>
+<p><strong>Social network connectivity.</strong> -</p>
+<p>Given a social network containing <strong>n</strong> members and a log file containing m timestamps at which times pairs of members formed friendships,</p>
+<p>design an algorithm to determine the <strong>earliest tim</strong>e at which all members are connected (i.e., every member is a friend of a friend of a friend … of a friend). Assume that the log file is sorted by timestamp and that friendship is an equivalence relation. The running time of your algorithm should be mlogn or better and use extra space proportional to n.</p>
+<p>log file 里存的就是 union 操作</p>
 
       
 
@@ -854,7 +221,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">OS</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">algorithm</a>
         		</li>
       		
 		</ul>
@@ -864,7 +231,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/18/概念/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/11/26/并查集/">展开全文 >></a>
         </p>
       
 
@@ -894,36 +261,31 @@
 
 
   
-    <article id="post-python反射" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-array" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/17/python反射/">python反射</a>
+      <a class="article-title" href="/2020/11/26/array/">array</a>
     </h1>
   
 
         
-        <a href="/2020/11/17/python反射/" class="archive-article-date">
-  	<time datetime="2020-11-17T06:20:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-17</time>
+        <a href="/2020/11/26/array/" class="archive-article-date">
+  	<time datetime="2020-11-26T06:38:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-26</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <ul>
-<li>getattr()</li>
-<li>hasattr()</li>
-<li>delattr()</li>
-<li>setattr()<br>
-实现基于字符串的反射机制</li>
-</ul>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> commons</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">()</span>:</span></span><br><span class="line">    inp = input(<span class="string">"请输入您想访问页面的url：  "</span>).strip()</span><br><span class="line">    <span class="keyword">if</span> hasattr(commons,inp):</span><br><span class="line">        func = getattr(commons,inp)</span><br><span class="line">        func()</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(<span class="string">"404"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    run()</span><br></pre></td></tr></table></figure>
-<p><a href="https://www.liujiangblog.com/course/python/48" target="_blank" rel="noopener">参考</a></p>
-
+        <h3 id="数组"><a class="markdownIt-Anchor" href="#数组"></a> 数组</h3>
+<h4 id="数据流中的中位数"><a class="markdownIt-Anchor" href="#数据流中的中位数"></a> 数据流中的中位数</h4>
+        
+          <a class="article-more-a" href="/2020/11/26/array/#more">more >></a>
+        
       
 
       
@@ -936,7 +298,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">algorithm</a>
         		</li>
       		
 		</ul>
@@ -946,7 +308,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/17/python反射/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/11/26/array/">展开全文 >></a>
         </p>
       
 
@@ -976,34 +338,29 @@
 
 
   
-    <article id="post-TCP" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-daily_algorithm" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/17/TCP/">TCP</a>
+      <a class="article-title" href="/2020/11/26/daily_algorithm/">daily_algorithm</a>
     </h1>
   
 
         
-        <a href="/2020/11/17/TCP/" class="archive-article-date">
-  	<time datetime="2020-11-17T03:29:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-17</time>
+        <a href="/2020/11/26/daily_algorithm/" class="archive-article-date">
+  	<time datetime="2020-11-26T06:37:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-26</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><a href="#tcp%E5%92%8Cudp%E5%8C%BA%E5%88%AB">TCP和UDP区别</a><br>
-<a href="#tcp%E7%9A%84%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6">TCP的流量控制</a><br>
-<a href="#tcp%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6">TCP拥塞控制</a><br>
-<a href="#syn%E6%B4%AA%E6%B0%B4%E6%94%BB%E5%87%BB">SYN洪水攻击</a><br>
-<a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E8%BF%9E%E6%8E%A5%E8%80%8C%E4%B8%8D%E6%98%AF%E4%B8%A4%E6%AC%A1%E6%88%96%E8%80%85%E5%85%B6%E4%BB%96%E6%AC%A1%E6%95%B0">为什么需要三次握手连接而不是两次或者其他次数</a><br>
-<a href="#tcp%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8Btime_wait%E5%92%8Cclosed_wait">TCP四次挥手time_wait和closed_wait</a></p>
+        <h4 id="5-最长回文子串"><a class="markdownIt-Anchor" href="#5-最长回文子串"></a> 5. 最长回文子串</h4>
         
-          <a class="article-more-a" href="/2020/11/17/TCP/#more">more >></a>
+          <a class="article-more-a" href="/2020/11/26/daily_algorithm/#more">more >></a>
         
       
 
@@ -1017,7 +374,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">网络</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">algorithm</a>
         		</li>
       		
 		</ul>
@@ -1027,7 +384,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/17/TCP/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/11/26/daily_algorithm/">展开全文 >></a>
         </p>
       
 
@@ -1057,207 +414,61 @@
 
 
   
-    <article id="post-http" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-graph" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/17/http/">http</a>
+      <a class="article-title" href="/2020/11/26/graph/">graph</a>
     </h1>
   
 
         
-        <a href="/2020/11/17/http/" class="archive-article-date">
-  	<time datetime="2020-11-17T02:21:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-17</time>
+        <a href="/2020/11/26/graph/" class="archive-article-date">
+  	<time datetime="2020-11-26T06:36:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-26</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="http有哪些头部详细介绍一下cookie"><a class="markdownIt-Anchor" href="#http有哪些头部详细介绍一下cookie"></a> http有哪些头部？详细介绍一下Cookie</h4>
+        <h3 id="图的基本概念"><a class="markdownIt-Anchor" href="#图的基本概念"></a> 图的基本概念</h3>
 <ul>
-<li>General Header Fields
+<li>图的表示
 <ul>
-<li>Cache-control
+<li>1.邻接矩阵
 <ul>
-<li>max-age 客户端最多保存缓存多少秒</li>
-<li>no-cache 可以缓存，但使用前必须去服务器验证是否过期</li>
-<li>no-store 响应不缓存，适合变化频繁的页面如秒杀页面</li>
+<li>n*n的邻接矩阵</li>
 </ul>
 </li>
-<li>Connection
+<li>2.邻接表
 <ul>
-<li>keep-alive http/1.1 默认启用长连接</li>
-<li>close 过多长连接会占用服务器资源，客户端主动通知服务器关闭连接</li>
-</ul>
-</li>
-<li>Transfer-encoding</li>
-</ul>
-</li>
-<li>Request Header Fields
-<ul>
-<li>Accept
-<ul>
-<li>客户端希望接收的数据类型</li>
-<li>text / iamge/ audio/video/aplication:json,key value</li>
-</ul>
-</li>
-<li>Refer
-<ul>
-<li>代表这个request从哪里来，可用于判断是否是合法的domain</li>
-</ul>
-</li>
-<li>Range
-<ul>
-<li>断点传输</li>
-</ul>
-</li>
-<li>Host
-<ul>
-<li>指定资源所在服务器</li>
-</ul>
-</li>
-<li>User-Agent
-<ul>
-<li>客户端程序信息</li>
+<li>为每个点建立一个链表(数组)存放与之相连的点</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>Response Header Fields
+<li>图的搜索
 <ul>
-<li>http-version</li>
-<li>status-code</li>
-<li>accept-range</li>
-<li>location
+<li>BFS
 <ul>
-<li>响应码
+<li>双向BFS
 <ul>
-<li>301 永久重定向</li>
-<li>302 临时重定向</li>
+<li>graph中，从起点和终点分别开始走，直到相遇 - 树形搜索结构变成纺锤形</li>
+<li>这样更&quot;快&quot;，因为经典BFS中，树形结构高度较高时，叶子非常多，将一颗高度为h的树用两个近似为 h/2的树代替，宽度相对小。</li>
 </ul>
 </li>
 </ul>
 </li>
-</ul>
-</li>
-<li>Entity Header Fields
-<ul>
-<li>content-type</li>
-<li>content-length</li>
-<li>last-modified</li>
-</ul>
-</li>
-<li>Cookie
-<ul>
-<li>key-value格式</li>
-<li>量一大就占带宽</li>
+<li>DFS</li>
 </ul>
 </li>
 </ul>
-<h4 id="加密"><a class="markdownIt-Anchor" href="#加密"></a> 加密</h4>
-<ul>
-<li>对称性加密
-<ul>
-<li>加密解密用同一个密钥，难点在于密钥的传送</li>
-</ul>
-</li>
-<li>密钥交换
-<ul>
-<li>Diffie-Hellman</li>
-</ul>
-</li>
-<li>非对称性加密
-<ul>
-<li>公钥加密，私钥解密</li>
-<li>RSA就是典型的非对称加密，速度比较慢
-<ul>
-<li>传大量数据时，一般不用公钥直接加密数据，而是加密对称性加密的密钥</li>
-</ul>
-</li>
-<li>无法确定通信双方的身份，依然有中间人攻击</li>
-</ul>
-</li>
-<li>数字签名
-<ul>
-<li>公布公钥，用私钥加密数据，把加密的数据公布出去</li>
-<li>对于RSA算法，私钥加密的数据只有公钥可以解开</li>
-<li>目的是为了证明身份，证明这些数据是由本人发出的</li>
-</ul>
-</li>
-<li>公钥证书
-<ul>
-<li>证书就是公钥和签名，由第三方机构颁发</li>
-<li>证书认证的流程
-<ul>
-<li>Bob 去可信任的认证机构证实本⼈真实⾝份，并提供⾃⼰的公钥。</li>
-<li>Alice 想跟 Bob 通信，⾸先向认证机构请求 Bob 的公钥，认证机构会把⼀张证书（Bob 的公钥以及⾃⼰对其公钥的签名）发送给 Alice。</li>
-<li>Alice 检查签名，确定该公钥确实由这家认证机构发送，中途未被篡改。(安装的正规浏览器中都预存了正规认证机构的证书（包含其公钥），⽤于确认机构⾝份，所以说证书的认证是可信的)</li>
-<li>Alice 通过这个公钥加密数据，开始和 Bob 通信</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h4 id="https的加密过程详细讲一下"><a class="markdownIt-Anchor" href="#https的加密过程详细讲一下"></a> https的加密过程，详细讲一下</h4>
-<p>在 HTTP 协议和 TCP 协议之间加了⼀个 SSL/TLS 安全层.<br>
-在你的浏览器和⽹站服务器完成 TCP 握⼿后，SSL 协议层也会进⾏** SSL 握⼿交换安全参数**，其中就包含该<strong>⽹站的证书</strong>，以便浏览器验证站点⾝份。SSL 安全层验证完成之后，上层的 <strong>HTTP 协议内容都会被加</strong>密，保证数据的安全传输。</p>
-<ul>
-<li>客户端请求服务器获取证书公钥和签名</li>
-<li>客户端(SSL/TLS)解析证书，验证证书是否有效
-<ul>
-<li>用公钥解密签名值和原始内容(签名也是由私钥针对明文加密得到的)对比来验证证书的合法性</li>
-</ul>
-</li>
-<li>客户端生成随机值,用 公钥加密 随机值生成密钥</li>
-<li>客户端将 秘钥 发送给服务器</li>
-<li>服务端用 私钥 解密 秘钥 得到随机值</li>
-<li>将信息和随机值混合在一起 进行对称加密</li>
-<li>将加密的内容发送给客户端</li>
-</ul>
-<h4 id="get和post有什么区别put和post呢幂等性是什么"><a class="markdownIt-Anchor" href="#get和post有什么区别put和post呢幂等性是什么"></a> get和post有什么区别？put和post呢？幂等性是什么？</h4>
-<ul>
-<li>
-<p>HTTP方法的幂等性是指<strong>一次和多次请求某一个资源应该具有同样的副作用</strong>, 强调的是一次和N次具有相同的副作用，而不是每次结果相同</p>
-</li>
-<li>
-<p>强调的是一次和N次具有相同的副作用，而不是每次GET的结果相同。不会改变资源的状态，不论调用一次还是N次都没有副作用。GET <code>http://www.news.com/latest-news</code>这个HTTP请求可能会每次得到不同的结果，但它本身并没有产生任何副作用，因而是满足幂等性的。</p>
-</li>
-<li>
-<p>DELETE方法用于删除资源，有副作用，但它应该满足幂等性。比如：DELETE <code>http://www.forum.com/article/4231</code>，调用一次和N次对系统产生的副作用是相同的，即删掉id为4231的帖子；因此，调用者可以多次调用或刷新页面而不必担心引起错误</p>
-</li>
-<li>
-<p>get和post有什么区别 <a href="https://blog.fundebug.com/2019/02/22/compare-http-method-get-and-post/" target="_blank" rel="noopener">参考</a></p>
-<ul>
-<li>GET 用于获取信息，是无副作用的，是幂等的，且可缓存</li>
-<li>POST 用于修改服务器上的数据，有副作用，非幂等，不可缓存</li>
-<li>GET把参数包含在URL中，POST通过request body</li>
-<li>GET请求在URL中传送的参数是有长度限制的，而POST么有 (和http无关，与浏览器服务器有关)</li>
-<li>GET产生一个TCP数据包；POST产生两个TCP数据包 <strong>不对</strong>
-<ul>
-<li>对于GET方式的请求，浏览器会把http header和data一并发送出去，服务器响应200（返回数据</li>
-<li>对于POST，浏览器先发送header，服务器响应100 continue，浏览器再发送data，服务器响应200 ok（返回数据）
-<ul>
-<li>在网络环境好的情况下，发一次包的时间和发两次包的时间差别基本可以无视。而在网络环境差的情况下，两次包的TCP<strong>在验证数据包完整性</strong>上，有非常大的优点</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p>POST和PUT的区别容易被简单地误认为“POST表示创建资源，PUT表示更新资源”；而实际上，<strong>二者均可用于创建资源</strong>，更为本质的差别是<strong>在幂等性</strong>方面</p>
-<ul>
-<li>POST所对应的URI并非创建的资源本身，而是<strong>资源的接收者</strong>。比如：POST <code>http://www.forum.com/articles的语义是在http://www.forum.com/articles</code>下创建一篇帖子，HTTP响应中应包含帖子的创建状态以及帖子的URI。两次相同的POST请求会在服务器端<strong>创建两份资源</strong>，它们具有不同的URI；所以，POST方法不具备幂等性</li>
-<li>PUT所对应的URI是要创建或更新的资源本身。比如：PUT <code>http://www.forum/articles/4231</code>的语义是创建或更新ID为4231的帖子。对同一URI进行多次PUT的副作用和一次PUT是相同的；因此，PUT方法具有幂等性</li>
-</ul>
-</li>
-</ul>
-<h4 id="输入url的全过程"><a class="markdownIt-Anchor" href="#输入url的全过程"></a> 输入url的全过程</h4>
-
+        
+          <a class="article-more-a" href="/2020/11/26/graph/#more">more >></a>
+        
       
 
       
@@ -1270,7 +481,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">网络</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">algorithm</a>
         		</li>
       		
 		</ul>
@@ -1280,7 +491,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/17/http/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/11/26/graph/">展开全文 >></a>
         </p>
       
 
@@ -1310,303 +521,35 @@
 
 
   
-    <article id="post-网络编程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-listnode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/17/网络编程/">网络编程</a>
+      <a class="article-title" href="/2020/11/26/listnode/">listnode</a>
     </h1>
   
 
         
-        <a href="/2020/11/17/网络编程/" class="archive-article-date">
-  	<time datetime="2020-11-17T01:53:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-17</time>
+        <a href="/2020/11/26/listnode/" class="archive-article-date">
+  	<time datetime="2020-11-26T06:29:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-26</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="ip地址"><a class="markdownIt-Anchor" href="#ip地址"></a> IP地址</h4>
-<p>分为IPv4和IPv6. IPv4一共32位地址, IPv6 128位(32 bytes)， IPv4地址 2^32 已用完。</p>
-<p>IP地址分为公网IP和内网IP。 一般通过ipconfig看到的是内网IP，公网IP需要在线查。</p>
-<p>内网地址: 类似于 192.168. x. x ， 10. x . x . x</p>
-<ul>
-<li>
-<p>两台机器位于同一网络，则他们之间可以直接通信</p>
-<ul>
-<li>
-<p>同一网路- IP地址前段相同，也就是网络号相同</p>
-</li>
-<li>
-<p>网络号 : IP &amp; network mask</p>
-<blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; IP = 101.202.99.2</span><br><span class="line">&gt; Mask = 255.255.255.0</span><br><span class="line">&gt; Network = IP &amp; Mask = 101.202.99.0</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-</li>
-</ul>
-</li>
-<li>
-<p>对于在不同网络的机器，就要通过路由器或者交换机这种设备(网关)进行通信。</p>
-</li>
-</ul>
-<h4 id="网络模型"><a class="markdownIt-Anchor" href="#网络模型"></a> 网络模型</h4>
-<p>OSI(Open system Interconnect) 网络模型是ISO组织定义的， 七层模型。</p>
-<h4 id="常用协议"><a class="markdownIt-Anchor" href="#常用协议"></a> 常用协议</h4>
-<ul>
-<li>IP协议
-<ul>
-<li>分组协议，不保证可靠传输</li>
-<li>IP协议只负责分发数据包，不保证顺序和正确性</li>
-</ul>
-</li>
-<li>TCP协议
-<ul>
-<li>传输控制协议，支持可靠传输和双向通信，TCP协议建立在IP协议基础上</li>
-<li>很多高级协议 http，SMTP都是建立在TCP协议之上</li>
-</ul>
-</li>
-<li>UDP协议
-<ul>
-<li>User Datagram Protocol，数据报文协议， 无连接协议， 不保证可靠传输</li>
-<li>通信前不用像TCP那样建立连接，因此传输效率高于TCP协议</li>
-<li>选用UDP协议，传输的数据通常容忍丢失，如音频会议</li>
-</ul>
-</li>
-</ul>
-<h4 id="tcp-编程"><a class="markdownIt-Anchor" href="#tcp-编程"></a> TCP 编程</h4>
-<p>一个应用程序通过一个<strong>socket</strong>来建立远程连接，Socket内部通过TCP/IP协议把数据传输。</p>
-<p>Socket、TCP和部分IP的功能都是由操作系统提供的，不同的编程语言只是提供了对操作系统调用的简单的封装</p>
-<ul>
-<li>
-<p>用Socket进行网络通信的原因</p>
-</li>
-<li>
-<p>仅通过IP地址通信不够，一台PC同一时间会运行多个网络程序，当操作系统接到一个数据包，若只有IP地址，无法判断发给哪个程序</p>
-</li>
-<li>
-<p>Socket</p>
-<ul>
-<li>由IP地址和端口号(0-65535)  – 端口由OS分配</li>
-<li>小于1024的端口属于特权端口，需要管理员权限</li>
-</ul>
-</li>
-<li>
-<p>Socket网络编程</p>
-</li>
-<li>
-<p>本质是两个进程之间的网络通信，其中一个进程充当服务器端，会主动监听某个指定的端口，另一个进程充当客户端，主动连接上服务器端IP和端口，连接成功后，就建立了TCP连接</p>
-</li>
-<li>
-<p>TCP的“三次握手”，“四次挥手”  <a href="https://zhuanlan.zhihu.com/p/53374516" target="_blank" rel="noopener">“三次握手，四次挥手”你真的懂吗？</a></p>
-<ul>
-<li>三次握手发生在，建立client和server端之间的连接
-<ul>
-<li>双方都能明确自己和对方的数据收，发能力正常</li>
-<li>第一次握手，client -&gt; syn -&gt; server
-<ul>
-<li>server知道, client能发，server能收</li>
-</ul>
-</li>
-<li>第二次握手,server -&gt; syn + ack -&gt; client
-<ul>
-<li>client知道，client能收发，server能收发</li>
-</ul>
-</li>
-<li>第三次握手,  client -&gt; ack -&gt; server
-<ul>
-<li>server知道，client能收, server能发 结合第一次 知道 双方都能收发</li>
-</ul>
-</li>
-<li>建立连接，开始传输数据</li>
-</ul>
-</li>
-<li>四次挥手发生在，断开client和server端连接
-<ul>
-<li>第一次挥手，client  -&gt; fin -&gt; server 告诉server自己要关闭连接了，不再发送数据但可以接收数据</li>
-<li>第二次挥手，server -&gt;ack -&gt; client ，表示自己收到client的消息，然后server端上层应用程序也被告知另一端发起关闭操作</li>
-<li>第三次挥手，server  -&gt; fin -&gt; client 表示server自己这边也关闭连接</li>
-<li>第四次挥手，client  -&gt; cack -&gt; server client告诉server自己收到连接关闭的消息。</li>
-</ul>
-</li>
-</ul>
-<img src="/2020/11/17/网络编程/image-20200312095124275.png" title="image-20200312095124275">
-</li>
-<li>
-<p>为何关闭连接要四次握手</p>
-<ul>
-<li>起初建立连接前，server在listen状态，收到要建立连接的syn报文后，把ack和syn放在一个报文里发送给client</li>
-<li>关闭连接时，当收到client的fin时，仅表示client端不再发送数据， 己方(server)是否关闭发送数据通道，需要上层应用决定，因此，FIN和ACK是分开发送的。</li>
-</ul>
-</li>
-</ul>
-<h4 id="http-协议"><a class="markdownIt-Anchor" href="#http-协议"></a> HTTP 协议</h4>
-<p>一个http服务器 本质上就是一个TCP服务器</p>
-<ul>
-<li>http1.0
-<ul>
-<li>browser 每次建立TCP连接后，只发送一个http请求并接受一个http 响应，然后就关闭TCP连接</li>
-</ul>
-</li>
-<li>http1.1
-<ul>
-<li>允许server和browser在同一个TCP连接上反复传送，接受多个HTTP请求响应</li>
-<li>由于创建一个TCP连接本身需要一定时间</li>
-</ul>
-</li>
-<li>http2.0
-<ul>
-<li>http协议是请求-响应协议，总是发送一个请求，接受一个响应</li>
-<li>http2.0允许browser同时发出多个请求，但每个请求需要有唯一标识，服务器可以不按请求的顺序返回多个响应。</li>
-<li>提高传输效率，因为browser在发出一个请求后，不必等待响应，就可以继续发下一个请求</li>
-</ul>
-</li>
-<li>http3.0
-<ul>
-<li>为提升速度，抛弃TCP协议，改为使用无需创建连接的UDP协议</li>
-</ul>
-</li>
-</ul>
-<h4 id="http连接和socket连接"><a class="markdownIt-Anchor" href="#http连接和socket连接"></a> http连接和socket连接</h4>
-<ul>
-<li>
-<p>http连接是“请求-- 响应模式”,  请求前先需要建立连接，还需要客户端向服务器发出请求，服务器才能回复数据</p>
-</li>
-<li>
-<p>socket 连接是 服务器端可以主动推数据给客户端来保持客户端与服务器数据的实时同步</p>
-</li>
-</ul>
-<p>TCP 单纯建立连接，不涉及任何我们需要请求的实际数据，简单的传输 – 传输层</p>
-<p>http 用来收发数据， 实际应用上， 属于应用层</p>
-<h4 id="web服务器"><a class="markdownIt-Anchor" href="#web服务器"></a> Web服务器</h4>
-<ul>
-<li>
-<p>完整的功能 (HTTP/1.1 为例)</p>
-<ul>
-<li>识别正确/错误的 HTTP请求</li>
-<li>识别正确/错误的HTTP头</li>
-<li>复用TCP连接</li>
-<li>复用线程</li>
-<li>IO异常处理</li>
-</ul>
-</li>
-<li>
-<p>通过py代码可以构建一个web服务器</p>
-<ul>
-<li>覆写 do_GET / do_POST 等函数来处理request</li>
-</ul>
-</li>
-<li>
-<p>但不希望每次给server增加新功能时，都是在server源码里修改</p>
-<ul>
-<li>如果程序能独立在另一个脚本文件运行，就是说每次加一个新功能都是新建一个py脚本，然后加在这个里面，然后server也能同步增加上这个功能。</li>
-<li>通过CGI 实现</li>
-</ul>
-</li>
-</ul>
-<h5 id="cgi"><a class="markdownIt-Anchor" href="#cgi"></a> CGI</h5>
-<ul>
-<li>CGI即<strong>通用网关接口</strong>(Common Gateway Interface)，是<strong>外部应用程序</strong>（CGI程序）与<strong>Web服务器之间的接口</strong>标准，是在CGI程序和Web服务器之间传递信息的规程。</li>
-<li>允许Web服务器<strong>执行外部程序</strong>，并将它们的输出发送给Web浏览器</li>
-<li>CGI方式在遇到连接请求（用户请求）先要创建cgi的子进程，激活一个CGI进程，然后处理请求，处理完后结束这个子进程。这就是fork-and-execute模式</li>
-<li>用cgi方式的服务器有多少连接请求就会有多少cgi子进程，<strong>子进程反复加载</strong>是cgi性能低下的主要原因。当用户请求数量非常多时，会大量挤占系统的资源如内存，CPU时间等，造成效能低下。</li>
-</ul>
-<p>CGI脚本工作流程：</p>
-<ol>
-<li>浏览器通过HTML表单或超链接请求指向一个CGI应用程序的URL。</li>
-<li>服务器收发到请求。</li>
-<li>服务器执行所指定的CGI应用程序。</li>
-<li>CGI应用程序执行所需要的操作，通常是基于浏览者输入的内容。</li>
-<li>CGI应用程序把结果格式化为网络服务器和浏览器能够理解的文档（通常是HTML网页）。</li>
-<li>网络服务器把结果返回到浏览器中。</li>
-</ol>
-<h5 id="servlet"><a class="markdownIt-Anchor" href="#servlet"></a> Servlet</h5>
-<p>JavaEE提供servelet处理HTTP请求。</p>
-<ul>
-<li>继承HttpServlet，<strong>覆写doGet()或doPost()</strong></li>
-<li>doGet 传入HttpServeletRequest  和 HttpServletResponse两个对象， 对应请求和响应</li>
-<li>使用Servlet ApI，并不直接与底层TCP交互，不需要解析HTTP协议</li>
-<li>支持Servlet API 的Web服务器
-<ul>
-<li>Tomcat, Jetty , GlassFish</li>
-</ul>
-</li>
-<li>Servlet 容器中运行的servlet
-<ul>
-<li>无法在代码中直接通过new创建servlet实例，必须由servlet容器自动创建servlet实例</li>
-<li>servlet容器只会给每个servlet类创建唯一实例</li>
-<li>servlet容器会使用多线程执行doGet() 或doPost()</li>
-</ul>
-</li>
-<li>重定向和转发
-<ul>
-<li>重定向 redirect
-<ul>
-<li>指当浏览器请求一个URL时, 服务器返回一个重定向指令，告诉浏览器地址已经变了，麻烦<strong>使用新的URL重新发送新</strong>请求 – 相当于有两次HTTP请求</li>
-<li>302 临时重定向，301永久重定向，301，浏览器会缓存/hi到/hello这个重定向的关联，下次请求/hi，浏览器直接发送/hello请求</li>
-</ul>
-</li>
-<li>转发 forward
-<ul>
-<li>内部转发，发生在服务器内部</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h5 id="jsp"><a class="markdownIt-Anchor" href="#jsp"></a> JSP</h5>
-<p>JSP- java server pages，整个文件与html无太大区别，后缀是.jsp，需要插入变量，或动态输出的地方用 &lt;% … %&gt;</p>
-<ul>
-<li>
-<p>&lt;%--  --%&gt; 之间是jsp注释</p>
-</li>
-<li>
-<p>&lt;% %&gt;之间是java代码</p>
-</li>
-<li>
-<p>&lt;%=  xxx %&gt; 可以快捷输出一个变量的值</p>
-</li>
-<li>
-<p>JSP 执行前首先被编译成一个Servlet，JSP本质就是一个servlet，但无需配置映射路径，web server 根据路径查找对应的jsp 文件</p>
-</li>
-</ul>
-<h5 id="mvc开发"><a class="markdownIt-Anchor" href="#mvc开发"></a> MVC开发</h5>
-<ul>
-<li>
-<p>servlet 适合编写java代码，但不适合输出复杂的html</p>
-</li>
-<li>
-<p>jsp适合编写html，并在其中插入动态内容，但不适合写复杂java代码</p>
-</li>
-<li>
-<p>MVC - M(model) , V(view), C(controller)</p>
-<ul>
-<li>C - 业务逻辑</li>
-<li>M- 数据模型</li>
-<li>V - 渲染视图</li>
-</ul>
-</li>
-</ul>
-<img src="/2020/11/17/网络编程/image-20200408145619279.png" title="image-20200408145619279">
-<h4 id="同源策略-same-origin-policy"><a class="markdownIt-Anchor" href="#同源策略-same-origin-policy"></a> 同源策略 same-origin policy</h4>
-<ul>
-<li>允许来自同一站点的资源进行相互访问而不受限制，但会阻止其他不同站点对文档/资源的访问。</li>
-<li>同源的文档必须有相同的<strong>协议，主机名和端口号</strong></li>
-<li>作用是可以防范会话劫持</li>
-</ul>
-<h4 id="跨域资源共享"><a class="markdownIt-Anchor" href="#跨域资源共享"></a> 跨域资源共享</h4>
-<p>CORS 是一种机制，允许我们绕过同源策略，从一个域名向另一个域名的资源发起请求.</p>
-<ul>
-<li>原理是添加新的HTTP头部，来对一些域名授权，那这些域名就可以发起对本页面的资源的请求。</li>
-</ul>
-
+        <h3 id="链表整个反转"><a class="markdownIt-Anchor" href="#链表整个反转"></a> 链表整个反转</h3>
+<h2 id="-more-"><a class="markdownIt-Anchor" href="#-more-"></a>
+        
+          <a class="article-more-a" href="/2020/11/26/listnode/#more">more >></a>
+        
       
 
       
-    </div>
+    </h2></div>
     <div class="article-info article-info-index">
       
       
@@ -1615,7 +558,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">网络</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">algorithm</a>
         		</li>
       		
 		</ul>
@@ -1625,7 +568,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/17/网络编程/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/11/26/listnode/">展开全文 >></a>
         </p>
       
 
@@ -1655,30 +598,30 @@
 
 
   
-    <article id="post-gevent源码" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-math" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/13/gevent源码/">gevent源码</a>
+      <a class="article-title" href="/2020/11/26/math/">math</a>
     </h1>
   
 
         
-        <a href="/2020/11/13/gevent源码/" class="archive-article-date">
-  	<time datetime="2020-11-13T06:16:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-13</time>
+        <a href="/2020/11/26/math/" class="archive-article-date">
+  	<time datetime="2020-11-26T06:28:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-26</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> gevent</span><br><span class="line">gevent.sleep(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sleep</span><span class="params">(seconds=<span class="number">0</span>)</span>:</span></span><br><span class="line">    hub = get_hub()</span><br><span class="line">    loop = hub.loop</span><br><span class="line">    hub.wait(loop.timer(seconds))</span><br><span class="line"></span><br><span class="line"><span class="comment"># hub是一个单例</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Hub</span><span class="params">(greenlet)</span>:</span></span><br><span class="line">    loop_class = config(<span class="string">'gevent.core.loop'</span>,<span class="string">'GEVENT_LOOP'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        greenlet.__init__(self)</span><br><span class="line">        loop_class = _import(self.loop_class)</span><br><span class="line">        self.loop = loop_class()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wait</span><span class="params">(self,watcher)</span>:</span></span><br><span class="line">        waiter = Waiter()</span><br><span class="line">        watcher.start(waiter.switch) <span class="comment"># watcher.start(method),当给定的几秒钟过后，会调用这里的函数也就是waiter.switch</span></span><br><span class="line">        waiter.get()</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Waiter</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.hub = get_hub()</span><br><span class="line">        self.greenlet = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">switch</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">assert</span> getcurrent() <span class="keyword">is</span> self.hub</span><br><span class="line">        self.greenlet.switch()</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">assert</span> self.greenlet <span class="keyword">is</span> <span class="literal">None</span></span><br><span class="line">        self.greenlet = getcurrent()</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">return</span> self.hub.switch()</span><br><span class="line">        <span class="keyword">finally</span>:</span><br><span class="line">            self.greenlet = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">hub.wait(loop.timer(seconds))</span><br><span class="line"><span class="comment"># loop有一堆接口,对应底层libev的各个功能, 这里用 timer(seconds) 返回一个watcher对象</span></span><br><span class="line">hub.wait()</span><br></pre></td></tr></table></figure>
-<p>相关资料</p>
-<p><a href="https://www.cnblogs.com/piperck/p/5719163.html" target="_blank" rel="noopener">ython 协程库gevent学习–gevent源码学习(二)</a></p>
-
+        <h4 id="素数分解"><a class="markdownIt-Anchor" href="#素数分解"></a> 素数分解</h4>
+        
+          <a class="article-more-a" href="/2020/11/26/math/#more">more >></a>
+        
       
 
       
@@ -1691,7 +634,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python,gevent</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">algorithm</a>
         		</li>
       		
 		</ul>
@@ -1701,7 +644,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/13/gevent源码/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/11/26/math/">展开全文 >></a>
         </p>
       
 
@@ -1731,50 +674,35 @@
 
 
   
-    <article id="post-bash技巧" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-string" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/12/bash技巧/">bash技巧</a>
+      <a class="article-title" href="/2020/11/26/string/">string</a>
     </h1>
   
 
         
-        <a href="/2020/11/12/bash技巧/" class="archive-article-date">
-  	<time datetime="2020-11-12T02:04:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-12</time>
+        <a href="/2020/11/26/string/" class="archive-article-date">
+  	<time datetime="2020-11-26T06:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-26</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Bash终端命令</p>
+        <h3 id="字符串"><a class="markdownIt-Anchor" href="#字符串"></a> 字符串</h3>
+<h4 id="两个字符串之间的最大相同子串"><a class="markdownIt-Anchor" href="#两个字符串之间的最大相同子串"></a> 两个字符串之间的最大相同子串</h4>
 <ul>
-<li>ctrl-r 搜索命令行历史记录
-<ul>
-<li>重复按ctrl-r 会向后查找匹配项</li>
-<li>Enter 会执行当前匹配命令</li>
-<li>右方向键 会把匹配项放入当前行，不会直接执行</li>
+<li>子串连续</li>
+<li>子串可以不连续</li>
 </ul>
-</li>
-<li>ctrl - u  删除光标所在位置之前的内容</li>
-<li>ctrl - k 删除光标到行尾的内容</li>
-<li>ctrl - a 光标移至行首</li>
-<li>ctrl - e 光标移至行尾</li>
-<li>history 查看命令行历史记录
-<ul>
-<li>!n(n是命令编号) 可以再次执行</li>
-<li>!! 指代上次键入的命令</li>
-</ul>
-</li>
-<li>cd - 回到前一个工作路径</li>
-<li>pstree -p 展示进程树</li>
-<li></li>
-</ul>
-
+        
+          <a class="article-more-a" href="/2020/11/26/string/#more">more >></a>
+        
       
 
       
@@ -1787,7 +715,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">algorithm</a>
         		</li>
       		
 		</ul>
@@ -1797,7 +725,237 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/12/bash技巧/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/11/26/string/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-topK" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/26/topK/">topK</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/26/topK/" class="archive-article-date">
+  	<time datetime="2020-11-26T06:18:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="常规解法"><a class="markdownIt-Anchor" href="#常规解法"></a> 常规解法</h3>
+<h4 id="排序"><a class="markdownIt-Anchor" href="#排序"></a> 排序</h4>
+        
+          <a class="article-more-a" href="/2020/11/26/topK/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">algorithm</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/26/topK/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-经验" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/26/经验/">经验</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/26/经验/" class="archive-article-date">
+  	<time datetime="2020-11-26T06:17:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="复制拷贝类算法题"><a class="markdownIt-Anchor" href="#复制拷贝类算法题"></a> 复制/拷贝类算法题</h3>
+        
+          <a class="article-more-a" href="/2020/11/26/经验/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">algorithm</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/26/经验/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-常见算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/26/常见算法/">常见算法</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/26/常见算法/" class="archive-article-date">
+  	<time datetime="2020-11-26T06:15:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="lru"><a class="markdownIt-Anchor" href="#lru"></a> LRU</h3>
+<p>least recently used</p>
+        
+          <a class="article-more-a" href="/2020/11/26/常见算法/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">algorithm</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/26/常见算法/">展开全文 >></a>
         </p>
       
 
@@ -1829,7 +987,7 @@
   
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 
@@ -1941,59 +1099,7 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">HMM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">nlp</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">NER</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">网络</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">text classification</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OS</a>
               </li>
             
             <div class="clearfix"></div>
