@@ -8,20 +8,20 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>TCP | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="TCP和UDP区别TCP的流量控制TCP拥塞控制SYN洪水攻击为什么需要三次握手连接而不是两次或者其他次数TCP四次挥手time_wait和closed_wait">
+  <meta name="description" content="TCP和UDP区别 TCP的流量控制 TCP拥塞控制 SYN洪水攻击 为什么需要三次握手连接而不是两次或者其他次数 TCP四次挥手time_wait和closed_wait">
 <meta name="keywords" content="网络">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TCP">
 <meta property="og:url" content="http://jasonyu.top/2020/11/17/TCP/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="TCP和UDP区别TCP的流量控制TCP拥塞控制SYN洪水攻击为什么需要三次握手连接而不是两次或者其他次数TCP四次挥手time_wait和closed_wait">
+<meta property="og:description" content="TCP和UDP区别 TCP的流量控制 TCP拥塞控制 SYN洪水攻击 为什么需要三次握手连接而不是两次或者其他次数 TCP四次挥手time_wait和closed_wait">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://jasonyu.top/2020/11/17/TCP/image-20201120095159344.png">
 <meta property="og:image" content="http://jasonyu.top/2020/11/17/TCP/image-20201120095642239.png">
-<meta property="og:updated_time" content="2020-11-26T08:54:51.578Z">
+<meta property="og:updated_time" content="2020-11-26T08:57:14.813Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TCP">
-<meta name="twitter:description" content="TCP和UDP区别TCP的流量控制TCP拥塞控制SYN洪水攻击为什么需要三次握手连接而不是两次或者其他次数TCP四次挥手time_wait和closed_wait">
+<meta name="twitter:description" content="TCP和UDP区别 TCP的流量控制 TCP拥塞控制 SYN洪水攻击 为什么需要三次握手连接而不是两次或者其他次数 TCP四次挥手time_wait和closed_wait">
 <meta name="twitter:image" content="http://jasonyu.top/2020/11/17/TCP/image-20201120095159344.png">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
@@ -172,14 +172,21 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><a href="#tcp和udp区别">TCP和UDP区别</a><br><a href="#tcp的流量控制">TCP的流量控制</a><br><a href="#tcp拥塞控制">TCP拥塞控制</a><br><a href="#syn洪水攻击">SYN洪水攻击</a><br><a href="#为什么需要三次握手连接而不是两次或者其他次数">为什么需要三次握手连接而不是两次或者其他次数</a><br><a href="#tcp四次挥手time_wait和closed_wait">TCP四次挥手time_wait和closed_wait</a></p>
+        <p><a href="#tcp%E5%92%8Cudp%E5%8C%BA%E5%88%AB">TCP和UDP区别</a><br>
+<a href="#tcp%E7%9A%84%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6">TCP的流量控制</a><br>
+<a href="#tcp%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6">TCP拥塞控制</a><br>
+<a href="#syn%E6%B4%AA%E6%B0%B4%E6%94%BB%E5%87%BB">SYN洪水攻击</a><br>
+<a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E8%BF%9E%E6%8E%A5%E8%80%8C%E4%B8%8D%E6%98%AF%E4%B8%A4%E6%AC%A1%E6%88%96%E8%80%85%E5%85%B6%E4%BB%96%E6%AC%A1%E6%95%B0">为什么需要三次握手连接而不是两次或者其他次数</a><br>
+<a href="#tcp%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8Btime_wait%E5%92%8Cclosed_wait">TCP四次挥手time_wait和closed_wait</a></p>
 <a id="more"></a>
-<h4 id="TCP和UDP区别"><a href="#TCP和UDP区别" class="headerlink" title="TCP和UDP区别"></a>TCP和UDP区别</h4><ul>
+<h4 id="tcp和udp区别"><a class="markdownIt-Anchor" href="#tcp和udp区别"></a> TCP和UDP区别</h4>
+<ul>
 <li>TCP面向连接;UDP是无连接的，即发送数据之前不需要建立连接</li>
 <li>TCP提供可靠的服务,通过TCP连接传送的数据，无差错，不丢失，不重复，且按序到达;UDP尽最大努力交付，即不保证可靠交付</li>
 <li>TCP面向字节流，实际上是TCP把数据看成一连串无结构的字节流;UDP是面向报文的UDP没有拥塞控制，因此网络出现拥塞不会使源主机的发送速率降低（对实时应用很有用，如IP电话，实时视频会议等</li>
 </ul>
-<h4 id="TCP的流量控制"><a href="#TCP的流量控制" class="headerlink" title="TCP的流量控制"></a>TCP的流量控制</h4><p>如果sender发送数据过快，receiver来不及接收，就会有分组丢失。<strong>为了避免分组丢</strong>失，控制发送者的发送速度，使得接收者来得及接收。目的是防止分组丢失，保证TCP可靠性。</p>
+<h4 id="tcp的流量控制"><a class="markdownIt-Anchor" href="#tcp的流量控制"></a> TCP的流量控制</h4>
+<p>如果sender发送数据过快，receiver来不及接收，就会有分组丢失。<strong>为了避免分组丢</strong>失，控制发送者的发送速度，使得接收者来得及接收。目的是防止分组丢失，保证TCP可靠性。</p>
 <p>实现</p>
 <ul>
 <li>滑动窗口协议，既保证了分组无差错、有序接收，也实现了流量控制。</li>
@@ -191,9 +198,11 @@
 <li>为了避免流量控制引发的死锁，TCP使用了<strong>持续计时器</strong>。每当发送者收到一个零窗口的应答后就启动该计时器。时间一到<strong>便主动发送报文询问接收者的窗口大小</strong>。若接收者仍然返回零窗口，则重置该计时器继续等待；若窗口不为0，则表示应答报文丢失了，此时重置发送窗口后开始发送，这样就避免了死锁的产生。</li>
 </ul>
 <p><a href="https://zhuanlan.zhihu.com/p/37379780" target="_blank" rel="noopener">TCP流量控制、拥塞控制</a></p>
-<h4 id="TCP拥塞控制"><a href="#TCP拥塞控制" class="headerlink" title="TCP拥塞控制"></a>TCP拥塞控制</h4><p>与流量控制区别</p>
+<h4 id="tcp拥塞控制"><a class="markdownIt-Anchor" href="#tcp拥塞控制"></a> TCP拥塞控制</h4>
+<p>与流量控制区别</p>
 <ul>
-<li>拥塞控制：拥塞控制是作用于网络的，它是防止过多的数据注入到网络中，<strong>避免出现网络负载过大</strong>的情况；<ul>
+<li>拥塞控制：拥塞控制是作用于网络的，它是防止过多的数据注入到网络中，<strong>避免出现网络负载过大</strong>的情况；
+<ul>
 <li>常用的方法</li>
 <li>慢开始、拥塞避免</li>
 <li>快重传、快恢复。</li>
@@ -202,10 +211,12 @@
 </ul>
 <p>流量控制：流量控制是<strong>作用于接收者</strong>的，它是<strong>控制发送者的发送速度</strong>从而使接收者来得及接收，防止分组丢失的</p>
 <ul>
-<li>慢开始<ul>
+<li>慢开始
+<ul>
 <li>发送方维持一个叫做拥塞窗口cwnd（congestion window）的状态变量。拥塞窗口的大小取决于网络的拥塞程度，并且动态地在变化。发送方让自己的发送窗口等于拥塞窗口，另外<strong>考虑到接受方的接收能力，发送窗口可能小于拥塞窗口</strong>。</li>
 <li>慢开始算法的思路就是，<strong>不要一开始就发送大量的数据</strong>，先探测一下网络的拥塞程度，也就是说<strong>由小到大逐渐增加拥塞窗口的大小</strong>。</li>
-<li>一个传输轮次所经历的时间其实就是往返时间RTT，而且每经过一个传输轮次（transmission round），拥塞窗口cwnd就加倍<ul>
+<li>一个传输轮次所经历的时间其实就是往返时间RTT，而且每经过一个传输轮次（transmission round），拥塞窗口cwnd就加倍
+<ul>
 <li>当cwnd&lt;ssthresh时，使用慢开始算法。</li>
 <li>当cwnd&gt;ssthresh时，改用拥塞避免算法。</li>
 <li>当cwnd=ssthresh时，慢开始与拥塞避免算法任意</li>
@@ -213,16 +224,19 @@
 </li>
 </ul>
 </li>
-<li>拥塞避免<ul>
+<li>拥塞避免
+<ul>
 <li>当cwnd&gt;ssthresh时，让拥塞窗口缓慢增长，即每经过一个往返时间RTT就把发送方的拥塞窗口cwnd加1</li>
 </ul>
 </li>
-<li>无论是在慢开始阶段还是在拥塞避免阶段，只要发送方判断网络出现拥塞（其根据就是<strong>没有按时收到确认</strong>，虽然没有收到确认可能是其他原因的分组丢失，但是因为无法判定，所以都当<strong>做拥塞</strong>来处理），<ul>
+<li>无论是在慢开始阶段还是在拥塞避免阶段，只要发送方判断网络出现拥塞（其根据就是<strong>没有按时收到确认</strong>，虽然没有收到确认可能是其他原因的分组丢失，但是因为无法判定，所以都当<strong>做拥塞</strong>来处理），
+<ul>
 <li>就把慢开始门限<strong>ssthresh设置为出现拥塞时的发送窗口大小的一半（但不能小于2</strong>）。然</li>
 <li>后把<strong>拥塞窗口cwnd重新设置为1</strong>，执行慢开始算法。</li>
 </ul>
 </li>
-<li>快恢复<ul>
+<li>快恢复
+<ul>
 <li>当发送方连续收到三个重复确认时，就执行“乘法减小”算法，<strong>把ssthresh门限减半</strong>（为了预防网络发生拥塞）。但是接下去并<strong>不执行慢开始</strong>算法</li>
 <li>如果网络出现拥塞的话就<strong>不会收到好几个重复的确认</strong>，所以发送方现在认为网络可能没有出现拥塞。所以此时不执行慢开始算法</li>
 <li>将cwnd设置为ssthresh减半后的值，然后执行<strong>拥塞避免</strong>算法，使cwnd缓慢增大</li>
@@ -230,7 +244,8 @@
 </ul>
 </li>
 </ul>
-<h4 id="TCP-重传机制"><a href="#TCP-重传机制" class="headerlink" title="TCP 重传机制"></a>TCP 重传机制</h4><ul>
+<h4 id="tcp-重传机制"><a class="markdownIt-Anchor" href="#tcp-重传机制"></a> TCP 重传机制</h4>
+<ul>
 <li>超时重传</li>
 </ul>
 <p>TCP 实现可靠传输的方式之一是通过序列号和确认应答。</p>
@@ -255,31 +270,39 @@
 <p>快速重传的工作方式是当收到三个相同的 ACK 报文时，会在定时器过期之前，重传丢失的报文段。</p>
 <p><strong>重传的时候，是重传之前的一个，还是重传所有的问题。</strong></p>
 <p>比如对于上面的例子，是重传 Seq2 呢？还是重传 Seq2、Seq3、Seq4、Seq5 呢？因为发送端并不清楚这连续的三个 Ack 2 是谁传回来的。</p>
-<h4 id="为什么需要三次握手连接而不是两次或者其他次数"><a href="#为什么需要三次握手连接而不是两次或者其他次数" class="headerlink" title="为什么需要三次握手连接而不是两次或者其他次数"></a>为什么需要三次握手连接而不是两次或者其他次数</h4><ul>
-<li>三次握手才能阻止重复历史连接的初始化<ul>
-<li>sender向receiver发出请求 SEQ = 100,CTL= SYN<ul>
+<h4 id="为什么需要三次握手连接而不是两次或者其他次数"><a class="markdownIt-Anchor" href="#为什么需要三次握手连接而不是两次或者其他次数"></a> 为什么需要三次握手连接而不是两次或者其他次数</h4>
+<ul>
+<li>三次握手才能阻止重复历史连接的初始化
+<ul>
+<li>sender向receiver发出请求 SEQ = 100,CTL= SYN
+<ul>
 <li>此时由于网络较差之类的问题,sender可能连续发送多次建立连接的请求，如果TCP建立连接只能通信两次，receiver并不清楚这次的请求是不是因为网络拥堵而已经过期的连接</li>
-<li>receiver收到请求时，发回 ACK = SEQ + 1 , SYN 让sender判断这次的连接是否过期<ul>
+<li>receiver收到请求时，发回 ACK = SEQ + 1 , SYN 让sender判断这次的连接是否过期
+<ul>
 <li>如果是历史连接，sender就会发送RST控制消息终止这次连接</li>
 <li>如果不是历史连接，sender就会发送ACK，通信双方就会成功建立连接</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>不是四次的原因<ul>
+<li>不是四次的原因
+<ul>
 <li>TCP消息头的设计，可以把中间两次通信合成一个，即receiver可以同时向sender发送ACK和SYN</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>三次握手才能对通信双方的初始序列号进行初始化<ul>
-<li>网络的不确定性导致数据包的丢失或者顺序颠倒<ul>
+<li>三次握手才能对通信双方的初始序列号进行初始化
+<ul>
+<li>网络的不确定性导致数据包的丢失或者顺序颠倒
+<ul>
 <li>数据包被sender重复发送导致数据重复</li>
 <li>数据包在传输中被路由或者其他节点丢失</li>
 <li>数据包到达receiver时没有按照发送顺序</li>
 </ul>
 </li>
-<li>通过序列号<ul>
+<li>通过序列号
+<ul>
 <li>receiver借助序列号<strong>对数据包去重，重新排序</strong></li>
 <li>sender在对应数据包<strong>未被ACK时重复发送</strong></li>
 </ul>
@@ -288,7 +311,8 @@
 </li>
 </ul>
 <p><a href="https://draveness.me/whys-the-design-tcp-three-way-handshake/" target="_blank" rel="noopener">为什么 TCP 建立连接需要三次握手</a></p>
-<h4 id="SYN洪水攻击"><a href="#SYN洪水攻击" class="headerlink" title="SYN洪水攻击"></a>SYN洪水攻击</h4><p>一个客户端不理会服务端发来的ack，一直重发syn怎么办</p>
+<h4 id="syn洪水攻击"><a class="markdownIt-Anchor" href="#syn洪水攻击"></a> SYN洪水攻击</h4>
+<p>一个客户端不理会服务端发来的ack，一直重发syn怎么办</p>
 <img src="/2020/11/17/TCP/image-20201120095159344.png" title="image-20201120095159344">
 <p>当服务端收到 SYN 包后，服务端会立马回复 SYN+ACK 包，表明确认收到了客户端的序列号，同时也把自己的序列号发给对方。</p>
 <p>服务端出现了新连接，状态是 <code>SYN_RCV</code>，Linux内核会建立一个<strong>半连接队列</strong>来维护 未完成的握手信息。 半连接队列溢出后，server就无法再建立新的连接。</p>
@@ -298,7 +322,8 @@
 </ul>
 <p><strong>开启 syncookies 功能就可以在不使用 SYN 半连接队列的情况下成功建立连接</strong>，</p>
 <p>syncookies 的工作原理：服务器根据当前状态计算出一个值，放在己方发出的 SYN+ACK 报文中发出，当客户端返回 ACK 报文时，取出该值验证，如果合法，就认为连接建立成功</p>
-<h4 id="TCP四次挥手time-wait和closed-wait"><a href="#TCP四次挥手time-wait和closed-wait" class="headerlink" title="TCP四次挥手time_wait和closed_wait"></a>TCP四次挥手time_wait和closed_wait</h4><p>客户端和服务端双方都可以主动断开连接，<strong>通常先关闭连接的一方称为主动方，后关闭连接的一方称为被动方。</strong></p>
+<h4 id="tcp四次挥手time_wait和closed_wait"><a class="markdownIt-Anchor" href="#tcp四次挥手time_wait和closed_wait"></a> TCP四次挥手time_wait和closed_wait</h4>
+<p>客户端和服务端双方都可以主动断开连接，<strong>通常先关闭连接的一方称为主动方，后关闭连接的一方称为被动方。</strong></p>
 <img src="/2020/11/17/TCP/image-20201120095642239.png" title="image-20201120095642239">
 <ul>
 <li>被动方在收到FIN报文后，内核自动回复ACK，连接从ESTABLISHED进入CLOSE_WAIT,表示被动方在<strong>等待进程调用close函数关闭连接</strong>。</li>
@@ -429,7 +454,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#TCP和UDP区别"><span class="toc-number">1.</span> <span class="toc-text">TCP和UDP区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TCP的流量控制"><span class="toc-number">2.</span> <span class="toc-text">TCP的流量控制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TCP拥塞控制"><span class="toc-number">3.</span> <span class="toc-text">TCP拥塞控制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TCP-重传机制"><span class="toc-number">4.</span> <span class="toc-text">TCP 重传机制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么需要三次握手连接而不是两次或者其他次数"><span class="toc-number">5.</span> <span class="toc-text">为什么需要三次握手连接而不是两次或者其他次数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SYN洪水攻击"><span class="toc-number">6.</span> <span class="toc-text">SYN洪水攻击</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TCP四次挥手time-wait和closed-wait"><span class="toc-number">7.</span> <span class="toc-text">TCP四次挥手time_wait和closed_wait</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#tcp和udp区别"><span class="toc-number">1.</span> <span class="toc-text"> TCP和UDP区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#tcp的流量控制"><span class="toc-number">2.</span> <span class="toc-text"> TCP的流量控制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#tcp拥塞控制"><span class="toc-number">3.</span> <span class="toc-text"> TCP拥塞控制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#tcp-重传机制"><span class="toc-number">4.</span> <span class="toc-text"> TCP 重传机制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么需要三次握手连接而不是两次或者其他次数"><span class="toc-number">5.</span> <span class="toc-text"> 为什么需要三次握手连接而不是两次或者其他次数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#syn洪水攻击"><span class="toc-number">6.</span> <span class="toc-text"> SYN洪水攻击</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#tcp四次挥手time_wait和closed_wait"><span class="toc-number">7.</span> <span class="toc-text"> TCP四次挥手time_wait和closed_wait</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -586,7 +611,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -594,7 +619,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">http</a>
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -602,11 +627,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
+                <a href="javascript:void(0)" class="js-tag color5">python, gevent</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -630,11 +655,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+                <a href="javascript:void(0)" class="js-tag color3">OS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OS</a>
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
               </li>
             
             <div class="clearfix"></div>

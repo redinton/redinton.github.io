@@ -167,7 +167,8 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>ubuntu 18.04 - mysql 5.7</p>
-<h3 id="安装与配置"><a href="#安装与配置" class="headerlink" title="安装与配置"></a>安装与配置</h3><h4 id="1-安装"><a href="#1-安装" class="headerlink" title="1. 安装"></a>1. 安装</h4>
+<h3 id="安装与配置"><a class="markdownIt-Anchor" href="#安装与配置"></a> 安装与配置</h3>
+<h4 id="1-安装"><a class="markdownIt-Anchor" href="#1-安装"></a> 1. 安装</h4>
         
           <a class="article-more-a" href="/2020/11/05/mysql安装与使用/#more">more >></a>
         
@@ -243,14 +244,16 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="annotate和aggregate"><a href="#annotate和aggregate" class="headerlink" title="annotate和aggregate"></a>annotate和aggregate</h3><p>初级查询方法如filter()和exclude().<br>涉及对queryset某些字段进行计算或分组计算排序时<br>
+        <h3 id="annotate和aggregate"><a class="markdownIt-Anchor" href="#annotate和aggregate"></a> annotate和aggregate</h3>
+<p>初级查询方法如filter()和exclude().<br>
+涉及对queryset某些字段进行计算或分组计算排序时</p>
         
           <a class="article-more-a" href="/2020/11/04/django_ORM/#more">more >></a>
         
       
 
       
-    </p></div>
+    </div>
     <div class="article-info article-info-index">
       
       
@@ -319,19 +322,21 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="事务-transaction"><a href="#事务-transaction" class="headerlink" title="事务 (transaction)"></a>事务 (transaction)</h3><p>把多条语句作为一个整体进行操作 — 成为数据库事务</p>
+        <h3 id="事务-transaction"><a class="markdownIt-Anchor" href="#事务-transaction"></a> 事务 (transaction)</h3>
+<p>把多条语句作为一个整体进行操作 – 成为数据库事务</p>
 <ul>
 <li>确保该事务范围内的所有操作全部成功或全部失败</li>
 <li>单条SQL语句, 数据库系统自动作为一个事务执行, 这种事务称为<strong>隐式事务</strong>。</li>
 <li>手动将多条SQL语句作为一个事务执行,  使用BEGIN开启一个事务, 使用COMMIT提交一个事务, 成为<strong>显式事务</strong>。</li>
-<li>主动让事务失败,  用ROLLBACK回滚事务, 整个事务会失败。
+<li>主动让事务失败,  用ROLLBACK回滚事务, 整个事务会失败。</li>
+</ul>
         
           <a class="article-more-a" href="/2020/11/04/mysql事务/#more">more >></a>
         
       
 
       
-    </li></ul></div>
+    </div>
     <div class="article-info article-info-index">
       
       
@@ -400,16 +405,18 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="mysql-的引擎"><a href="#mysql-的引擎" class="headerlink" title="mysql 的引擎"></a>mysql 的引擎</h3><p>mysql的存储方式由引擎决定，常用的有Innodb和MySiam。</p>
+        <h3 id="mysql-的引擎"><a class="markdownIt-Anchor" href="#mysql-的引擎"></a> mysql 的引擎</h3>
+<p>mysql的存储方式由引擎决定，常用的有Innodb和MySiam。</p>
 <ul>
-<li>不同的引擎区别在于如何存储和索引数据，是否使用事务
+<li>不同的引擎区别在于如何存储和索引数据，是否使用事务</li>
+</ul>
         
           <a class="article-more-a" href="/2020/11/04/mysql概念/#more">more >></a>
         
       
 
       
-    </li></ul></div>
+    </div>
     <div class="article-info article-info-index">
       
       
@@ -478,7 +485,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h4>
+        <h4 id="线程安全"><a class="markdownIt-Anchor" href="#线程安全"></a> 线程安全</h4>
         
           <a class="article-more-a" href="/2020/11/04/乐观锁悲观锁/#more">more >></a>
         
@@ -557,14 +564,15 @@
         <p>为了实现高并发,满足系统支持足够大的业务量</p>
 <ul>
 <li>前端静态资源压缩整合，CDN，分布式SOA架构</li>
-<li>缓存，数据库加索引，读写分离
+<li>缓存，数据库加索引，读写分离</li>
+</ul>
         
           <a class="article-more-a" href="/2020/11/03/高并发系统设计/#more">more >></a>
         
       
 
       
-    </li></ul></div>
+    </div>
     <div class="article-info article-info-index">
       
       
@@ -635,19 +643,21 @@
       
         <ul>
 <li>求最值类型的问题一般就往dp方向试</li>
-<li>dp问题 重叠子问题且符合最优子结构<ul>
+<li>dp问题 重叠子问题且符合最优子结构
+<ul>
 <li>子问题间相互独立即dp(n)和dp(n-1)的结果互不影响</li>
 <li>最优子结构，从子问题的最优结果推出更大规模的最优结果</li>
 </ul>
 </li>
-<li>找到状态和选择, 遍历状态, 作出选择
+<li>找到状态和选择, 遍历状态, 作出选择</li>
+</ul>
         
           <a class="article-more-a" href="/2020/11/01/dp/#more">more >></a>
         
       
 
       
-    </li></ul></div>
+    </div>
     <div class="article-info article-info-index">
       
       
@@ -718,21 +728,29 @@
       
         <p>可扩展性</p>
 <ul>
-<li>clone<ul>
+<li>clone
+<ul>
 <li>通常一个web服务背后有多台server通过load balancer来协调</li>
-<li>user-related data例如session,profile pictures之类的,不能存在某台server的本地,应该存在某个centralized data store可以被所有application server访问到<ul>
+<li>user-related data例如session,profile pictures之类的,不能存在某台server的本地,应该存在某个centralized data store可以被所有application server访问到
+<ul>
 <li>例如存在 external database or external persistent cache like redis</li>
 </ul>
 </li>
-<li>代码的部署<ul>
-<li>当代码有所改动，如何保证所有application server的代码都有变动
+<li>代码的部署
+<ul>
+<li>当代码有所改动，如何保证所有application server的代码都有变动</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
         
           <a class="article-more-a" href="/2020/10/31/scalability/#more">more >></a>
         
       
 
       
-    </li></ul></li></ul></li></ul></div>
+    </div>
     <div class="article-info article-info-index">
       
       
@@ -801,7 +819,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="BST-二叉搜索树"><a href="#BST-二叉搜索树" class="headerlink" title="BST 二叉搜索树"></a>BST 二叉搜索树</h3>
+        <h3 id="bst-二叉搜索树"><a class="markdownIt-Anchor" href="#bst-二叉搜索树"></a> BST 二叉搜索树</h3>
         
           <a class="article-more-a" href="/2020/10/31/tree_1/#more">more >></a>
         
@@ -1055,7 +1073,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1063,7 +1081,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">http</a>
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1071,11 +1089,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
+                <a href="javascript:void(0)" class="js-tag color5">python, gevent</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1099,11 +1117,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+                <a href="javascript:void(0)" class="js-tag color3">OS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OS</a>
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
               </li>
             
             <div class="clearfix"></div>

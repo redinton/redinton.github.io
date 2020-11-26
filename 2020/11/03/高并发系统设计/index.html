@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Keep Moving">
 <meta property="og:description" content="为了实现高并发,满足系统支持足够大的业务量  前端静态资源压缩整合，CDN，分布式SOA架构 缓存，数据库加索引，读写分离">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-26T08:54:51.564Z">
+<meta property="og:updated_time" content="2020-11-26T08:57:14.792Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="高并发系统设计">
 <meta name="twitter:description" content="为了实现高并发,满足系统支持足够大的业务量  前端静态资源压缩整合，CDN，分布式SOA架构 缓存，数据库加索引，读写分离">
@@ -172,15 +172,20 @@
         <p>为了实现高并发,满足系统支持足够大的业务量</p>
 <ul>
 <li>前端静态资源压缩整合，CDN，分布式SOA架构</li>
-<li>缓存，数据库加索引，读写分离<a id="more"></a>
-<h4 id="高并发系统设计原则"><a href="#高并发系统设计原则" class="headerlink" title="高并发系统设计原则"></a>高并发系统设计原则</h4></li>
+<li>缓存，数据库加索引，读写分离</li>
+</ul>
+<a id="more"></a>
+<h4 id="高并发系统设计原则"><a class="markdownIt-Anchor" href="#高并发系统设计原则"></a> 高并发系统设计原则</h4>
+<ul>
 <li>在系统其它既定条件下,系统处理请求越快，用户得到反馈的时间越短，单位时间内server处理请求的数量就越多</li>
 </ul>
 <p>秒杀状态分成未开始,可抢购,已抢完。 取决于活动开始时间，剩余库存</p>
 <p>剩余库存个数一般要全局一致，可以用memcached来缓存，秒杀中，库存变化非常快，直接对库存个数缓存，那么秒杀期间需要频繁更新缓存，不好。对于秒杀活动来说，剩余库存在某个时间点的个数没意义，用户关心是否可以抢，即true or false。只需要在库存耗尽的时候更新一次，而且为了防止这一次更新失败，可以重复更新。借助memcache的cas操作，也只会做一次set写操作。活动期间，查询活动状态的请求都打在memcached上，减少写的频率减轻memcache的负担。</p>
 <p>秒杀请求是写请求，用户发出秒杀请求到成功秒杀需要两个步骤，一是扣库存，二是发送秒杀商品。至少是两条数据库操作。扣库存这一步，在mysql的innodb engine行锁下，update的sql到了db就开始排队，期间db的连接是被占用的，请求足够多时造成db拥堵。</p>
 <ul>
-<li>限制能够真正进行秒杀的人数<ul>
+<li>
+<p>限制能够真正进行秒杀的人数</p>
+<ul>
 <li>比如有2500个名额，理论上来说先发送请求的2500个用户能够秒杀成功，这2500个用户扣库存的sql在数据库排队的时候，库存还没有消耗完。全部排队更新完是需要时间的，就比如说0.5s 在这个时间内，用户会看到当前仍然是可抢状态，所以这段时间内持续会有秒杀请求进入，秒杀的高峰期，0.5秒也有几万的请求，让几万条sql来竞争是没有意义的，所以要限制这些参与到扣库存这一步的人数。</li>
 <li>可抢状态需要第三个因素来决定，那就是当<strong>前秒杀的排队人数</strong>，比如2500个名额秒杀名额，目标放过去3000个秒杀请求</li>
 <li>有库存 并且 排队人数 &lt; 限制请求数 = 可抢，有库存 并且 排队人数 &gt;= 限制请求数 = 抢完</li>
@@ -189,12 +194,18 @@
 <li>怎么屏蔽重复用户呢？ 就要有个地方来记参与的用户id，可以使用redis的set结构来保存，这个时候set的size代表当前排队的用户数，扣库存之前add当前用户id到set，根据add是否成功的结果，来判断是否继续处理请求</li>
 </ul>
 </li>
-</ul>
-<ul>
-<li>传统秒杀系统之所以挂，请求都压倒了后端数据层，数据读写锁冲突严重，并发高响应慢，几乎所有请求都超时。</li>
-<li>充分利用缓存：这是一个典型的读多写少的应用场景</li>
-<li>产品层面，用户点击“查询”或者“购票”后，按钮置灰，禁止用户重复提交请求 b）JS层面，限制用户在x秒之内只能提交一次请求 如此限流，80%流量已拦。</li>
-<li>对于读请求，还要我说么？cache抗，不管是memcached还是redis，单机抗个每秒10w应该都是没什么问题的 如此限流，只有非常少的写请求，和非常少的读缓存mis的请求会透到数据层去，又有99.9%的请求被拦住了</li>
+<li>
+<p>传统秒杀系统之所以挂，请求都压倒了后端数据层，数据读写锁冲突严重，并发高响应慢，几乎所有请求都超时。</p>
+</li>
+<li>
+<p>充分利用缓存：这是一个典型的读多写少的应用场景</p>
+</li>
+<li>
+<p>产品层面，用户点击“查询”或者“购票”后，按钮置灰，禁止用户重复提交请求 b）JS层面，限制用户在x秒之内只能提交一次请求 如此限流，80%流量已拦。</p>
+</li>
+<li>
+<p>对于读请求，还要我说么？cache抗，不管是memcached还是redis，单机抗个每秒10w应该都是没什么问题的 如此限流，只有非常少的写请求，和非常少的读缓存mis的请求会透到数据层去，又有99.9%的请求被拦住了</p>
+</li>
 </ul>
 <p>常见的组件最大QPS，mysql单机1000QPS，Redis单机10万QPS。</p>
 <ul>
@@ -322,7 +333,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#高并发系统设计原则"><span class="toc-number">1.</span> <span class="toc-text">高并发系统设计原则</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#高并发系统设计原则"><span class="toc-number">1.</span> <span class="toc-text"> 高并发系统设计原则</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -479,7 +490,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -487,7 +498,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">http</a>
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -495,11 +506,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
+                <a href="javascript:void(0)" class="js-tag color5">python, gevent</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -523,11 +534,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+                <a href="javascript:void(0)" class="js-tag color3">OS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OS</a>
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
               </li>
             
             <div class="clearfix"></div>

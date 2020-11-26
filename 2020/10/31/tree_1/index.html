@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Keep Moving">
 <meta property="og:description" content="BST 二叉搜索树">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-26T08:54:51.486Z">
+<meta property="og:updated_time" content="2020-11-26T08:57:14.688Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tree_1">
 <meta name="twitter:description" content="BST 二叉搜索树">
@@ -169,10 +169,16 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="BST-二叉搜索树"><a href="#BST-二叉搜索树" class="headerlink" title="BST 二叉搜索树"></a>BST 二叉搜索树</h3><a id="more"></a>
-<h4 id="二叉搜索树的判定"><a href="#二叉搜索树的判定" class="headerlink" title="二叉搜索树的判定"></a><a href="https://leetcode-cn.com/problems/validate-binary-search-tree/" target="_blank" rel="noopener">二叉搜索树的判定</a></h4><h4 id="二叉搜索树的删除指定节点"><a href="#二叉搜索树的删除指定节点" class="headerlink" title="二叉搜索树的删除指定节点"></a><a href="https://leetcode-cn.com/problems/delete-node-in-a-bst/" target="_blank" rel="noopener">二叉搜索树的删除指定节点</a></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">TreeNode deleteNode(TreeNode root, int key) &#123;</span><br><span class="line">    <span class="keyword">if</span> (root == null) <span class="keyword">return</span> null;</span><br><span class="line">    <span class="keyword">if</span> (root.val == key) &#123;</span><br><span class="line">        // 这两个 <span class="keyword">if</span> 把情况 <span class="number">1</span> 和 <span class="number">2</span> 都正确处理了</span><br><span class="line">        <span class="keyword">if</span> (root.left == null) <span class="keyword">return</span> root.right;</span><br><span class="line">        <span class="keyword">if</span> (root.right == null) <span class="keyword">return</span> root.left;</span><br><span class="line">        // 处理情况 <span class="number">3</span></span><br><span class="line">        TreeNode minNode = getMin(root.right);</span><br><span class="line">        root.val = minNode.val;</span><br><span class="line">        root.right = deleteNode(root.right, minNode.val);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (root.val &gt; key) &#123;</span><br><span class="line">        root.left = deleteNode(root.left, key);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (root.val &lt; key) &#123;</span><br><span class="line">        root.right = deleteNode(root.right, key);</span><br><span class="line">    &#125;</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">TreeNode getMin(TreeNode node) &#123;</span><br><span class="line">    // BST 最左边的就是最⼩的</span><br><span class="line">    <span class="keyword">while</span> (node.left != null) node = node.left;</span><br><span class="line">    <span class="keyword">return</span> node;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="二叉搜索树第k小的元素"><a href="#二叉搜索树第k小的元素" class="headerlink" title="二叉搜索树第k小的元素"></a><a href="https://leetcode-cn.com/problems/kth-smallest-element-in-a-bst/" target="_blank" rel="noopener">二叉搜索树第k小的元素</a></h4><p>中序遍历第k个点。 最坏情况为O(N)<br>改进: 因为红黑树这种改良的自平衡BST,CRUD都是O(logN)的复杂度。因此, 我们可以通过在每个节点额外记录以当前节点作为根的二叉树有多少节点。这样每次搜索的时候,就可以知道当前节点是排第几了。</p>
-<h4 id="完全二叉树计算节点数目"><a href="#完全二叉树计算节点数目" class="headerlink" title="完全二叉树计算节点数目"></a><a href="https://leetcode-cn.com/problems/count-complete-tree-nodes/" target="_blank" rel="noopener">完全二叉树计算节点数目</a></h4><p>O(logN * logN) 的复杂度</p>
+        <h3 id="bst-二叉搜索树"><a class="markdownIt-Anchor" href="#bst-二叉搜索树"></a> BST 二叉搜索树</h3>
+<a id="more"></a>
+<h4 id="二叉搜索树的判定"><a class="markdownIt-Anchor" href="#二叉搜索树的判定"></a> <a href="https://leetcode-cn.com/problems/validate-binary-search-tree/" target="_blank" rel="noopener">二叉搜索树的判定</a></h4>
+<h4 id="二叉搜索树的删除指定节点"><a class="markdownIt-Anchor" href="#二叉搜索树的删除指定节点"></a> <a href="https://leetcode-cn.com/problems/delete-node-in-a-bst/" target="_blank" rel="noopener">二叉搜索树的删除指定节点</a></h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">TreeNode deleteNode(TreeNode root, int key) &#123;</span><br><span class="line">    <span class="keyword">if</span> (root == null) <span class="keyword">return</span> null;</span><br><span class="line">    <span class="keyword">if</span> (root.val == key) &#123;</span><br><span class="line">        // 这两个 <span class="keyword">if</span> 把情况 <span class="number">1</span> 和 <span class="number">2</span> 都正确处理了</span><br><span class="line">        <span class="keyword">if</span> (root.left == null) <span class="keyword">return</span> root.right;</span><br><span class="line">        <span class="keyword">if</span> (root.right == null) <span class="keyword">return</span> root.left;</span><br><span class="line">        // 处理情况 <span class="number">3</span></span><br><span class="line">        TreeNode minNode = getMin(root.right);</span><br><span class="line">        root.val = minNode.val;</span><br><span class="line">        root.right = deleteNode(root.right, minNode.val);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (root.val &gt; key) &#123;</span><br><span class="line">        root.left = deleteNode(root.left, key);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (root.val &lt; key) &#123;</span><br><span class="line">        root.right = deleteNode(root.right, key);</span><br><span class="line">    &#125;</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">TreeNode getMin(TreeNode node) &#123;</span><br><span class="line">    // BST 最左边的就是最⼩的</span><br><span class="line">    <span class="keyword">while</span> (node.left != null) node = node.left;</span><br><span class="line">    <span class="keyword">return</span> node;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="二叉搜索树第k小的元素"><a class="markdownIt-Anchor" href="#二叉搜索树第k小的元素"></a> <a href="https://leetcode-cn.com/problems/kth-smallest-element-in-a-bst/" target="_blank" rel="noopener">二叉搜索树第k小的元素</a></h4>
+<p>中序遍历第k个点。 最坏情况为O(N)<br>
+改进: 因为红黑树这种改良的自平衡BST,CRUD都是O(logN)的复杂度。因此, 我们可以通过在每个节点额外记录以当前节点作为根的二叉树有多少节点。这样每次搜索的时候,就可以知道当前节点是排第几了。</p>
+<h4 id="完全二叉树计算节点数目"><a class="markdownIt-Anchor" href="#完全二叉树计算节点数目"></a> <a href="https://leetcode-cn.com/problems/count-complete-tree-nodes/" target="_blank" rel="noopener">完全二叉树计算节点数目</a></h4>
+<p>O(logN * logN) 的复杂度</p>
 
       
 
@@ -294,7 +300,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#BST-二叉搜索树"><span class="toc-number">1.</span> <span class="toc-text">BST 二叉搜索树</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#二叉搜索树的判定"><span class="toc-number">1.1.</span> <span class="toc-text">二叉搜索树的判定</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#二叉搜索树的删除指定节点"><span class="toc-number">1.2.</span> <span class="toc-text">二叉搜索树的删除指定节点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#二叉搜索树第k小的元素"><span class="toc-number">1.3.</span> <span class="toc-text">二叉搜索树第k小的元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#完全二叉树计算节点数目"><span class="toc-number">1.4.</span> <span class="toc-text">完全二叉树计算节点数目</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#bst-二叉搜索树"><span class="toc-number">1.</span> <span class="toc-text"> BST 二叉搜索树</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#二叉搜索树的判定"><span class="toc-number">1.1.</span> <span class="toc-text"> 二叉搜索树的判定</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#二叉搜索树的删除指定节点"><span class="toc-number">1.2.</span> <span class="toc-text"> 二叉搜索树的删除指定节点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#二叉搜索树第k小的元素"><span class="toc-number">1.3.</span> <span class="toc-text"> 二叉搜索树第k小的元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#完全二叉树计算节点数目"><span class="toc-number">1.4.</span> <span class="toc-text"> 完全二叉树计算节点数目</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -451,7 +457,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -459,7 +465,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">http</a>
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -467,11 +473,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
+                <a href="javascript:void(0)" class="js-tag color5">python, gevent</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -495,11 +501,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+                <a href="javascript:void(0)" class="js-tag color3">OS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OS</a>
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
               </li>
             
             <div class="clearfix"></div>

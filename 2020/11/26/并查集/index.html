@@ -8,22 +8,22 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>并查集 | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Union find并查集">
+  <meta name="description" content="Union find 并查集">
 <meta name="keywords" content="algorithm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="并查集">
 <meta property="og:url" content="http://jasonyu.top/2020/11/26/并查集/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="Union find并查集">
+<meta property="og:description" content="Union find 并查集">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://jasonyu.top/2020/11/26/并查集/image-20200109203151686.png">
 <meta property="og:image" content="http://jasonyu.top/2020/11/26/并查集/image-20200109203523778.png">
 <meta property="og:image" content="http://jasonyu.top/2020/11/26/并查集/image-20200109213836865.png">
 <meta property="og:image" content="http://jasonyu.top/2020/11/26/并查集/image-20200109215215269.png">
-<meta property="og:updated_time" content="2020-11-26T08:54:51.490Z">
+<meta property="og:updated_time" content="2020-11-26T08:57:14.695Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="并查集">
-<meta name="twitter:description" content="Union find并查集">
+<meta name="twitter:description" content="Union find 并查集">
 <meta name="twitter:image" content="http://jasonyu.top/2020/11/26/并查集/image-20200109203151686.png">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
@@ -174,7 +174,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="Union-find"><a href="#Union-find" class="headerlink" title="Union find"></a>Union find</h3><p>并查集<br><a id="more"></a><br>dynamic connectivity problem - 动态连通性</p>
+        <h3 id="union-find"><a class="markdownIt-Anchor" href="#union-find"></a> Union find</h3>
+<p>并查集</p>
+<a id="more"></a>
+<p>dynamic connectivity problem - 动态连通性</p>
 <p>several implementations</p>
 <ul>
 <li>quick find</li>
@@ -183,32 +186,35 @@
 <li>weighted quick union with path compression</li>
 </ul>
 <p>percolation(渗流) problem</p>
-<h4 id="dynamic-connectivity"><a href="#dynamic-connectivity" class="headerlink" title="dynamic connectivity"></a>dynamic connectivity</h4><p>给定 a set of N objects， 有一些object直接是connect的， (union command就是 connect two objects), 问题是 问 某两个object 之间是否 connect.</p>
+<h4 id="dynamic-connectivity"><a class="markdownIt-Anchor" href="#dynamic-connectivity"></a> dynamic connectivity</h4>
+<p>给定 a set of N objects， 有一些object直接是connect的， (union command就是 connect two objects), 问题是 问 某两个object 之间是否 connect.</p>
 <ul>
 <li>应用点:</li>
 </ul>
 <img src="/2020/11/26/并查集/image-20200109203151686.png" title="image-20200109203151686">
 <ul>
-<li><p>connected components</p>
-<p>maximal set of  objects that are mutually  connected</p>
-</li>
+<li>connected components</li>
 </ul>
+<p>maximal set of  objects that are mutually  connected</p>
 <img src="/2020/11/26/并查集/image-20200109203523778.png" title="image-20200109203523778">
-<h4 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h4><ul>
+<h4 id="解决方法"><a class="markdownIt-Anchor" href="#解决方法"></a> 解决方法</h4>
+<ul>
 <li>quick find</li>
 <li>quick union</li>
-<li>weighted quick union<ul>
+<li>weighted quick union
+<ul>
 <li>quick union 的弊端在于 最后的树可能会很深</li>
 <li>weighted 的策略就是在合并的时候，把 large tree 放在 small tree 上面。</li>
 </ul>
 </li>
 </ul>
 <img src="/2020/11/26/并查集/image-20200109213836865.png" title="image-20200109213836865">
-<h4 id="Percolation-problem"><a href="#Percolation-problem" class="headerlink" title="Percolation problem"></a>Percolation problem</h4><img src="/2020/11/26/并查集/image-20200109215215269.png" title="image-20200109215215269">
+<h4 id="percolation-problem"><a class="markdownIt-Anchor" href="#percolation-problem"></a> Percolation problem</h4>
+<img src="/2020/11/26/并查集/image-20200109215215269.png" title="image-20200109215215269">
 <p>随机开启区域(每一个block可能开启也可能关闭)， check botton block是否和 top block 有连接 (connect),</p>
 <p>随机开启了block就是一个union 的操作</p>
-<p><strong>Social network connectivity.</strong> - </p>
-<p>Given a social network containing <strong>n</strong> members and a log file containing m timestamps at which times pairs of members formed friendships, </p>
+<p><strong>Social network connectivity.</strong> -</p>
+<p>Given a social network containing <strong>n</strong> members and a log file containing m timestamps at which times pairs of members formed friendships,</p>
 <p>design an algorithm to determine the <strong>earliest tim</strong>e at which all members are connected (i.e., every member is a friend of a friend of a friend … of a friend). Assume that the log file is sorted by timestamp and that friendship is an equivalence relation. The running time of your algorithm should be mlogn or better and use extra space proportional to n.</p>
 <p>log file 里存的就是 union 操作</p>
 
@@ -332,7 +338,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Union-find"><span class="toc-number">1.</span> <span class="toc-text">Union find</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#dynamic-connectivity"><span class="toc-number">1.1.</span> <span class="toc-text">dynamic connectivity</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#解决方法"><span class="toc-number">1.2.</span> <span class="toc-text">解决方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Percolation-problem"><span class="toc-number">1.3.</span> <span class="toc-text">Percolation problem</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#union-find"><span class="toc-number">1.</span> <span class="toc-text"> Union find</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#dynamic-connectivity"><span class="toc-number">1.1.</span> <span class="toc-text"> dynamic connectivity</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#解决方法"><span class="toc-number">1.2.</span> <span class="toc-text"> 解决方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#percolation-problem"><span class="toc-number">1.3.</span> <span class="toc-text"> Percolation problem</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -489,7 +495,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -497,7 +503,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">http</a>
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -505,11 +511,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
+                <a href="javascript:void(0)" class="js-tag color5">python, gevent</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -533,11 +539,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+                <a href="javascript:void(0)" class="js-tag color3">OS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OS</a>
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
               </li>
             
             <div class="clearfix"></div>

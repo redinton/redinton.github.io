@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>numpy | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="array 数组的展开如a是3*4 展开成12，有 ravel 和flatten 两种方式">
+  <meta name="description" content="array 数组的展开 如a是3*4 展开成12，有 ravel 和flatten 两种方式">
 <meta name="keywords" content="python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="numpy">
 <meta property="og:url" content="http://jasonyu.top/2020/11/26/numpy/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="array 数组的展开如a是3*4 展开成12，有 ravel 和flatten 两种方式">
+<meta property="og:description" content="array 数组的展开 如a是3*4 展开成12，有 ravel 和flatten 两种方式">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-26T08:54:51.583Z">
+<meta property="og:updated_time" content="2020-11-26T08:57:14.819Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="numpy">
-<meta name="twitter:description" content="array 数组的展开如a是3*4 展开成12，有 ravel 和flatten 两种方式">
+<meta name="twitter:description" content="array 数组的展开 如a是3*4 展开成12，有 ravel 和flatten 两种方式">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -169,7 +169,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="array-数组的展开"><a href="#array-数组的展开" class="headerlink" title="array 数组的展开"></a>array 数组的展开</h4><p>如a是3*4 展开成12，有 ravel 和flatten 两种方式<br><a id="more"></a><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">a = arange(<span class="number">12</span>).reshape(<span class="number">3</span>,<span class="number">4</span>)</span><br><span class="line">print(a)</span><br><span class="line"><span class="comment"># [[ 0  1  2  3]</span></span><br><span class="line"><span class="comment">#  [ 4  5  6  7]</span></span><br><span class="line"><span class="comment">#  [ 8  9 10 11]]</span></span><br><span class="line">print(a.ravel())</span><br><span class="line"><span class="comment"># [ 0  1  2  3  4  5  6  7  8  9 10 11]</span></span><br><span class="line">print(a.flatten())</span><br><span class="line"><span class="comment"># [ 0  1  2  3  4  5  6  7  8  9 10 11]</span></span><br></pre></td></tr></table></figure></p>
+        <h4 id="array-数组的展开"><a class="markdownIt-Anchor" href="#array-数组的展开"></a> array 数组的展开</h4>
+<p>如a是3*4 展开成12，有 ravel 和flatten 两种方式</p>
+<a id="more"></a>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">a = arange(<span class="number">12</span>).reshape(<span class="number">3</span>,<span class="number">4</span>)</span><br><span class="line">print(a)</span><br><span class="line"><span class="comment"># [[ 0  1  2  3]</span></span><br><span class="line"><span class="comment">#  [ 4  5  6  7]</span></span><br><span class="line"><span class="comment">#  [ 8  9 10 11]]</span></span><br><span class="line">print(a.ravel())</span><br><span class="line"><span class="comment"># [ 0  1  2  3  4  5  6  7  8  9 10 11]</span></span><br><span class="line">print(a.flatten())</span><br><span class="line"><span class="comment"># [ 0  1  2  3  4  5  6  7  8  9 10 11]</span></span><br></pre></td></tr></table></figure>
 <p>在平时使用的时候flatten()更为合适</p>
 <p>使用过程中flatten()分配了新的内存,</p>
 <p>但ravel()返回的是一个数组的视图.视图是数组的引用(说引用不太恰当,因为原数组和ravel()返回后的数组的地址并不一样), 虽然他们是不同的对象,但在修改ravel后的结果的时候,ravel前的结果中相应的数也改变了</p>
@@ -294,7 +297,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#array-数组的展开"><span class="toc-number">1.</span> <span class="toc-text">array 数组的展开</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#array-数组的展开"><span class="toc-number">1.</span> <span class="toc-text"> array 数组的展开</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -451,7 +454,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -459,7 +462,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">http</a>
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -467,11 +470,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
+                <a href="javascript:void(0)" class="js-tag color5">python, gevent</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -495,11 +498,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+                <a href="javascript:void(0)" class="js-tag color3">OS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OS</a>
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
               </li>
             
             <div class="clearfix"></div>

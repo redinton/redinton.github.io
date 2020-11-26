@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>mysql问题 | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="mysql如何实现不同的隔离级别mysql的wait_timeout和interactive_timeout">
+  <meta name="description" content="mysql如何实现不同的隔离级别 mysql的wait_timeout和interactive_timeout">
 <meta name="keywords" content="mysql">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql问题">
 <meta property="og:url" content="http://jasonyu.top/2020/11/21/mysql问题/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="mysql如何实现不同的隔离级别mysql的wait_timeout和interactive_timeout">
+<meta property="og:description" content="mysql如何实现不同的隔离级别 mysql的wait_timeout和interactive_timeout">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-26T08:54:51.557Z">
+<meta property="og:updated_time" content="2020-11-26T08:57:14.780Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql问题">
-<meta name="twitter:description" content="mysql如何实现不同的隔离级别mysql的wait_timeout和interactive_timeout">
+<meta name="twitter:description" content="mysql如何实现不同的隔离级别 mysql的wait_timeout和interactive_timeout">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -169,42 +169,54 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><a href="#mysql如何实现不同的隔离级别">mysql如何实现不同的隔离级别</a><br><a href="#mysql的wait_timeout和interactive_timeout">mysql的wait_timeout和interactive_timeout</a></p>
+        <p><a href="#mysql%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E4%B8%8D%E5%90%8C%E7%9A%84%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB">mysql如何实现不同的隔离级别</a><br>
+<a href="#mysql%E7%9A%84wait_timeout%E5%92%8Cinteractive_timeout">mysql的wait_timeout和interactive_timeout</a></p>
 <a id="more"></a>
-<h4 id="mysql如何实现不同的隔离级别"><a href="#mysql如何实现不同的隔离级别" class="headerlink" title="mysql如何实现不同的隔离级别"></a>mysql如何实现不同的隔离级别</h4><ul>
-<li>read commited<ul>
+<h4 id="mysql如何实现不同的隔离级别"><a class="markdownIt-Anchor" href="#mysql如何实现不同的隔离级别"></a> mysql如何实现不同的隔离级别</h4>
+<ul>
+<li>read commited
+<ul>
 <li>只<strong>对记录加记录锁</strong>，而不<strong>会在记录之间加间隙锁</strong></li>
 <li>允许新的记录插入到被锁定记录的附近，所以再多次使用查询语句时，可能得到不同的结果（Non-Repeatable Read）</li>
 </ul>
 </li>
-<li>REPEATABLE READ<ul>
+<li>REPEATABLE READ
+<ul>
 <li>多次读取同一范围的数据会<strong>返回第一次查询的快照</strong>，不会返回不同的数据行</li>
-<li>可以用过 MySQL 提供的 Next-Key 锁解决幻读问题<ul>
+<li>可以用过 MySQL 提供的 Next-Key 锁解决幻读问题
+<ul>
 <li>幻读： 在一个事务中，同一个范围内的记录被读取时，其他事务向这个范围添加了新的记录。</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>SERIALIZABLE <ul>
-<li>InnoDB 隐式地将全部的查询语句加上共享锁，解决了幻读的问题<br><a href="https://draveness.me/mysql-innodb/" target="_blank" rel="noopener">浅入浅出 MySQL 和 InnoDB</a></li>
+<li>SERIALIZABLE
+<ul>
+<li>InnoDB 隐式地将全部的查询语句加上共享锁，解决了幻读的问题<br>
+<a href="https://draveness.me/mysql-innodb/" target="_blank" rel="noopener">浅入浅出 MySQL 和 InnoDB</a></li>
 </ul>
 </li>
 </ul>
-<h4 id="mysql的wait-timeout和interactive-timeout"><a href="#mysql的wait-timeout和interactive-timeout" class="headerlink" title="mysql的wait_timeout和interactive_timeout"></a>mysql的wait_timeout和interactive_timeout</h4><ul>
-<li>interactive_timeout<ul>
+<h4 id="mysql的wait_timeout和interactive_timeout"><a class="markdownIt-Anchor" href="#mysql的wait_timeout和interactive_timeout"></a> mysql的wait_timeout和interactive_timeout</h4>
+<ul>
+<li>interactive_timeout
+<ul>
 <li>服务器关闭交互式连接前等待的时间(s)</li>
 <li>交互式连接就是在终端打开mysql连接，小黑框里进行sql的操作</li>
 </ul>
 </li>
-<li>wait_timeout<ul>
+<li>wait_timeout
+<ul>
 <li>服务器关闭非交互式连接前等待的时间(s)</li>
 <li>非交互式连接就是通过类似jdbc hibernate这种插件调用mysql的连接。</li>
 <li>到点就会自动kill掉mysql的一部分连接线程</li>
 </ul>
 </li>
-<li>修改方式<ul>
+<li>修改方式
+<ul>
 <li>修改当前的session</li>
-<li>修改全局的属性值<ul>
+<li>修改全局的属性值
+<ul>
 <li>my.ini配置文件添加wait_timeout=10, 然后重启服务</li>
 </ul>
 </li>
@@ -334,7 +346,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#mysql如何实现不同的隔离级别"><span class="toc-number">1.</span> <span class="toc-text">mysql如何实现不同的隔离级别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mysql的wait-timeout和interactive-timeout"><span class="toc-number">2.</span> <span class="toc-text">mysql的wait_timeout和interactive_timeout</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#mysql如何实现不同的隔离级别"><span class="toc-number">1.</span> <span class="toc-text"> mysql如何实现不同的隔离级别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mysql的wait_timeout和interactive_timeout"><span class="toc-number">2.</span> <span class="toc-text"> mysql的wait_timeout和interactive_timeout</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -491,7 +503,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -499,7 +511,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">http</a>
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -507,11 +519,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
+                <a href="javascript:void(0)" class="js-tag color5">python, gevent</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -535,11 +547,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+                <a href="javascript:void(0)" class="js-tag color3">OS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OS</a>
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
               </li>
             
             <div class="clearfix"></div>

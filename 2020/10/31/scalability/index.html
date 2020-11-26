@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>scalability | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="可扩展性  clone 通常一个web服务背后有多台server通过load balancer来协调 user-related data例如session,profile pictures之类的,不能存在某台server的本地,应该存在某个centralized data store可以被所有application server访问到 例如存在 external database or exter">
+  <meta name="description" content="可扩展性  clone  通常一个web服务背后有多台server通过load balancer来协调 user-related data例如session,profile pictures之类的,不能存在某台server的本地,应该存在某个centralized data store可以被所有application server访问到  例如存在 external database or ext">
 <meta name="keywords" content="分布式">
 <meta property="og:type" content="article">
 <meta property="og:title" content="scalability">
 <meta property="og:url" content="http://jasonyu.top/2020/10/31/scalability/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="可扩展性  clone 通常一个web服务背后有多台server通过load balancer来协调 user-related data例如session,profile pictures之类的,不能存在某台server的本地,应该存在某个centralized data store可以被所有application server访问到 例如存在 external database or exter">
+<meta property="og:description" content="可扩展性  clone  通常一个web服务背后有多台server通过load balancer来协调 user-related data例如session,profile pictures之类的,不能存在某台server的本地,应该存在某个centralized data store可以被所有application server访问到  例如存在 external database or ext">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-26T08:54:51.561Z">
+<meta property="og:updated_time" content="2020-11-26T08:57:14.787Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="scalability">
-<meta name="twitter:description" content="可扩展性  clone 通常一个web服务背后有多台server通过load balancer来协调 user-related data例如session,profile pictures之类的,不能存在某台server的本地,应该存在某个centralized data store可以被所有application server访问到 例如存在 external database or exter">
+<meta name="twitter:description" content="可扩展性  clone  通常一个web服务背后有多台server通过load balancer来协调 user-related data例如session,profile pictures之类的,不能存在某台server的本地,应该存在某个centralized data store可以被所有application server访问到  例如存在 external database or ext">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -171,60 +171,83 @@
       
         <p>可扩展性</p>
 <ul>
-<li>clone<ul>
+<li>clone
+<ul>
 <li>通常一个web服务背后有多台server通过load balancer来协调</li>
-<li>user-related data例如session,profile pictures之类的,不能存在某台server的本地,应该存在某个centralized data store可以被所有application server访问到<ul>
+<li>user-related data例如session,profile pictures之类的,不能存在某台server的本地,应该存在某个centralized data store可以被所有application server访问到
+<ul>
 <li>例如存在 external database or external persistent cache like redis</li>
 </ul>
 </li>
-<li>代码的部署<ul>
-<li>当代码有所改动，如何保证所有application server的代码都有变动<a id="more"></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>database</p>
+<li>代码的部署
 <ul>
-<li>mysql的主从结构, master负责写,然后slaves负责读<ul>
+<li>当代码有所改动，如何保证所有application server的代码都有变动</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+<ul>
+<li>
+<p>database</p>
+<ul>
+<li>mysql的主从结构, master负责写,然后slaves负责读
+<ul>
 <li>sharding, denormalization, SQL tuning</li>
 </ul>
 </li>
-<li>用NoSQL, 不在任何databse query中加join操作<ul>
+<li>用NoSQL, 不在任何databse query中加join操作
+<ul>
 <li>join操作放在代码里执行</li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p>cache</p>
+<li>
+<p>cache</p>
 <ul>
 <li>memory-cache Key-Value结构</li>
-<li>cache database query<ul>
-<li>每次去数据库取数的时候,把query和取回来的result存在cache中<ul>
+<li>cache database query
+<ul>
+<li>每次去数据库取数的时候,把query和取回来的result存在cache中
+<ul>
 <li>数据库中数据变化的时候，需要删除cache中对应的所有记录</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>cache objects<ul>
+<li>cache objects
+<ul>
 <li>直接cache objects 可以是一个classes或者是instances</li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p>asynchronous</p>
+<li>
+<p>asynchronous</p>
 <ul>
 <li>把耗时的工作变成异步来做</li>
 </ul>
 </li>
+<li>
+<p>水平扩展</p>
+</li>
+<li>
+<p>垂直扩展</p>
+</li>
+<li>
+<p>负载均衡</p>
+</li>
+<li>
+<p>数据库复制</p>
+</li>
+<li>
+<p>数据库分区</p>
+</li>
 </ul>
-<ul>
-<li>水平扩展</li>
-<li>垂直扩展</li>
-<li>负载均衡</li>
-<li>数据库复制</li>
-<li>数据库分区</li>
-</ul>
-<h4 id="性能和可扩展性"><a href="#性能和可扩展性" class="headerlink" title="性能和可扩展性"></a>性能和可扩展性</h4><p>服务性能的增长与资源的增加是成比例的,服务是可扩展的。</p>
+<h4 id="性能和可扩展性"><a class="markdownIt-Anchor" href="#性能和可扩展性"></a> 性能和可扩展性</h4>
+<p>服务性能的增长与资源的增加是成比例的,服务是可扩展的。</p>
 
       
 
@@ -346,7 +369,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#性能和可扩展性"><span class="toc-number">1.</span> <span class="toc-text">性能和可扩展性</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#性能和可扩展性"><span class="toc-number">1.</span> <span class="toc-text"> 性能和可扩展性</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -503,7 +526,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -511,7 +534,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">http</a>
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -519,11 +542,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
+                <a href="javascript:void(0)" class="js-tag color5">python, gevent</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -547,11 +570,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+                <a href="javascript:void(0)" class="js-tag color3">OS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OS</a>
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
               </li>
             
             <div class="clearfix"></div>

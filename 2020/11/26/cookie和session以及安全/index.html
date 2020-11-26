@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>cookie和session以及安全 | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="cookie一个 cookie 形似 name = value,  存储在浏览器, 但也可以设置多个，因此cookie 是 一组 键值对儿 一个session 理解为一个数据结构，多数情况是映射， 存储在服务器上 cookie字段存在HTTP header中，量一大就占带宽。 cookie可以存储一个sessionID=xxx， 仅传这个cookie给server，server用这个找到对应的se">
+  <meta name="description" content="cookie 一个 cookie 形似 name = value,  存储在浏览器, 但也可以设置多个，因此cookie 是 一组 键值对儿 一个session 理解为一个数据结构，多数情况是映射， 存储在服务器上 cookie字段存在HTTP header中，量一大就占带宽。 cookie可以存储一个sessionID=xxx， 仅传这个cookie给server，server用这个找到对应的">
 <meta name="keywords" content="http">
 <meta property="og:type" content="article">
 <meta property="og:title" content="cookie和session以及安全">
 <meta property="og:url" content="http://jasonyu.top/2020/11/26/cookie和session以及安全/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="cookie一个 cookie 形似 name = value,  存储在浏览器, 但也可以设置多个，因此cookie 是 一组 键值对儿 一个session 理解为一个数据结构，多数情况是映射， 存储在服务器上 cookie字段存在HTTP header中，量一大就占带宽。 cookie可以存储一个sessionID=xxx， 仅传这个cookie给server，server用这个找到对应的se">
+<meta property="og:description" content="cookie 一个 cookie 形似 name = value,  存储在浏览器, 但也可以设置多个，因此cookie 是 一组 键值对儿 一个session 理解为一个数据结构，多数情况是映射， 存储在服务器上 cookie字段存在HTTP header中，量一大就占带宽。 cookie可以存储一个sessionID=xxx， 仅传这个cookie给server，server用这个找到对应的">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-26T08:54:51.575Z">
+<meta property="og:updated_time" content="2020-11-26T08:57:14.809Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="cookie和session以及安全">
-<meta name="twitter:description" content="cookie一个 cookie 形似 name = value,  存储在浏览器, 但也可以设置多个，因此cookie 是 一组 键值对儿 一个session 理解为一个数据结构，多数情况是映射， 存储在服务器上 cookie字段存在HTTP header中，量一大就占带宽。 cookie可以存储一个sessionID=xxx， 仅传这个cookie给server，server用这个找到对应的se">
+<meta name="twitter:description" content="cookie 一个 cookie 形似 name = value,  存储在浏览器, 但也可以设置多个，因此cookie 是 一组 键值对儿 一个session 理解为一个数据结构，多数情况是映射， 存储在服务器上 cookie字段存在HTTP header中，量一大就占带宽。 cookie可以存储一个sessionID=xxx， 仅传这个cookie给server，server用这个找到对应的">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -169,36 +169,45 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h4><p>一个 cookie 形似 name = value,  存储在浏览器, 但也可以设置多个，因此cookie 是 一组 键值对儿</p>
+        <h4 id="cookie"><a class="markdownIt-Anchor" href="#cookie"></a> cookie</h4>
+<p>一个 cookie 形似 name = value,  存储在浏览器, 但也可以设置多个，因此cookie 是 一组 键值对儿</p>
 <p>一个session 理解为一个数据结构，多数情况是映射， 存储在<strong>服务器</strong>上</p>
 <p>cookie字段存在HTTP header中，量一大就占带宽。</p>
-<p>cookie可以存储一个sessionID=xxx， 仅传这个cookie给server，server用这个找到对应的session， 有效解决用户追踪问题。<br><a id="more"></a></p>
-<h4 id="session"><a href="#session" class="headerlink" title="session"></a>session</h4><p>实现 — 抽离成 Manager , Provider,  Session 三个类</p>
+<p>cookie可以存储一个sessionID=xxx， 仅传这个cookie给server，server用这个找到对应的session， 有效解决用户追踪问题。</p>
+<a id="more"></a>
+<h4 id="session"><a class="markdownIt-Anchor" href="#session"></a> session</h4>
+<p>实现 – 抽离成 Manager , Provider,  Session 三个类</p>
 <ul>
-<li><p>Manager </p>
+<li>
+<p>Manager</p>
 <ul>
 <li>session管理，存储配置信息，session存活时间，cookie名字等等</li>
 <li>所有session存在Manager内部的一个provider中</li>
 <li>Manager 把sid(sessionID) 传给 Provider</li>
 </ul>
 </li>
-<li><p>Provider</p>
+<li>
+<p>Provider</p>
 <ul>
 <li>最常见就是一个散列表， sid 对应 session</li>
 </ul>
 </li>
-<li>Session<ul>
+<li>
+<p>Session</p>
+<ul>
 <li>存储用户的具体信息</li>
 </ul>
 </li>
 </ul>
 <p>之所以抽象出Manager,Provider,Session  三个类，涉及到设计层面</p>
 <ul>
-<li><p>Session</p>
+<li>
+<p>Session</p>
 <ul>
 <li>虽然session就是键值对，但不直接用hash，因为Session结构不止存储一个hash，还可以存辅助数据，如sid，访问次数，过期时间， 方便实现 LRU， LFU</li>
 <li>session 也可以有不同的存储方式，若用language内置的hash，则session数据存在内存里，数据量大，容易程序crash。 所以可以存入 redis， mysql</li>
-<li>Session 提供一些抽象接口<ul>
+<li>Session 提供一些抽象接口
+<ul>
 <li>set ( key val)</li>
 <li>get ( key )</li>
 <li>delete ( key )</li>
@@ -206,28 +215,34 @@
 </li>
 </ul>
 </li>
-<li><p>Provider</p>
+<li>
+<p>Provider</p>
 <ul>
 <li>由于时不时要删session, 除了设置存活时间，还有些LRU缓存淘汰</li>
 <li>因此provider 内部要使用 哈希链表</li>
 </ul>
 </li>
 </ul>
-<h3 id="CSRF"><a href="#CSRF" class="headerlink" title="CSRF"></a>CSRF</h3><p>简述: 所谓跨域请求仿造就是，比如当用户登录网上银行后，cookie里会存放用于这个网站的credentials，此时如果用户点击了某个第三方恶意网站，里面的脚本就也是往这个网上银行网站发请求，而这个请求会带上用户的cookie，因此就可以模拟用户了。 注意：<strong>攻击者并不能拿到cookie里的内容，只是可以把cookie发送出去</strong>。<strong>攻击者也不可以修改header的内容</strong>。</p>
+<h3 id="csrf"><a class="markdownIt-Anchor" href="#csrf"></a> CSRF</h3>
+<p>简述: 所谓跨域请求仿造就是，比如当用户登录网上银行后，cookie里会存放用于这个网站的credentials，此时如果用户点击了某个第三方恶意网站，里面的脚本就也是往这个网上银行网站发请求，而这个请求会带上用户的cookie，因此就可以模拟用户了。 注意：<strong>攻击者并不能拿到cookie里的内容，只是可以把cookie发送出去</strong>。<strong>攻击者也不可以修改header的内容</strong>。</p>
 <p>预防措施</p>
 <ul>
 <li>用户在登录某网站期间，用完后及时登出</li>
 </ul>
 <p>另一个场景：</p>
 <p>比如博客删除的接口用的是GET请求，那么攻击者只要在其恶意网站的脚本中模拟GET请求即可。</p>
-<p>原网站 <code>&lt;a href=&#39;/delete?id=3&#39;&gt;刪除&lt;/a&gt;</code></p>
-<p>攻击者只要在钓鱼网站上写入 <code>&lt;a href=&#39;https://small-min.blog.com/delete?id=3&#39;&gt;開始測驗&lt;/a&gt;</code>, <strong>由于浏览器的运行机制，会一并把samll-min.blog.com的cookie也带</strong>上。</p>
+<p>原网站 <code>&lt;a href='/delete?id=3'&gt;刪除&lt;/a&gt;</code></p>
+<p>攻击者只要在钓鱼网站上写入 <code>&lt;a href='https://small-min.blog.com/delete?id=3'&gt;開始測驗&lt;/a&gt;</code>, <strong>由于浏览器的运行机制，会一并把samll-min.blog.com的cookie也带</strong>上。</p>
 <p>因为浏览器的机制，只要发送request给某个网域，就会把关联的cookie一起带上去，倘若使用者处于登入状态，那么request中就会包含他的session id。</p>
 <p>如果把删除功能改成post请求，就不能通过<code>&lt;a&gt;</code> 或者 <code>&lt;img&gt;</code> 来攻击(因为这些发GET请求)，但其实可以通过<code>&lt;form&gt;</code>…</p>
 <p>因此建议还是遵守RESTful的规范，删除就用delete</p>
-<h4 id="Server的防御"><a href="#Server的防御" class="headerlink" title="Server的防御"></a>Server的防御</h4><ul>
-<li>检查refer<ul>
-<li>request的header有个refer，代表这个request从哪里来，可用于判断是否是合法的domain<ul>
+<h4 id="server的防御"><a class="markdownIt-Anchor" href="#server的防御"></a> Server的防御</h4>
+<ul>
+<li>
+<p>检查refer</p>
+<ul>
+<li>request的header有个refer，代表这个request从哪里来，可用于判断是否是合法的domain
+<ul>
 <li>但有些浏览器可能不会带refer</li>
 <li>有些使用者可能关闭自动带refer</li>
 <li>判断是否是合法domain的程序必须没bug</li>
@@ -235,14 +250,17 @@
 </li>
 </ul>
 </li>
-<li><p>加上验证码 image 或者 sms</p>
+<li>
+<p>加上验证码 image 或者 sms</p>
 <ul>
 <li>由于攻击者无法知道image 或者 sms，所以可以预防csrf</li>
 </ul>
 </li>
-<li><p>加csrf token</p>
+<li>
+<p>加csrf token</p>
 <ul>
-<li><p>放着csrf攻击，核心在于确保有些信息<strong>只有使用者</strong>知道。</p>
+<li>
+<p>放着csrf攻击，核心在于确保有些信息<strong>只有使用者</strong>知道。</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"https://small-min.blog.com/delete"</span> <span class="attr">method</span>=<span class="string">"POST"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">name</span>=<span class="string">"id"</span> <span class="attr">value</span>=<span class="string">"3"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">name</span>=<span class="string">"csrftoken"</span> <span class="attr">value</span>=<span class="string">"fj1iro2jro12ijoi1"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"刪除文章"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>csrftoken由server随机产生，并存在server的session中，点击submit后，server对比表单中的csrftoken和session里的是否一致。 因为攻击者不知道csrftoken的值</p>
 <p>但是！</p>
@@ -253,7 +271,8 @@
 </li>
 </ul>
 </li>
-<li><p>double submit cookie</p>
+<li>
+<p>double submit cookie</p>
 <ul>
 <li>此法不需要server端存储状态</li>
 <li>server产生一组随机的token加在form中，但不用写到session里，而是同时也让client side设定一个csrftoken的cookie，值也是同一组token</li>
@@ -265,26 +284,32 @@
 </ul>
 <p><a href="https://blog.techbridge.cc/2017/02/25/csrf-introduction/" target="_blank" rel="noopener">讓我們來談談 CSRF</a></p>
 <p><a href="https://tech.meituan.com/2018/10/11/fe-security-csrf.html" target="_blank" rel="noopener">前端安全系列（二）：如何防止CSRF攻击？</a></p>
-<h4 id="Django-CSRF"><a href="#Django-CSRF" class="headerlink" title="Django CSRF"></a>Django CSRF</h4><p>django.middleware.csrf.CsrfViewMiddleware</p>
+<h4 id="django-csrf"><a class="markdownIt-Anchor" href="#django-csrf"></a> Django CSRF</h4>
+<p>django.middleware.csrf.CsrfViewMiddleware</p>
 <ul>
-<li><p>CSRF_USE_SESSIONS</p>
+<li>
+<p>CSRF_USE_SESSIONS</p>
 <ul>
-<li><p>True的情况 , csrf token存在server端的session里，与每次提交的表单里的csrf_token对比</p>
+<li>
+<p>True的情况 , csrf token存在server端的session里，与每次提交的表单里的csrf_token对比</p>
 </li>
-<li><p>False的情况，放在cookie里，每次只要验证提交上来的cookie里的token和表单里的csrf_token是否一致</p>
+<li>
+<p>False的情况，放在cookie里，每次只要验证提交上来的cookie里的token和表单里的csrf_token是否一致</p>
 </li>
 </ul>
 </li>
-<li><p>局部</p>
+<li>
+<p>局部</p>
 <ul>
 <li>@csrf_protect，为当前函数强制设置防跨站请求伪造功能，即便settings中没有设置全局中间件。</li>
 <li>@csrf_exempt，取消当前函数防跨站请求伪造功能，即便settings中设置了全局中间件</li>
 </ul>
 </li>
 </ul>
-<h3 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h3><p>xss (cross site script)</p>
+<h3 id="xss"><a class="markdownIt-Anchor" href="#xss"></a> XSS</h3>
+<p>xss (cross site script)</p>
 <p>xss 攻击是页面被注入恶意代码，利用恶意脚本，攻击者可以获取用户的敏感信息如cookie，SessionID</p>
-<p><a href="https://tech.meituan.com/2018/09/27/fe-security.html" target="_blank" rel="noopener"><a href="https://tech.meituan.com/2018/09/27/fe-security.html" target="_blank" rel="noopener">前端安全系列（一）：如何防止XSS攻击？</a></a></p>
+<p>[<a href="https://tech.meituan.com/2018/09/27/fe-security.html" target="_blank" rel="noopener">前端安全系列（一）：如何防止XSS攻击？</a>](<a href="https://tech.meituan.com/2018/09/27/fe-security.html" target="_blank" rel="noopener">https://tech.meituan.com/2018/09/27/fe-security.html</a>)</p>
 
       
 
@@ -406,7 +431,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#cookie"><span class="toc-number">1.</span> <span class="toc-text">cookie</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#session"><span class="toc-number">2.</span> <span class="toc-text">session</span></a></li></ol><li class="toc-item toc-level-3"><a class="toc-link" href="#CSRF"><span class="toc-number"></span> <span class="toc-text">CSRF</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Server的防御"><span class="toc-number">1.</span> <span class="toc-text">Server的防御</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Django-CSRF"><span class="toc-number">2.</span> <span class="toc-text">Django CSRF</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XSS"><span class="toc-number"></span> <span class="toc-text">XSS</span></a>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#cookie"><span class="toc-number">1.</span> <span class="toc-text"> cookie</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#session"><span class="toc-number">2.</span> <span class="toc-text"> session</span></a></li></ol><li class="toc-item toc-level-3"><a class="toc-link" href="#csrf"><span class="toc-number"></span> <span class="toc-text"> CSRF</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#server的防御"><span class="toc-number">1.</span> <span class="toc-text"> Server的防御</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#django-csrf"><span class="toc-number">2.</span> <span class="toc-text"> Django CSRF</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#xss"><span class="toc-number"></span> <span class="toc-text"> XSS</span></a>
                     </li></div>
                 </span>
             </div>
@@ -563,7 +588,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -571,7 +596,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">http</a>
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -579,11 +604,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
+                <a href="javascript:void(0)" class="js-tag color5">python, gevent</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -607,11 +632,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+                <a href="javascript:void(0)" class="js-tag color3">OS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OS</a>
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
               </li>
             
             <div class="clearfix"></div>

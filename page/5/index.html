@@ -166,17 +166,19 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="副本-replica"><a href="#副本-replica" class="headerlink" title="副本 replica"></a>副本 replica</h4><p>分布式系统对数据和服务提供的一种冗余方式,为了对外提供高可用的服务，我们往往会对数据和服务进行副本处理。</p>
+        <h4 id="副本-replica"><a class="markdownIt-Anchor" href="#副本-replica"></a> 副本 replica</h4>
+<p>分布式系统对数据和服务提供的一种冗余方式,为了对外提供高可用的服务，我们往往会对数据和服务进行副本处理。</p>
 <ul>
 <li>数据副本指在不同节点上持久同一份数据，当<strong>某一个节点上存储的数据丢失时，可以从副本上读取到该数据</strong>，这是解决分布式系统数据丢失问题的有效手段。</li>
-<li>服务副本指多个节点提供同样的服务，每个节点都有能力接受来自外部的请求并进行相应的处理。
+<li>服务副本指多个节点提供同样的服务，每个节点都有能力接受来自外部的请求并进行相应的处理。</li>
+</ul>
         
           <a class="article-more-a" href="/2020/11/09/分布式网站架构/#more">more >></a>
         
       
 
       
-    </li></ul></div>
+    </div>
     <div class="article-info article-info-index">
       
       
@@ -245,14 +247,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Redis 的主从复制模式下，一旦主节点由于故障不能提供服务，需要<strong>手动将从节点晋升为主节点</strong>，同时还要通知客户端更新主节点地址，这种故障处理方式从一定程度上是无法接受的。<br>
+        <p>Redis 的主从复制模式下，一旦主节点由于故障不能提供服务，需要<strong>手动将从节点晋升为主节点</strong>，同时还要通知客户端更新主节点地址，这种故障处理方式从一定程度上是无法接受的。</p>
         
           <a class="article-more-a" href="/2020/11/07/redis哨兵机制/#more">more >></a>
         
       
 
       
-    </p></div>
+    </div>
     <div class="article-info article-info-index">
       
       
@@ -324,17 +326,18 @@
         <p>数据的复制是单向的，只能由主节点到从节点</p>
 <p>主从复制的作用</p>
 <ul>
-<li>数据冗余：主从复制<strong>实现了数据的热备份，</strong>是持久化之外的一种数据冗余方式。</li>
+<li>数据冗余：主从复制**实现了数据的热备份，**是持久化之外的一种数据冗余方式。</li>
 <li>故障恢复：当主节点出现问题时，可以由<strong>从节点提供服务</strong>，实现快速的故障恢复；实际上是一种服务的冗余。</li>
 <li>负载均衡：在主从复制的基础上，配合读写分离，可以由主<strong>节点提供写服务，由从节点提供读服务，分担服务器负载</strong>；尤其是在写少<strong>读多的场景下</strong>，通过多个从节点分担读负载，可以大大提高Redis服务器的并发量。</li>
-<li>高可用基石：主从复制还是哨兵和集群能够实施的基础，因此说主从复制是Redis高可用的基础。
+<li>高可用基石：主从复制还是哨兵和集群能够实施的基础，因此说主从复制是Redis高可用的基础。</li>
+</ul>
         
           <a class="article-more-a" href="/2020/11/07/redis主从复制/#more">more >></a>
         
       
 
       
-    </li></ul></div>
+    </div>
     <div class="article-info article-info-index">
       
       
@@ -404,14 +407,14 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>关系型数据库ACID 中关于原子性的定义</p>
-<p><strong>原子性</strong>:一个事务(transaction)中的所有操作，要么全部完成，要么全部不完成，不会结束在中间某个环节。事务在执行过程中发生错误，会被恢复(Rollback)<strong>到事务开始前的状态</strong>，就像这个事务从来没有执行过一样。<br>
+<p><strong>原子性</strong>:一个事务(transaction)中的所有操作，要么全部完成，要么全部不完成，不会结束在中间某个环节。事务在执行过程中发生错误，会被恢复(Rollback)<strong>到事务开始前的状态</strong>，就像这个事务从来没有执行过一样。</p>
         
           <a class="article-more-a" href="/2020/11/07/redis事务/#more">more >></a>
         
       
 
       
-    </p></div>
+    </div>
     <div class="article-info article-info-index">
       
       
@@ -480,14 +483,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>当缓存内存不足时，通过淘汰旧数据处理新加入数据选择的策略.<br>
+        <p>当缓存内存不足时，通过淘汰旧数据处理新加入数据选择的策略.</p>
         
           <a class="article-more-a" href="/2020/11/07/redis内存淘汰机制/#more">more >></a>
         
       
 
       
-    </p></div>
+    </div>
     <div class="article-info article-info-index">
       
       
@@ -556,14 +559,18 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><a href="#缓存穿透">缓存穿透</a><br><a href="#缓存击穿">缓存击穿</a><br><a href="#缓存雪崩">缓存雪崩</a><br><a href="#缓存降级">缓存降级</a><br><a href="#缓存预热">缓存预热</a><br>
+        <p><a href="#%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F">缓存穿透</a><br>
+<a href="#%E7%BC%93%E5%AD%98%E5%87%BB%E7%A9%BF">缓存击穿</a><br>
+<a href="#%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9">缓存雪崩</a><br>
+<a href="#%E7%BC%93%E5%AD%98%E9%99%8D%E7%BA%A7">缓存降级</a><br>
+<a href="#%E7%BC%93%E5%AD%98%E9%A2%84%E7%83%AD">缓存预热</a></p>
         
           <a class="article-more-a" href="/2020/11/07/缓存各种问题/#more">more >></a>
         
       
 
       
-    </p></div>
+    </div>
     <div class="article-info article-info-index">
       
       
@@ -632,14 +639,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>重启系统或者关闭系统，之前缓存在内存中的数据都会丢失再也不能找回。因此为了避免这种情况，Redis需要实现持久化将内存中的数据存储起来<br>
+        <p>重启系统或者关闭系统，之前缓存在内存中的数据都会丢失再也不能找回。因此为了避免这种情况，Redis需要实现持久化将内存中的数据存储起来</p>
         
           <a class="article-more-a" href="/2020/11/07/redis持久化/#more">more >></a>
         
       
 
       
-    </p></div>
+    </div>
     <div class="article-info article-info-index">
       
       
@@ -708,32 +715,40 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="value的数据结构类型"><a href="#value的数据结构类型" class="headerlink" title="value的数据结构类型"></a>value的数据结构类型</h4><p>Redis 可以存储键和五种不同类型的值之间的映射。键的类型只能为字符串，值支持五种数据类型：字符串、列表、集合、散列表、有序集合。</p>
+        <h4 id="value的数据结构类型"><a class="markdownIt-Anchor" href="#value的数据结构类型"></a> value的数据结构类型</h4>
+<p>Redis 可以存储键和五种不同类型的值之间的映射。键的类型只能为字符串，值支持五种数据类型：字符串、列表、集合、散列表、有序集合。</p>
 <ul>
-<li>string<ul>
-<li>字符串类型的值实际可以是字符串（<strong>简单的字符串、复杂的字符串</strong>（例如JSON、XML））、<strong>数字</strong><br><strong>（整数、浮点数），甚至是二进制</strong>（图片、音频、视频），但是值最大不能<br><strong>超过512MB</strong>。</li>
+<li>string
+<ul>
+<li>字符串类型的值实际可以是字符串（<strong>简单的字符串、复杂的字符串</strong>（例如JSON、XML））、<strong>数字</strong><br>
+<strong>（整数、浮点数），甚至是二进制</strong>（图片、音频、视频），但是值最大不能<br>
+<strong>超过512MB</strong>。</li>
 <li>set key_name value</li>
 </ul>
 </li>
-<li>hash<ul>
+<li>hash
+<ul>
 <li>hset key_name field value</li>
 </ul>
 </li>
-<li>list<ul>
+<li>list
+<ul>
 <li>linkedlist</li>
-<li>ziplist </li>
+<li>ziplist</li>
 <li>lpush key_name v1 v2 … vn list头部添加字符串元素</li>
 <li>rpush key_name v1 v2 … vn</li>
 <li>lrem key_name count value 对应list中删除count个和value相同的元素</li>
 <li>llen key_name 返回对应的list长度</li>
 </ul>
 </li>
-<li>set<ul>
+<li>set
+<ul>
 <li>sadd key_name value</li>
 <li>集合通过哈希表实现，添加删除查找的复杂度都是O(1)</li>
 </ul>
 </li>
-<li>zset(有序集合)<ul>
+<li>zset(有序集合)
+<ul>
 <li>zadd key_name score1 value1</li>
 <li>通过分数从小到大排序，分数可以重复，元素不重复</li>
 </ul>
@@ -814,7 +829,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="redis-配置"><a href="#redis-配置" class="headerlink" title="redis 配置"></a>redis 配置</h3><p>101服务器上的redis 服务是通过以下命令安装</p>
+        <h3 id="redis-配置"><a class="markdownIt-Anchor" href="#redis-配置"></a> redis 配置</h3>
+<p>101服务器上的redis 服务是通过以下命令安装</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install redis-server</span><br></pre></td></tr></table></figure>
         
           <a class="article-more-a" href="/2020/11/06/redis_1/#more">more >></a>
@@ -891,7 +907,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="乐观锁和悲观锁"><a href="#乐观锁和悲观锁" class="headerlink" title="乐观锁和悲观锁"></a>乐观锁和悲观锁</h3><p>悲观锁：假定会发生并发冲突，屏蔽一切可能违反数据完整性的操作</p>
+        <h3 id="乐观锁和悲观锁"><a class="markdownIt-Anchor" href="#乐观锁和悲观锁"></a> 乐观锁和悲观锁</h3>
+<p>悲观锁：假定会发生并发冲突，屏蔽一切可能违反数据完整性的操作</p>
 <p>乐观锁：假设不会发生并发冲突，只在<strong>提交操作时检查是否违反数据完整</strong>性。</p>
         
           <a class="article-more-a" href="/2020/11/06/mysql锁机制/#more">more >></a>
@@ -1070,7 +1087,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1078,7 +1095,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">http</a>
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1086,11 +1103,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
+                <a href="javascript:void(0)" class="js-tag color5">python, gevent</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1114,11 +1131,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+                <a href="javascript:void(0)" class="js-tag color3">OS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OS</a>
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
               </li>
             
             <div class="clearfix"></div>

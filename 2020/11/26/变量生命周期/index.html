@@ -8,19 +8,19 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>变量生命周期 | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="变量生命周期变量存储的空间">
+  <meta name="description" content="变量生命周期 变量存储的空间">
 <meta name="keywords" content="OS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="变量生命周期">
 <meta property="og:url" content="http://jasonyu.top/2020/11/26/变量生命周期/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="变量生命周期变量存储的空间">
+<meta property="og:description" content="变量生命周期 变量存储的空间">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://jasonyu.top/2020/11/26/变量生命周期/image-20200819201957668.png">
-<meta property="og:updated_time" content="2020-11-26T08:54:51.568Z">
+<meta property="og:updated_time" content="2020-11-26T08:57:14.799Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="变量生命周期">
-<meta name="twitter:description" content="变量生命周期变量存储的空间">
+<meta name="twitter:description" content="变量生命周期 变量存储的空间">
 <meta name="twitter:image" content="http://jasonyu.top/2020/11/26/变量生命周期/image-20200819201957668.png">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
@@ -171,30 +171,40 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>变量生命周期<br>变量存储的空间<br><a id="more"></a></p>
+        <p>变量生命周期<br>
+变量存储的空间</p>
+<a id="more"></a>
 <ul>
-<li>stack(栈)<ul>
-<li>超出范围时，自动销毁<ul>
+<li>stack(栈)
+<ul>
+<li>超出范围时，自动销毁
+<ul>
 <li>Java: primitive types(int,float,bool,对象的指针), C++ : primitive types / struct / class</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>heap(堆)<ul>
-<li>GC (Java, python, C# , JS)<ul>
+<li>heap(堆)
+<ul>
+<li>GC (Java, python, C# , JS)
+<ul>
 <li>reference counting</li>
 <li>marked as garbage when ref-count becomes 0</li>
 <li>deletion can be delayed</li>
 </ul>
 </li>
-<li>manual management C++<ul>
-<li>using raw pointers<ul>
+<li>manual management C++
+<ul>
+<li>using raw pointers
+<ul>
 <li>explicit call to delete , destroyed immediately</li>
 <li>hard to track ownership,error prone -&gt; memory leak</li>
 </ul>
 </li>
-<li>using smart-pointers C++ 11<ul>
-<li>destroyed immediately when <ul>
+<li>using smart-pointers C++ 11
+<ul>
+<li>destroyed immediately when
+<ul>
 <li>std:: unique_ptr out of scope</li>
 <li>std:: share_ptr reference count becomes 0</li>
 </ul>
@@ -488,7 +498,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -496,7 +506,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">http</a>
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -504,11 +514,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
+                <a href="javascript:void(0)" class="js-tag color5">python, gevent</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -532,11 +542,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+                <a href="javascript:void(0)" class="js-tag color3">OS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OS</a>
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
               </li>
             
             <div class="clearfix"></div>

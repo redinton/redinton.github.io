@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>面向对象 | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="实例属性和类属性python 动态语言, 根据类创建的实例可以任意绑定属性">
+  <meta name="description" content="实例属性和类属性 python 动态语言, 根据类创建的实例可以任意绑定属性">
 <meta name="keywords" content="python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="面向对象">
 <meta property="og:url" content="http://jasonyu.top/2020/11/26/面向对象/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="实例属性和类属性python 动态语言, 根据类创建的实例可以任意绑定属性">
+<meta property="og:description" content="实例属性和类属性 python 动态语言, 根据类创建的实例可以任意绑定属性">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-26T08:54:51.597Z">
+<meta property="og:updated_time" content="2020-11-26T08:57:14.837Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="面向对象">
-<meta name="twitter:description" content="实例属性和类属性python 动态语言, 根据类创建的实例可以任意绑定属性">
+<meta name="twitter:description" content="实例属性和类属性 python 动态语言, 根据类创建的实例可以任意绑定属性">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -169,26 +169,34 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="实例属性和类属性"><a href="#实例属性和类属性" class="headerlink" title="实例属性和类属性"></a>实例属性和类属性</h4><p>python 动态语言, 根据类创建的实例可以<strong>任意绑定属性</strong><br><a id="more"></a></p>
+        <h4 id="实例属性和类属性"><a class="markdownIt-Anchor" href="#实例属性和类属性"></a> 实例属性和类属性</h4>
+<p>python 动态语言, 根据类创建的实例可以<strong>任意绑定属性</strong></p>
+<a id="more"></a>
 <ul>
-<li><p>实例属性</p>
+<li>
+<p>实例属性</p>
 <ul>
-<li>通过实例变量 如 a.name = “jason”</li>
-<li>或者通过self变量 self.name =  “jason”</li>
+<li>通过实例变量 如 <a href="http://a.name" target="_blank" rel="noopener">a.name</a> = “jason”</li>
+<li>或者通过self变量 <a href="http://self.name" target="_blank" rel="noopener">self.name</a> =  “jason”</li>
 </ul>
 </li>
-<li><p>类属性</p>
+<li>
+<p>类属性</p>
 <ul>
-<li><p>所有实例共享一个属性</p>
+<li>
+<p>所有实例共享一个属性</p>
 </li>
-<li><p>直接在class中定义属性</p>
+<li>
+<p>直接在class中定义属性</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span><span class="params">(object)</span>:</span></span><br><span class="line">	name = <span class="string">'Student'</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
-<li><p>Attention</p>
+<li>
+<p>Attention</p>
 <ul>
-<li>类属性与实例属性最好不要用一样的名字<ul>
+<li>类属性与实例属性最好不要用一样的名字
+<ul>
 <li>相同名称的实例属性会屏蔽类属性</li>
 <li>但如果删除实例属性后，再用相同的名称，访问到的将是类属性</li>
 </ul>
@@ -197,20 +205,26 @@
 </li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span>:</span></span><br><span class="line">    class_name = <span class="string">"Student"</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,name)</span>:</span></span><br><span class="line">        self.instance_name = name</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    s = Student(<span class="string">"jason"</span>)</span><br><span class="line">    <span class="comment"># 访问类属性 方法一</span></span><br><span class="line">    <span class="keyword">print</span> (Student.class_name)</span><br><span class="line">    <span class="comment"># 访问类属性 方法二</span></span><br><span class="line">    <span class="keyword">print</span> (s.class_name)</span><br><span class="line">    <span class="comment"># 访问实例属性</span></span><br><span class="line">    <span class="keyword">print</span> (s.instance_name)</span><br><span class="line">    <span class="comment"># 实例可以任意绑定属性</span></span><br><span class="line">    s.age = <span class="number">1</span></span><br><span class="line">    <span class="keyword">print</span> (s.age)</span><br></pre></td></tr></table></figure>
-<h4 id="元类"><a href="#元类" class="headerlink" title="元类"></a>元类</h4><ul>
-<li>可以用type() 实现和 class Hello(Object) 一样的效果来定义类<ul>
+<h4 id="元类"><a class="markdownIt-Anchor" href="#元类"></a> 元类</h4>
+<ul>
+<li>可以用type() 实现和 class Hello(Object) 一样的效果来定义类
+<ul>
 <li>type() 既可以返回一个对象的类型,又可以创建出新的类型</li>
 </ul>
 </li>
 <li>先定义类，然后创建实例</li>
-<li>如果想<strong>创建类</strong>，就要先定义metaclass，再创建类，最后创建实例<ul>
-<li>ORM 框架, 所有的类只能动态定义, 只有使用者才能根据表的结果定义对应的类<ul>
-<li>元类中在 类的方法集合attrs 中增加了 <ul>
+<li>如果想<strong>创建类</strong>，就要先定义metaclass，再创建类，最后创建实例
+<ul>
+<li>ORM 框架, 所有的类只能动态定义, 只有使用者才能根据表的结果定义对应的类
+<ul>
+<li>元类中在 类的方法集合attrs 中增加了
+<ul>
 <li><code>__mapping__</code>  保存属性和列的映射关系</li>
 <li><code>__table__</code> 表名和类名一致</li>
 </ul>
 </li>
-<li>便于编写 save , find, delete, update 之类的操作<ul>
+<li>便于编写 save , find, delete, update 之类的操作
+<ul>
 <li>上述的mapping 和 table 是为了编写对应的sql 语句的需要</li>
 </ul>
 </li>
@@ -219,14 +233,17 @@
 </ul>
 </li>
 </ul>
-<h4 id="类方法，静态方法，实例方法"><a href="#类方法，静态方法，实例方法" class="headerlink" title="类方法，静态方法，实例方法"></a>类方法，静态方法，实例方法</h4><ul>
-<li>类方法<ul>
+<h4 id="类方法静态方法实例方法"><a class="markdownIt-Anchor" href="#类方法静态方法实例方法"></a> 类方法，静态方法，实例方法</h4>
+<ul>
+<li>类方法
+<ul>
 <li>@classmethod 第一个参数一定是cls 指向类本身</li>
 <li>类方法内还可以调用 静态方法</li>
 </ul>
 </li>
-<li>静态方法<ul>
-<li>@staticmethod 参数既没有self, 也没有cls </li>
+<li>静态方法
+<ul>
+<li>@staticmethod 参数既没有self, 也没有cls</li>
 <li>代码易读性.静态方法并不需要self参数</li>
 <li>节约内存.不用每个实例都实例化方法.</li>
 </ul>
@@ -234,12 +251,15 @@
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Date</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, day=<span class="number">0</span>, month=<span class="number">0</span>, year=<span class="number">0</span>)</span>:</span></span><br><span class="line">        self.day = day</span><br><span class="line">        self.month = month</span><br><span class="line">        self.year = year</span><br><span class="line"></span><br><span class="line"><span class="meta">    @classmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">from_string</span><span class="params">(cls, date_as_string)</span>:</span></span><br><span class="line">        day, month, year = map(int, date_as_string.split(<span class="string">'-'</span>))</span><br><span class="line">        date1 = cls(day, month, year)</span><br><span class="line">        <span class="keyword">return</span> date1</span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">is_date_valid</span><span class="params">(date_as_string)</span>:</span></span><br><span class="line">        day, month, year = map(int, date_as_string.split(<span class="string">'-'</span>))</span><br><span class="line">        <span class="keyword">return</span> day &lt;= <span class="number">31</span> <span class="keyword">and</span> month &lt;= <span class="number">12</span> <span class="keyword">and</span> year &lt;= <span class="number">3999</span></span><br><span class="line">    </span><br><span class="line">date2 = Date.from_string(<span class="string">'11-09-2012'</span>)</span><br><span class="line">is_date = Date.is_date_valid(<span class="string">'11-09-2012'</span></span><br></pre></td></tr></table></figure>
 <ul>
-<li><p>类方法</p>
+<li>
+<p>类方法</p>
 <ul>
-<li><p>有些处理函数发生在类的构造函数之前</p>
+<li>
+<p>有些处理函数发生在类的构造函数之前</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果不用类方法</span></span><br><span class="line">day, month, year = map(int, string_date.split(<span class="string">'-'</span>))</span><br><span class="line">date1 = Date(day, month, year)</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>可以借助类方法实现 <strong>不同的构造函数效果</strong></p>
+<li>
+<p>可以借助类方法实现 <strong>不同的构造函数效果</strong></p>
 <ul>
 <li>python只有<code>__new__</code></li>
 </ul>
@@ -359,7 +379,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#实例属性和类属性"><span class="toc-number">1.</span> <span class="toc-text">实例属性和类属性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#元类"><span class="toc-number">2.</span> <span class="toc-text">元类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#类方法，静态方法，实例方法"><span class="toc-number">3.</span> <span class="toc-text">类方法，静态方法，实例方法</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#实例属性和类属性"><span class="toc-number">1.</span> <span class="toc-text"> 实例属性和类属性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#元类"><span class="toc-number">2.</span> <span class="toc-text"> 元类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#类方法静态方法实例方法"><span class="toc-number">3.</span> <span class="toc-text"> 类方法，静态方法，实例方法</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -516,7 +536,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -524,7 +544,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">http</a>
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -532,11 +552,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
+                <a href="javascript:void(0)" class="js-tag color5">python, gevent</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -560,11 +580,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+                <a href="javascript:void(0)" class="js-tag color3">OS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OS</a>
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
               </li>
             
             <div class="clearfix"></div>

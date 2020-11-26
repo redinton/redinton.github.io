@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>分布式系统_1 | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="GFS 为了大容量和高速,每个包含数据的文件会被GFS自动分割并存放在多个服务器上 读写操作就会被加快，因为可以从多个服务器上同时读取同一个文件，进而获得更高的聚合吞吐量">
+  <meta name="description" content="GFS  为了大容量和高速,每个包含数据的文件会被GFS自动分割并存放在多个服务器上  读写操作就会被加快，因为可以从多个服务器上同时读取同一个文件，进而获得更高的聚合吞吐量">
 <meta name="keywords" content="分布式">
 <meta property="og:type" content="article">
 <meta property="og:title" content="分布式系统_1">
 <meta property="og:url" content="http://jasonyu.top/2020/11/26/分布式系统_1/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="GFS 为了大容量和高速,每个包含数据的文件会被GFS自动分割并存放在多个服务器上 读写操作就会被加快，因为可以从多个服务器上同时读取同一个文件，进而获得更高的聚合吞吐量">
+<meta property="og:description" content="GFS  为了大容量和高速,每个包含数据的文件会被GFS自动分割并存放在多个服务器上  读写操作就会被加快，因为可以从多个服务器上同时读取同一个文件，进而获得更高的聚合吞吐量">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-26T08:54:51.573Z">
+<meta property="og:updated_time" content="2020-11-26T08:57:14.806Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="分布式系统_1">
-<meta name="twitter:description" content="GFS 为了大容量和高速,每个包含数据的文件会被GFS自动分割并存放在多个服务器上 读写操作就会被加快，因为可以从多个服务器上同时读取同一个文件，进而获得更高的聚合吞吐量">
+<meta name="twitter:description" content="GFS  为了大容量和高速,每个包含数据的文件会被GFS自动分割并存放在多个服务器上  读写操作就会被加快，因为可以从多个服务器上同时读取同一个文件，进而获得更高的聚合吞吐量">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -169,27 +169,35 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="GFS"><a href="#GFS" class="headerlink" title="GFS"></a>GFS</h3><ul>
-<li>为了大容量和高速,每个包含数据的文件会被GFS自动分割并存放在多个服务器上<ul>
-<li>读写操作就会被加快，因为可以从多个服务器上同时读取同一个文件，进而获得更高的聚合吞吐量<a id="more"></a>
-</li>
+        <h3 id="gfs"><a class="markdownIt-Anchor" href="#gfs"></a> GFS</h3>
+<ul>
+<li>为了大容量和高速,每个包含数据的文件会被GFS自动分割并存放在多个服务器上
+<ul>
+<li>读写操作就会被加快，因为可以从多个服务器上同时读取同一个文件，进而获得更高的聚合吞吐量</li>
 </ul>
 </li>
 </ul>
-<h4 id="Master-节点"><a href="#Master-节点" class="headerlink" title="Master 节点"></a>Master 节点</h4><ul>
-<li><p>假设上百个客户端和一个master节点，尽管可用多台机器作为Master节点，但GFS的Master是Active-standby模式，所以只有一个Master节点在工作</p>
+<a id="more"></a>
+<h4 id="master-节点"><a class="markdownIt-Anchor" href="#master-节点"></a> Master 节点</h4>
+<ul>
+<li>
+<p>假设上百个客户端和一个master节点，尽管可用多台机器作为Master节点，但GFS的Master是Active-standby模式，所以只有一个Master节点在工作</p>
 </li>
-<li><p>Master节点保存了文件名和存储位置的对应关系，除外，还有大量的Chunk服务器</p>
+<li>
+<p>Master节点保存了文件名和存储位置的对应关系，除外，还有大量的Chunk服务器</p>
 <ul>
 <li>Chunk服务器存储实际的数据，Master节点管理文件和Chunk的信息</li>
 <li>Master知道每个文件对应的所有的Chunk的ID，当想读取这个文件任意一个部分时，只需要向master节点查询对应的Chunk在哪个服务器上</li>
 </ul>
 </li>
-<li><p>Master节点保存的数据内容</p>
+<li>
+<p>Master节点保存的数据内容</p>
 <ul>
-<li><p>文件名 -&gt;  Chunk ID  或者Chunk Handle 数组的对应</p>
+<li>
+<p>文件名 -&gt;  Chunk ID  或者Chunk Handle 数组的对应</p>
 </li>
-<li><p>Chunk ID -&gt; Chunk 数据的对应关系</p>
+<li>
+<p>Chunk ID -&gt; Chunk 数据的对应关系</p>
 <ul>
 <li>每个Chunk存在哪些server上</li>
 <li>每个Chunk当前的版本号，所以Master节点必须记住每个Chunk对应的版本号</li>
@@ -197,57 +205,72 @@
 <li>主Chunk只能在特定的租约时间内担任主Chunk，所以，Master节点要记住主Chunk的租约过期时间</li>
 </ul>
 </li>
-<li><p>以上数据都<strong>存储在内存</strong>中，如果<strong>Master故障了，这些数据就都丢失了。</strong>为了能让Master重启而不丢失数据，Master节点会同时将数据存储在磁盘上。所以Master节点<strong>读数据只会从内存读</strong>，但是写数据的时候，至少有一部分数据会接入到磁盘中。更具体来说，Master会在磁盘上存储log，每次有数据变更时，Master会在磁盘的log中追加一条记录，并生成CheckPoint (The checkpoint is in a compact B-tree like form that <strong>can be directly mapped into memory a</strong>nd used for namespace lookup without extra parsing)</p>
+<li>
+<p>以上数据都<strong>存储在内存</strong>中，如果<strong>Master故障了，这些数据就都丢失了。<strong>为了能让Master重启而不丢失数据，Master节点会同时将数据存储在磁盘上。所以Master节点</strong>读数据只会从内存读</strong>，但是写数据的时候，至少有一部分数据会接入到磁盘中。更具体来说，Master会在磁盘上存储log，每次有数据变更时，Master会在磁盘的log中追加一条记录，并生成CheckPoint (The checkpoint is in a compact B-tree like form that <strong>can be directly mapped into memory a</strong>nd used for namespace lookup without extra parsing)</p>
 </li>
 </ul>
 </li>
 </ul>
-<h4 id="CAP理论"><a href="#CAP理论" class="headerlink" title="CAP理论"></a>CAP理论</h4><ul>
-<li>P(partion tolerance) 总是存在。<ul>
+<h4 id="cap理论"><a class="markdownIt-Anchor" href="#cap理论"></a> CAP理论</h4>
+<ul>
+<li>
+<p>P(partion tolerance) 总是存在。</p>
+<ul>
 <li>因为大多数分布式系统分布在多个子网络partition。分区容错 指的是子网络之间的通信可能会失败，但还是要对外提供服务。这个一定成立。</li>
 </ul>
 </li>
-<li>C(consistence) <ul>
+<li>
+<p>C(consistence)</p>
+<ul>
 <li>所有节点访问同一份最近的数据副本</li>
 </ul>
 </li>
-<li><p>A(availibility)</p>
+<li>
+<p>A(availibility)</p>
 <ul>
 <li>非故障节点在合理时间内返回合理的响应</li>
 </ul>
 </li>
-<li><p>CA无法同时保证(在发生P的情况下)</p>
+<li>
+<p>CA无法同时保证(在发生P的情况下)</p>
 <ul>
 <li>若系统出现“分区”，系统中的某个节点在写操作，为了保证C，需要禁止其他节点的读写，这就会和A发生冲突</li>
 </ul>
 </li>
 </ul>
-<h4 id="Base理论"><a href="#Base理论" class="headerlink" title="Base理论"></a>Base理论</h4><ul>
-<li>Basically Available 基本可用<ul>
+<h4 id="base理论"><a class="markdownIt-Anchor" href="#base理论"></a> Base理论</h4>
+<ul>
+<li>Basically Available 基本可用
+<ul>
 <li>响应时间的损失，例如从原来0.5s变成3s</li>
 <li>系统功能上的损失，正常下用户可以使用系统的全部功能，但由于系统访问量剧增导致某些非核心功能无法使用。</li>
 </ul>
 </li>
-<li>Soft-state 软状态<ul>
+<li>Soft-state 软状态
+<ul>
 <li>允许系统中的数据存在中间状态(CAP理论中的数据不一致)，并认为该中间状态的存在不会影响系统的整体可用性，即允许系统在不同节点的数据副本之间进行数据同步的过程存在延时。</li>
 </ul>
 </li>
-<li>Eventually Consistent 最终一致性<ul>
+<li>Eventually Consistent 最终一致性
+<ul>
 <li>系统中的所有数据副本，在经过一段时间的同步后，最终能够达到一个一致的状态</li>
 </ul>
 </li>
 </ul>
 <p>分布式一致性的三个级别</p>
 <ul>
-<li>强一致性<ul>
+<li>强一致性
+<ul>
 <li>系统写入什么，读出来就是什么</li>
 </ul>
 </li>
-<li>弱一致性<ul>
+<li>弱一致性
+<ul>
 <li>不一定能读取最新写入的值，也不保证什么时间后读取的数据是最新的，尽量保证某个时刻达到数据一致的状态。</li>
 </ul>
 </li>
-<li>最终一致性<ul>
+<li>最终一致性
+<ul>
 <li>弱一致性的升级，系统会保证在一定时间内达到数据一致的状态。</li>
 </ul>
 </li>
@@ -374,7 +397,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#GFS"><span class="toc-number">1.</span> <span class="toc-text">GFS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Master-节点"><span class="toc-number">1.1.</span> <span class="toc-text">Master 节点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CAP理论"><span class="toc-number">1.2.</span> <span class="toc-text">CAP理论</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Base理论"><span class="toc-number">1.3.</span> <span class="toc-text">Base理论</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#gfs"><span class="toc-number">1.</span> <span class="toc-text"> GFS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#master-节点"><span class="toc-number">1.1.</span> <span class="toc-text"> Master 节点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#cap理论"><span class="toc-number">1.2.</span> <span class="toc-text"> CAP理论</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#base理论"><span class="toc-number">1.3.</span> <span class="toc-text"> Base理论</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -531,7 +554,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -539,7 +562,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">http</a>
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -547,11 +570,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
+                <a href="javascript:void(0)" class="js-tag color5">python, gevent</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -575,11 +598,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+                <a href="javascript:void(0)" class="js-tag color3">OS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OS</a>
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
               </li>
             
             <div class="clearfix"></div>

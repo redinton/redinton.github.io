@@ -8,20 +8,20 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>python面试题 | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="dict实现原理list和set查询谁复杂度低else与for,while,try使用eval函数is not Noneis和==的区别运算符重载装饰器闭包内的变量存在哪里   pyc,so文件python和java,C++的区别type和object的关系   上下文管理器python中的高阶函数python特殊方法python菱形继承super关键字实现,python多继承   线程安全的单例">
+  <meta name="description" content="dict实现原理 list和set查询谁复杂度低 else与for,while,try使用 eval函数 is not None is和==的区别 运算符重载 装饰器闭包内的变量存在哪里 pyc,so文件 python和java,C++的区别 type和object的关系 上下文管理器 python中的高阶函数 python特殊方法 python菱形继承 super关键字实现,python多继承">
 <meta name="keywords" content="python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="python面试题">
 <meta property="og:url" content="http://jasonyu.top/2020/11/21/python_1/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="dict实现原理list和set查询谁复杂度低else与for,while,try使用eval函数is not Noneis和==的区别运算符重载装饰器闭包内的变量存在哪里   pyc,so文件python和java,C++的区别type和object的关系   上下文管理器python中的高阶函数python特殊方法python菱形继承super关键字实现,python多继承   线程安全的单例">
+<meta property="og:description" content="dict实现原理 list和set查询谁复杂度低 else与for,while,try使用 eval函数 is not None is和==的区别 运算符重载 装饰器闭包内的变量存在哪里 pyc,so文件 python和java,C++的区别 type和object的关系 上下文管理器 python中的高阶函数 python特殊方法 python菱形继承 super关键字实现,python多继承">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://jasonyu.top/2020/11/21/python_1/image-20201117143012148.png">
 <meta property="og:image" content="http://jasonyu.top/2020/11/21/python_1/image-20201123103511551.png">
-<meta property="og:updated_time" content="2020-11-26T08:54:51.587Z">
+<meta property="og:updated_time" content="2020-11-26T08:57:14.825Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python面试题">
-<meta name="twitter:description" content="dict实现原理list和set查询谁复杂度低else与for,while,try使用eval函数is not Noneis和==的区别运算符重载装饰器闭包内的变量存在哪里   pyc,so文件python和java,C++的区别type和object的关系   上下文管理器python中的高阶函数python特殊方法python菱形继承super关键字实现,python多继承   线程安全的单例">
+<meta name="twitter:description" content="dict实现原理 list和set查询谁复杂度低 else与for,while,try使用 eval函数 is not None is和==的区别 运算符重载 装饰器闭包内的变量存在哪里 pyc,so文件 python和java,C++的区别 type和object的关系 上下文管理器 python中的高阶函数 python特殊方法 python菱形继承 super关键字实现,python多继承">
 <meta name="twitter:image" content="http://jasonyu.top/2020/11/21/python_1/image-20201117143012148.png">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
@@ -172,32 +172,60 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><a href="#dict实现原理">dict实现原理</a><br><a href="#list和set查询谁复杂度低">list和set查询谁复杂度低</a><br><a href="#else与forwhiletry使用">else与for,while,try使用</a><br><a href="#eval函数">eval函数</a><br><a href="#is_not_none">is not None</a><br><a href="#is和的区别">is和==的区别</a><br><a href="#运算符重载">运算符重载</a><br><a href="#装饰器闭包内的变量存在哪里">装饰器闭包内的变量存在哪里</a>  </p>
-<p><a href="#pyc文件so文件">pyc,so文件</a><br><a href="#python和javac的区别">python和java,C++的区别</a><br><a href="#type和object的关系">type和object的关系</a>  </p>
-<p><a href="#上下文管理器">上下文管理器</a><br><a href="#python中的高阶函数">python中的高阶函数</a><br><a href="#python特殊方法">python特殊方法</a><br><a href="#python菱形继承">python菱形继承</a><br><a href="#python多继承子类调用一个父类的方法怎么做super关键字的具体实现方式">super关键字实现,python多继承</a>  </p>
-<p><a href="#线程安全的单例设计模式">线程安全的单例设计模式</a>  </p>
-<p><a href="#函数_和__情况">函数<em>和_</em>情况</a><br><a href="#函数的参数">函数的参数</a><br><a href="#基础数据类型可变不可变">基础数据类型,可变,不可变</a><br><a href="#深拷贝浅拷贝">深拷贝浅拷贝</a><br><a href="#用python调用系统命令用什么模块">用python调用系统命令用什么模块</a>  </p>
-<p><a href="#序列迭代">序列迭代</a><br><a href="#itertools库">itertools 库</a><br><a href="#标准迭代器iterator接口">标准迭代器Iterator接口</a><br><a href="#迭代生成器generator如何实现">迭代,生成器,generator如何实现</a><br><a id="more"></a></p>
-<h4 id="装饰器-闭包内的变量存在哪里"><a href="#装饰器-闭包内的变量存在哪里" class="headerlink" title="装饰器/闭包内的变量存在哪里"></a>装饰器/闭包内的变量存在哪里</h4><p><a href="https://stackoverflow.com/questions/739654/how-to-make-a-chain-of-function-decorators/1594484#1594484" target="_blank" rel="noopener">装饰器参考</a></p>
+        <p><a href="#dict%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86">dict实现原理</a><br>
+<a href="#list%E5%92%8Cset%E6%9F%A5%E8%AF%A2%E8%B0%81%E5%A4%8D%E6%9D%82%E5%BA%A6%E4%BD%8E">list和set查询谁复杂度低</a><br>
+<a href="#else%E4%B8%8Eforwhiletry%E4%BD%BF%E7%94%A8">else与for,while,try使用</a><br>
+<a href="#eval%E5%87%BD%E6%95%B0">eval函数</a><br>
+<a href="#is_not_none">is not None</a><br>
+<a href="#is%E5%92%8C%E7%9A%84%E5%8C%BA%E5%88%AB">is和==的区别</a><br>
+<a href="#%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD">运算符重载</a><br>
+<a href="#%E8%A3%85%E9%A5%B0%E5%99%A8%E9%97%AD%E5%8C%85%E5%86%85%E7%9A%84%E5%8F%98%E9%87%8F%E5%AD%98%E5%9C%A8%E5%93%AA%E9%87%8C">装饰器闭包内的变量存在哪里</a></p>
+<p><a href="#pyc%E6%96%87%E4%BB%B6so%E6%96%87%E4%BB%B6">pyc,so文件</a><br>
+<a href="#python%E5%92%8Cjavac%E7%9A%84%E5%8C%BA%E5%88%AB">python和java,C++的区别</a><br>
+<a href="#type%E5%92%8Cobject%E7%9A%84%E5%85%B3%E7%B3%BB">type和object的关系</a></p>
+<p><a href="#%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86%E5%99%A8">上下文管理器</a><br>
+<a href="#python%E4%B8%AD%E7%9A%84%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0">python中的高阶函数</a><br>
+<a href="#python%E7%89%B9%E6%AE%8A%E6%96%B9%E6%B3%95">python特殊方法</a><br>
+<a href="#python%E8%8F%B1%E5%BD%A2%E7%BB%A7%E6%89%BF">python菱形继承</a><br>
+<a href="#python%E5%A4%9A%E7%BB%A7%E6%89%BF%E5%AD%90%E7%B1%BB%E8%B0%83%E7%94%A8%E4%B8%80%E4%B8%AA%E7%88%B6%E7%B1%BB%E7%9A%84%E6%96%B9%E6%B3%95%E6%80%8E%E4%B9%88%E5%81%9Asuper%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F">super关键字实现,python多继承</a></p>
+<p><a href="#%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E5%8D%95%E4%BE%8B%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F">线程安全的单例设计模式</a></p>
+<p><a href="#%E5%87%BD%E6%95%B0_%E5%92%8C__%E6%83%85%E5%86%B5">函数_和__情况</a><br>
+<a href="#%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%82%E6%95%B0">函数的参数</a><br>
+<a href="#%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%8F%AF%E5%8F%98%E4%B8%8D%E5%8F%AF%E5%8F%98">基础数据类型,可变,不可变</a><br>
+<a href="#%E6%B7%B1%E6%8B%B7%E8%B4%9D%E6%B5%85%E6%8B%B7%E8%B4%9D">深拷贝浅拷贝</a><br>
+<a href="#%E7%94%A8python%E8%B0%83%E7%94%A8%E7%B3%BB%E7%BB%9F%E5%91%BD%E4%BB%A4%E7%94%A8%E4%BB%80%E4%B9%88%E6%A8%A1%E5%9D%97">用python调用系统命令用什么模块</a></p>
+<p><a href="#%E5%BA%8F%E5%88%97%E8%BF%AD%E4%BB%A3">序列迭代</a><br>
+<a href="#itertools%E5%BA%93">itertools 库</a><br>
+<a href="#%E6%A0%87%E5%87%86%E8%BF%AD%E4%BB%A3%E5%99%A8iterator%E6%8E%A5%E5%8F%A3">标准迭代器Iterator接口</a><br>
+<a href="#%E8%BF%AD%E4%BB%A3%E7%94%9F%E6%88%90%E5%99%A8generator%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0">迭代,生成器,generator如何实现</a></p>
+<a id="more"></a>
+<h4 id="装饰器闭包内的变量存在哪里"><a class="markdownIt-Anchor" href="#装饰器闭包内的变量存在哪里"></a> 装饰器/闭包内的变量存在哪里</h4>
+<p><a href="https://stackoverflow.com/questions/739654/how-to-make-a-chain-of-function-decorators/1594484#1594484" target="_blank" rel="noopener">装饰器参考</a></p>
 <ul>
 <li>例如统计函数运行时间，打印日志</li>
 <li>函数装饰器和类装饰器</li>
-<li>本质也是个闭包<ul>
+<li>本质也是个闭包
+<ul>
 <li>它能访问定义体之外定义的非全局变量</li>
 <li>外函数返回内函数的引用</li>
 </ul>
 </li>
-<li>外函数把临时变量绑定给内函数<ul>
+<li>外函数把临时变量绑定给内函数
+<ul>
 <li>通常一个函数结束时会把变量都释放给内存空间，但外部函数发现临时变量在内部函数会用到，就会把临时变量绑定到内函数</li>
 </ul>
 </li>
-<li>修改外函数临时变量<ul>
+<li>修改外函数临时变量
+<ul>
 <li>方法一: python3 支持nonlocal参数，表明这个变量不是局部变量空间的变量，需要向上一层变量空间找这个变量</li>
-<li>方法二：把闭包变量改成可变类型数据进行修改<br><a href="https://blog.csdn.net/pushiqiang/article/details/79282118" target="_blank" rel="noopener">深入理解python中闭包，闭包的实质</a></li>
+<li>方法二：把闭包变量改成可变类型数据进行修改<br>
+<a href="https://blog.csdn.net/pushiqiang/article/details/79282118" target="_blank" rel="noopener">深入理解python中闭包，闭包的实质</a></li>
 </ul>
 </li>
 </ul>
-<h4 id="上下文管理器"><a href="#上下文管理器" class="headerlink" title="上下文管理器"></a>上下文管理器</h4><p>基本语法<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> EXPR <span class="keyword">as</span> VAR:</span><br><span class="line">	BLOCK</span><br><span class="line"><span class="keyword">with</span> open(<span class="string">"file.txt"</span>,<span class="string">"r"</span>) <span class="keyword">as</span> f: <span class="comment">#上下文表达式</span></span><br><span class="line">    lines = f.readlines()</span><br><span class="line"><span class="comment"># 上下文管理器: open("file.txt","r")</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="上下文管理器"><a class="markdownIt-Anchor" href="#上下文管理器"></a> 上下文管理器</h4>
+<p>基本语法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> EXPR <span class="keyword">as</span> VAR:</span><br><span class="line">	BLOCK</span><br><span class="line"><span class="keyword">with</span> open(<span class="string">"file.txt"</span>,<span class="string">"r"</span>) <span class="keyword">as</span> f: <span class="comment">#上下文表达式</span></span><br><span class="line">    lines = f.readlines()</span><br><span class="line"><span class="comment"># 上下文管理器: open("file.txt","r")</span></span><br></pre></td></tr></table></figure>
 <p>上下文管理协议</p>
 <ul>
 <li>一个类中实现了 <code>__enter__</code> ,  <code>__exit__</code></li>
@@ -207,14 +235,18 @@
 <li>更优雅的方式操作(创建/获取/释放)资源 如文件操作，数据库连接</li>
 <li>处理异常更优雅</li>
 </ul>
-<h4 id="list和set查询-谁复杂度低"><a href="#list和set查询-谁复杂度低" class="headerlink" title="list和set查询,谁复杂度低"></a>list和set查询,谁复杂度低</h4><ul>
-<li>list 的底层实现<ul>
-<li>长度可变的数组，对其他对象的引用组成的连续数组 </li>
+<h4 id="list和set查询谁复杂度低"><a class="markdownIt-Anchor" href="#list和set查询谁复杂度低"></a> list和set查询,谁复杂度低</h4>
+<ul>
+<li>list 的底层实现
+<ul>
+<li>长度可变的数组，对其他对象的引用组成的连续数组</li>
 <li>index() 查找元素 O(N),  pop(i) O(N)</li>
 </ul>
 </li>
-<li>集合的底层实现<ul>
-<li>集合有两种<ul>
+<li>集合的底层实现
+<ul>
+<li>集合有两种
+<ul>
 <li>set() 可变，无序，有限</li>
 <li>frozenset() 不可变 可哈希 无序</li>
 </ul>
@@ -222,99 +254,128 @@
 <li>带<strong>有空值的字典</strong>，只<strong>有键才是集合</strong>的元素</li>
 </ul>
 </li>
-<li>if  i in list 和  if  i in set 哪个快<ul>
+<li>if  i in list 和  if  i in set 哪个快
+<ul>
 <li>set快 set是算哈希 O(1) 平均， 而list是 O(n)</li>
 </ul>
 </li>
 </ul>
-<h4 id="dict实现原理"><a href="#dict实现原理" class="headerlink" title="dict实现原理"></a>dict实现原理</h4><ul>
-<li>dict 实现原理<ul>
+<h4 id="dict实现原理"><a class="markdownIt-Anchor" href="#dict实现原理"></a> dict实现原理</h4>
+<ul>
+<li>dict 实现原理
+<ul>
 <li>伪随机探测(pseudo-random probing)的散列表(hash table)作为字典的底层数据结构</li>
-<li>可哈希的对象作为字典的键<ul>
+<li>可哈希的对象作为字典的键
+<ul>
 <li>python内置的所有<strong>不可变的内置类型都是可哈希</strong>的，可变类型不可哈希</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<h4 id="基础数据类型可变-不可变"><a href="#基础数据类型可变-不可变" class="headerlink" title="基础数据类型可变,不可变"></a>基础数据类型可变,不可变</h4><ul>
-<li>可变: list, set, dict<ul>
+<h4 id="基础数据类型可变不可变"><a class="markdownIt-Anchor" href="#基础数据类型可变不可变"></a> 基础数据类型可变,不可变</h4>
+<ul>
+<li>可变: list, set, dict
+<ul>
 <li>可变对象变化后，地址没变 (可以用 id() 来查看地址)</li>
 </ul>
 </li>
-<li>不可变: int , float,string,bool,<strong> tuple</strong></li>
+<li>不可变: int , float,string,bool,** tuple**</li>
 </ul>
-<h4 id="深拷贝-浅拷贝"><a href="#深拷贝-浅拷贝" class="headerlink" title="深拷贝,浅拷贝"></a>深拷贝,浅拷贝</h4><ul>
-<li><p>a=b 不算拷贝，a=b只是把a的指针指向b的地址，</p>
+<h4 id="深拷贝浅拷贝"><a class="markdownIt-Anchor" href="#深拷贝浅拷贝"></a> 深拷贝,浅拷贝</h4>
+<ul>
+<li>
+<p>a=b 不算拷贝，a=b只是把a的指针指向b的地址，</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;a = (1, 2, 3)</span><br><span class="line">&gt;&gt;&gt;id(a)</span><br><span class="line">2139167074776</span><br><span class="line">&gt;&gt;&gt; b = a</span><br><span class="line">&gt;&gt;&gt; a = (4, 5, 6) 这个赋值会让 a指向另一个地址，而b只是指向原来那个地址</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">(4, 5, 6)</span><br><span class="line">&gt;&gt;&gt; b</span><br><span class="line">(1, 2, 3)</span><br><span class="line">&gt;&gt;&gt; id(a)</span><br><span class="line">2139167075928</span><br><span class="line">&gt;&gt;&gt; id(b)</span><br><span class="line">2139167074776</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a = &apos;123&apos;</span><br><span class="line">b = a</span><br><span class="line"># 浅拷贝</span><br><span class="line">c = copy.copy(a)</span><br><span class="line"># 深拷贝</span><br><span class="line">d = copy.deepcopy(a)</span><br></pre></td></tr></table></figure>
 <ul>
-<li><p>浅拷贝 按被拷贝的对象区分</p>
+<li>
+<p>浅拷贝 按被拷贝的对象区分</p>
 <ul>
-<li><p>不可变 (int tuple，string)</p>
+<li>
+<p>不可变 (int tuple，string)</p>
 <ul>
 <li>情况等价于 “=” 对象的id值与浅拷贝原来的值相同</li>
 </ul>
 </li>
-<li>针对不可变对象，浅拷贝也是创建一个引用</li>
+<li>
+<p>针对不可变对象，浅拷贝也是创建一个引用</p>
+</li>
 </ul>
 </li>
-<li><p>可变对象 list,dict set</p>
+<li>
+<p>可变对象 list,dict set</p>
 <ul>
-<li>当对象内无复杂子对象<ul>
+<li>
+<p>当对象内无复杂子对象</p>
+<ul>
 <li>原来对象的id值 和 浅拷贝后的 不同</li>
 </ul>
 </li>
-<li><p>浅拷贝后的对象值变化，不影响原来的值 反之</p>
+<li>
+<p>浅拷贝后的对象值变化，不影响原来的值 反之</p>
 </li>
-<li><p>有复杂子对象 如list嵌套list</p>
+<li>
+<p>有复杂子对象 如list嵌套list</p>
 <ul>
-<li>改变原来对象中的 复杂子对象的值，会影响 浅拷贝后的值<ul>
+<li>改变原来对象中的 复杂子对象的值，会影响 浅拷贝后的值
+<ul>
 <li>浅复制 ，复杂子对象的保存方式是 作为 引用 方式存储的</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>要想不影响 就用 深拷贝</li>
+<li>
+<p>要想不影响 就用 深拷贝</p>
+</li>
 </ul>
 </li>
 </ul>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">t1 = (<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line">t2 = tuple(t1)</span><br><span class="line">t2 <span class="keyword">is</span> t1 true</span><br><span class="line">t3 = t1[:]</span><br><span class="line">t3 <span class="keyword">is</span> t1 true</span><br><span class="line"></span><br><span class="line">t1 = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line">t2 = list(t1)</span><br><span class="line">t2 <span class="keyword">is</span> t1 false</span><br><span class="line">t3 = t1[:]</span><br><span class="line">t3 <span class="keyword">is</span> t1 false</span><br></pre></td></tr></table></figure>
-<h4 id="is和-的区别"><a href="#is和-的区别" class="headerlink" title="is和==的区别"></a>is和==的区别</h4><p>python中所有都是对象，都有着 id, type, value 属性</p>
+<h4 id="is和的区别"><a class="markdownIt-Anchor" href="#is和的区别"></a> is和==的区别</h4>
+<p>python中所有都是对象，都有着 id, type, value 属性</p>
 <ul>
-<li><p>最大区别</p>
+<li>
+<p>最大区别</p>
 <ul>
 <li>is 比较的是内存地址(id)是否一致， == 比较的是对象的值是否一致，会调<code>__eq__</code> 方法</li>
 </ul>
 </li>
-<li><p>特殊情况</p>
+<li>
+<p>特殊情况</p>
 <ul>
-<li><p>int型 [-5,256] 之间常用的小数在内存中已经分配了地址，所以 </p>
+<li>
+<p>int型 [-5,256] 之间常用的小数在内存中已经分配了地址，所以</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="number">10</span></span><br><span class="line">b = <span class="number">10</span> </span><br><span class="line">a <span class="keyword">is</span> b <span class="keyword">return</span> true</span><br><span class="line">a = <span class="number">1000</span></span><br><span class="line">b = <span class="number">1000</span></span><br><span class="line">a <span class="keyword">is</span> b <span class="keyword">return</span> false</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
-<li><p>tuple set, list, dict类中</p>
+<li>
+<p>tuple set, list, dict类中</p>
 <ul>
 <li>通常 == return true 而 is 返回 false 因为都会重新开辟内存</li>
 </ul>
 </li>
-<li><p>bool 类型</p>
+<li>
+<p>bool 类型</p>
 <ul>
 <li>True 和 False是python两个内建的对象，不会再有其他的bool对象</li>
 </ul>
 </li>
-<li>None 类型<ul>
-<li>None有自己的类型 type(None) return  NoneType </li>
+<li>
+<p>None 类型</p>
+<ul>
+<li>None有自己的类型 type(None) return  NoneType</li>
 <li>None 是一个常量，表示一个空对象，数据空并不代表是空对象</li>
 <li><strong>None 是一个单例对象</strong>，一个变量是None 那么一定和 None是同一个内存空间</li>
 <li>在用 not x  判断不是None的时候，会把 x == []，{}，(),’’ 的情况也包含，所以要用 is not None</li>
 </ul>
 </li>
 </ul>
-<h4 id="is-not-None"><a href="#is-not-None" class="headerlink" title="is_not_None"></a>is_not_None</h4><p>is 是比较 内存地址，而None是单例模式生成的，类型是NoneType  除了None 本身，其余对象 is not None的结果都是True</p>
+<h4 id="is_not_none"><a class="markdownIt-Anchor" href="#is_not_none"></a> is_not_None</h4>
+<p>is 是比较 内存地址，而None是单例模式生成的，类型是NoneType  除了None 本身，其余对象 is not None的结果都是True</p>
 <p>哪些形式的数据为空</p>
 <ul>
 <li>None ， False</li>
@@ -325,66 +386,85 @@
 </ul>
 <p>a = []</p>
 <p>a is not None -&gt; return True</p>
-<p>if a -&gt;  用于判断a是否为空, 调用的是 a自身的 _<em>nonzero_</em>() 或者 在没有nonezero的时候调用 len()</p>
-<h4 id="函数”“和“-”情况"><a href="#函数”“和“-”情况" class="headerlink" title="函数”“和“_”情况"></a>函数”<em>“和“_</em>”情况</h4><ul>
+<p>if a -&gt;  用于判断a是否为空, 调用的是 a自身的 _<em>nonzero</em>_() 或者 在没有nonezero的时候调用 len()</p>
+<h4 id="函数_和__情况"><a class="markdownIt-Anchor" href="#函数_和__情况"></a> 函数&quot;_&quot;和“__”情况</h4>
+<ul>
 <li><code>_</code>是类似 protected</li>
 <li><code>__</code>是类似 private</li>
 </ul>
-<h4 id="写一下线程安全的单例设计模式"><a href="#写一下线程安全的单例设计模式" class="headerlink" title="写一下线程安全的单例设计模式"></a>写一下线程安全的单例设计模式</h4><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">singleton</span><span class="params">(cls)</span>:</span></span><br><span class="line">    _instance = &#123;&#125;</span><br><span class="line">    lock = threading.Lock()</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_wrapper</span><span class="params">(*args,**kwargs)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> cls <span class="keyword">not</span> <span class="keyword">in</span> _instance:</span><br><span class="line">            <span class="keyword">with</span> lock:</span><br><span class="line">              <span class="keyword">if</span> cls <span class="keyword">not</span> <span class="keyword">in</span> _instance:</span><br><span class="line">                _instance[cls] = cls(*args,**kwargs)</span><br><span class="line">        <span class="keyword">return</span> _instance[cls]</span><br><span class="line">    <span class="keyword">return</span> _wrapper</span><br></pre></td></tr></table></figure>
-<h4 id="python中的高阶函数"><a href="#python中的高阶函数" class="headerlink" title="python中的高阶函数"></a>python中的高阶函数</h4><p>lambda，map, reduce filter </p>
+<h4 id="写一下线程安全的单例设计模式"><a class="markdownIt-Anchor" href="#写一下线程安全的单例设计模式"></a> 写一下线程安全的单例设计模式</h4>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">singleton</span><span class="params">(cls)</span>:</span></span><br><span class="line">    _instance = &#123;&#125;</span><br><span class="line">    lock = threading.Lock()</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_wrapper</span><span class="params">(*args,**kwargs)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> cls <span class="keyword">not</span> <span class="keyword">in</span> _instance:</span><br><span class="line">            <span class="keyword">with</span> lock:</span><br><span class="line">              <span class="keyword">if</span> cls <span class="keyword">not</span> <span class="keyword">in</span> _instance:</span><br><span class="line">                _instance[cls] = cls(*args,**kwargs)</span><br><span class="line">        <span class="keyword">return</span> _instance[cls]</span><br><span class="line">    <span class="keyword">return</span> _wrapper</span><br></pre></td></tr></table></figure>
+<h4 id="python中的高阶函数"><a class="markdownIt-Anchor" href="#python中的高阶函数"></a> python中的高阶函数</h4>
+<p>lambda，map, reduce filter</p>
 <p>以函数作为参数进行传递，或者返回对象是函数</p>
 <ul>
-<li><p>map </p>
+<li>
+<p>map</p>
 <ul>
-<li><p>map(function, iterable,…)</p>
+<li>
+<p>map(function, iterable,…)</p>
 </li>
-<li><p>Python 2.x 返回列表。</p>
+<li>
+<p>Python 2.x 返回列表。</p>
 <p>Python 3.x 返回迭代器。</p>
 </li>
-<li><p>根据提供的函数对指定序列做映射</p>
+<li>
+<p>根据提供的函数对指定序列做映射</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">map(<span class="keyword">lambda</span> x, y: x + y, [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">9</span>], [<span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">8</span>, <span class="number">10</span>])</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
-<li><p>filter</p>
+<li>
+<p>filter</p>
 <ul>
 <li>用法同 map类似，只是function 返回bool 用于筛选</li>
 </ul>
 </li>
-<li><p>reduce</p>
+<li>
+<p>reduce</p>
 <ul>
-<li><p>把一个函数作用在一个序列[x1,x2,x3,….]上，这个函数必须接受两个参数， reduce把结果继续和序列的下一个元素做累积计算</p>
+<li>
+<p>把一个函数作用在一个序列[x1,x2,x3,…]上，这个函数必须接受两个参数， reduce把结果继续和序列的下一个元素做累积计算</p>
 </li>
-<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reduce(f,[x1,x2,x3,x4]) = f(f(f(x1,x2),x3),x4)</span><br></pre></td></tr></table></figure>
+<li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reduce(f,[x1,x2,x3,x4]) = f(f(f(x1,x2),x3),x4)</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
 </ul>
-<h4 id="pyc文件-so文件"><a href="#pyc文件-so文件" class="headerlink" title="pyc文件,so文件"></a>pyc文件,so文件</h4><ul>
-<li>pyc文件<ul>
+<h4 id="pyc文件so文件"><a class="markdownIt-Anchor" href="#pyc文件so文件"></a> pyc文件,so文件</h4>
+<ul>
+<li>pyc文件
+<ul>
 <li>.py程序被编译成byte-compiled的pyc文件，目的是加快下次执行文件加载速度</li>
 <li>运行py文件时，会自动检查是否有对应的.pyc文件，若存在并且py文件修改时间和pyc文件相同，就会读取pyc文件</li>
 <li>只有在<strong>import对应的.py文件</strong>的时候，才会生成对应的.pyc文件</li>
 </ul>
 </li>
-<li>so文件<ul>
+<li>so文件
+<ul>
 <li>用cython把Python文件编译成.so文件</li>
 </ul>
 </li>
 </ul>
-<h4 id="python和java-C-的区别"><a href="#python和java-C-的区别" class="headerlink" title="python和java,C++的区别"></a>python和java,C++的区别</h4><ul>
+<h4 id="python和javac的区别"><a class="markdownIt-Anchor" href="#python和javac的区别"></a> python和java,C++的区别</h4>
+<ul>
 <li>静态类型和动态类型</li>
 <li>python 一切皆对象,祖先都是Object</li>
 <li>python有GIL</li>
 </ul>
-<h4 id="迭代-生成器-generator如何实现"><a href="#迭代-生成器-generator如何实现" class="headerlink" title="迭代,生成器,generator如何实现"></a>迭代,生成器,generator如何实现</h4><img src="/2020/11/21/python_1/image-20201117143012148.png" title="image-20201117143012148">
+<h4 id="迭代生成器generator如何实现"><a class="markdownIt-Anchor" href="#迭代生成器generator如何实现"></a> 迭代,生成器,generator如何实现</h4>
+<img src="/2020/11/21/python_1/image-20201117143012148.png" title="image-20201117143012148">
 <p>三者区别</p>
 <ul>
-<li>可迭代对象 Iterable<ul>
+<li>可迭代对象 Iterable
+<ul>
 <li>含 <code>__iter__</code> () 方法，且返回的是<strong>一个对应的迭代器</strong>(list返回list_iterator)</li>
-<li>迭代器<ul>
+<li>迭代器
+<ul>
 <li>除了<code>__iter__</code> 还要有 <code>__next__</code>方法</li>
-<li>生成器<ul>
+<li>生成器
+<ul>
 <li>一种特殊的迭代器</li>
 <li>在迭代的过程中可以改变当前迭代值</li>
 </ul>
@@ -396,17 +476,21 @@
 </ul>
 <p>详细介绍</p>
 <ul>
-<li><p>迭代 <a href="https://zhuanlan.zhihu.com/p/32162554" target="_blank" rel="noopener">参考 </a></p>
+<li>
+<p>迭代 <a href="https://zhuanlan.zhihu.com/p/32162554" target="_blank" rel="noopener">参考 </a></p>
 <ul>
-<li>iterable 可迭代对象，序列的大小长度已确定<ul>
+<li>iterable 可迭代对象，序列的大小长度已确定
+<ul>
 <li>list,tuple,dict,string</li>
-<li>含 <code>__iter__</code> () 方法，且返回的是<strong>一个对应的迭代器</strong>(list返回list_iterator)<ul>
+<li>含 <code>__iter__</code> () 方法，且返回的是<strong>一个对应的迭代器</strong>(list返回list_iterator)
+<ul>
 <li>例如 iter( list 或者 tuple 对象) 返回的结果就是个迭代器 就可以调 next</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>iterator 迭代器的对象，特点是不知道要执行多少次<ul>
+<li>iterator 迭代器的对象，特点是不知道要执行多少次
+<ul>
 <li><code>__iter__</code>() 返回<strong>iterator对象本身</strong></li>
 <li><code>__next_</code>() 返回下一个值，直到没有值返回抛出stopIteration异常</li>
 <li>实现中 class Iterator(Iterable)</li>
@@ -414,97 +498,122 @@
 </li>
 </ul>
 </li>
-<li><p>生成器</p>
+<li>
+<p>生成器</p>
 <ul>
-<li><p>由于内存限制，创建列表的大小受限</p>
+<li>
+<p>由于内存限制，创建列表的大小受限</p>
 <ul>
 <li>生成器的思想边循环边计算</li>
 <li>generator保存的是算法，调用的话用next(g)， 直到最后一个元素 抛出StopIteration</li>
 <li>generator 也可以用 for 来遍历 generator 也是一个迭代器？</li>
 </ul>
 </li>
-<li><p>定义的两种方式</p>
+<li>
+<p>定义的两种方式</p>
 <ul>
-<li><p>列表生成式 把[ ] 改成 ( )  就是返回生成器</p>
+<li>
+<p>列表生成式 把[ ] 改成 ( )  就是返回生成器</p>
 </li>
-<li><p>复杂的算法 就表示成函数的形式 加入 yield  ， 每一次起点就是从yield 后一行开始到下一次yield结束</p>
+<li>
+<p>复杂的算法 就表示成函数的形式 加入 yield  ， 每一次起点就是从yield 后一行开始到下一次yield结束</p>
+</li>
+</ul>
 </li>
 </ul>
 </li>
 </ul>
-</li>
-</ul>
-<h4 id="序列迭代"><a href="#序列迭代" class="headerlink" title="序列迭代"></a>序列迭代</h4><ul>
-<li>解释器需要迭代对象x时，会自动调用 iter(x) </li>
-<li>内置 iter 函数<ul>
+<h4 id="序列迭代"><a class="markdownIt-Anchor" href="#序列迭代"></a> 序列迭代</h4>
+<ul>
+<li>解释器需要迭代对象x时，会自动调用 iter(x)</li>
+<li>内置 iter 函数
+<ul>
 <li>检查对象是否有<code>__iter__</code> 方法，有的话就调用它获取迭代器</li>
 <li>若没有<code>__iter__</code> 但有<code>__getitem__</code> , python 会创建一个迭代器，按顺序(索引0开始) 获取元素</li>
 <li>尝试失败就抛出 TypeError 异常</li>
 </ul>
 </li>
-<li>检查对象是否可迭代<ul>
+<li>检查对象是否可迭代
+<ul>
 <li>最好用iter () 还会考虑 <code>__getitem__</code></li>
 <li>不用 isinstance(x,abc.iterable) 只考虑有无<code>__iter__</code></li>
 </ul>
 </li>
 </ul>
-<h4 id="标准迭代器Iterator接口"><a href="#标准迭代器Iterator接口" class="headerlink" title="标准迭代器Iterator接口"></a>标准迭代器Iterator接口</h4><ul>
+<h4 id="标准迭代器iterator接口"><a class="markdownIt-Anchor" href="#标准迭代器iterator接口"></a> 标准迭代器Iterator接口</h4>
+<ul>
 <li><code>__next__</code> 返回下一个元素，如果没有抛出StopIteration</li>
 <li><code>__iter__</code> 返回self</li>
 </ul>
-<h4 id="itertools库"><a href="#itertools库" class="headerlink" title="itertools库"></a>itertools库</h4><ul>
-<li>chain(it1,it2, … ,itN)<ul>
+<h4 id="itertools库"><a class="markdownIt-Anchor" href="#itertools库"></a> itertools库</h4>
+<ul>
+<li>chain(it1,it2, … ,itN)
+<ul>
 <li>先产出 it1 中的所有元素，然后it2的 ，然后所有都连接在一起</li>
 </ul>
 </li>
-<li>zip_longest(it1,it2m fillvalue=None)<ul>
+<li>zip_longest(it1,it2m fillvalue=None)
+<ul>
 <li>zip 取最长的iterator，剩余确实的补全</li>
 </ul>
 </li>
 </ul>
-<h4 id="用python调用系统命令用什么模块"><a href="#用python调用系统命令用什么模块" class="headerlink" title="用python调用系统命令用什么模块"></a>用python调用系统命令用什么模块</h4><ul>
-<li><p>os模块</p>
+<h4 id="用python调用系统命令用什么模块"><a class="markdownIt-Anchor" href="#用python调用系统命令用什么模块"></a> 用python调用系统命令用什么模块</h4>
+<ul>
+<li>
+<p>os模块</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 子终端运行系统命令，不能获取命令执行后的返回信息以及执行返回的状态</span></span><br><span class="line">os.system(cmd)</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">os.system(<span class="string">'date'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 不仅执行命令而且返回执行后的信息对象(常用于需要获取执行命令后的返回信息)</span></span><br><span class="line">os.popen(cmd)</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">nowtime = os.popen(<span class="string">'date'</span>)</span><br><span class="line"><span class="keyword">print</span> nowtime.read()</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>subprocess模块</p>
+<li>
+<p>subprocess模块</p>
 <ul>
 <li>对线程的控制和监控</li>
 </ul>
 </li>
 </ul>
-<h4 id="python是多继承-子类调用一个父类的方法-怎么做-super关键字的具体实现方式"><a href="#python是多继承-子类调用一个父类的方法-怎么做-super关键字的具体实现方式" class="headerlink" title="python是多继承,子类调用一个父类的方法,怎么做,super关键字的具体实现方式"></a>python是多继承,子类调用一个父类的方法,怎么做,super关键字的具体实现方式</h4><p>支持多继承</p>
-<h4 id="python菱形继承"><a href="#python菱形继承" class="headerlink" title="python菱形继承"></a>python菱形继承</h4><img src="/2020/11/21/python_1/image-20201123103511551.png" title="image-20201123103511551">
+<h4 id="python是多继承子类调用一个父类的方法怎么做super关键字的具体实现方式"><a class="markdownIt-Anchor" href="#python是多继承子类调用一个父类的方法怎么做super关键字的具体实现方式"></a> python是多继承,子类调用一个父类的方法,怎么做,super关键字的具体实现方式</h4>
+<p>支持多继承</p>
+<h4 id="python菱形继承"><a class="markdownIt-Anchor" href="#python菱形继承"></a> python菱形继承</h4>
+<img src="/2020/11/21/python_1/image-20201123103511551.png" title="image-20201123103511551">
 <ul>
-<li><p>当D类的对象使用一个属性时，首先在D类中查找是否有该属性，若没有就去父类</p>
+<li>
+<p>当D类的对象使用一个属性时，首先在D类中查找是否有该属性，若没有就去父类</p>
 <ul>
 <li>首先是去B还是C</li>
 <li>如果先去B，但B没有的话，是先去C还是去A</li>
 </ul>
 </li>
-<li><p>菱形继承的初始化问题</p>
+<li>
+<p>菱形继承的初始化问题</p>
 <ul>
-<li><p>如果每个类的初始化都是用父类的初始化即</p>
+<li>
+<p>如果每个类的初始化都是用父类的初始化即</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Electrical</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name)</span>:</span></span><br><span class="line">        self.name = name</span><br><span class="line">        print(<span class="string">'Electrical init'</span>)</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Phone</span><span class="params">(Electrical)</span>:</span> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name, price)</span>:</span></span><br><span class="line">        Electrical.__init__(self, name)</span><br><span class="line">        self.price = price</span><br><span class="line">        print(<span class="string">'Phone init'</span>)</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Computer</span><span class="params">(Electrical)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name, config)</span>:</span></span><br><span class="line">        Electrical.__init__(self, name)</span><br><span class="line">        self.config = config</span><br><span class="line">        print(<span class="string">'Computer init'</span>)</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HuaWei</span><span class="params">(Phone, Computer)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name, price, config)</span>:</span></span><br><span class="line">        Phone.__init__(self, name, price)</span><br><span class="line">        Computer.__init__(self, name, config)</span><br><span class="line">        print(<span class="string">'HuaWei init'</span>)</span><br><span class="line"></span><br><span class="line">h = HuaWei(<span class="string">'huawei'</span>, <span class="number">100</span>, <span class="string">'i7'</span>)</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>创建HuaWei对象时，Eletrical的<code>__init__</code>执行了两遍，有问题</p>
+<li>
+<p>创建HuaWei对象时，Eletrical的<code>__init__</code>执行了两遍，有问题</p>
 <ul>
 <li><strong>用super解决</strong></li>
 <li>super本质也是个类，内部记录着MRO信息，确保每个类只会被查找一次，避免顶层父类中的方法被多次执行。</li>
 <li>super()会创建一个super对象</li>
 </ul>
 </li>
-<li><p>新式类即(py3默认继承Object) 采用广度优先的方式继承顺序</p>
+<li>
+<p>新式类即(py3默认继承Object) 采用广度优先的方式继承顺序</p>
 <ul>
 <li>先从水平继承，即上述顺序是 D-B-C-A</li>
 </ul>
 </li>
-<li><p>可以通过<code>__mro__</code>方法查看继承顺序</p>
+<li>
+<p>可以通过<code>__mro__</code>方法查看继承顺序</p>
 </li>
 </ul>
 </li>
 </ul>
-<h4 id="type和object的关系"><a href="#type和object的关系" class="headerlink" title="type和object的关系"></a>type和object的关系</h4><ul>
-<li>面向对象中存在两种关系<ul>
+<h4 id="type和object的关系"><a class="markdownIt-Anchor" href="#type和object的关系"></a> type和object的关系</h4>
+<ul>
+<li>面向对象中存在两种关系
+<ul>
 <li>父子关系，即继承关系，子类继承于父类，查看一个类型的父类，使用<code>__bases__</code>属性</li>
 <li>类型实例关系，表现为某个类型的实例化，查看实例的类型, 使用<code>__class__</code>属性，或者用type()函数</li>
 </ul>
@@ -512,18 +621,23 @@
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; object</span><br><span class="line">&lt;type &apos;object&apos;&gt;</span><br><span class="line">&gt;&gt;&gt; type</span><br><span class="line">&lt;type &apos;type&apos;&gt;</span><br><span class="line">它们都是type的一个实例，表示它们都是类型对象。</span><br></pre></td></tr></table></figure>
 <ul>
-<li><p>object是父子关系的顶端，所有的数据类型的父类都是它；</p>
+<li>
+<p>object是父子关系的顶端，所有的数据类型的父类都是它；</p>
 </li>
-<li><p>type是类型实例关系的顶端，所有对象都是它的实例的</p>
+<li>
+<p>type是类型实例关系的顶端，所有对象都是它的实例的</p>
 </li>
 </ul>
 <p>object是一个type，object is and instance of type。即Object是type的一个实例。</p>
-<h4 id="函数的参数"><a href="#函数的参数" class="headerlink" title="函数的参数"></a>函数的参数</h4><ul>
+<h4 id="函数的参数"><a class="markdownIt-Anchor" href="#函数的参数"></a> 函数的参数</h4>
+<ul>
 <li>不要使用可变类型作为参数的默认值</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HauntedBus</span>:</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, passengers=[])</span>:</span></span><br><span class="line">		self.passengers = passengers</span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">pick</span><span class="params">(self, name)</span>:</span></span><br><span class="line">		self.passengers.append(name)</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">bus2 = HauntedBus()</span><br><span class="line">bus2.pick(<span class="string">'Carrie'</span>)</span><br><span class="line">bus2.passengers</span><br><span class="line">[<span class="string">'Carrie'</span>]</span><br><span class="line">bus3 = HauntedBus()</span><br><span class="line">bus3.passengers</span><br><span class="line">[<span class="string">'Carrie'</span>]</span><br><span class="line">	</span><br><span class="line">	<span class="comment"># 修改版</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, passengers=None)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> passengers <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        	self.passengers = []</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">        	self.passengers = passengers</span><br><span class="line"> </span><br><span class="line">	<span class="comment"># 修改版</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, passengers=None)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> passengers <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        	self.passengers = []</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># 通过创建副本维护自己的list</span></span><br><span class="line">        	self.passengers = list(passengers)</span><br></pre></td></tr></table></figure>
-<h4 id="python特殊方法"><a href="#python特殊方法" class="headerlink" title="python特殊方法"></a>python特殊方法</h4><ul>
-<li><code>__slots__</code> 节省内存<ul>
+<h4 id="python特殊方法"><a class="markdownIt-Anchor" href="#python特殊方法"></a> python特殊方法</h4>
+<ul>
+<li><code>__slots__</code> 节省内存
+<ul>
 <li>默认下，python在实例中<code>__dict__</code>的字典中存储实例属性，底层是<strong>用散列表来提升速度，会消耗大量内存</strong>。</li>
 <li>如果数百万个属性不多的实例，用<code>__slots__</code> ，在元组中存储实例属性，而不是字典。</li>
 <li>每个子类需要定义<code>__slots__</code>属性，解释器会忽略继承的<code>__slots__</code>属性</li>
@@ -538,33 +652,41 @@
 <li><code>__contains__</code>  支持in运算符</li>
 <li><code>__mro__</code> method resolution order 方法解析顺序。 按顺序列出类及其超类。 多重继承的时候，一般是从左到右，再往上(往父类)</li>
 </ul>
-<h4 id="运算符重载"><a href="#运算符重载" class="headerlink" title="运算符重载"></a>运算符重载</h4><ul>
+<h4 id="运算符重载"><a class="markdownIt-Anchor" href="#运算符重载"></a> 运算符重载</h4>
+<ul>
 <li><code>__eq__</code>  ==</li>
 <li><code>__pos__</code> +</li>
-<li><code>__neg__</code> - </li>
+<li><code>__neg__</code> -</li>
 </ul>
-<h4 id="else与for-while-try使用"><a href="#else与for-while-try使用" class="headerlink" title="else与for,while,try使用"></a>else与for,while,try使用</h4><ul>
-<li>for <ul>
+<h4 id="else与forwhiletry使用"><a class="markdownIt-Anchor" href="#else与forwhiletry使用"></a> else与for,while,try使用</h4>
+<ul>
+<li>for
+<ul>
 <li>当for循环运行完(即for循环没有被break语句中止) 才运行else模块</li>
 </ul>
 </li>
-<li>while<ul>
+<li>while
+<ul>
 <li>while 循环因为条件为false退出(不是因为break退出)才运行else</li>
 </ul>
 </li>
-<li>try<ul>
+<li>try
+<ul>
 <li>try 中没有异常抛出时运行else</li>
 </ul>
 </li>
 </ul>
 <p>所有情况下，如果异常或return，break，continue导致控制权跳到了复合语句的主块之外，else也会被跳过</p>
-<h4 id="eval函数"><a href="#eval函数" class="headerlink" title="eval函数"></a>eval函数</h4><ul>
-<li>str to list/dict/tuple<ul>
+<h4 id="eval函数"><a class="markdownIt-Anchor" href="#eval函数"></a> eval函数</h4>
+<ul>
+<li>str to list/dict/tuple
+<ul>
 <li>实现把字符串常量转成变量</li>
 </ul>
 </li>
 <li>慎用的原因是 针对不可信的str，转化成命令后可能造成漏洞，如rm 数据</li>
-<li>有这个函数的原因:<ul>
+<li>有这个函数的原因:
+<ul>
 <li>动态语言支持动态地产生代码，对于已经部署好的工程，也可以只做很小的局部修改，就实现 bug 修复</li>
 </ul>
 </li>
@@ -690,7 +812,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#装饰器-闭包内的变量存在哪里"><span class="toc-number">1.</span> <span class="toc-text">装饰器/闭包内的变量存在哪里</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#上下文管理器"><span class="toc-number">2.</span> <span class="toc-text">上下文管理器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#list和set查询-谁复杂度低"><span class="toc-number">3.</span> <span class="toc-text">list和set查询,谁复杂度低</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#dict实现原理"><span class="toc-number">4.</span> <span class="toc-text">dict实现原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#基础数据类型可变-不可变"><span class="toc-number">5.</span> <span class="toc-text">基础数据类型可变,不可变</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#深拷贝-浅拷贝"><span class="toc-number">6.</span> <span class="toc-text">深拷贝,浅拷贝</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#is和-的区别"><span class="toc-number">7.</span> <span class="toc-text">is和==的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#is-not-None"><span class="toc-number">8.</span> <span class="toc-text">is_not_None</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#函数”“和“-”情况"><span class="toc-number">9.</span> <span class="toc-text">函数”“和“_”情况</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#写一下线程安全的单例设计模式"><span class="toc-number">10.</span> <span class="toc-text">写一下线程安全的单例设计模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#python中的高阶函数"><span class="toc-number">11.</span> <span class="toc-text">python中的高阶函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pyc文件-so文件"><span class="toc-number">12.</span> <span class="toc-text">pyc文件,so文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#python和java-C-的区别"><span class="toc-number">13.</span> <span class="toc-text">python和java,C++的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#迭代-生成器-generator如何实现"><span class="toc-number">14.</span> <span class="toc-text">迭代,生成器,generator如何实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#序列迭代"><span class="toc-number">15.</span> <span class="toc-text">序列迭代</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#标准迭代器Iterator接口"><span class="toc-number">16.</span> <span class="toc-text">标准迭代器Iterator接口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#itertools库"><span class="toc-number">17.</span> <span class="toc-text">itertools库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#用python调用系统命令用什么模块"><span class="toc-number">18.</span> <span class="toc-text">用python调用系统命令用什么模块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#python是多继承-子类调用一个父类的方法-怎么做-super关键字的具体实现方式"><span class="toc-number">19.</span> <span class="toc-text">python是多继承,子类调用一个父类的方法,怎么做,super关键字的具体实现方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#python菱形继承"><span class="toc-number">20.</span> <span class="toc-text">python菱形继承</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#type和object的关系"><span class="toc-number">21.</span> <span class="toc-text">type和object的关系</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#函数的参数"><span class="toc-number">22.</span> <span class="toc-text">函数的参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#python特殊方法"><span class="toc-number">23.</span> <span class="toc-text">python特殊方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#运算符重载"><span class="toc-number">24.</span> <span class="toc-text">运算符重载</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#else与for-while-try使用"><span class="toc-number">25.</span> <span class="toc-text">else与for,while,try使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#eval函数"><span class="toc-number">26.</span> <span class="toc-text">eval函数</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#装饰器闭包内的变量存在哪里"><span class="toc-number">1.</span> <span class="toc-text"> 装饰器/闭包内的变量存在哪里</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#上下文管理器"><span class="toc-number">2.</span> <span class="toc-text"> 上下文管理器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#list和set查询谁复杂度低"><span class="toc-number">3.</span> <span class="toc-text"> list和set查询,谁复杂度低</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#dict实现原理"><span class="toc-number">4.</span> <span class="toc-text"> dict实现原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#基础数据类型可变不可变"><span class="toc-number">5.</span> <span class="toc-text"> 基础数据类型可变,不可变</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#深拷贝浅拷贝"><span class="toc-number">6.</span> <span class="toc-text"> 深拷贝,浅拷贝</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#is和的区别"><span class="toc-number">7.</span> <span class="toc-text"> is和==的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#is_not_none"><span class="toc-number">8.</span> <span class="toc-text"> is_not_None</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#函数_和__情况"><span class="toc-number">9.</span> <span class="toc-text"> 函数&quot;_&quot;和“__”情况</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#写一下线程安全的单例设计模式"><span class="toc-number">10.</span> <span class="toc-text"> 写一下线程安全的单例设计模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#python中的高阶函数"><span class="toc-number">11.</span> <span class="toc-text"> python中的高阶函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pyc文件so文件"><span class="toc-number">12.</span> <span class="toc-text"> pyc文件,so文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#python和javac的区别"><span class="toc-number">13.</span> <span class="toc-text"> python和java,C++的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#迭代生成器generator如何实现"><span class="toc-number">14.</span> <span class="toc-text"> 迭代,生成器,generator如何实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#序列迭代"><span class="toc-number">15.</span> <span class="toc-text"> 序列迭代</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#标准迭代器iterator接口"><span class="toc-number">16.</span> <span class="toc-text"> 标准迭代器Iterator接口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#itertools库"><span class="toc-number">17.</span> <span class="toc-text"> itertools库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#用python调用系统命令用什么模块"><span class="toc-number">18.</span> <span class="toc-text"> 用python调用系统命令用什么模块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#python是多继承子类调用一个父类的方法怎么做super关键字的具体实现方式"><span class="toc-number">19.</span> <span class="toc-text"> python是多继承,子类调用一个父类的方法,怎么做,super关键字的具体实现方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#python菱形继承"><span class="toc-number">20.</span> <span class="toc-text"> python菱形继承</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#type和object的关系"><span class="toc-number">21.</span> <span class="toc-text"> type和object的关系</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#函数的参数"><span class="toc-number">22.</span> <span class="toc-text"> 函数的参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#python特殊方法"><span class="toc-number">23.</span> <span class="toc-text"> python特殊方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#运算符重载"><span class="toc-number">24.</span> <span class="toc-text"> 运算符重载</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#else与forwhiletry使用"><span class="toc-number">25.</span> <span class="toc-text"> else与for,while,try使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#eval函数"><span class="toc-number">26.</span> <span class="toc-text"> eval函数</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -847,7 +969,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -855,7 +977,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">http</a>
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -863,11 +985,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
+                <a href="javascript:void(0)" class="js-tag color5">python, gevent</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -891,11 +1013,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+                <a href="javascript:void(0)" class="js-tag color3">OS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OS</a>
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
               </li>
             
             <div class="clearfix"></div>

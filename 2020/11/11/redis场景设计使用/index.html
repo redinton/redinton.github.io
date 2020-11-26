@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>redis场景设计使用 | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="用redis实现购物车的功能在修改频繁的情况下，不会用关系型数据库来存储购物车的信息。 可以考虑用redis或者mongodb这种非关系型数据库 设计: 用户ID作为key,商品ID作为field，商品数量作为value增加购物车内商品123hset cart:1001 10021 1hset cart:1001 10025 1hset cart:1001 10079 1  全选功能 获取某用户购">
+  <meta name="description" content="用redis实现购物车的功能 在修改频繁的情况下，不会用关系型数据库来存储购物车的信息。 可以考虑用redis或者mongodb这种非关系型数据库 设计: 用户ID作为key,商品ID作为field，商品数量作为value 增加购物车内商品 123hset cart:1001 10021 1hset cart:1001 10025 1hset cart:1001 10079 1  全选功能  获">
 <meta name="keywords" content="redis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="redis场景设计使用">
 <meta property="og:url" content="http://jasonyu.top/2020/11/11/redis场景设计使用/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="用redis实现购物车的功能在修改频繁的情况下，不会用关系型数据库来存储购物车的信息。 可以考虑用redis或者mongodb这种非关系型数据库 设计: 用户ID作为key,商品ID作为field，商品数量作为value增加购物车内商品123hset cart:1001 10021 1hset cart:1001 10025 1hset cart:1001 10079 1  全选功能 获取某用户购">
+<meta property="og:description" content="用redis实现购物车的功能 在修改频繁的情况下，不会用关系型数据库来存储购物车的信息。 可以考虑用redis或者mongodb这种非关系型数据库 设计: 用户ID作为key,商品ID作为field，商品数量作为value 增加购物车内商品 123hset cart:1001 10021 1hset cart:1001 10025 1hset cart:1001 10079 1  全选功能  获">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-26T08:54:51.533Z">
+<meta property="og:updated_time" content="2020-11-26T08:57:14.747Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="redis场景设计使用">
-<meta name="twitter:description" content="用redis实现购物车的功能在修改频繁的情况下，不会用关系型数据库来存储购物车的信息。 可以考虑用redis或者mongodb这种非关系型数据库 设计: 用户ID作为key,商品ID作为field，商品数量作为value增加购物车内商品123hset cart:1001 10021 1hset cart:1001 10025 1hset cart:1001 10079 1  全选功能 获取某用户购">
+<meta name="twitter:description" content="用redis实现购物车的功能 在修改频繁的情况下，不会用关系型数据库来存储购物车的信息。 可以考虑用redis或者mongodb这种非关系型数据库 设计: 用户ID作为key,商品ID作为field，商品数量作为value 增加购物车内商品 123hset cart:1001 10021 1hset cart:1001 10025 1hset cart:1001 10079 1  全选功能  获">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -169,44 +169,56 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="用redis实现购物车的功能"><a href="#用redis实现购物车的功能" class="headerlink" title="用redis实现购物车的功能"></a>用redis实现购物车的功能</h3><p>在修改频繁的情况下，不会用关系型数据库来存储购物车的信息。 可以考虑用redis或者mongodb这种非关系型数据库</p>
-<p>设计: 用户ID作为key,商品ID作为field，商品数量作为value<br>增加购物车内商品<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hset cart:1001 10021 1</span><br><span class="line">hset cart:1001 10025 1</span><br><span class="line">hset cart:1001 10079 1</span><br></pre></td></tr></table></figure></p>
+        <h3 id="用redis实现购物车的功能"><a class="markdownIt-Anchor" href="#用redis实现购物车的功能"></a> 用redis实现购物车的功能</h3>
+<p>在修改频繁的情况下，不会用关系型数据库来存储购物车的信息。 可以考虑用redis或者mongodb这种非关系型数据库</p>
+<p>设计: 用户ID作为key,商品ID作为field，商品数量作为value<br>
+增加购物车内商品</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hset cart:1001 10021 1</span><br><span class="line">hset cart:1001 10025 1</span><br><span class="line">hset cart:1001 10079 1</span><br></pre></td></tr></table></figure>
 <ul>
-<li>全选功能<ul>
+<li>全选功能
+<ul>
 <li>获取某用户购物车内的所有商品</li>
-<li><blockquote>
+<li>
+<blockquote>
 <p>hgetall cart:1001 # 获取某个key下的所有field和value</p>
 </blockquote>
 </li>
 </ul>
 </li>
-<li>商品数量<ul>
+<li>商品数量
+<ul>
 <li>显示购物车内商品总数量</li>
-<li><blockquote>
+<li>
+<blockquote>
 <p>hlen cart:1001 # 显示某个key下所有field的数量</p>
 </blockquote>
 </li>
 </ul>
 </li>
-<li>删除某商品<ul>
+<li>删除某商品
+<ul>
 <li>删除购物车内的某个商品</li>
-<li><blockquote>
+<li>
+<blockquote>
 <p>hdel cart:1001 10079</p>
 </blockquote>
 </li>
 </ul>
 </li>
 <li>增加或减少商品的数量</li>
-<li><blockquote>
-<p>hincrby cart:1001 10021 1 </p>
+<li>
+<blockquote>
+<p>hincrby cart:1001 10021 1</p>
 </blockquote>
 </li>
 </ul>
 <p>购物车</p>
 <ul>
-<li>未登录时暂存购物车<ul>
+<li>未登录时暂存购物车
+<ul>
 <li>如果存在服务端，需要每个暂存购物车有一个全局唯一标识，比较浪费服务端资源</li>
-<li>存客户端，选项是session，cookie，localstorage<ul>
+<li>存客户端，选项是session，cookie，localstorage
+<ul>
 <li>session的保留时间短，且数据实际还是存服务端</li>
 <li>cookie存储实现简单，加减购物车，合并购物车中由于服务端可以读写cookie，全部逻辑都可以在服务端实现，并且客户端和服务端请求的次数也相对少一些。</li>
 <li>LocalStorage 存储，客户端和服务端都要实现一些业务逻辑，但 LocalStorage 的好处是，它的存储容量比 Cookie 的 4KB 上限要大得多，而且不用像 Cookie 那样，无论用不用，每次请求都要带着，可以节省带宽。</li>
@@ -338,7 +350,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#用redis实现购物车的功能"><span class="toc-number">1.</span> <span class="toc-text">用redis实现购物车的功能</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#用redis实现购物车的功能"><span class="toc-number">1.</span> <span class="toc-text"> 用redis实现购物车的功能</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -495,7 +507,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -503,7 +515,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">http</a>
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -511,11 +523,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
+                <a href="javascript:void(0)" class="js-tag color5">python, gevent</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -539,11 +551,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+                <a href="javascript:void(0)" class="js-tag color3">OS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OS</a>
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
               </li>
             
             <div class="clearfix"></div>

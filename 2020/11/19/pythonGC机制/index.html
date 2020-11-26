@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>pythonGC机制 | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="说一说gc/python的垃圾回收机制 引用计数 标记清除 分代回收">
+  <meta name="description" content="说一说gc/python的垃圾回收机制  引用计数 标记清除 分代回收">
 <meta name="keywords" content="python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="pythonGC机制">
 <meta property="og:url" content="http://jasonyu.top/2020/11/19/pythonGC机制/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="说一说gc/python的垃圾回收机制 引用计数 标记清除 分代回收">
+<meta property="og:description" content="说一说gc/python的垃圾回收机制  引用计数 标记清除 分代回收">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-26T08:54:51.586Z">
+<meta property="og:updated_time" content="2020-11-26T08:57:14.823Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="pythonGC机制">
-<meta name="twitter:description" content="说一说gc/python的垃圾回收机制 引用计数 标记清除 分代回收">
+<meta name="twitter:description" content="说一说gc/python的垃圾回收机制  引用计数 标记清除 分代回收">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -169,7 +169,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="说一说gc-python的垃圾回收机制"><a href="#说一说gc-python的垃圾回收机制" class="headerlink" title="说一说gc/python的垃圾回收机制"></a>说一说gc/python的垃圾回收机制</h3><ul>
+        <h3 id="说一说gcpython的垃圾回收机制"><a class="markdownIt-Anchor" href="#说一说gcpython的垃圾回收机制"></a> 说一说gc/python的垃圾回收机制</h3>
+<ul>
 <li>引用计数</li>
 <li>标记清除</li>
 <li>分代回收</li>
@@ -177,28 +178,35 @@
 <a id="more"></a>
 <p>python默认的gc机制是 引用计数法</p>
 <ul>
-<li><p>每个对象维护一个字段记录当前对象被引用的次数，一旦对象引用计数为0，该对象立即被回收，内存空间被释放</p>
+<li>
+<p>每个对象维护一个字段记录当前对象被引用的次数，一旦对象引用计数为0，该对象立即被回收，内存空间被释放</p>
 </li>
-<li><p>缺点</p>
+<li>
+<p>缺点</p>
 <ul>
-<li><p><strong>无法解决对象的循环引用问题</strong></p>
+<li>
+<p><strong>无法解决对象的循环引用问题</strong></p>
 <ul>
-<li><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">a=[<span class="number">1</span>,<span class="number">2</span>]</span><br><span class="line">b=[<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line">a.append(b)</span><br><span class="line">b.append(a)</span><br><span class="line">DEL a</span><br><span class="line">DEL b</span><br><span class="line"><span class="comment">#a，b的被引用次数都是1 无法被gc</span></span><br></pre></td></tr></table></figure>
+<li>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">a=[<span class="number">1</span>,<span class="number">2</span>]</span><br><span class="line">b=[<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line">a.append(b)</span><br><span class="line">b.append(a)</span><br><span class="line">DEL a</span><br><span class="line">DEL b</span><br><span class="line"><span class="comment">#a，b的被引用次数都是1 无法被gc</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
-<li><p>需要额外的空间维护引用计数</p>
+<li>
+<p>需要额外的空间维护引用计数</p>
 </li>
 </ul>
 </li>
-<li><p>引用计数+1的情况</p>
+<li>
+<p>引用计数+1的情况</p>
 <ul>
 <li>对象被创建  a=23, ; 对象被引用 b = a,</li>
 <li>对象被作为参数，传入一个函数 func(a);</li>
 <li>对象作为一个元素，被存储到容器中 list = [a]</li>
 </ul>
 </li>
-<li><p>引用计数 - 1</p>
+<li>
+<p>引用计数 - 1</p>
 <ul>
 <li>对象别名被显示销毁  del a;</li>
 <li>对象别名被赋予新的对象 a = 24</li>
@@ -206,11 +214,13 @@
 <li>对象所在的容器被销毁，或者从容器中删除对象</li>
 </ul>
 </li>
-<li><p>标记清除</p>
+<li>
+<p>标记清除</p>
 <ul>
 <li>用来解决容器对象(列表,字典,用户自定义类的对象,元祖等)可能产生的循环引用</li>
 <li>每个容器对象维护两个额外的指针，</li>
-<li>步骤<ul>
+<li>步骤
+<ul>
 <li>标记阶段-遍历所有对象,如果是可达的(即还有对象引用),就标记该对象可达</li>
 <li>清除阶段-再次遍历对象,如果发现某个对象没有标记可达,则回收</li>
 </ul>
@@ -218,7 +228,9 @@
 <li>标记清除阶段, 会暂停整个应用程序</li>
 </ul>
 </li>
-<li>分代回收<ul>
+<li>
+<p>分代回收</p>
+<ul>
 <li>对象存在时间越长，越不可能是垃圾，应该越少去收集</li>
 <li>在标记-清除可以有效减少遍历的对象数目，进而提高垃圾回收的速度</li>
 <li>将内存根据对象的存活时间分成三个集合，年轻代，中生代，老年代</li>
@@ -349,7 +361,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#说一说gc-python的垃圾回收机制"><span class="toc-number">1.</span> <span class="toc-text">说一说gc/python的垃圾回收机制</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#说一说gcpython的垃圾回收机制"><span class="toc-number">1.</span> <span class="toc-text"> 说一说gc/python的垃圾回收机制</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -506,7 +518,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -514,7 +526,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">http</a>
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -522,11 +534,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
+                <a href="javascript:void(0)" class="js-tag color5">python, gevent</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -550,11 +562,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+                <a href="javascript:void(0)" class="js-tag color3">OS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OS</a>
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
               </li>
             
             <div class="clearfix"></div>

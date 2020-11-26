@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Keep Moving">
 <meta property="og:description" content="线程安全">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-26T08:54:51.566Z">
+<meta property="og:updated_time" content="2020-11-26T08:57:14.797Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="乐观锁悲观锁">
 <meta name="twitter:description" content="线程安全">
@@ -169,43 +169,60 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h4><a id="more"></a>
+        <h4 id="线程安全"><a class="markdownIt-Anchor" href="#线程安全"></a> 线程安全</h4>
+<a id="more"></a>
 <ul>
-<li>如果一个类被设计为允许多线程正确访问，那么这个类就是 “<strong>线程安全</strong>”</li>
-<li>对线程安全性的讨论必须建立在对象内部存在共享变量这一前提，若对象在多条线程间<strong>没有共享数据</strong>，那这个对象一定是线程安全的</li>
-<li><p>还有一些不变类如 String，Integer，LocalDate 所有成员变量都是final，多线程同时访问时，只能读不能写，因此也是 “线程安全”</p>
+<li>
+<p>如果一个类被设计为允许多线程正确访问，那么这个类就是 “<strong>线程安全</strong>”</p>
 </li>
-<li><p>并发</p>
+<li>
+<p>对线程安全性的讨论必须建立在对象内部存在共享变量这一前提，若对象在多条线程间<strong>没有共享数据</strong>，那这个对象一定是线程安全的</p>
+</li>
+<li>
+<p>还有一些不变类如 String，Integer，LocalDate 所有成员变量都是final，多线程同时访问时，只能读不能写，因此也是 “线程安全”</p>
+</li>
+<li>
+<p>并发</p>
 <ul>
 <li>同一个时间间隔多个请求</li>
 </ul>
 </li>
-<li>并行<ul>
+<li>
+<p>并行</p>
+<ul>
 <li>同一个时刻同时操作</li>
 </ul>
 </li>
 </ul>
-<h4 id="乐观锁和悲观锁"><a href="#乐观锁和悲观锁" class="headerlink" title="乐观锁和悲观锁"></a>乐观锁和悲观锁</h4><p>这两个是设计思想。涉及多线程更新共享变量,可以通过加锁保障数据一致性和安全性。</p>
+<h4 id="乐观锁和悲观锁"><a class="markdownIt-Anchor" href="#乐观锁和悲观锁"></a> 乐观锁和悲观锁</h4>
+<p>这两个是设计思想。涉及多线程更新共享变量,可以通过加锁保障数据一致性和安全性。</p>
 <ul>
-<li>悲观锁, 共享资<strong>源每次只给一个线程使用</strong>, 其余线程阻塞. 常见通过<strong>加锁</strong>来保障变量数据的一致性和安全性<ul>
+<li>
+<p>悲观锁, 共享资<strong>源每次只给一个线程使用</strong>, 其余线程阻塞. 常见通过<strong>加锁</strong>来保障变量数据的一致性和安全性</p>
+<ul>
 <li>例如MySQL的表锁,行锁,python的threading中的Lock</li>
 </ul>
 </li>
-</ul>
+<li>
+<p>乐观锁, <strong>默认不会阻塞其他线程访问操作该对象</strong>(因此不会去加锁), 但是需要<strong>更新的时候去判断该值有没有被其他线程更新</strong>过。 通过<strong>CAS和版本号</strong>来实现乐观锁并发更新。</p>
 <ul>
-<li>乐观锁, <strong>默认不会阻塞其他线程访问操作该对象</strong>(因此不会去加锁), 但是需要<strong>更新的时候去判断该值有没有被其他线程更新</strong>过。 通过<strong>CAS和版本号</strong>来实现乐观锁并发更新。<ul>
-<li>CAS (compare and swap) — 原子操作<ul>
+<li>CAS (compare and swap) – 原子操作
+<ul>
 <li>用于多线程中实现不被打断的数据交换操作,避免多线程同时改写某一数据由于执行顺序不确定性以及中断的不可预知性产生的数据不一致问题</li>
-<li>CAS包含三个操作数，内存值V，预期原值A和更新值B，先比较V是否与A相等，相等就把V更新为B，否则返回<ul>
-<li>缺点1 ABA问题 <ul>
-<li>一个变量v 被线程读取的时候是A，经过逻辑运算，更新的时候还是A，那么能确保该变量没有被修改过? 比如值从 A—&gt;B—&gt;A ,中间被修改为B,最后又修改为A </li>
+<li>CAS包含三个操作数，内存值V，预期原值A和更新值B，先比较V是否与A相等，相等就把V更新为B，否则返回
+<ul>
+<li>缺点1 ABA问题
+<ul>
+<li>一个变量v 被线程读取的时候是A，经过逻辑运算，更新的时候还是A，那么能确保该变量没有被修改过? 比如值从 A–&gt;B–&gt;A ,中间被修改为B,最后又修改为A</li>
 </ul>
 </li>
-<li>解决<ul>
+<li>解决
+<ul>
 <li>增加版本号的对比。取数据时，同时取出记录的版本号的值，更新的时候 将版本号加一</li>
 </ul>
 </li>
-<li>缺点2<ul>
+<li>缺点2
+<ul>
 <li>如果并发更新失败，基于CAS的方式会不断循环尝试，给CPU带来压力，影响性能</li>
 </ul>
 </li>
@@ -218,11 +235,13 @@
 </ul>
 <p>场景</p>
 <ul>
-<li>悲观锁<ul>
+<li>悲观锁
+<ul>
 <li>适合写入频繁场景, 若出现大量读取操作，每次读取都进行加锁，会增加开销，降低系统的吞吐量</li>
 </ul>
 </li>
-<li>乐观锁<ul>
+<li>乐观锁
+<ul>
 <li>适合读取频繁，若出现大量写入操作，数据发生冲突的可能性变大，为保证数据的一致性，应用层要不断重新获取数据，会增加大量的查询操作，降低系统的吞吐量</li>
 </ul>
 </li>
@@ -349,7 +368,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#线程安全"><span class="toc-number">1.</span> <span class="toc-text">线程安全</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#乐观锁和悲观锁"><span class="toc-number">2.</span> <span class="toc-text">乐观锁和悲观锁</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#线程安全"><span class="toc-number">1.</span> <span class="toc-text"> 线程安全</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#乐观锁和悲观锁"><span class="toc-number">2.</span> <span class="toc-text"> 乐观锁和悲观锁</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -506,7 +525,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -514,7 +533,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">http</a>
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -522,11 +541,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
+                <a href="javascript:void(0)" class="js-tag color5">python, gevent</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -550,11 +569,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+                <a href="javascript:void(0)" class="js-tag color3">OS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OS</a>
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
               </li>
             
             <div class="clearfix"></div>

@@ -9,14 +9,14 @@
   <title>gevent源码 | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="1234567891011121314151617181920212223242526272829303132333435363738394041424344import geventgevent.sleep(1)def sleep(seconds=0):    hub = get_hub()    loop = hub.loop    hub.wait(loop.timer(seconds))">
-<meta name="keywords" content="python,gevent">
+<meta name="keywords" content="python, gevent">
 <meta property="og:type" content="article">
 <meta property="og:title" content="gevent源码">
 <meta property="og:url" content="http://jasonyu.top/2020/11/13/gevent源码/index.html">
 <meta property="og:site_name" content="Keep Moving">
 <meta property="og:description" content="1234567891011121314151617181920212223242526272829303132333435363738394041424344import geventgevent.sleep(1)def sleep(seconds=0):    hub = get_hub()    loop = hub.loop    hub.wait(loop.timer(seconds))">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-26T08:54:51.582Z">
+<meta property="og:updated_time" content="2020-11-26T08:57:14.817Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="gevent源码">
 <meta name="twitter:description" content="1234567891011121314151617181920212223242526272829303132333435363738394041424344import geventgevent.sleep(1)def sleep(seconds=0):    hub = get_hub()    loop = hub.loop    hub.wait(loop.timer(seconds))">
@@ -172,7 +172,7 @@
         <a id="more"></a>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> gevent</span><br><span class="line">gevent.sleep(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sleep</span><span class="params">(seconds=<span class="number">0</span>)</span>:</span></span><br><span class="line">    hub = get_hub()</span><br><span class="line">    loop = hub.loop</span><br><span class="line">    hub.wait(loop.timer(seconds))</span><br><span class="line"></span><br><span class="line"><span class="comment"># hub是一个单例</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Hub</span><span class="params">(greenlet)</span>:</span></span><br><span class="line">    loop_class = config(<span class="string">'gevent.core.loop'</span>,<span class="string">'GEVENT_LOOP'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        greenlet.__init__(self)</span><br><span class="line">        loop_class = _import(self.loop_class)</span><br><span class="line">        self.loop = loop_class()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wait</span><span class="params">(self,watcher)</span>:</span></span><br><span class="line">        waiter = Waiter()</span><br><span class="line">        watcher.start(waiter.switch) <span class="comment"># watcher.start(method),当给定的几秒钟过后，会调用这里的函数也就是waiter.switch</span></span><br><span class="line">        waiter.get()</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Waiter</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.hub = get_hub()</span><br><span class="line">        self.greenlet = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">switch</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">assert</span> getcurrent() <span class="keyword">is</span> self.hub</span><br><span class="line">        self.greenlet.switch()</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">assert</span> self.greenlet <span class="keyword">is</span> <span class="literal">None</span></span><br><span class="line">        self.greenlet = getcurrent()</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">return</span> self.hub.switch()</span><br><span class="line">        <span class="keyword">finally</span>:</span><br><span class="line">            self.greenlet = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">hub.wait(loop.timer(seconds))</span><br><span class="line"><span class="comment"># loop有一堆接口,对应底层libev的各个功能, 这里用 timer(seconds) 返回一个watcher对象</span></span><br><span class="line">hub.wait()</span><br></pre></td></tr></table></figure>
 <p>相关资料</p>
-<p><a href="https://www.cnblogs.com/piperck/p/5719163.html" target="_blank" rel="noopener">ython 协程库gevent学习—gevent源码学习(二)</a></p>
+<p><a href="https://www.cnblogs.com/piperck/p/5719163.html" target="_blank" rel="noopener">ython 协程库gevent学习–gevent源码学习(二)</a></p>
 
       
 
@@ -186,7 +186,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">python,gevent</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">python, gevent</a>
         		</li>
       		
 		</ul>
@@ -451,7 +451,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -459,7 +459,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">http</a>
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -467,11 +467,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
+                <a href="javascript:void(0)" class="js-tag color5">python, gevent</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -495,11 +495,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+                <a href="javascript:void(0)" class="js-tag color3">OS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OS</a>
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
               </li>
             
             <div class="clearfix"></div>

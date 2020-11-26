@@ -18,7 +18,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://jasonyu.top/2020/11/26/经验/image-20200830193739858.png">
 <meta property="og:image" content="http://jasonyu.top/2020/11/26/经验/image-20200831112146031.png">
-<meta property="og:updated_time" content="2020-11-26T08:54:51.491Z">
+<meta property="og:updated_time" content="2020-11-26T08:57:14.697Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="经验">
 <meta name="twitter:description" content="复制/拷贝类算法题">
@@ -172,53 +172,66 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="复制-拷贝类算法题"><a href="#复制-拷贝类算法题" class="headerlink" title="复制/拷贝类算法题"></a>复制/拷贝类算法题</h3><a id="more"></a>
+        <h3 id="复制拷贝类算法题"><a class="markdownIt-Anchor" href="#复制拷贝类算法题"></a> 复制/拷贝类算法题</h3>
+<a id="more"></a>
 <p>建议利用哈希表(dict)来存原始节点和拷贝生成节点的映射。</p>
 <p><a href="https://leetcode.com/problems/clone-graph/" target="_blank" rel="noopener">样例题目</a> 克隆图</p>
-<h3 id="字符串修改类"><a href="#字符串修改类" class="headerlink" title="字符串修改类"></a>字符串修改类</h3><p>当两个字符串之间可以有一个修改(增加删除替换时),可以用“#”来代替那个被替换的字符, 然后存成字典。</p>
+<h3 id="字符串修改类"><a class="markdownIt-Anchor" href="#字符串修改类"></a> 字符串修改类</h3>
+<p>当两个字符串之间可以有一个修改(增加删除替换时),可以用“#”来代替那个被替换的字符, 然后存成字典。</p>
 <p><a href="https://leetcode.com/problems/word-ladder/" target="_blank" rel="noopener">样例</a></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Dict = dict()</span><br><span class="line">    <span class="keyword">for</span> word <span class="keyword">in</span> wordList:</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(word)):</span><br><span class="line">            tmp_word = word[:i] + <span class="string">'-'</span> + word[i+<span class="number">1</span>:]</span><br><span class="line">            Dict[tmp_word] = Dict.get(tmp_word,[]) + [word]</span><br></pre></td></tr></table></figure>
-<h3 id="有向图的环路检测？"><a href="#有向图的环路检测？" class="headerlink" title="有向图的环路检测？"></a>有向图的环路检测？</h3><p><a href="https://leetcode.com/problems/course-schedule/submissions/" target="_blank" rel="noopener">样例题目</a> — <a href="https://en.wikipedia.org/wiki/Topological_sorting#Algorithms" target="_blank" rel="noopener">Topological sorting</a></p>
+<h3 id="有向图的环路检测"><a class="markdownIt-Anchor" href="#有向图的环路检测"></a> 有向图的环路检测？</h3>
+<p><a href="https://leetcode.com/problems/course-schedule/submissions/" target="_blank" rel="noopener">样例题目</a> — <a href="https://en.wikipedia.org/wiki/Topological_sorting#Algorithms" target="_blank" rel="noopener">Topological sorting</a></p>
 <p>DFS中 ,可以对 visited的状态值设置多种选项</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">graph = [[] <span class="keyword">for</span> _ <span class="keyword">in</span> range(numCourses)]</span><br><span class="line">visited = [<span class="number">0</span>] * numCourses</span><br><span class="line"><span class="keyword">for</span> x,y <span class="keyword">in</span> prerequisites:</span><br><span class="line">    graph[x].append(y)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dfs</span><span class="params">(i)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> visited[i] == <span class="number">-1</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">if</span> visited[i] == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">    visited[i] = <span class="number">-1</span></span><br><span class="line">    <span class="keyword">for</span> neigh <span class="keyword">in</span> graph[i]:</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> dfs(neigh):</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    visited[i] = <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(numCourses):</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> dfs(i):</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"><span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure>
-<h3 id="TreeSum-类型的题"><a href="#TreeSum-类型的题" class="headerlink" title="TreeSum 类型的题"></a>TreeSum 类型的题</h3><p>当node只有left-children 或者right-children时, 只能沿着那个方向走。 因为在判断从root到leaf的和时，一定要保证最后一个是leaf 而不仅仅是用 if not node 这样来判断。</p>
-<h3 id="Presum-类型的题"><a href="#Presum-类型的题" class="headerlink" title="Presum 类型的题"></a>Presum 类型的题</h3><p>求某个区间的和 等于某个值k的时候，可以用preSum的思想</p>
+<h3 id="treesum-类型的题"><a class="markdownIt-Anchor" href="#treesum-类型的题"></a> TreeSum 类型的题</h3>
+<p>当node只有left-children 或者right-children时, 只能沿着那个方向走。 因为在判断从root到leaf的和时，一定要保证最后一个是leaf 而不仅仅是用 if not node 这样来判断。</p>
+<h3 id="presum-类型的题"><a class="markdownIt-Anchor" href="#presum-类型的题"></a> Presum 类型的题</h3>
+<p>求某个区间的和 等于某个值k的时候，可以用preSum的思想</p>
 <p>相关题目</p>
 <p><a href="https://leetcode.com/problems/subarray-sum-equals-k/" target="_blank" rel="noopener">Subarray Sum Equals K</a></p>
 <p><a href="https://leetcode.com/problems/path-sum-iii/" target="_blank" rel="noopener">path sum </a></p>
 <p>在Tree类型中，由于pathSum 这个字典是share的，因此在share后，要记得撤销</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pathSum</span><span class="params">(self, root: TreeNode, k: int)</span> -&gt; int:</span></span><br><span class="line">    <span class="keyword">from</span> collections <span class="keyword">import</span> defaultdict</span><br><span class="line">    preSum = defaultdict(int)</span><br><span class="line">    preSum[<span class="number">0</span>] = <span class="number">1</span></span><br><span class="line">    ans = [<span class="number">0</span>]</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">iterate_tree</span><span class="params">(node,tmpSum,preSum)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> node:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">        tmpSum += node.val</span><br><span class="line">        subPath = tmpSum - k</span><br><span class="line">        <span class="keyword">if</span> subPath <span class="keyword">in</span> preSum:</span><br><span class="line">            ans[<span class="number">0</span>] += preSum[subPath]</span><br><span class="line">        preSum[tmpSum] += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        iterate_tree(node.left,tmpSum,preSum)</span><br><span class="line">        iterate_tree(node.right,tmpSum,preSum)</span><br><span class="line">        </span><br><span class="line">        preSum[tmpSum] -= <span class="number">1</span> // 重点 记得撤销</span><br><span class="line">        </span><br><span class="line">     iterate_tree(root,<span class="number">0</span>,preSum) </span><br><span class="line">     <span class="keyword">return</span> ans[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 给定一个list l</span></span><br><span class="line"></span><br><span class="line">presum_i = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> l:</span><br><span class="line">	presum_i += i</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 存储前缀和为某值的次数</span></span><br><span class="line">preSumDict = defaultdict()</span><br><span class="line">preSumDict[<span class="number">0</span>] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">presum_i = <span class="number">0</span></span><br><span class="line">count = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> l:</span><br><span class="line">    presum_i += i</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (presum_i - k) <span class="keyword">in</span> preSumDict:</span><br><span class="line">        count += preSumDict[presum_i - k]</span><br><span class="line">    preSumDict[presum_i] += <span class="number">1</span></span><br><span class="line"><span class="keyword">return</span> count</span><br></pre></td></tr></table></figure>
-<h3 id="最小公共祖先"><a href="#最小公共祖先" class="headerlink" title="最小公共祖先"></a>最小公共祖先</h3><p>用递归的思想</p>
+<h3 id="最小公共祖先"><a class="markdownIt-Anchor" href="#最小公共祖先"></a> 最小公共祖先</h3>
+<p>用递归的思想</p>
 <p>只要找到p,或者q就返回那个节点</p>
 <p>如果左子树返回的节点，和右子树返回的节点都非空，那么ancestor就是当前节点</p>
 <p>否则就是 非空的那个节点 (因为返回的节点有个空，就说明那两个节点都不在那个子树)</p>
-<h3 id="LRU"><a href="#LRU" class="headerlink" title="LRU"></a>LRU</h3><p>least recently used</p>
+<h3 id="lru"><a class="markdownIt-Anchor" href="#lru"></a> LRU</h3>
+<p>least recently used</p>
 <ul>
-<li>params<ul>
+<li>
+<p>params</p>
+<ul>
 <li>capacity</li>
 </ul>
 </li>
-<li><p>methods</p>
+<li>
+<p>methods</p>
 <ul>
 <li>put O(1)</li>
 <li>get  O(1)</li>
 </ul>
 </li>
-<li><p>structure</p>
+<li>
+<p>structure</p>
 <ul>
-<li>哈希链表 — 双向链表 + 哈希表</li>
+<li>哈希链表 – 双向链表 + 哈希表</li>
 </ul>
 </li>
 </ul>
 <img src="/2020/11/26/经验/image-20200830193739858.png" title="image-20200830193739858">
 <ul>
-<li><p>双向链表的作用</p>
+<li>
+<p>双向链表的作用</p>
 <ul>
 <li>为了 删除节点时的操作O(1) 需要双向链表直接获得前置节点</li>
 </ul>
 </li>
-<li><p>哈希表的作用</p>
+<li>
+<p>哈希表的作用</p>
 <ul>
 <li>为了O(1)的时间查找到key对应的节点</li>
 </ul>
@@ -226,32 +239,41 @@
 </ul>
 <p>伪代码</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> key,val;</span><br><span class="line">    <span class="keyword">public</span> Node next,prev;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">(<span class="keyword">int</span> k,<span class="keyword">int</span> v)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.key = k;</span><br><span class="line">        <span class="keyword">this</span>.val = v;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DoubleList</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addFirst</span><span class="params">(Node x)</span></span>; <span class="comment">// O(1)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">(Node x)</span></span>; <span class="comment">// O(1)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Node <span class="title">removeLast</span><span class="params">()</span></span>; <span class="comment">// O(1)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">size</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">HashMap&lt;Integer,Node&gt; map;</span><br><span class="line">DoubleList cache;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">get</span><span class="params">(<span class="keyword">int</span> key)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (key 不存在) <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        将 (key,value)放到开头;</span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">put</span><span class="params">(<span class="keyword">int</span> key, <span class="keyword">int</span> val)</span></span>&#123;</span><br><span class="line">    Node x = <span class="keyword">new</span> Node(key,val);</span><br><span class="line">    <span class="keyword">if</span>(key 存在)&#123;</span><br><span class="line">        删除旧的记录;</span><br><span class="line">        将新节点插入到开头;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (cache已满)&#123;</span><br><span class="line">            删除cache里最后一个节点，并返回该节点;</span><br><span class="line">            然后删除HashMap里的映射记录;</span><br><span class="line">        &#125;</span><br><span class="line">        将节点插入到开头;</span><br><span class="line">        更新HashMap;</span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="LFU"><a href="#LFU" class="headerlink" title="LFU"></a>LFU</h3><p>Least Frequently Used</p>
+<h3 id="lfu"><a class="markdownIt-Anchor" href="#lfu"></a> LFU</h3>
+<p>Least Frequently Used</p>
 <p>需要存储一个使用频次，当多个key有相同的使用频次的时候(陷入一个 tie)， 可以通过LRU机制来 break tie</p>
 <ul>
-<li>params<ul>
+<li>
+<p>params</p>
+<ul>
 <li>capacity</li>
 </ul>
 </li>
-<li><p>methods</p>
+<li>
+<p>methods</p>
 <ul>
 <li>put O(1)</li>
 <li>get  O(1)</li>
 </ul>
 </li>
-<li><p>structure</p>
+<li>
+<p>structure</p>
 <ul>
-<li>哈希链表 — 双向链表 + 哈希表</li>
+<li>哈希链表 – 双向链表 + 哈希表</li>
 </ul>
 </li>
 </ul>
 <img src="/2020/11/26/经验/image-20200831112146031.png" title="image-20200831112146031">
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> key,val,cnt;</span><br><span class="line">	Node prev,next;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">(<span class="keyword">int</span> key,<span class="keyword">int</span> val)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.key = key;</span><br><span class="line">		<span class="keyword">this</span>.val = val;</span><br><span class="line">        cnt = <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LFUCache</span> </span>&#123;</span><br><span class="line">	<span class="keyword">public</span> HashMap&lt;Integer,Node&gt; nodeMap; <span class="comment">// key 2 node</span></span><br><span class="line">    <span class="keyword">public</span> HashMap&lt;Integer,DoubleList&gt; countMap ; <span class="comment">// count 2 list</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> capacity,size,min;</span><br><span class="line">    </span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">LFUCache</span><span class="params">(<span class="keyword">int</span> capacity)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.capacity = capacity;</span><br><span class="line">        nodeMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        countMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">	&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">get</span><span class="params">(<span class="keyword">int</span> key)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!nodeMap.containsKey(key)) <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        Node node = nodeMap.get(key);</span><br><span class="line">        update(node);</span><br><span class="line">        <span class="keyword">return</span> node.val;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">put</span><span class="params">(<span class="keyword">int</span> key, <span class="keyword">int</span> val)</span></span>&#123;</span><br><span class="line">        Node node;</span><br><span class="line">        <span class="keyword">if</span> (nodeMap.containKeys(key))&#123;</span><br><span class="line">            node = nodeMap.get(key);</span><br><span class="line">            node.val = val;</span><br><span class="line">            update(node);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            node = <span class="keyword">new</span> Node(key,val);</span><br><span class="line">            <span class="keyword">if</span> (size == capacity)&#123;</span><br><span class="line">                DoubleList lastList = countMap.get(min);</span><br><span class="line">            	nodeMap.remove(lastList.removeLast().key);</span><br><span class="line">                size--;</span><br><span class="line">            &#125;</span><br><span class="line">            size++;</span><br><span class="line">            min = <span class="number">1</span>;</span><br><span class="line">            DoubleList newList = countMap.getOrDefault(node.cnt,<span class="keyword">new</span> DoubleList());</span><br><span class="line">            newList.add(node);</span><br><span class="line">            countMap.put(node.cnt,newList);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(Node node)</span></span>&#123;</span><br><span class="line">        DoubleList oldList = countMap.get(node.cnt);</span><br><span class="line">        oldList.remove(node);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (node.cnt == min &amp;&amp; oldList.size() == <span class="number">0</span>) min++;</span><br><span class="line">        node.cnt++;</span><br><span class="line">        DoubleList newList = countMap.getOrDefault(node.cnt,<span class="keyword">new</span> DoubleList());</span><br><span class="line">        newList.add(node);</span><br><span class="line">       	countMap.put(node.cnt,newList);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="访问过的节点处理"><a href="#访问过的节点处理" class="headerlink" title="访问过的节点处理"></a>访问过的节点处理</h3><ul>
-<li>backtrack中经常涉及到是否会走回头路的问题<ul>
+<h3 id="访问过的节点处理"><a class="markdownIt-Anchor" href="#访问过的节点处理"></a> 访问过的节点处理</h3>
+<ul>
+<li>backtrack中经常涉及到是否会走回头路的问题
+<ul>
 <li>用一个HashSet添加访问过的节点</li>
-<li>把访问过的节点置为False，之后又变回来<ul>
-<li>例子 <a href="https://leetcode.com/problems/word-search/discuss/?currentPage=1&amp;orderBy=most_votes&amp;query=" target="_blank" rel="noopener">LC 79 word Search</a><ul>
+<li>把访问过的节点置为False，之后又变回来
+<ul>
+<li>例子 <a href="https://leetcode.com/problems/word-search/discuss/?currentPage=1&amp;orderBy=most_votes&amp;query=" target="_blank" rel="noopener">LC 79 word Search</a>
+<ul>
 <li>这种二维图的遍历，很难把路径都添加到set中，不如直接把访问过的point置为False</li>
 </ul>
 </li>
@@ -260,31 +282,39 @@
 </ul>
 </li>
 </ul>
-<h3 id="Trie-树"><a href="#Trie-树" class="headerlink" title="Trie 树"></a>Trie 树</h3><p>假设就以26个letter</p>
+<h3 id="trie-树"><a class="markdownIt-Anchor" href="#trie-树"></a> Trie 树</h3>
+<p>假设就以26个letter</p>
 <p>Time complexity O(1)</p>
-<p>Space complexity </p>
+<p>Space complexity</p>
 <ul>
-<li>insert<ul>
+<li>
+<p>insert</p>
+<ul>
 <li>插入单词</li>
 </ul>
 </li>
-<li>startsWith<ul>
+<li>
+<p>startsWith</p>
+<ul>
 <li>是否存在以给定prefix作为前缀的单词</li>
 </ul>
 </li>
-<li><p>search</p>
+<li>
+<p>search</p>
 <ul>
 <li>是否存在该单词</li>
 </ul>
 </li>
-<li><p>find</p>
+<li>
+<p>find</p>
 <ul>
 <li>抽离一个方法专门寻找pattern，判断search的结果就是find结果加上判断这个是不是一个完整的词</li>
 </ul>
 </li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Trie</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Initialize your data structure here.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self.node = &#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">insert</span><span class="params">(self, word)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Inserts a word into the trie.</span></span><br><span class="line"><span class="string">        :type word: str</span></span><br><span class="line"><span class="string">        :rtype: None</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        t = self.node</span><br><span class="line">        <span class="keyword">for</span> letter <span class="keyword">in</span> word:</span><br><span class="line">            <span class="keyword">if</span> letter <span class="keyword">not</span> <span class="keyword">in</span> t:</span><br><span class="line">                t[letter] = &#123;&#125;</span><br><span class="line">            t = t[letter]</span><br><span class="line">        t[<span class="string">'#'</span>] = <span class="string">'#'</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">search</span><span class="params">(self, word)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Returns if the word is in the trie.</span></span><br><span class="line"><span class="string">        :type word: str</span></span><br><span class="line"><span class="string">        :rtype: bool</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        state,p = self.find(word)</span><br><span class="line">        <span class="keyword">return</span> state <span class="keyword">and</span> (<span class="string">"#"</span> <span class="keyword">in</span> p)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">startsWith</span><span class="params">(self, prefix)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Returns if there is any word in the trie that starts with the given prefix.</span></span><br><span class="line"><span class="string">        :type prefix: str</span></span><br><span class="line"><span class="string">        :rtype: bool</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        state,p = self.find(prefix)</span><br><span class="line">        <span class="keyword">return</span> state</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">find</span><span class="params">(self,pattern)</span>:</span></span><br><span class="line">        p = self.node</span><br><span class="line">        <span class="keyword">for</span> w <span class="keyword">in</span> pattern:</span><br><span class="line">            <span class="keyword">if</span> w <span class="keyword">in</span> p:</span><br><span class="line">                p = p[w]</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">False</span>,p</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span>,p</span><br><span class="line"></span><br><span class="line"><span class="comment"># Your Trie object will be instantiated and called as such:</span></span><br><span class="line"><span class="comment"># obj = Trie()</span></span><br><span class="line"><span class="comment"># obj.insert(word)</span></span><br><span class="line"><span class="comment"># param_2 = obj.search(word)</span></span><br><span class="line"><span class="comment"># param_3 = obj.startsWith(prefix)</span></span><br></pre></td></tr></table></figure>
-<h3 id="字符修改匹配型"><a href="#字符修改匹配型" class="headerlink" title="字符修改匹配型"></a>字符修改匹配型</h3><p>针对一个单词，任意替换某一个char，生成给定词表wordList里的单词，可以先创建一个match dict </p>
+<h3 id="字符修改匹配型"><a class="markdownIt-Anchor" href="#字符修改匹配型"></a> 字符修改匹配型</h3>
+<p>针对一个单词，任意替换某一个char，生成给定词表wordList里的单词，可以先创建一个match dict</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">buildDict</span><span class="params">(self,wordList)</span>:</span></span><br><span class="line">    <span class="keyword">from</span> collections <span class="keyword">import</span> defaultdict</span><br><span class="line">    match = defaultdict(list)</span><br><span class="line">    <span class="keyword">for</span> word <span class="keyword">in</span> wordList:</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(word)):</span><br><span class="line">            tmp = word[:i] + <span class="string">"-"</span> + word[i+<span class="number">1</span>:]</span><br><span class="line">            match[tmp].append(word)</span><br><span class="line">    <span class="keyword">return</span> match</span><br></pre></td></tr></table></figure>
 
       
@@ -407,7 +437,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#复制-拷贝类算法题"><span class="toc-number">1.</span> <span class="toc-text">复制/拷贝类算法题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串修改类"><span class="toc-number">2.</span> <span class="toc-text">字符串修改类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#有向图的环路检测？"><span class="toc-number">3.</span> <span class="toc-text">有向图的环路检测？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TreeSum-类型的题"><span class="toc-number">4.</span> <span class="toc-text">TreeSum 类型的题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Presum-类型的题"><span class="toc-number">5.</span> <span class="toc-text">Presum 类型的题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最小公共祖先"><span class="toc-number">6.</span> <span class="toc-text">最小公共祖先</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LRU"><span class="toc-number">7.</span> <span class="toc-text">LRU</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LFU"><span class="toc-number">8.</span> <span class="toc-text">LFU</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#访问过的节点处理"><span class="toc-number">9.</span> <span class="toc-text">访问过的节点处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Trie-树"><span class="toc-number">10.</span> <span class="toc-text">Trie 树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符修改匹配型"><span class="toc-number">11.</span> <span class="toc-text">字符修改匹配型</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#复制拷贝类算法题"><span class="toc-number">1.</span> <span class="toc-text"> 复制/拷贝类算法题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串修改类"><span class="toc-number">2.</span> <span class="toc-text"> 字符串修改类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#有向图的环路检测"><span class="toc-number">3.</span> <span class="toc-text"> 有向图的环路检测？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#treesum-类型的题"><span class="toc-number">4.</span> <span class="toc-text"> TreeSum 类型的题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#presum-类型的题"><span class="toc-number">5.</span> <span class="toc-text"> Presum 类型的题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最小公共祖先"><span class="toc-number">6.</span> <span class="toc-text"> 最小公共祖先</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lru"><span class="toc-number">7.</span> <span class="toc-text"> LRU</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lfu"><span class="toc-number">8.</span> <span class="toc-text"> LFU</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#访问过的节点处理"><span class="toc-number">9.</span> <span class="toc-text"> 访问过的节点处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#trie-树"><span class="toc-number">10.</span> <span class="toc-text"> Trie 树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符修改匹配型"><span class="toc-number">11.</span> <span class="toc-text"> 字符修改匹配型</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -564,7 +594,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -572,7 +602,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">http</a>
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -580,11 +610,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
+                <a href="javascript:void(0)" class="js-tag color5">python, gevent</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -608,11 +638,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+                <a href="javascript:void(0)" class="js-tag color3">OS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OS</a>
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
               </li>
             
             <div class="clearfix"></div>

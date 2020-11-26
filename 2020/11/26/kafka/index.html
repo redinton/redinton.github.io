@@ -18,9 +18,9 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://jasonyu.top/2020/11/26/kafka/1568863739174.png">
 <meta property="og:image" content="http://jasonyu.top/2020/11/26/kafka/1568866111822.png">
-<meta property="og:image" content="c:/Users/xyu3/AppData/Roaming/Typora/typora-user-images/image-20200520131353480.png">
+<meta property="og:image" content="c:%5CUsers%5Cxyu3%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200520131353480.png">
 <meta property="og:image" content="http://jasonyu.top/2020/11/26/kafka/image-20200522141229499.png">
-<meta property="og:updated_time" content="2020-11-26T08:54:51.523Z">
+<meta property="og:updated_time" content="2020-11-26T08:57:14.733Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="kafka">
 <meta name="twitter:description" content="消息队列">
@@ -174,15 +174,19 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h4><a id="more"></a>
-<h5 id="模式一：-点对点"><a href="#模式一：-点对点" class="headerlink" title="模式一： 点对点"></a>模式一： 点对点</h5><p>一对一，消费者主动拉取数据，数据收到后消息清除。 Kafka 是这一种模式</p>
+        <h4 id="消息队列"><a class="markdownIt-Anchor" href="#消息队列"></a> 消息队列</h4>
+<a id="more"></a>
+<h5 id="模式一-点对点"><a class="markdownIt-Anchor" href="#模式一-点对点"></a> 模式一： 点对点</h5>
+<p>一对一，消费者主动拉取数据，数据收到后消息清除。 Kafka 是这一种模式</p>
 <p>好处：适用于客户端A(发送数据方)和客户端B(消费数据方)的速度不匹配。</p>
 <p>缺点：需要消息接收方开一个进程实时监控消息发送方是否有消息</p>
-<h5 id="模式二：发布-订阅模式"><a href="#模式二：发布-订阅模式" class="headerlink" title="模式二：发布/订阅模式"></a>模式二：发布/订阅模式</h5><p>一对多,数据生产后发送给所有的订阅者</p>
+<h5 id="模式二发布订阅模式"><a class="markdownIt-Anchor" href="#模式二发布订阅模式"></a> 模式二：发布/订阅模式</h5>
+<p>一对多,数据生产后发送给所有的订阅者</p>
 <p>好处：不用进程监听</p>
 <p>坏处：不同的订阅者之间速度可能不匹配</p>
 <img src="/2020/11/26/kafka/1568863739174.png" width="1568863739174">
-<h4 id="producer的写入流程"><a href="#producer的写入流程" class="headerlink" title="producer的写入流程"></a>producer的写入流程</h4><img src="/2020/11/26/kafka/1568866111822.png" width="1568866111822">
+<h4 id="producer的写入流程"><a class="markdownIt-Anchor" href="#producer的写入流程"></a> producer的写入流程</h4>
+<img src="/2020/11/26/kafka/1568866111822.png" width="1568866111822">
 <p>确保producer这边的数据都能够写入kafka的机制是 ACK，由kafka这边反馈一个信号(0,1,all)</p>
 <p>消息中间件(MQ or Message Broker)</p>
 <ul>
@@ -191,20 +195,28 @@
 </ul>
 <p>消息生产完， 发布主题</p>
 <p>消息订阅主题，获取最新消息</p>
-<h4 id="Kafka-一代-消息队列"><a href="#Kafka-一代-消息队列" class="headerlink" title="Kafka 一代 消息队列"></a>Kafka 一代 消息队列</h4><ul>
-<li><p>队列保证FIFO</p>
+<h4 id="kafka-一代-消息队列"><a class="markdownIt-Anchor" href="#kafka-一代-消息队列"></a> Kafka 一代 消息队列</h4>
+<ul>
+<li>
+<p>队列保证FIFO</p>
 </li>
-<li><p>由于订阅了某条消息的Customer数量可以是0，也可能是多个，所以不能消费完，就删除消息</p>
+<li>
+<p>由于订阅了某条消息的Customer数量可以是0，也可能是多个，所以不能消费完，就删除消息</p>
 </li>
-<li>Kafka 会对消息 持久化存储 (时间可以配置)</li>
-<li>对于每个Customer，会记录一个offset 标志该Customer 消费到哪条数据</li>
+<li>
+<p>Kafka 会对消息 持久化存储 (时间可以配置)</p>
+</li>
+<li>
+<p>对于每个Customer，会记录一个offset 标志该Customer 消费到哪条数据</p>
+</li>
 </ul>
 <p>缺点</p>
 <ul>
 <li>Topic 太多，一个只订阅了topicA 的customer要在一个有ABCDF 等等topic的消息队列中 找topic为A的消息</li>
 <li>吞吐量低 全部消息都放在一条队列，请求一多会炸</li>
 </ul>
-<h4 id="Kafka二代-Partition"><a href="#Kafka二代-Partition" class="headerlink" title="Kafka二代 Partition"></a>Kafka二代 Partition</h4><p>分布存储</p>
+<h4 id="kafka二代-partition"><a class="markdownIt-Anchor" href="#kafka二代-partition"></a> Kafka二代 Partition</h4>
+<p>分布存储</p>
 <ul>
 <li>多条队列，每条队列里存的都是同一个topic的的消息，也提高了吞吐量</li>
 </ul>
@@ -212,22 +224,30 @@
 <ul>
 <li>不满足高可用，机器挂掉就不行了 单点系统</li>
 </ul>
-<h4 id="Kafka三代-Broker-集群"><a href="#Kafka三代-Broker-集群" class="headerlink" title="Kafka三代 Broker 集群"></a>Kafka三代 Broker 集群</h4><p>kafka中，集群里每个实例叫broker。 每个实例不一定是一个server</p>
-<p><img src="C:\Users\xyu3\AppData\Roaming\Typora\typora-user-images\image-20200520131353480.png" alt="image-20200520131353480"></p>
+<h4 id="kafka三代-broker-集群"><a class="markdownIt-Anchor" href="#kafka三代-broker-集群"></a> Kafka三代 Broker 集群</h4>
+<p>kafka中，集群里每个实例叫broker。 每个实例不一定是一个server</p>
+<p><img src="C:%5CUsers%5Cxyu3%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200520131353480.png" alt="image-20200520131353480"></p>
 <p>同一个topic可以被分成好几个partition</p>
 <p>参考 <a href="https://zhuanlan.zhihu.com/p/37405836" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/37405836</a></p>
-<h4 id="Kafka的消息结构"><a href="#Kafka的消息结构" class="headerlink" title="Kafka的消息结构"></a>Kafka的消息结构</h4><h4 id="Zookeeper-和-Kafka的关系"><a href="#Zookeeper-和-Kafka的关系" class="headerlink" title="Zookeeper 和 Kafka的关系"></a>Zookeeper 和 Kafka的关系</h4><ul>
+<h4 id="kafka的消息结构"><a class="markdownIt-Anchor" href="#kafka的消息结构"></a> Kafka的消息结构</h4>
+<h4 id="zookeeper-和-kafka的关系"><a class="markdownIt-Anchor" href="#zookeeper-和-kafka的关系"></a> Zookeeper 和 Kafka的关系</h4>
+<ul>
 <li>管控各个broker，当某个broker中的leader断了之后，去调度</li>
 <li>store metadata about the Kafka cluster , as well as consumer client details</li>
 </ul>
-<h4 id="数据可靠性和重复消费"><a href="#数据可靠性和重复消费" class="headerlink" title="数据可靠性和重复消费"></a>数据可靠性和重复消费</h4><ul>
+<h4 id="数据可靠性和重复消费"><a class="markdownIt-Anchor" href="#数据可靠性和重复消费"></a> 数据可靠性和重复消费</h4>
+<ul>
 <li>生产者把消息发给Kafka，发送过程中挂掉、或者Kafka保存消息时发送异常怎么办？</li>
 <li>消费者获取消费时发生异常怎么办？</li>
 <li>消费者已经消费了数据，但是修改offset时失败了，导致重复消费怎么办？</li>
 </ul>
-<h4 id="pull-or-push"><a href="#pull-or-push" class="headerlink" title="pull or push"></a>pull or push</h4><p>消费者侧在获取消息时，是通过主动去pull消息呢？还是由Kafka给消费者push消息？</p>
+<h4 id="pull-or-push"><a class="markdownIt-Anchor" href="#pull-or-push"></a> pull or push</h4>
+<p>消费者侧在获取消息时，是通过主动去pull消息呢？还是由Kafka给消费者push消息？</p>
 <p>是消费者通过pull机制去获取消息</p>
-<h4 id="提高消费者处理性能"><a href="#提高消费者处理性能" class="headerlink" title="提高消费者处理性能"></a>提高消费者处理性能</h4><h4 id="集群搭建"><a href="#集群搭建" class="headerlink" title="集群搭建"></a>集群搭建</h4><h5 id="搭建zookeeper-集群"><a href="#搭建zookeeper-集群" class="headerlink" title="搭建zookeeper 集群"></a>搭建zookeeper 集群</h5><p>每台机子都重复下面的操作</p>
+<h4 id="提高消费者处理性能"><a class="markdownIt-Anchor" href="#提高消费者处理性能"></a> 提高消费者处理性能</h4>
+<h4 id="集群搭建"><a class="markdownIt-Anchor" href="#集群搭建"></a> 集群搭建</h4>
+<h5 id="搭建zookeeper-集群"><a class="markdownIt-Anchor" href="#搭建zookeeper-集群"></a> 搭建zookeeper 集群</h5>
+<p>每台机子都重复下面的操作</p>
 <p>默认安装了Java环境</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp config/zoo_sample.cfg config/zoo.cfg</span><br></pre></td></tr></table></figure>
 <p>修改zoo.cfg的内容</p>
@@ -240,8 +260,10 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/zkCli.sh -server 192.168.0.1:2181</span><br></pre></td></tr></table></figure>
 <p>连接集群</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/zkCli.sh -server 192.168.229.160:2181,192.168.229.161:2181,192.168.229.162:2181</span><br></pre></td></tr></table></figure>
-<h5 id="搭建kafka集群"><a href="#搭建kafka集群" class="headerlink" title="搭建kafka集群"></a>搭建kafka集群</h5><p>参考 <a href="https://ken.io/note/kafka-cluster-deploy-guide#H3-14" target="_blank" rel="noopener">https://ken.io/note/kafka-cluster-deploy-guide#H3-14</a></p>
-<h4 id="kafka-the-definitive-guide"><a href="#kafka-the-definitive-guide" class="headerlink" title="kafka the definitive guide"></a>kafka the definitive guide</h4><p>consumer 数目 大于 partition 数目</p>
+<h5 id="搭建kafka集群"><a class="markdownIt-Anchor" href="#搭建kafka集群"></a> 搭建kafka集群</h5>
+<p>参考 <a href="https://ken.io/note/kafka-cluster-deploy-guide#H3-14" target="_blank" rel="noopener">https://ken.io/note/kafka-cluster-deploy-guide#H3-14</a></p>
+<h4 id="kafka-the-definitive-guide"><a class="markdownIt-Anchor" href="#kafka-the-definitive-guide"></a> kafka the definitive guide</h4>
+<p>consumer 数目 大于 partition 数目</p>
 <ul>
 <li>多的consumer处于闲置状态，因为一个partition最多可以被一个consumer 消费？</li>
 </ul>
@@ -249,18 +271,23 @@
 <ul>
 <li>存在一个consumer消费多个partition的情况</li>
 </ul>
-<h5 id="Producer"><a href="#Producer" class="headerlink" title="Producer"></a>Producer</h5><img src="/2020/11/26/kafka/image-20200522141229499.png" title="image-20200522141229499">
+<h5 id="producer"><a class="markdownIt-Anchor" href="#producer"></a> Producer</h5>
+<img src="/2020/11/26/kafka/image-20200522141229499.png" title="image-20200522141229499">
 <ul>
-<li><p>Produce message to Kafka </p>
+<li>
+<p>Produce message to Kafka</p>
 <ul>
-<li><p>create a ProducerRecord</p>
+<li>
+<p>create a ProducerRecord</p>
 </li>
-<li><p>serialize the kay value objects into ByteArrays</p>
+<li>
+<p>serialize the kay value objects into ByteArrays</p>
 <ul>
 <li>so that they can be sent to network</li>
 </ul>
 </li>
-<li><p>data is sent to a partitioner</p>
+<li>
+<p>data is sent to a partitioner</p>
 <ul>
 <li>usually based on key to pick a partition for the data</li>
 </ul>
@@ -268,17 +295,21 @@
 </ul>
 </li>
 </ul>
-<h5 id="Customer"><a href="#Customer" class="headerlink" title="Customer"></a>Customer</h5><ul>
-<li>multiple consuers  are subscribed to a topic and belong to the same <strong>consumer group</strong><ul>
+<h5 id="customer"><a class="markdownIt-Anchor" href="#customer"></a> Customer</h5>
+<ul>
+<li>multiple consuers  are subscribed to a topic and belong to the same <strong>consumer group</strong>
+<ul>
 <li>each consumer receive message from a different subset of partitions in the topic</li>
 </ul>
 </li>
 </ul>
 <p>consumer 通常做的是high-latency operation 比如写入db 或者 耗时的计算操作，因此添加更多的consumer可以share load，每个consumer 负责一部分partition</p>
 <ul>
-<li><p>consumer 数量没必要超过 partition 数目，超过的部分consumer idle</p>
+<li>
+<p>consumer 数量没必要超过 partition 数目，超过的部分consumer idle</p>
 </li>
-<li><p>创建topic的时候可以设置多一点partition</p>
+<li>
+<p>创建topic的时候可以设置多一点partition</p>
 </li>
 </ul>
 <p>对于一个topic中的message，可能被多个application用到，为了让每个application都能得到topic中的所有数据，每个application对应一个consumer group。</p>
@@ -287,7 +318,10 @@
 <p>consumer group中动态增加 consumer 或者减少时，这个consumer 会消费曾经是被其他consumer消费的partition。 修改 partition的 ownership过程叫做 rebalancing， 这个过程中，整个consumer group的consumer都是不能consume message状态</p>
 <blockquote>
 <p>The way consumers maintain membership in a consumer group and ownership of the partitions assigned to them is by sending heartbeats to a Kafka broker designated  as the group coordinator</p>
-<p>If the consumer stops sending heartbeats for long enough, its session will time out<br>and the group coordinator will consider it dead and trigger a rebalance</p>
+</blockquote>
+<blockquote>
+<p>If the consumer stops sending heartbeats for long enough, its session will time out<br>
+and the group coordinator will consider it dead and trigger a rebalance</p>
 </blockquote>
 <p>一个 consumer 可以订阅多个 topic，也可以通过正则的方式去匹配多个topic</p>
 <ul>
@@ -418,7 +452,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#消息队列"><span class="toc-number">1.</span> <span class="toc-text">消息队列</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#模式一：-点对点"><span class="toc-number">1.1.</span> <span class="toc-text">模式一： 点对点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#模式二：发布-订阅模式"><span class="toc-number">1.2.</span> <span class="toc-text">模式二：发布/订阅模式</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#producer的写入流程"><span class="toc-number">2.</span> <span class="toc-text">producer的写入流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Kafka-一代-消息队列"><span class="toc-number">3.</span> <span class="toc-text">Kafka 一代 消息队列</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Kafka二代-Partition"><span class="toc-number">4.</span> <span class="toc-text">Kafka二代 Partition</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Kafka三代-Broker-集群"><span class="toc-number">5.</span> <span class="toc-text">Kafka三代 Broker 集群</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Kafka的消息结构"><span class="toc-number">6.</span> <span class="toc-text">Kafka的消息结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Zookeeper-和-Kafka的关系"><span class="toc-number">7.</span> <span class="toc-text">Zookeeper 和 Kafka的关系</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据可靠性和重复消费"><span class="toc-number">8.</span> <span class="toc-text">数据可靠性和重复消费</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pull-or-push"><span class="toc-number">9.</span> <span class="toc-text">pull or push</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#提高消费者处理性能"><span class="toc-number">10.</span> <span class="toc-text">提高消费者处理性能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#集群搭建"><span class="toc-number">11.</span> <span class="toc-text">集群搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#搭建zookeeper-集群"><span class="toc-number">11.1.</span> <span class="toc-text">搭建zookeeper 集群</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#搭建kafka集群"><span class="toc-number">11.2.</span> <span class="toc-text">搭建kafka集群</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#kafka-the-definitive-guide"><span class="toc-number">12.</span> <span class="toc-text">kafka the definitive guide</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Producer"><span class="toc-number">12.1.</span> <span class="toc-text">Producer</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Customer"><span class="toc-number">12.2.</span> <span class="toc-text">Customer</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#消息队列"><span class="toc-number">1.</span> <span class="toc-text"> 消息队列</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#模式一-点对点"><span class="toc-number">1.1.</span> <span class="toc-text"> 模式一： 点对点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#模式二发布订阅模式"><span class="toc-number">1.2.</span> <span class="toc-text"> 模式二：发布/订阅模式</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#producer的写入流程"><span class="toc-number">2.</span> <span class="toc-text"> producer的写入流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#kafka-一代-消息队列"><span class="toc-number">3.</span> <span class="toc-text"> Kafka 一代 消息队列</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#kafka二代-partition"><span class="toc-number">4.</span> <span class="toc-text"> Kafka二代 Partition</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#kafka三代-broker-集群"><span class="toc-number">5.</span> <span class="toc-text"> Kafka三代 Broker 集群</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#kafka的消息结构"><span class="toc-number">6.</span> <span class="toc-text"> Kafka的消息结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#zookeeper-和-kafka的关系"><span class="toc-number">7.</span> <span class="toc-text"> Zookeeper 和 Kafka的关系</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据可靠性和重复消费"><span class="toc-number">8.</span> <span class="toc-text"> 数据可靠性和重复消费</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pull-or-push"><span class="toc-number">9.</span> <span class="toc-text"> pull or push</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#提高消费者处理性能"><span class="toc-number">10.</span> <span class="toc-text"> 提高消费者处理性能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#集群搭建"><span class="toc-number">11.</span> <span class="toc-text"> 集群搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#搭建zookeeper-集群"><span class="toc-number">11.1.</span> <span class="toc-text"> 搭建zookeeper 集群</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#搭建kafka集群"><span class="toc-number">11.2.</span> <span class="toc-text"> 搭建kafka集群</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#kafka-the-definitive-guide"><span class="toc-number">12.</span> <span class="toc-text"> kafka the definitive guide</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#producer"><span class="toc-number">12.1.</span> <span class="toc-text"> Producer</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#customer"><span class="toc-number">12.2.</span> <span class="toc-text"> Customer</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -575,7 +609,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -583,7 +617,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">http</a>
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -591,11 +625,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
+                <a href="javascript:void(0)" class="js-tag color5">python, gevent</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -619,11 +653,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+                <a href="javascript:void(0)" class="js-tag color3">OS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OS</a>
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
               </li>
             
             <div class="clearfix"></div>

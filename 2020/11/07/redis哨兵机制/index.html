@@ -17,7 +17,7 @@
 <meta property="og:description" content="Redis 的主从复制模式下，一旦主节点由于故障不能提供服务，需要手动将从节点晋升为主节点，同时还要通知客户端更新主节点地址，这种故障处理方式从一定程度上是无法接受的。">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://jasonyu.top/2020/11/07/redis哨兵机制/image-20201107181922115.png">
-<meta property="og:updated_time" content="2020-11-26T08:54:51.532Z">
+<meta property="og:updated_time" content="2020-11-26T08:57:14.746Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="redis哨兵机制">
 <meta name="twitter:description" content="Redis 的主从复制模式下，一旦主节点由于故障不能提供服务，需要手动将从节点晋升为主节点，同时还要通知客户端更新主节点地址，这种故障处理方式从一定程度上是无法接受的。">
@@ -171,7 +171,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Redis 的主从复制模式下，一旦主节点由于故障不能提供服务，需要<strong>手动将从节点晋升为主节点</strong>，同时还要通知客户端更新主节点地址，这种故障处理方式从一定程度上是无法接受的。<br><a id="more"></a></p>
+        <p>Redis 的主从复制模式下，一旦主节点由于故障不能提供服务，需要<strong>手动将从节点晋升为主节点</strong>，同时还要通知客户端更新主节点地址，这种故障处理方式从一定程度上是无法接受的。</p>
+<a id="more"></a>
 <p>Redis 2.8 以后提供了 Redis Sentinel 哨兵机制来解决这个问题。</p>
 <p>Redis Sentinel 是 Redis 高可用的实现方案。Sentinel 是一个管理<strong>多个 Redis 实例的</strong>工具，它可以实现对 Redis 的监控、通知、自动故障转移。</p>
 <p>哨兵模式的主要作用在于它能够自动完成故障发现和故障转移，并通知客户端，从而实现高可用。哨兵模式通常由一组 Sentinel 节点和一组（或多组）主从复制节点组成。</p>
@@ -189,10 +190,15 @@
 <p>因为故障转移的工作只需要一个 Sentinel 节点来完成，所以 Sentinel 节点之间会再做一次选举工作， 基于 Raft 算法选出一个 Sentinel 领导者来进行故障转移的工作。</p>
 <p>被选举出的 Sentinel 领导者进行故障转移的具体步骤如下：</p>
 <p>（1）在从节点列表中选出一个节点作为新的主节点</p>
-<p>过滤不健康或者不满足要求的节点；<br>选择 slave-priority（优先级）最高的从节点， 如果存在则返回， 不存在则继续；<br>选择复制偏移量最大的从节点 ， 如果存在则返回， 不存在则继续；<br>选择 runid 最小的从节点。<br>（2）Sentinel 领导者节点会对选出来的从节点执行 slaveof no one 命令让其成为主节点。</p>
+<p>过滤不健康或者不满足要求的节点；<br>
+选择 slave-priority（优先级）最高的从节点， 如果存在则返回， 不存在则继续；<br>
+选择复制偏移量最大的从节点 ， 如果存在则返回， 不存在则继续；<br>
+选择 runid 最小的从节点。<br>
+（2）Sentinel 领导者节点会对选出来的从节点执行 slaveof no one 命令让其成为主节点。</p>
 <p>（3）Sentinel 领导者节点会向剩余的从节点发送命令，让他们从新的主节点上复制数据。</p>
 <p>（4）Sentinel 领导者会将原来的主节点更新为从节点， 并对其进行监控， 当其恢复后命令它去复制新的主节点。</p>
-<h4 id="Cluster部署"><a href="#Cluster部署" class="headerlink" title="Cluster部署"></a>Cluster部署</h4><p>引入Cluster模式的原因：</p>
+<h4 id="cluster部署"><a class="markdownIt-Anchor" href="#cluster部署"></a> Cluster部署</h4>
+<p>引入Cluster模式的原因：</p>
 <p>不管是主从模式还是哨兵模式都只能由一个master在写数据，在海量数据高并发场景，一个节点写数据容易出现瓶颈，引入Cluster模式可以实现多个节点同时写数据。</p>
 <p>Redis-Cluster采用无中心结构，每个节点都保存数据，节点之间互相连接从而知道整个集群状态。</p>
 
@@ -316,7 +322,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Cluster部署"><span class="toc-number">1.</span> <span class="toc-text">Cluster部署</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#cluster部署"><span class="toc-number">1.</span> <span class="toc-text"> Cluster部署</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -473,7 +479,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -481,7 +487,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">http</a>
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -489,11 +495,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
+                <a href="javascript:void(0)" class="js-tag color5">python, gevent</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -517,11 +523,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+                <a href="javascript:void(0)" class="js-tag color3">OS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OS</a>
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
               </li>
             
             <div class="clearfix"></div>

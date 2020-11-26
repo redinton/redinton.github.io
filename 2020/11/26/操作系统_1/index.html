@@ -17,7 +17,7 @@
 <meta property="og:description" content="进程和线程的区别">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://pic3.zhimg.com/v2-49bf07299a06dd50406bb63c9f1e0bc6_b.jpg">
-<meta property="og:updated_time" content="2020-11-26T08:54:51.569Z">
+<meta property="og:updated_time" content="2020-11-26T08:57:14.801Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="操作系统_1">
 <meta name="twitter:description" content="进程和线程的区别">
@@ -171,14 +171,19 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h5 id="进程和线程的区别"><a href="#进程和线程的区别" class="headerlink" title="进程和线程的区别"></a>进程和线程的区别</h5><a id="more"></a>
+        <h5 id="进程和线程的区别"><a class="markdownIt-Anchor" href="#进程和线程的区别"></a> 进程和线程的区别</h5>
+<a id="more"></a>
 <ul>
-<li>多线程和多进程最大的不同<ul>
+<li>多线程和多进程最大的不同
+<ul>
 <li>多进程中，同一个变量，各有一份拷贝存在每个进程中，互不影响</li>
-<li>多线程中，所有变量由所有线程共享<ul>
+<li>多线程中，所有变量由所有线程共享
+<ul>
 <li>危险在于多个线程同时改一个变量，内容变乱</li>
-<li>解决办法<ul>
-<li>加锁，运行期间加锁，当多个线程同时执行 lock.acquire() 时，只有一个线程能成功获取锁，好处是确保某段关键代码只能由一个线程从头到尾完整执行，坏处是<ul>
+<li>解决办法
+<ul>
+<li>加锁，运行期间加锁，当多个线程同时执行 lock.acquire() 时，只有一个线程能成功获取锁，好处是确保某段关键代码只能由一个线程从头到尾完整执行，坏处是
+<ul>
 <li>1.阻止了多线程并发执行，效率降低</li>
 <li>2.由于可以存在多个锁，不同的线程持有不同的锁，并试图获取对方持有的锁时，可能会造成死锁，导致多个线程全部挂起，既不能执行，也无法结束，只能靠操作系统强制终止。</li>
 </ul>
@@ -191,52 +196,73 @@
 </li>
 </ul>
 <p>Thread和Process中，优选Process，Process更稳定，且Process可以分布到多台机器上，Thread最多只能分布到同一台机器的多个CPU上</p>
-<h5 id="线程占用资源吗"><a href="#线程占用资源吗" class="headerlink" title="线程占用资源吗"></a>线程占用资源吗</h5><h5 id="写一个线程池"><a href="#写一个线程池" class="headerlink" title="写一个线程池"></a>写一个线程池</h5><h5 id="说一说线程安全"><a href="#说一说线程安全" class="headerlink" title="说一说线程安全"></a>说一说线程安全</h5><h5 id="bio，nio，aio的区别"><a href="#bio，nio，aio的区别" class="headerlink" title="bio，nio，aio的区别"></a>bio，nio，aio的区别</h5><h5 id="同步和异步区别"><a href="#同步和异步区别" class="headerlink" title="同步和异步区别"></a>同步和异步区别</h5><h5 id="阻塞和非阻塞的区别"><a href="#阻塞和非阻塞的区别" class="headerlink" title="阻塞和非阻塞的区别"></a>阻塞和非阻塞的区别</h5><h4 id="进程调度"><a href="#进程调度" class="headerlink" title="进程调度"></a>进程调度</h4><ul>
-<li><p>首先，操作系统需要有控制权，所以就引入<code>时钟中断</code>（Clock Interrupt），进程每隔一段时间，将<strong>控制权还给操作系统</strong>，操作系统决定将下次的执行权限赋予哪个进程，这个过程，必须要调度算法协调多方。</p>
+<h5 id="线程占用资源吗"><a class="markdownIt-Anchor" href="#线程占用资源吗"></a> 线程占用资源吗</h5>
+<h5 id="写一个线程池"><a class="markdownIt-Anchor" href="#写一个线程池"></a> 写一个线程池</h5>
+<h5 id="说一说线程安全"><a class="markdownIt-Anchor" href="#说一说线程安全"></a> 说一说线程安全</h5>
+<h5 id="bionioaio的区别"><a class="markdownIt-Anchor" href="#bionioaio的区别"></a> bio，nio，aio的区别</h5>
+<h5 id="同步和异步区别"><a class="markdownIt-Anchor" href="#同步和异步区别"></a> 同步和异步区别</h5>
+<h5 id="阻塞和非阻塞的区别"><a class="markdownIt-Anchor" href="#阻塞和非阻塞的区别"></a> 阻塞和非阻塞的区别</h5>
+<h4 id="进程调度"><a class="markdownIt-Anchor" href="#进程调度"></a> 进程调度</h4>
+<ul>
+<li>
+<p>首先，操作系统需要有控制权，所以就引入<code>时钟中断</code>（Clock Interrupt），进程每隔一段时间，将<strong>控制权还给操作系统</strong>，操作系统决定将下次的执行权限赋予哪个进程，这个过程，必须要调度算法协调多方。</p>
 </li>
-<li><p>策略</p>
+<li>
+<p>策略</p>
 <ul>
 <li>先进先出，</li>
 <li>短任务优先</li>
 <li>最短完成时间优先</li>
-<li>多级反馈<ul>
+<li>多级反馈
+<ul>
 <li>将任务分优先级，高优先的先执行，每隔一段，中低级的任务都有机会晋升为高优先级任务，避免高优先级任务一直占用 CPU，低优先任务饿死。</li>
 </ul>
 </li>
-<li>比例份额<ul>
+<li>比例份额
+<ul>
 <li>每个任务都有份额，高优先重要的任务份额多，低优先级的少，每次 CPU 运行权都进行彩票抽奖，这样达到理论上的公平。每个任务还可以将份额再细分给子任务，这样能让任务也有控制权。</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<h4 id="内存虚拟化"><a href="#内存虚拟化" class="headerlink" title="内存虚拟化"></a>内存虚拟化</h4><p>操作系统通过<strong>分段和分页</strong>技术抽象了地址空间，所以进程里的内存地址是虚拟的。<strong>每个进程运行的时候，都拥有一块非常大的虚拟地址空间</strong>，像独占了整个进程一样。它实现了进程之间的隔离，也让每个进程最大化利用内存。</p>
+<h4 id="内存虚拟化"><a class="markdownIt-Anchor" href="#内存虚拟化"></a> 内存虚拟化</h4>
+<p>操作系统通过<strong>分段和分页</strong>技术抽象了地址空间，所以进程里的内存地址是虚拟的。<strong>每个进程运行的时候，都拥有一块非常大的虚拟地址空间</strong>，像独占了整个进程一样。它实现了进程之间的隔离，也让每个进程最大化利用内存。</p>
 <ul>
-<li><p>分段</p>
+<li>
+<p>分段</p>
 <ul>
-<li><p>一般内存分为 4 个部分，程序代码，堆，栈，空闲地址。</p>
+<li>
+<p>一般内存分为 4 个部分，程序代码，堆，栈，空闲地址。</p>
 </li>
-<li><p>运行的时候程序代码是固定的，所以放在最上面</p>
+<li>
+<p>运行的时候程序代码是固定的，所以放在最上面</p>
 </li>
-<li><p>堆需要的内容比较大，所以向下增长</p>
+<li>
+<p>堆需要的内容比较大，所以向下增长</p>
 </li>
-<li><p>栈所需的内容比较少，放在内存的最后部分，反向增长</p>
+<li>
+<p>栈所需的内容比较少，放在内存的最后部分，反向增长</p>
 </li>
-<li><p>这样空闲的部分就很大，分段就是将地址空闲地址，分成不同的段，提供空闲地址的利用率。</p>
+<li>
+<p>这样空闲的部分就很大，分段就是将地址空闲地址，分成不同的段，提供空闲地址的利用率。</p>
 <p><img src="https://pic3.zhimg.com/v2-49bf07299a06dd50406bb63c9f1e0bc6_b.jpg" alt="img"></p>
 </li>
 </ul>
 </li>
-<li><p>分页</p>
+<li>
+<p>分页</p>
 <ul>
 <li>将虚拟地址转换成物理地址</li>
 <li>分页的地址可以是连续的，物理地址可以不连续</li>
 <li>分页和物理地址之间，引入了页表，专门管理分页到物理地址的映射。</li>
 </ul>
 </li>
-<li><p>分段是逻辑地址 -&gt; 线性地址（虚拟地址），而分页是虚拟地址 -&gt; 物理空间，</p>
+<li>
+<p>分段是逻辑地址 -&gt; 线性地址（虚拟地址），而分页是虚拟地址 -&gt; 物理空间，</p>
 </li>
-<li><p>TLB (translation lookaside buffer TLB)</p>
+<li>
+<p>TLB (translation lookaside buffer TLB)</p>
 <ul>
 <li>每一次内存访问，都需要执行一次虚拟地址到真实地址的查找，那 I/O 非常高</li>
 <li>TLB，一个存储虚拟地址到真实地址的数据结构，也是程序中经常说的缓存</li>
@@ -364,7 +390,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#进程和线程的区别"><span class="toc-number">1.</span> <span class="toc-text">进程和线程的区别</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#线程占用资源吗"><span class="toc-number">2.</span> <span class="toc-text">线程占用资源吗</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#写一个线程池"><span class="toc-number">3.</span> <span class="toc-text">写一个线程池</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#说一说线程安全"><span class="toc-number">4.</span> <span class="toc-text">说一说线程安全</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#bio，nio，aio的区别"><span class="toc-number">5.</span> <span class="toc-text">bio，nio，aio的区别</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#同步和异步区别"><span class="toc-number">6.</span> <span class="toc-text">同步和异步区别</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#阻塞和非阻塞的区别"><span class="toc-number">7.</span> <span class="toc-text">阻塞和非阻塞的区别</span></a></li></ol><li class="toc-item toc-level-4"><a class="toc-link" href="#进程调度"><span class="toc-number"></span> <span class="toc-text">进程调度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#内存虚拟化"><span class="toc-number"></span> <span class="toc-text">内存虚拟化</span></a>
+                    <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#进程和线程的区别"><span class="toc-number">1.</span> <span class="toc-text"> 进程和线程的区别</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#线程占用资源吗"><span class="toc-number">2.</span> <span class="toc-text"> 线程占用资源吗</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#写一个线程池"><span class="toc-number">3.</span> <span class="toc-text"> 写一个线程池</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#说一说线程安全"><span class="toc-number">4.</span> <span class="toc-text"> 说一说线程安全</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#bionioaio的区别"><span class="toc-number">5.</span> <span class="toc-text"> bio，nio，aio的区别</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#同步和异步区别"><span class="toc-number">6.</span> <span class="toc-text"> 同步和异步区别</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#阻塞和非阻塞的区别"><span class="toc-number">7.</span> <span class="toc-text"> 阻塞和非阻塞的区别</span></a></li></ol><li class="toc-item toc-level-4"><a class="toc-link" href="#进程调度"><span class="toc-number"></span> <span class="toc-text"> 进程调度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#内存虚拟化"><span class="toc-number"></span> <span class="toc-text"> 内存虚拟化</span></a>
                     </li></div>
                 </span>
             </div>
@@ -521,7 +547,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -529,7 +555,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">http</a>
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -537,11 +563,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
+                <a href="javascript:void(0)" class="js-tag color5">python, gevent</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -565,11 +591,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+                <a href="javascript:void(0)" class="js-tag color3">OS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OS</a>
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
               </li>
             
             <div class="clearfix"></div>

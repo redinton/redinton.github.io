@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>celery | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Celery 简介专注于实时处理和任务调度的分布式任务队列, 任务就是消息。">
+  <meta name="description" content="Celery 简介 专注于实时处理和任务调度的分布式任务队列, 任务就是消息。">
 <meta name="keywords" content="mq">
 <meta property="og:type" content="article">
 <meta property="og:title" content="celery">
 <meta property="og:url" content="http://jasonyu.top/2020/11/26/celery/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="Celery 简介专注于实时处理和任务调度的分布式任务队列, 任务就是消息。">
+<meta property="og:description" content="Celery 简介 专注于实时处理和任务调度的分布式任务队列, 任务就是消息。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-26T08:54:51.521Z">
+<meta property="og:updated_time" content="2020-11-26T08:57:14.731Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="celery">
-<meta name="twitter:description" content="Celery 简介专注于实时处理和任务调度的分布式任务队列, 任务就是消息。">
+<meta name="twitter:description" content="Celery 简介 专注于实时处理和任务调度的分布式任务队列, 任务就是消息。">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -169,57 +169,73 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="Celery-简介"><a href="#Celery-简介" class="headerlink" title="Celery 简介"></a>Celery 简介</h3><p>专注于实时处理和任务调度的分布式任务队列, 任务就是消息。<br><a id="more"></a></p>
-<h4 id="常见场景"><a href="#常见场景" class="headerlink" title="常见场景"></a>常见场景</h4><ul>
-<li><p>web应用</p>
+        <h3 id="celery-简介"><a class="markdownIt-Anchor" href="#celery-简介"></a> Celery 简介</h3>
+<p>专注于实时处理和任务调度的分布式任务队列, 任务就是消息。</p>
+<a id="more"></a>
+<h4 id="常见场景"><a class="markdownIt-Anchor" href="#常见场景"></a> 常见场景</h4>
+<ul>
+<li>
+<p>web应用</p>
 <p>用户触发一个操作<strong>需要长时间才能执行完</strong>成，可以把他作为任务交给Celery去异步执行。</p>
 </li>
-<li><p>定时任务</p>
+<li>
+<p>定时任务</p>
 <p>可以用来跑一些<strong>定时</strong>任务</p>
 </li>
-<li><p>同步完成的附加工作异步完成</p>
+<li>
+<p>同步完成的附加工作异步完成</p>
 <p><strong>发短信/邮件, 推送消息</strong>, 清缓存</p>
 </li>
 </ul>
-<h4 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h4><ul>
-<li><p>Celery beat</p>
+<h4 id="架构"><a class="markdownIt-Anchor" href="#架构"></a> 架构</h4>
+<ul>
+<li>
+<p>Celery beat</p>
 <ul>
 <li>任务调度, Beat进程读取配置文件的内容,周期性将配置文件中到期需要执行的任务发送给任务队列</li>
 <li>用于定时任务</li>
 </ul>
 </li>
-<li><p>Worker</p>
+<li>
+<p>Worker</p>
 <p><strong>消费者-执行任务</strong>， 通常在多个服务器运行多个消费者来提高执行效率</p>
 </li>
-<li><p>Broker</p>
+<li>
+<p>Broker</p>
 <p>消息代理(消息中间件),  通常是消息队列或者数据库</p>
 <p>接受任务生产者发送顾过来的任务消息, <strong>存进队列</strong>再按序分发给任务消费方</p>
 <p>Celery目前支持RabbitMQ、Redis、MongoDB、Beanstalk、SQLAlchemy、Zookeeper等作为消息代理，但适用于生产环境的只有RabbitMQ和Redis</p>
 <p>Celery最初的设计就是基于RabbitMQ，所以使用RabbitMQ会非常稳定, 使用Redis，则需要能接受发生突然断电之类的问题造成Redis突然终止后的数据丢失等后果。</p>
 </li>
-<li><p>Producer</p>
+<li>
+<p>Producer</p>
 <p>生产者, 调用celery的api，函数，装饰器而产生任务并交给任务队列处理都是任务生产者</p>
 </li>
-<li><p>Result Backend</p>
+<li>
+<p>Result Backend</p>
 <p>任务处理完保持状态信息和结果，供于查询</p>
 <p>Celery  默认支持 Redis、RabbitMQ、MongoDB、Django ORM、SQLAlchemy</p>
 </li>
 </ul>
-<h4 id="Celery-序列化"><a href="#Celery-序列化" class="headerlink" title="Celery 序列化"></a>Celery 序列化</h4><p>在客户端和消费者之间传输数据需要序列化和反序列化。</p>
-<h4 id="Celery-的具体运用"><a href="#Celery-的具体运用" class="headerlink" title="Celery 的具体运用"></a>Celery 的具体运用</h4><ul>
+<h4 id="celery-序列化"><a class="markdownIt-Anchor" href="#celery-序列化"></a> Celery 序列化</h4>
+<p>在客户端和消费者之间传输数据需要序列化和反序列化。</p>
+<h4 id="celery-的具体运用"><a class="markdownIt-Anchor" href="#celery-的具体运用"></a> Celery 的具体运用</h4>
+<ul>
 <li>创建一个celery application 用来定义你的任务列表</li>
 <li>编写需要异步执行的任务函数，并用celery实例的task修饰器修饰</li>
 <li>调用异步任务时， 用函数名.delay(参数）形式调用为异步调用。 函数名（参数）方式为同步调用。</li>
 <li>执行celery监听服务</li>
 </ul>
-<p>main.py 来实例化文件</p>
+<p><a href="http://main.py" target="_blank" rel="noopener">main.py</a> 来实例化文件</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> celery <span class="keyword">import</span> Celery</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取django项目的配置，若执行的任务在配置文件中有相关配置，则要加载</span></span><br><span class="line"><span class="comment"># os.environ["DJANGO_SETTINGS_MODULE"] = "project.settings.dev"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建celery对象</span></span><br><span class="line">app = Celery(<span class="string">'celery_test'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载配置</span></span><br><span class="line">app.config_from_object(<span class="string">'celery_tasks.config'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 注册需执行的任务</span></span><br><span class="line">app.autodiscover_tasks([</span><br><span class="line">    <span class="string">'celery_tasks.sms'</span>,</span><br><span class="line">   ])</span><br></pre></td></tr></table></figure>
-<p>config.py 配置文件</p>
+<p><a href="http://config.py" target="_blank" rel="noopener">config.py</a> 配置文件</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 指定rabbitmq或则redis作为celery的队列</span></span><br><span class="line"><span class="comment"># broker_url= 'amqp://guest:guest@127.0.0.1:5672'</span></span><br><span class="line">broker_url = <span class="string">'redis://127.0.0.1:6379/14'</span></span><br></pre></td></tr></table></figure>
-<p>sms.tasks.py 编写需要执行的异步任务函数</p>
+<p><a href="http://sms.tasks.py" target="_blank" rel="noopener">sms.tasks.py</a> 编写需要执行的异步任务函数</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># bind：保证task对象会作为第一个参数自动传入</span></span><br><span class="line"><span class="comment"># name：异步任务别名</span></span><br><span class="line"><span class="comment"># retry_backoff：异常自动重试的时间间隔 第n次(retry_backoff×2^(n-1))s</span></span><br><span class="line"><span class="comment"># max_retries：异常自动重试次数的上限</span></span><br><span class="line"><span class="meta">@celery_app.task(bind=True, name='ccp_send_sms_code', retry_backoff=3)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ccp_send_sms_code</span><span class="params">(self, mobile, sms_code)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    发送短信异步任务</span></span><br><span class="line"><span class="string">    :param mobile: 手机号</span></span><br><span class="line"><span class="string">    :param sms_code: 短信验证码</span></span><br><span class="line"><span class="string">    :return: 成功0 或 失败-1</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        send_ret = CCP().send_template_sms(mobile, [sms_code, <span class="number">5</span>], <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        logger.error(e)</span><br><span class="line">        <span class="comment"># 有异常自动重试三次</span></span><br><span class="line">        <span class="keyword">raise</span> self.retry(exc=e, max_retries=<span class="number">3</span>)</span><br><span class="line">    <span class="keyword">if</span> send_ret != <span class="number">0</span>:</span><br><span class="line">        <span class="comment"># 有异常自动重试三次</span></span><br><span class="line">        <span class="keyword">raise</span> self.retry(exc=Exception(<span class="string">'发送短信失败'</span>), max_retries=<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> send_ret</span><br></pre></td></tr></table></figure>
-<h4 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">celery -A celery_tasks.main worker -l info</span><br><span class="line"><span class="meta">#</span><span class="bash"> 运行定义app的文件</span></span><br></pre></td></tr></table></figure>
-<h4 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h4><p><a href="https://www.jianshu.com/p/bced1b38c8c7" target="_blank" rel="noopener">1. 简书</a></p>
+<h4 id="运行"><a class="markdownIt-Anchor" href="#运行"></a> 运行</h4>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">celery -A celery_tasks.main worker -l info</span><br><span class="line"><span class="meta">#</span><span class="bash"> 运行定义app的文件</span></span><br></pre></td></tr></table></figure>
+<h4 id="参考链接"><a class="markdownIt-Anchor" href="#参考链接"></a> 参考链接</h4>
+<p><a href="https://www.jianshu.com/p/bced1b38c8c7" target="_blank" rel="noopener">1. 简书</a></p>
 <p><a href="https://zhuanlan.zhihu.com/p/22304455" target="_blank" rel="noopener">2.知乎</a></p>
 
       
@@ -342,7 +358,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Celery-简介"><span class="toc-number">1.</span> <span class="toc-text">Celery 简介</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#常见场景"><span class="toc-number">1.1.</span> <span class="toc-text">常见场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#架构"><span class="toc-number">1.2.</span> <span class="toc-text">架构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Celery-序列化"><span class="toc-number">1.3.</span> <span class="toc-text">Celery 序列化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Celery-的具体运用"><span class="toc-number">1.4.</span> <span class="toc-text">Celery 的具体运用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#运行"><span class="toc-number">1.5.</span> <span class="toc-text">运行</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#参考链接"><span class="toc-number">1.6.</span> <span class="toc-text">参考链接</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#celery-简介"><span class="toc-number">1.</span> <span class="toc-text"> Celery 简介</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#常见场景"><span class="toc-number">1.1.</span> <span class="toc-text"> 常见场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#架构"><span class="toc-number">1.2.</span> <span class="toc-text"> 架构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#celery-序列化"><span class="toc-number">1.3.</span> <span class="toc-text"> Celery 序列化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#celery-的具体运用"><span class="toc-number">1.4.</span> <span class="toc-text"> Celery 的具体运用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#运行"><span class="toc-number">1.5.</span> <span class="toc-text"> 运行</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#参考链接"><span class="toc-number">1.6.</span> <span class="toc-text"> 参考链接</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -499,7 +515,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -507,7 +523,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">http</a>
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -515,11 +531,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
+                <a href="javascript:void(0)" class="js-tag color5">python, gevent</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -543,11 +559,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+                <a href="javascript:void(0)" class="js-tag color3">OS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OS</a>
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
               </li>
             
             <div class="clearfix"></div>

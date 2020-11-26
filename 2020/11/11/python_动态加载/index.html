@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>python_动态加载 | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="python 实现动态加载模块和类  系统函数 import  importlib 模块 exec 函数">
+  <meta name="description" content="python 实现动态加载模块和类  系统函数 import importlib 模块 exec 函数">
 <meta name="keywords" content="python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="python_动态加载">
 <meta property="og:url" content="http://jasonyu.top/2020/11/11/python_动态加载/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="python 实现动态加载模块和类  系统函数 import  importlib 模块 exec 函数">
+<meta property="og:description" content="python 实现动态加载模块和类  系统函数 import importlib 模块 exec 函数">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-26T08:54:51.589Z">
+<meta property="og:updated_time" content="2020-11-26T08:57:14.827Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python_动态加载">
-<meta name="twitter:description" content="python 实现动态加载模块和类  系统函数 import  importlib 模块 exec 函数">
+<meta name="twitter:description" content="python 实现动态加载模块和类  系统函数 import importlib 模块 exec 函数">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -171,12 +171,12 @@
       
         <p>python 实现动态加载模块和类</p>
 <ul>
-<li>系统函数 import </li>
+<li>系统函数 import</li>
 <li>importlib 模块</li>
-<li>exec 函数<a id="more"></a>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Hello</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">"test"</span></span><br><span class="line"></span><br><span class="line">    int_value = <span class="number">123456</span></span><br><span class="line">    str_value = <span class="string">"a python string"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="keyword">print</span> __file__, __name__</span><br></pre></td></tr></table></figure>
-</li>
+<li>exec 函数</li>
 </ul>
+<a id="more"></a>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Hello</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">"test"</span></span><br><span class="line"></span><br><span class="line">    int_value = <span class="number">123456</span></span><br><span class="line">    str_value = <span class="string">"a python string"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="keyword">print</span> __file__, __name__</span><br></pre></td></tr></table></figure>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment">#coding: utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> importlib</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f1</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    使用__import__来实现动态加载</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    module_name = <span class="string">"module"</span></span><br><span class="line">    module1 = __import__(module_name)</span><br><span class="line">    h = module1.Hello()</span><br><span class="line">    h.test()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f2</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    使用importlib</span></span><br><span class="line"><span class="string">    importlib相比__import__()，操作更简单、灵活，支持reload()</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    module_name = <span class="string">"module"</span></span><br><span class="line">    class_name = <span class="string">"Hello"</span></span><br><span class="line">    test_module = importlib.import_module(module_name)</span><br><span class="line">    <span class="comment"># 使用getattr()获取模块中的类</span></span><br><span class="line">    test_class = getattr(test_module, class_name)</span><br><span class="line">    <span class="comment"># 动态加载类test_class生成类对象</span></span><br><span class="line">    test_obj = test_class()</span><br><span class="line">    test_obj.test()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment"># reload()重新加载，一般用于原模块有变化等特殊情况。</span></span><br><span class="line">    reload_module = importlib.import_module(module_name)</span><br><span class="line">    print(getattr(reload_module, class_name).int_value)</span><br><span class="line">    print(getattr(reload_module, class_name).str_value)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    f1()</span><br><span class="line">    f2()</span><br></pre></td></tr></table></figure>
 
       
@@ -456,7 +456,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -464,7 +464,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">http</a>
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -472,11 +472,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
+                <a href="javascript:void(0)" class="js-tag color5">python, gevent</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -500,11 +500,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+                <a href="javascript:void(0)" class="js-tag color3">OS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OS</a>
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
               </li>
             
             <div class="clearfix"></div>

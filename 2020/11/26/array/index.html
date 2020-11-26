@@ -8,21 +8,18 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>array | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="数组数据流中的中位数">
+  <meta name="description" content="数组  数据流中的中位数">
 <meta name="keywords" content="algorithm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="array">
 <meta property="og:url" content="http://jasonyu.top/2020/11/26/array/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="数组数据流中的中位数">
+<meta property="og:description" content="数组  数据流中的中位数">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://jasonyu.top/Users/K/Library/Application%20Support/typora-user-images/image-20190326160440626.png">
-<meta property="og:image" content="http://jasonyu.top/Users/K/Library/Application%20Support/typora-user-images/image-20190326183324885.png">
-<meta property="og:updated_time" content="2020-11-26T08:54:51.473Z">
+<meta property="og:updated_time" content="2020-11-26T08:57:14.669Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="array">
-<meta name="twitter:description" content="数组数据流中的中位数">
-<meta name="twitter:image" content="http://jasonyu.top/Users/K/Library/Application%20Support/typora-user-images/image-20190326160440626.png">
+<meta name="twitter:description" content="数组  数据流中的中位数">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -172,134 +169,172 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><h4 id="数据流中的中位数"><a href="#数据流中的中位数" class="headerlink" title="数据流中的中位数"></a>数据流中的中位数</h4><a id="more"></a>
+        <h3 id="数组"><a class="markdownIt-Anchor" href="#数组"></a> 数组</h3>
+<h4 id="数据流中的中位数"><a class="markdownIt-Anchor" href="#数据流中的中位数"></a> 数据流中的中位数</h4>
+<a id="more"></a>
 <hr>
 <ul>
-<li>大根堆，小根堆<ul>
+<li>大根堆，小根堆
+<ul>
 <li>数据流中数目是奇数时，将数据插入大根堆，反之 — 大根堆的最大值小于 小根堆的最小值</li>
 <li>当数要插入大根堆时，先和小根堆的最小值比较，如果大于小根堆的最小值，两者换一下，再插入大根堆</li>
 <li>反之，要插入小根堆时，先和大根堆的最大值比较，若小于大根堆最大值，互换，再插入小根堆</li>
 </ul>
 </li>
 </ul>
-<h4 id="数组中的重复数字"><a href="#数组中的重复数字" class="headerlink" title="数组中的重复数字"></a>数组中的重复数字</h4><hr>
+<h4 id="数组中的重复数字"><a class="markdownIt-Anchor" href="#数组中的重复数字"></a> 数组中的重复数字</h4>
+<hr>
 <ul>
 <li>0-n-1范围中中n个数字，存在多个重复，找出一个</li>
 <li>排序/哈希表 - 空间复杂度O(n)</li>
-<li><strong>0-n-1 对应位置对应的值保持一致</strong><ul>
+<li><strong>0-n-1 对应位置对应的值保持一致</strong>
+<ul>
 <li>1,3,5,0 - idx=0对应的值为1，找到idx=1的位置，看值是否等于1，若等于说明重复，</li>
 <li>若不等于，交换变为 3,1,5,0，继续看3</li>
 </ul>
 </li>
 </ul>
-<h4 id="旋转数组的最小数字"><a href="#旋转数组的最小数字" class="headerlink" title="旋转数组的最小数字"></a>旋转数组的最小数字</h4><hr>
+<h4 id="旋转数组的最小数字"><a class="markdownIt-Anchor" href="#旋转数组的最小数字"></a> 旋转数组的最小数字</h4>
+<hr>
 <p>3，4，5，1，2 是 1，2，3，4，5的一种旋转方式</p>
 <ul>
 <li>二分法</li>
 </ul>
-<h4 id="调整数组顺序使奇数都在偶数前面"><a href="#调整数组顺序使奇数都在偶数前面" class="headerlink" title="调整数组顺序使奇数都在偶数前面"></a>调整数组顺序使奇数都在偶数前面</h4><hr>
+<h4 id="调整数组顺序使奇数都在偶数前面"><a class="markdownIt-Anchor" href="#调整数组顺序使奇数都在偶数前面"></a> 调整数组顺序使奇数都在偶数前面</h4>
+<hr>
 <ul>
-<li>前后两个指针，往中间走<ul>
+<li>前后两个指针，往中间走
+<ul>
 <li>first指向偶数，last指向奇数，互换</li>
 </ul>
 </li>
 </ul>
-<h5 id="变种一-保持奇数-偶数相对位置不变"><a href="#变种一-保持奇数-偶数相对位置不变" class="headerlink" title="变种一 保持奇数 偶数相对位置不变"></a>变种一 保持奇数 偶数相对位置不变</h5><p>前面是偶数 后面是奇数</p>
+<h5 id="变种一-保持奇数-偶数相对位置不变"><a class="markdownIt-Anchor" href="#变种一-保持奇数-偶数相对位置不变"></a> 变种一 保持奇数 偶数相对位置不变</h5>
+<p>前面是偶数 后面是奇数</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment"># 方法1</span></span><br><span class="line"><span class="comment"># i is the index of the even sequence next item</span></span><br><span class="line"> i,j = <span class="number">0</span>,<span class="number">0</span></span><br><span class="line"> <span class="keyword">while</span> j &lt; len(A):</span><br><span class="line">     <span class="keyword">if</span> A[j] % <span class="number">2</span> == <span class="number">0</span> <span class="keyword">and</span> j &gt; i:</span><br><span class="line">         A = A[:i] + [A[j]] + A[i:j] + A[j+<span class="number">1</span>:]</span><br><span class="line">         i += <span class="number">1</span></span><br><span class="line">     <span class="keyword">else</span>:</span><br><span class="line">         j += <span class="number">1</span></span><br><span class="line"> <span class="keyword">return</span> A</span><br><span class="line"> </span><br><span class="line"> <span class="comment"># 方法2</span></span><br><span class="line">     <span class="comment"># i is the index of the even sequence next item</span></span><br><span class="line">     i,j = <span class="number">0</span>,<span class="number">0</span></span><br><span class="line">     <span class="keyword">while</span> j &lt; len(A):</span><br><span class="line">         <span class="keyword">if</span> A[j] % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">             tmp = j</span><br><span class="line">             <span class="keyword">while</span> tmp &gt; i:</span><br><span class="line">                 A[tmp],A[tmp<span class="number">-1</span>] = A[tmp<span class="number">-1</span>],A[tmp]</span><br><span class="line">                 tmp -= <span class="number">1</span></span><br><span class="line">             i += <span class="number">1</span></span><br><span class="line">         j += <span class="number">1</span></span><br><span class="line">     <span class="keyword">return</span> A</span><br></pre></td></tr></table></figure>
-<h5 id="变种二-保持奇数-偶数-相对有序"><a href="#变种二-保持奇数-偶数-相对有序" class="headerlink" title="变种二  保持奇数 偶数 相对有序"></a>变种二  保持奇数 偶数 相对有序</h5><p>思路变种1一样，排序用的是插入排序</p>
+<h5 id="变种二-保持奇数-偶数-相对有序"><a class="markdownIt-Anchor" href="#变种二-保持奇数-偶数-相对有序"></a> 变种二  保持奇数 偶数 相对有序</h5>
+<p>思路变种1一样，排序用的是插入排序</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># i is the index of the even sequence next item</span></span><br><span class="line">i,j = <span class="number">0</span>,<span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> j &lt; len(A):</span><br><span class="line">    <span class="keyword">if</span> A[j] % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        tmp = j</span><br><span class="line">        <span class="keyword">while</span> tmp &gt; i:</span><br><span class="line">            A[tmp],A[tmp<span class="number">-1</span>] = A[tmp<span class="number">-1</span>],A[tmp]</span><br><span class="line">            tmp -= <span class="number">1</span>                </span><br><span class="line">        <span class="keyword">while</span> tmp &gt; <span class="number">0</span> <span class="keyword">and</span> A[tmp] &lt; A[tmp<span class="number">-1</span>]:</span><br><span class="line">            A[tmp],A[tmp<span class="number">-1</span>] = A[tmp<span class="number">-1</span>],A[tmp]</span><br><span class="line">            tmp -= <span class="number">1</span></span><br><span class="line">        i += <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        tmp = j</span><br><span class="line">        <span class="keyword">while</span> tmp &gt; i <span class="keyword">and</span> A[tmp] &lt; A[tmp<span class="number">-1</span>]:</span><br><span class="line">            A[tmp],A[tmp<span class="number">-1</span>] = A[tmp<span class="number">-1</span>],A[tmp]</span><br><span class="line">            tmp -= <span class="number">1</span></span><br><span class="line">    j += <span class="number">1</span></span><br><span class="line"><span class="keyword">return</span> A</span><br></pre></td></tr></table></figure>
-<h4 id="有序矩阵查找"><a href="#有序矩阵查找" class="headerlink" title="有序矩阵查找"></a><a href="https://leetcode.com/problems/search-a-2d-matrix-ii/description/" target="_blank" rel="noopener">有序矩阵查找</a></h4><hr>
+<h4 id="有序矩阵查找"><a class="markdownIt-Anchor" href="#有序矩阵查找"></a> <a href="https://leetcode.com/problems/search-a-2d-matrix-ii/description/" target="_blank" rel="noopener">有序矩阵查找</a></h4>
+<hr>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  [<span class="number">1</span>,   <span class="number">4</span>,  <span class="number">7</span>, <span class="number">11</span>, <span class="number">15</span>],</span><br><span class="line">  [<span class="number">2</span>,   <span class="number">5</span>,  <span class="number">8</span>, <span class="number">12</span>, <span class="number">19</span>],</span><br><span class="line">  [<span class="number">3</span>,   <span class="number">6</span>,  <span class="number">9</span>, <span class="number">16</span>, <span class="number">22</span>],</span><br><span class="line">  [<span class="number">10</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">17</span>, <span class="number">24</span>],</span><br><span class="line">  [<span class="number">18</span>, <span class="number">21</span>, <span class="number">23</span>, <span class="number">26</span>, <span class="number">30</span>]</span><br><span class="line">]</span><br><span class="line">每行每列都是递增的，在这个数组中找target数，存在<span class="keyword">return</span> <span class="literal">True</span> 否则<span class="literal">False</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>思路:每一行的最右边的这个数 matrix[i][-1]都是本行最大的数，如果target小于这个数，那么左移，如果大于那么下移。</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> len(matrix) == <span class="number">0</span> <span class="keyword">or</span> len(matrix[<span class="number">0</span>]) == <span class="number">0</span>:</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">i,j = <span class="number">0</span>,len(matrix[<span class="number">0</span>])<span class="number">-1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> i &lt; len(matrix) <span class="keyword">and</span> j &gt; <span class="number">-1</span>: </span><br><span class="line">    <span class="keyword">if</span> matrix[i][j] == target:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">elif</span> matrix[i][j] &gt; target:</span><br><span class="line">        j -= <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        i += <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure>
-<h4 id="有序矩阵第K小的元素"><a href="#有序矩阵第K小的元素" class="headerlink" title="有序矩阵第K小的元素"></a><a href="https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/description/" target="_blank" rel="noopener">有序矩阵第K小的元素</a></h4><hr>
+<h4 id="有序矩阵第k小的元素"><a class="markdownIt-Anchor" href="#有序矩阵第k小的元素"></a> <a href="https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/description/" target="_blank" rel="noopener">有序矩阵第K小的元素</a></h4>
+<hr>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">kthSmallest</span><span class="params">(self, matrix: List[List[int]], k: int)</span> -&gt; int:</span></span><br><span class="line">    <span class="keyword">import</span> heapq</span><br><span class="line">    heap = [(matrix[<span class="number">0</span>][<span class="number">0</span>],<span class="number">0</span>,<span class="number">0</span>)]</span><br><span class="line">    cnt = <span class="number">0</span></span><br><span class="line">    heapq.heapify(heap)</span><br><span class="line">    <span class="keyword">while</span> heap:</span><br><span class="line">        <span class="keyword">print</span> (heap)</span><br><span class="line">        num,i,j = heapq.heappop(heap)</span><br><span class="line">        cnt += <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> cnt == k:</span><br><span class="line">            <span class="keyword">return</span> num</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> i+<span class="number">1</span> &lt; len(matrix):</span><br><span class="line">                heapq.heappush(heap,(matrix[i+<span class="number">1</span>][j],i+<span class="number">1</span>,j))</span><br><span class="line">            <span class="comment">#### 注意只在第一行时，才可以右移, 避免重复</span></span><br><span class="line">            <span class="keyword">if</span> i == <span class="number">0</span> <span class="keyword">and</span> j+<span class="number">1</span> &lt; len(matrix[<span class="number">0</span>]):</span><br><span class="line">                heapq.heappush(heap,(matrix[i][j+<span class="number">1</span>],i,j+<span class="number">1</span>))</span><br></pre></td></tr></table></figure>
-<h4 id="Car-Pooling"><a href="#Car-Pooling" class="headerlink" title="Car Pooling"></a><a href="https://leetcode.com/problems/car-pooling/" target="_blank" rel="noopener">Car Pooling</a></h4><hr>
+<h4 id="car-pooling"><a class="markdownIt-Anchor" href="#car-pooling"></a> <a href="https://leetcode.com/problems/car-pooling/" target="_blank" rel="noopener">Car Pooling</a></h4>
+<hr>
 <blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;Input: trips = [[2,1,5],[3,3,7]], capacity = 4</span><br><span class="line">&gt;Output: false</span><br><span class="line">&gt;Input: trips = [[2,1,5],[3,3,7]], capacity = 5</span><br><span class="line">&gt;Output: true</span><br><span class="line">&gt;0 &lt;= trips[i][1] &lt; trips[i][2] &lt;= 1000</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">carPooling</span><span class="params">(self, trips, capacity)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    :type trips: List[List[int]]</span></span><br><span class="line"><span class="string">    :type capacity: int</span></span><br><span class="line"><span class="string">    :rtype: bool</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    tmp = [x <span class="keyword">for</span> n, i, j <span class="keyword">in</span> trips <span class="keyword">for</span> x <span class="keyword">in</span> [[i, n], [j, - n]]]</span><br><span class="line">    <span class="keyword">for</span> i, v <span class="keyword">in</span> sorted(tmp,key=<span class="keyword">lambda</span> x:(x[<span class="number">0</span>],x[<span class="number">1</span>])):</span><br><span class="line">        capacity -= v</span><br><span class="line">        <span class="keyword">if</span> capacity &lt; <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure>
 <p>该时间复杂度为O(nlogn)涉及到排序， 可以用一个1001的数组存 就不用排序了</p>
-<h4 id="一个长度为n的数组，求其中出现次数大于n-2的元素，要求线性时间复杂度，恒定空间复杂度"><a href="#一个长度为n的数组，求其中出现次数大于n-2的元素，要求线性时间复杂度，恒定空间复杂度" class="headerlink" title="一个长度为n的数组，求其中出现次数大于n/2的元素，要求线性时间复杂度，恒定空间复杂度"></a>一个长度为n的数组，求其中出现次数大于n/2的元素，要求线性时间复杂度，恒定空间复杂度</h4><p>由于是恒定空间复杂度。</p>
+<p>####一个长度为n的数组，求其中出现次数大于n/2的元素，要求线性时间复杂度，恒定空间复杂度</p>
+<p>由于是恒定空间复杂度。</p>
 <p>考虑遍历数组时，一旦当前数与之前的数不同就相互抵消，最终剩下的数一定是数目大于n/2的数。</p>
-<h4 id="N-sum"><a href="#N-sum" class="headerlink" title="N sum"></a>N sum</h4><ul>
-<li><p>2 sum 用hash</p>
-</li>
-<li><p>3 sum 数组中三个数的和等于某个数(一般是0)</p>
+<h4 id="n-sum"><a class="markdownIt-Anchor" href="#n-sum"></a> N sum</h4>
 <ul>
-<li><p>可以先排序 O(nlogn)</p>
+<li>
+<p>2 sum 用hash</p>
 </li>
-<li><p>第一个数是在nums[:-2]中找，确定了第一个数，再用2sum的方式找剩下的两个数</p>
+<li>
+<p>3 sum 数组中三个数的和等于某个数(一般是0)</p>
 <ul>
-<li><p>优化，在确定第一个数的时候，如果这个数和前一个数相同可以跳过</p>
+<li>
+<p>可以先排序 O(nlogn)</p>
+</li>
+<li>
+<p>第一个数是在nums[:-2]中找，确定了第一个数，再用2sum的方式找剩下的两个数</p>
+<ul>
+<li>
+<p>优化，在确定第一个数的时候，如果这个数和前一个数相同可以跳过</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> len(nums) &lt; <span class="number">3</span>:</span><br><span class="line">    <span class="keyword">return</span> []</span><br><span class="line">nums.sort()</span><br><span class="line">res = set()</span><br><span class="line"><span class="keyword">for</span> i, v <span class="keyword">in</span> enumerate(nums[:<span class="number">-2</span>]):</span><br><span class="line">    <span class="keyword">if</span> i &gt;= <span class="number">1</span> <span class="keyword">and</span> v == nums[i<span class="number">-1</span>]:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    d = &#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> nums[i+<span class="number">1</span>:]:</span><br><span class="line">        <span class="keyword">if</span> x <span class="keyword">not</span> <span class="keyword">in</span> d:</span><br><span class="line">            d[-v-x] = <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            res.add((v, -v-x, x))</span><br><span class="line"><span class="keyword">return</span> map(list, res)</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p>3 sum closest</p>
+<li>
+<p>3 sum closest</p>
 <ul>
 <li>找三个数，他们之和<strong>最接近于</strong>给定数</li>
-<li>方法同3 sum，但是<ul>
+<li>方法同3 sum，但是
+<ul>
 <li>在遍历第一个数后，后面两个数的确定可以用双指针</li>
 </ul>
 </li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">threeSumClosest</span><span class="params">(self, nums: List[int], target: int)</span> -&gt; int:</span></span><br><span class="line">    nums.sort()</span><br><span class="line">    minus = float(<span class="string">'inf'</span>)</span><br><span class="line">    ans = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(nums)<span class="number">-2</span>):</span><br><span class="line">        left = i+<span class="number">1</span></span><br><span class="line">        right = len(nums)<span class="number">-1</span></span><br><span class="line">        <span class="keyword">while</span> left &lt; right:</span><br><span class="line">            sum2 = nums[left] + nums[right]</span><br><span class="line">            <span class="keyword">if</span> abs(sum2+nums[i]-target) &lt; minus:</span><br><span class="line">                ans = sum2+nums[i]</span><br><span class="line">                minus = abs(sum2+nums[i]-target)</span><br><span class="line">            <span class="keyword">if</span> sum2 &lt; target-nums[i]:</span><br><span class="line">                left +=<span class="number">1</span></span><br><span class="line">            <span class="keyword">elif</span> sum2 &gt; target-nums[i]:</span><br><span class="line">                right -=<span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">return</span> target</span><br><span class="line">    <span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure>
 </li>
-</ul>
+<li>
+<p>4 Sum</p>
 <ul>
-<li>4 Sum<ul>
 <li>通过递归先变成3Sum，再变成2Sum.</li>
 <li><a href="https://leetcode.com/problems/4sum/discuss/8545/Python-140ms-beats-100-and-works-for-N-sum-(Ngreater2)" target="_blank" rel="noopener">https://leetcode.com/problems/4sum/discuss/8545/Python-140ms-beats-100-and-works-for-N-sum-(Ngreater2)</a></li>
 </ul>
 </li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fourSum</span><span class="params">(self, nums: List[int], target: int)</span> -&gt; List[List[int]]:</span></span><br><span class="line">    </span><br><span class="line">    re,path = [],[]</span><br><span class="line">    nums.sort()</span><br><span class="line">    self.NSum(<span class="number">4</span>,path,re,nums,target)</span><br><span class="line">    <span class="keyword">return</span> re</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">NSum</span><span class="params">(self,N,path,re,nums,target)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> N &gt; <span class="number">2</span>:</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(nums)-N+<span class="number">1</span>):</span><br><span class="line">            <span class="keyword">if</span> i &gt; <span class="number">0</span> <span class="keyword">and</span> nums[i] == nums[i<span class="number">-1</span>]:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            self.NSum(N<span class="number">-1</span>,path+[nums[i]],re,nums[i+<span class="number">1</span>:],target-nums[i])</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        left = <span class="number">0</span></span><br><span class="line">        right = len(nums)<span class="number">-1</span></span><br><span class="line">        <span class="keyword">while</span> left &lt; right:</span><br><span class="line">            sum2 = nums[left]+nums[right]</span><br><span class="line">            <span class="keyword">if</span> sum2 &lt; target:</span><br><span class="line">                left += <span class="number">1</span></span><br><span class="line">            <span class="keyword">elif</span> sum2 &gt; target:</span><br><span class="line">                right -=<span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">if</span> left==<span class="number">0</span> <span class="keyword">or</span> nums[left]!=nums[left<span class="number">-1</span>]:</span><br><span class="line">                    re.append(path+[nums[left],nums[right]])</span><br><span class="line">                left += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">return</span></span><br></pre></td></tr></table></figure>
-<h4 id="435-Non-overlapping-Intervals"><a href="#435-Non-overlapping-Intervals" class="headerlink" title="435. Non-overlapping Intervals"></a><a href="https://leetcode.com/problems/non-overlapping-intervals/" target="_blank" rel="noopener">435. Non-overlapping Intervals</a></h4><p>最少移除几个intervals让剩下的没有重叠</p>
+<h4 id="435-non-overlapping-intervals"><a class="markdownIt-Anchor" href="#435-non-overlapping-intervals"></a> <a href="https://leetcode.com/problems/non-overlapping-intervals/" target="_blank" rel="noopener">435. Non-overlapping Intervals</a></h4>
+<p>最少移除几个intervals让剩下的没有重叠</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">eraseOverlapIntervals</span><span class="params">(self, intervals)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    :type intervals: List[Interval]</span></span><br><span class="line"><span class="string">    :rtype: int</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    end = float(<span class="string">'-inf'</span>)</span><br><span class="line">    erased = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> sorted(intervals, key=<span class="keyword">lambda</span> i: i.end):</span><br><span class="line">        <span class="keyword">if</span> i.start &gt;= end:</span><br><span class="line">            end = i.end</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            erased += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> erased</span><br></pre></td></tr></table></figure>
-<h4 id="452-Minimum-Number-of-Arrows-to-Burst-Balloons"><a href="#452-Minimum-Number-of-Arrows-to-Burst-Balloons" class="headerlink" title="452. Minimum Number of Arrows to Burst Balloons"></a><a href="https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/" target="_blank" rel="noopener">452. Minimum Number of Arrows to Burst Balloons</a></h4><p>不重叠的区间数目</p>
+<h4 id="452-minimum-number-of-arrows-to-burst-balloons"><a class="markdownIt-Anchor" href="#452-minimum-number-of-arrows-to-burst-balloons"></a> <a href="https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/" target="_blank" rel="noopener">452. Minimum Number of Arrows to Burst Balloons</a></h4>
+<p>不重叠的区间数目</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">findMinArrowShots</span><span class="params">(self, points)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    :type points: List[List[int]]</span></span><br><span class="line"><span class="string">    :rtype: int</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    points = sorted(points,key=<span class="keyword">lambda</span> x:(x[<span class="number">1</span>]))</span><br><span class="line">    num,end = <span class="number">0</span>, -float(<span class="string">'inf'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> point <span class="keyword">in</span> sorted(points,key=<span class="keyword">lambda</span> x:(x[<span class="number">1</span>])):</span><br><span class="line">        <span class="keyword">if</span> point[<span class="number">0</span>] &gt; end:</span><br><span class="line">            num += <span class="number">1</span></span><br><span class="line">            end = point[<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">return</span> num</span><br></pre></td></tr></table></figure>
-<h3 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h3><h4 id="青蛙跳-小矩阵覆盖大矩形问题"><a href="#青蛙跳-小矩阵覆盖大矩形问题" class="headerlink" title="青蛙跳 / 小矩阵覆盖大矩形问题"></a>青蛙跳 / 小矩阵覆盖大矩形问题</h4><hr>
+<h3 id="递归"><a class="markdownIt-Anchor" href="#递归"></a> 递归</h3>
+<h4 id="青蛙跳-小矩阵覆盖大矩形问题"><a class="markdownIt-Anchor" href="#青蛙跳-小矩阵覆盖大矩形问题"></a> 青蛙跳 / 小矩阵覆盖大矩形问题</h4>
+<hr>
 <p>用2*1的小矩形，覆盖2 * 8 的大矩形有几种方法</p>
 <ul>
-<li><p>覆盖2*8 的方式记为f(8)</p>
-<p><img src="/Users/K/Library/Application Support/typora-user-images/image-20190326160440626.png" alt="image-20190326160440626"></p>
+<li>
+<p>覆盖2*8 的方式记为f(8)</p>
+<p>![image-20190326160440626](/Users/K/Library/Application Support/typora-user-images/image-20190326160440626.png)</p>
 </li>
 </ul>
-<h4 id="数值的整数次方"><a href="#数值的整数次方" class="headerlink" title="数值的整数次方"></a>数值的整数次方</h4><hr>
+<h4 id="数值的整数次方"><a class="markdownIt-Anchor" href="#数值的整数次方"></a> 数值的整数次方</h4>
+<hr>
 <ul>
 <li>check 底数是否为0 ； 幂是整数还是负数还是0</li>
 <li>递归求解</li>
 </ul>
-<h3 id="回溯"><a href="#回溯" class="headerlink" title="回溯"></a>回溯</h3><h4 id="79-Word-search-Leetcode-机器人的运动范围"><a href="#79-Word-search-Leetcode-机器人的运动范围" class="headerlink" title="79. Word search (Leetcode) / 机器人的运动范围"></a>79. Word search (Leetcode) / 机器人的运动范围</h4><hr>
+<h3 id="回溯"><a class="markdownIt-Anchor" href="#回溯"></a> 回溯</h3>
+<h4 id="79-word-search-leetcode-机器人的运动范围"><a class="markdownIt-Anchor" href="#79-word-search-leetcode-机器人的运动范围"></a> 79. Word search (Leetcode) / 机器人的运动范围</h4>
+<hr>
 <p>记录 i, j, index(到目前为止走过的路), pre(之前经历过的节点)</p>
-<h3 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h3><h4 id="剪绳子"><a href="#剪绳子" class="headerlink" title="剪绳子"></a>剪绳子</h4><hr>
-<p><img src="/Users/K/Library/Application Support/typora-user-images/image-20190326183324885.png" alt="image-20190326183324885"></p>
+<h3 id="动态规划"><a class="markdownIt-Anchor" href="#动态规划"></a> 动态规划</h3>
+<h4 id="剪绳子"><a class="markdownIt-Anchor" href="#剪绳子"></a> 剪绳子</h4>
+<hr>
+<p>![image-20190326183324885](/Users/K/Library/Application Support/typora-user-images/image-20190326183324885.png)</p>
 <ul>
-<li>动态规划 - O($n^{2}$) 时间, O(n) 空间<ul>
+<li>动态规划 - O(<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>n</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">n^{2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span>) 时间, O(n) 空间
+<ul>
 <li>从f(1),f(2),f(3)算起到f(n)</li>
 </ul>
 </li>
 <li>贪心 每次剪 3 - O(n)</li>
 </ul>
-<h4 id="最长公共子序列-公共子串"><a href="#最长公共子序列-公共子串" class="headerlink" title="最长公共子序列/公共子串"></a>最长公共子序列/公共子串</h4><hr>
+<h4 id="最长公共子序列公共子串"><a class="markdownIt-Anchor" href="#最长公共子序列公共子串"></a> 最长公共子序列/公共子串</h4>
+<hr>
 <ul>
 <li>子序列: 子串要求在原字符串中是<strong>连续的</strong>，而<strong>子序列则只需保持相对顺序一致</strong>，并不要求连续。例如X = {a, Q, 1, 1}; Y = {a, 1, 1, d, f}那么，{a, 1, 1}是X和Y的最长公共子序列，但不是它们的最长公共字串。</li>
-<li>子序列<ul>
+<li>子序列
+<ul>
 <li>建立状态转移矩阵，行坐标为序列1，纵坐标为序列2</li>
 </ul>
 </li>
 </ul>
-<h3 id="位运算"><a href="#位运算" class="headerlink" title="位运算"></a>位运算</h3><h4 id="二进制中1的个数"><a href="#二进制中1的个数" class="headerlink" title="二进制中1的个数"></a>二进制中1的个数</h4><hr>
+<h3 id="位运算"><a class="markdownIt-Anchor" href="#位运算"></a> 位运算</h3>
+<h4 id="二进制中1的个数"><a class="markdownIt-Anchor" href="#二进制中1的个数"></a> 二进制中1的个数</h4>
+<hr>
 <ul>
 <li>思路1:输入Num， 对Num不断右移一位，再与1 相与，看最低位是否为1,针对负数情况不好解决</li>
 <li>思路2:左移flag, flag 一开始为1，输入Num有几个bit移几次，</li>
 </ul>
-<h4 id="输入整数m-n，问改变m的二进制表示几位，可以得到n"><a href="#输入整数m-n，问改变m的二进制表示几位，可以得到n" class="headerlink" title="输入整数m,n，问改变m的二进制表示几位，可以得到n"></a>输入整数m,n，问改变m的二进制表示几位，可以得到n</h4><hr>
+<h4 id="输入整数mn问改变m的二进制表示几位可以得到n"><a class="markdownIt-Anchor" href="#输入整数mn问改变m的二进制表示几位可以得到n"></a> 输入整数m,n，问改变m的二进制表示几位，可以得到n</h4>
+<hr>
 <ul>
 <li>m的二进制表示和n的二进制表示 异或</li>
 <li>统计1的数目</li>
@@ -425,7 +460,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#数组"><span class="toc-number">1.</span> <span class="toc-text">数组</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#数据流中的中位数"><span class="toc-number">1.1.</span> <span class="toc-text">数据流中的中位数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数组中的重复数字"><span class="toc-number">1.2.</span> <span class="toc-text">数组中的重复数字</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#旋转数组的最小数字"><span class="toc-number">1.3.</span> <span class="toc-text">旋转数组的最小数字</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#调整数组顺序使奇数都在偶数前面"><span class="toc-number">1.4.</span> <span class="toc-text">调整数组顺序使奇数都在偶数前面</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#变种一-保持奇数-偶数相对位置不变"><span class="toc-number">1.4.1.</span> <span class="toc-text">变种一 保持奇数 偶数相对位置不变</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#变种二-保持奇数-偶数-相对有序"><span class="toc-number">1.4.2.</span> <span class="toc-text">变种二  保持奇数 偶数 相对有序</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#有序矩阵查找"><span class="toc-number">1.5.</span> <span class="toc-text">有序矩阵查找</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#有序矩阵第K小的元素"><span class="toc-number">1.6.</span> <span class="toc-text">有序矩阵第K小的元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Car-Pooling"><span class="toc-number">1.7.</span> <span class="toc-text">Car Pooling</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#一个长度为n的数组，求其中出现次数大于n-2的元素，要求线性时间复杂度，恒定空间复杂度"><span class="toc-number">1.8.</span> <span class="toc-text">一个长度为n的数组，求其中出现次数大于n/2的元素，要求线性时间复杂度，恒定空间复杂度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#N-sum"><span class="toc-number">1.9.</span> <span class="toc-text">N sum</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#435-Non-overlapping-Intervals"><span class="toc-number">1.10.</span> <span class="toc-text">435. Non-overlapping Intervals</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#452-Minimum-Number-of-Arrows-to-Burst-Balloons"><span class="toc-number">1.11.</span> <span class="toc-text">452. Minimum Number of Arrows to Burst Balloons</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#递归"><span class="toc-number">2.</span> <span class="toc-text">递归</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#青蛙跳-小矩阵覆盖大矩形问题"><span class="toc-number">2.1.</span> <span class="toc-text">青蛙跳 / 小矩阵覆盖大矩形问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数值的整数次方"><span class="toc-number">2.2.</span> <span class="toc-text">数值的整数次方</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#回溯"><span class="toc-number">3.</span> <span class="toc-text">回溯</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#79-Word-search-Leetcode-机器人的运动范围"><span class="toc-number">3.1.</span> <span class="toc-text">79. Word search (Leetcode) / 机器人的运动范围</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#动态规划"><span class="toc-number">4.</span> <span class="toc-text">动态规划</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#剪绳子"><span class="toc-number">4.1.</span> <span class="toc-text">剪绳子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#最长公共子序列-公共子串"><span class="toc-number">4.2.</span> <span class="toc-text">最长公共子序列/公共子串</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#位运算"><span class="toc-number">5.</span> <span class="toc-text">位运算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#二进制中1的个数"><span class="toc-number">5.1.</span> <span class="toc-text">二进制中1的个数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#输入整数m-n，问改变m的二进制表示几位，可以得到n"><span class="toc-number">5.2.</span> <span class="toc-text">输入整数m,n，问改变m的二进制表示几位，可以得到n</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#数组"><span class="toc-number">1.</span> <span class="toc-text"> 数组</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#数据流中的中位数"><span class="toc-number">1.1.</span> <span class="toc-text"> 数据流中的中位数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数组中的重复数字"><span class="toc-number">1.2.</span> <span class="toc-text"> 数组中的重复数字</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#旋转数组的最小数字"><span class="toc-number">1.3.</span> <span class="toc-text"> 旋转数组的最小数字</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#调整数组顺序使奇数都在偶数前面"><span class="toc-number">1.4.</span> <span class="toc-text"> 调整数组顺序使奇数都在偶数前面</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#变种一-保持奇数-偶数相对位置不变"><span class="toc-number">1.4.1.</span> <span class="toc-text"> 变种一 保持奇数 偶数相对位置不变</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#变种二-保持奇数-偶数-相对有序"><span class="toc-number">1.4.2.</span> <span class="toc-text"> 变种二  保持奇数 偶数 相对有序</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#有序矩阵查找"><span class="toc-number">1.5.</span> <span class="toc-text"> 有序矩阵查找</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#有序矩阵第k小的元素"><span class="toc-number">1.6.</span> <span class="toc-text"> 有序矩阵第K小的元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#car-pooling"><span class="toc-number">1.7.</span> <span class="toc-text"> Car Pooling</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#n-sum"><span class="toc-number">1.8.</span> <span class="toc-text"> N sum</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#435-non-overlapping-intervals"><span class="toc-number">1.9.</span> <span class="toc-text"> 435. Non-overlapping Intervals</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#452-minimum-number-of-arrows-to-burst-balloons"><span class="toc-number">1.10.</span> <span class="toc-text"> 452. Minimum Number of Arrows to Burst Balloons</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#递归"><span class="toc-number">2.</span> <span class="toc-text"> 递归</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#青蛙跳-小矩阵覆盖大矩形问题"><span class="toc-number">2.1.</span> <span class="toc-text"> 青蛙跳 / 小矩阵覆盖大矩形问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数值的整数次方"><span class="toc-number">2.2.</span> <span class="toc-text"> 数值的整数次方</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#回溯"><span class="toc-number">3.</span> <span class="toc-text"> 回溯</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#79-word-search-leetcode-机器人的运动范围"><span class="toc-number">3.1.</span> <span class="toc-text"> 79. Word search (Leetcode) / 机器人的运动范围</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#动态规划"><span class="toc-number">4.</span> <span class="toc-text"> 动态规划</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#剪绳子"><span class="toc-number">4.1.</span> <span class="toc-text"> 剪绳子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#最长公共子序列公共子串"><span class="toc-number">4.2.</span> <span class="toc-text"> 最长公共子序列/公共子串</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#位运算"><span class="toc-number">5.</span> <span class="toc-text"> 位运算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#二进制中1的个数"><span class="toc-number">5.1.</span> <span class="toc-text"> 二进制中1的个数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#输入整数mn问改变m的二进制表示几位可以得到n"><span class="toc-number">5.2.</span> <span class="toc-text"> 输入整数m,n，问改变m的二进制表示几位，可以得到n</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -582,7 +617,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -590,7 +625,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">http</a>
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -598,11 +633,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
+                <a href="javascript:void(0)" class="js-tag color5">python, gevent</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -626,11 +661,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+                <a href="javascript:void(0)" class="js-tag color3">OS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OS</a>
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
               </li>
             
             <div class="clearfix"></div>

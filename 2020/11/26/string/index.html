@@ -8,20 +8,18 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>string | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="字符串两个字符串之间的最大相同子串 子串连续 子串可以不连续">
+  <meta name="description" content="字符串  两个字符串之间的最大相同子串  子串连续 子串可以不连续">
 <meta name="keywords" content="algorithm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="string">
 <meta property="og:url" content="http://jasonyu.top/2020/11/26/string/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="字符串两个字符串之间的最大相同子串 子串连续 子串可以不连续">
+<meta property="og:description" content="字符串  两个字符串之间的最大相同子串  子串连续 子串可以不连续">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://jasonyu.top/Users/K/Library/Application%20Support/typora-user-images/image-20190613134741489.png">
-<meta property="og:updated_time" content="2020-11-26T08:54:51.482Z">
+<meta property="og:updated_time" content="2020-11-26T08:57:14.683Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="string">
-<meta name="twitter:description" content="字符串两个字符串之间的最大相同子串 子串连续 子串可以不连续">
-<meta name="twitter:image" content="http://jasonyu.top/Users/K/Library/Application%20Support/typora-user-images/image-20190613134741489.png">
+<meta name="twitter:description" content="字符串  两个字符串之间的最大相同子串  子串连续 子串可以不连续">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -171,21 +169,28 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><h4 id="两个字符串之间的最大相同子串"><a href="#两个字符串之间的最大相同子串" class="headerlink" title="两个字符串之间的最大相同子串"></a>两个字符串之间的最大相同子串</h4><ul>
+        <h3 id="字符串"><a class="markdownIt-Anchor" href="#字符串"></a> 字符串</h3>
+<h4 id="两个字符串之间的最大相同子串"><a class="markdownIt-Anchor" href="#两个字符串之间的最大相同子串"></a> 两个字符串之间的最大相同子串</h4>
+<ul>
 <li>子串连续</li>
-<li>子串可以不连续<a id="more"></a>
-动态规划构建数组 考虑一个子串m1,另一个m2, 空间复杂度O($m1<em>m2$),时间O($m1</em>m2$)</li>
+<li>子串可以不连续</li>
 </ul>
-<h4 id="字符串循环移位"><a href="#字符串循环移位" class="headerlink" title="字符串循环移位"></a>字符串循环移位</h4><hr>
+<a id="more"></a>
+<p>动态规划构建数组 考虑一个子串m1,另一个m2, 空间复杂度O(<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mn>1</mn><mo>∗</mo><mi>m</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">m1*m2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mord">2</span></span></span></span>),时间O(<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mn>1</mn><mo>∗</mo><mi>m</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">m1*m2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mord">2</span></span></span></span>)</p>
+<h4 id="字符串循环移位"><a class="markdownIt-Anchor" href="#字符串循环移位"></a> 字符串循环移位</h4>
+<hr>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s = &quot;abcd123&quot; k = 3 字符串循环向右移k位</span><br><span class="line">Return &quot;123abcd&quot;</span><br></pre></td></tr></table></figure>
-<p> abcd123 中的 abcd 和 123 单独翻转，得到 dcba321，然后对整个字符串进行翻转，得到 123abcd。</p>
+<p>abcd123 中的 abcd 和 123 单独翻转，得到 dcba321，然后对整个字符串进行翻转，得到 123abcd。</p>
 <p>同理: 字符串中单词的翻转 - “I am a student” -&gt;  “student a am I”</p>
 <p>将每个单词翻转，最后把整个句子翻转。</p>
-<h4 id="回文串系列"><a href="#回文串系列" class="headerlink" title="回文串系列"></a>回文串系列</h4><h5 id="判断一个整数是否是回文数"><a href="#判断一个整数是否是回文数" class="headerlink" title="判断一个整数是否是回文数"></a>判断一个整数是否是回文数</h5><hr>
+<h4 id="回文串系列"><a class="markdownIt-Anchor" href="#回文串系列"></a> 回文串系列</h4>
+<p>#####判断一个整数是否是回文数</p>
+<hr>
 <p>不能将整数转换为字符串进行判断</p>
 <p>思路: 得到该数的右边部分，和左边比较是否一致</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> x == <span class="number">0</span>:</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"><span class="keyword">if</span> x &lt; <span class="number">0</span> <span class="keyword">or</span> x % <span class="number">10</span> == <span class="number">0</span>:</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">right = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> x &gt; right:</span><br><span class="line">    right = right * <span class="number">10</span> + x % <span class="number">10</span></span><br><span class="line">    x = x // <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> x == right <span class="keyword">or</span> x == right // <span class="number">10</span>:</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"><span class="keyword">return</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure>
-<h5 id="判断回文子字符串的个数"><a href="#判断回文子字符串的个数" class="headerlink" title="判断回文子字符串的个数"></a>判断回文子字符串的个数</h5><hr>
+<p>#####判断回文子字符串的个数</p>
+<hr>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: &quot;aaa&quot;</span><br><span class="line">Output: 6</span><br><span class="line">Explanation: Six palindromic strings: &quot;a&quot;, &quot;a&quot;, &quot;a&quot;, &quot;aa&quot;, &quot;aa&quot;, &quot;aaa&quot;.</span><br></pre></td></tr></table></figure>
 <ul>
 <li>思路一：利用求最大子串的思路,分奇偶中心分别往外展开</li>
@@ -193,57 +198,73 @@
 <p>从字符串的某一位开始，尝试着去扩展子字符串。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">    self.cnt = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">countSubstrings</span><span class="params">(self, s)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(s)):            </span><br><span class="line">        self.extend_s(s,i,i)</span><br><span class="line">        self.extend_s(s,i,i+<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">return</span> self.cnt</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">extend_s</span><span class="params">(self,s,start,end)</span>:</span></span><br><span class="line">    <span class="keyword">while</span> start &gt; <span class="number">-1</span> <span class="keyword">and</span> end &lt; len(s) <span class="keyword">and</span> s[start] == s[end]:</span><br><span class="line">        start -= <span class="number">1</span></span><br><span class="line">        end +=<span class="number">1</span></span><br><span class="line">        self.cnt +=<span class="number">1</span></span><br></pre></td></tr></table></figure>
 <ul>
-<li><p>思路二: Dp</p>
+<li>
+<p>思路二: Dp</p>
 <ul>
-<li><p>dp$[i][j]$ 定义成子字符串[i, j]是否是回文串</p>
+<li>
+<p>dp<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mi>i</mi><mo>]</mo><mo>[</mo><mi>j</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">[i][j]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span></span></span></span> 定义成子字符串[i, j]是否是回文串</p>
 <ul>
-<li><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">  dp = [[<span class="literal">False</span>]*len(s) <span class="keyword">for</span> _ <span class="keyword">in</span> range(len(s))]</span><br><span class="line">  res = <span class="number">0</span></span><br><span class="line"><span class="comment"># 关键还是从后往前遍历</span></span><br><span class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> range(len(s)<span class="number">-1</span>,<span class="number">-1</span>,<span class="number">-1</span>):</span><br><span class="line">      <span class="keyword">for</span> j <span class="keyword">in</span> range(i,len(s)):</span><br><span class="line">          dp[i][j] = (s[i]==s[j]) <span class="keyword">and</span> (j-i&lt;=<span class="number">2</span> <span class="keyword">or</span> dp[i+<span class="number">1</span>][j<span class="number">-1</span>])</span><br><span class="line">          <span class="keyword">if</span> dp[i][j]:</span><br><span class="line">              res += <span class="number">1</span></span><br><span class="line">  <span class="keyword">return</span> re</span><br></pre></td></tr></table></figure>
+<li>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">  dp = [[<span class="literal">False</span>]*len(s) <span class="keyword">for</span> _ <span class="keyword">in</span> range(len(s))]</span><br><span class="line">  res = <span class="number">0</span></span><br><span class="line"><span class="comment"># 关键还是从后往前遍历</span></span><br><span class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> range(len(s)<span class="number">-1</span>,<span class="number">-1</span>,<span class="number">-1</span>):</span><br><span class="line">      <span class="keyword">for</span> j <span class="keyword">in</span> range(i,len(s)):</span><br><span class="line">          dp[i][j] = (s[i]==s[j]) <span class="keyword">and</span> (j-i&lt;=<span class="number">2</span> <span class="keyword">or</span> dp[i+<span class="number">1</span>][j<span class="number">-1</span>])</span><br><span class="line">          <span class="keyword">if</span> dp[i][j]:</span><br><span class="line">              res += <span class="number">1</span></span><br><span class="line">  <span class="keyword">return</span> re</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<h5 id="最长回文子串"><a href="#最长回文子串" class="headerlink" title="最长回文子串"></a>最长回文子串</h5><hr>
+<h5 id="最长回文子串"><a class="markdownIt-Anchor" href="#最长回文子串"></a> 最长回文子串</h5>
+<hr>
 <blockquote>
 <p>最长回文子串 给定一个字符串 s，找到 s 中最长的回文子串。</p>
 </blockquote>
 <ul>
-<li><p>定义一个help(s,l,r)  l 和r就是左起始点和右起始点</p>
+<li>
+<p>定义一个help(s,l,r)  l 和r就是左起始点和右起始点</p>
 <ul>
-<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">global_len, index 这两个全局变量 记录最长子串</span><br><span class="line">for i in range(len(s)):</span><br><span class="line">	helper(s,i,i) # 奇数情况</span><br><span class="line">	helper(s,i,i+1) # 偶数情况</span><br></pre></td></tr></table></figure>
+<li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">global_len, index 这两个全局变量 记录最长子串</span><br><span class="line">for i in range(len(s)):</span><br><span class="line">	helper(s,i,i) # 奇数情况</span><br><span class="line">	helper(s,i,i+1) # 偶数情况</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
-<li><p>上述方法的简化版本- <strong>针对  abbbbbbc 这种连续重复多次的情</strong>况,</p>
+<li>
+<p>上述方法的简化版本- <strong>针对  abbbbbbc 这种连续重复多次的情</strong>况,</p>
 </li>
-<li><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">self.maxlen = <span class="number">0</span></span><br><span class="line">self.start = <span class="number">0</span></span><br><span class="line">i = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> i &lt; len(s):</span><br><span class="line">    <span class="keyword">if</span> len(s) - i &lt; self.maxlen / <span class="number">2</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    l,r = i,i</span><br><span class="line">    <span class="keyword">while</span> r &lt; len(s)<span class="number">-1</span> <span class="keyword">and</span> s[r] == s[r+<span class="number">1</span>]:</span><br><span class="line">        r += <span class="number">1</span></span><br><span class="line">    i = r + <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> l &gt; <span class="number">-1</span> <span class="keyword">and</span> r &lt; len(s) <span class="keyword">and</span> s[l] ==s[r]:</span><br><span class="line">        l -= <span class="number">1</span></span><br><span class="line">        r += <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> self.maxlen &lt; r-l<span class="number">-1</span>:</span><br><span class="line">        self.maxlen = r-l<span class="number">-1</span></span><br><span class="line">        self.start = l + <span class="number">1</span></span><br><span class="line">            </span><br><span class="line"><span class="keyword">return</span> s[self.start:self.start+self.maxlen]</span><br></pre></td></tr></table></figure>
+<li>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">self.maxlen = <span class="number">0</span></span><br><span class="line">self.start = <span class="number">0</span></span><br><span class="line">i = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> i &lt; len(s):</span><br><span class="line">    <span class="keyword">if</span> len(s) - i &lt; self.maxlen / <span class="number">2</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    l,r = i,i</span><br><span class="line">    <span class="keyword">while</span> r &lt; len(s)<span class="number">-1</span> <span class="keyword">and</span> s[r] == s[r+<span class="number">1</span>]:</span><br><span class="line">        r += <span class="number">1</span></span><br><span class="line">    i = r + <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> l &gt; <span class="number">-1</span> <span class="keyword">and</span> r &lt; len(s) <span class="keyword">and</span> s[l] ==s[r]:</span><br><span class="line">        l -= <span class="number">1</span></span><br><span class="line">        r += <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> self.maxlen &lt; r-l<span class="number">-1</span>:</span><br><span class="line">        self.maxlen = r-l<span class="number">-1</span></span><br><span class="line">        self.start = l + <span class="number">1</span></span><br><span class="line">            </span><br><span class="line"><span class="keyword">return</span> s[self.start:self.start+self.maxlen]</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>manacher</p>
+<li>
+<p>manacher</p>
 </li>
 </ul>
-<h5 id="最长回文子序列"><a href="#最长回文子序列" class="headerlink" title="最长回文子序列"></a>最长回文子序列</h5><hr>
+<h5 id="最长回文子序列"><a class="markdownIt-Anchor" href="#最长回文子序列"></a> 最长回文子序列</h5>
+<hr>
 <blockquote>
 <p>最长回文子序列 给定一个字符串s，找到其中最长的回文子序列</p>
 </blockquote>
 <p>子串：字符串中连续的序列; 子序列: 字符串中保持相对位置的字符序列</p>
 <ul>
-<li><p>动态规划</p>
+<li>
+<p>动态规划</p>
 </li>
-<li><p><img src="/Users/K/Library/Application Support/typora-user-images/image-20190613134741489.png" alt="image-20190613134741489"></p>
+<li>
+<p>![image-20190613134741489](/Users/K/Library/Application Support/typora-user-images/image-20190613134741489.png)</p>
 </li>
-<li><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">dp = [[<span class="number">0</span>]*len(s) <span class="keyword">for</span> _ <span class="keyword">in</span> range(len(s))]</span><br><span class="line"><span class="comment">### 核心在于 i 是从后往前遍历，原因是在状态转移方程中 dp[i,j] = dp[i+1,j-1]由i+1de状					### 态来更新i的状态</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(s)<span class="number">-1</span>,<span class="number">-1</span>,<span class="number">-1</span>):</span><br><span class="line">    dp[i][i] = <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(i+<span class="number">1</span>,len(s)):</span><br><span class="line">        <span class="keyword">if</span> s[i] == s[j]:</span><br><span class="line">            dp[i][j] = dp[i+<span class="number">1</span>][j<span class="number">-1</span>] +<span class="number">2</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            dp[i][j] = max(dp[i+<span class="number">1</span>][j],dp[i][j<span class="number">-1</span>])</span><br><span class="line">            </span><br><span class="line"><span class="keyword">return</span> dp[<span class="number">0</span>][len(s)<span class="number">-1</span>]</span><br></pre></td></tr></table></figure>
+<li>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">dp = [[<span class="number">0</span>]*len(s) <span class="keyword">for</span> _ <span class="keyword">in</span> range(len(s))]</span><br><span class="line"><span class="comment">### 核心在于 i 是从后往前遍历，原因是在状态转移方程中 dp[i,j] = dp[i+1,j-1]由i+1de状					### 态来更新i的状态</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(s)<span class="number">-1</span>,<span class="number">-1</span>,<span class="number">-1</span>):</span><br><span class="line">    dp[i][i] = <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(i+<span class="number">1</span>,len(s)):</span><br><span class="line">        <span class="keyword">if</span> s[i] == s[j]:</span><br><span class="line">            dp[i][j] = dp[i+<span class="number">1</span>][j<span class="number">-1</span>] +<span class="number">2</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            dp[i][j] = max(dp[i+<span class="number">1</span>][j],dp[i][j<span class="number">-1</span>])</span><br><span class="line">            </span><br><span class="line"><span class="keyword">return</span> dp[<span class="number">0</span>][len(s)<span class="number">-1</span>]</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h5 id="最长回文串"><a href="#最长回文串" class="headerlink" title="最长回文串"></a>最长回文串</h5><hr>
+<h5 id="最长回文串"><a class="markdownIt-Anchor" href="#最长回文串"></a> 最长回文串</h5>
+<hr>
 <p>给定一个包含大写字母和小写字母的字符串，找到通过这些字母构造成的最长的回文串。在构造过程中，请注意区分大小写。比如<code>&quot;Aa&quot;</code>不能当做一个回文字符串。注 意:假设字符串的长度不会超过 1010。</p>
 <ul>
 <li>从字符串中找出能构成回文串的字符</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">输入:</span><br><span class="line">&quot;abccccdd&quot;</span><br><span class="line">输出:</span><br><span class="line">7</span><br><span class="line">解释:</span><br><span class="line">我们可以构造的最长的回文串是&quot;dccaccd&quot;, 它的长度是 7。</span><br></pre></td></tr></table></figure>
 <ul>
-<li>思路：<ul>
-<li>遍历字符串, 判断对应的字符是否在list中<ul>
+<li>思路：
+<ul>
+<li>遍历字符串, 判断对应的字符是否在list中
+<ul>
 <li>不在就加进去</li>
 <li>在的话，就把list中的对应的字符删除，同时count += 1 (count记录的就是字符对出现的次数)</li>
 </ul>
@@ -252,23 +273,31 @@
 </ul>
 </li>
 </ul>
-<h5 id="判断子串是否是回文串"><a href="#判断子串是否是回文串" class="headerlink" title="判断子串是否是回文串"></a>判断子串是否是回文串</h5><hr>
+<p>#####判断子串是否是回文串</p>
+<hr>
 <p>给定一个字符串，验证它是否是回文串，只考虑字母和数字字符，可以忽略字母的大小写。</p>
 <ul>
 <li>两个指针从字符串的首尾开始往中间移动</li>
 <li>一个help函数,判断当前字符是否只是数字或字母</li>
 </ul>
-<h5 id="分割子串"><a href="#分割子串" class="headerlink" title="分割子串"></a>分割子串</h5><hr>
+<h5 id="分割子串"><a class="markdownIt-Anchor" href="#分割子串"></a> 分割子串</h5>
+<hr>
 <p>给定一个字符串 <em>s</em>，将 <em>s</em> 分割成一些子串，使每个子串都是回文串，返回 <em>s</em> 所有可能的分割方案。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">输入: &quot;aab&quot;</span><br><span class="line">输出:</span><br><span class="line">[</span><br><span class="line">  [&quot;aa&quot;,&quot;b&quot;],</span><br><span class="line">  [&quot;a&quot;,&quot;a&quot;,&quot;b&quot;]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"> flag = [[<span class="number">0</span>]*len(s) <span class="keyword">for</span> _ <span class="keyword">in</span> range(len(s))]</span><br><span class="line"> store = &#123;&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">### Flag 存储 子串i到j是否为回文</span></span><br><span class="line"> <span class="keyword">for</span> i <span class="keyword">in</span> range(len(s)<span class="number">-1</span>,<span class="number">-1</span>,<span class="number">-1</span>):</span><br><span class="line">     <span class="keyword">for</span> j <span class="keyword">in</span> range(i,len(s)):</span><br><span class="line">         flag[i][j] = s[i] == s[j] <span class="keyword">and</span> (j-i &lt; <span class="number">2</span> <span class="keyword">or</span> flag[i+<span class="number">1</span>][j<span class="number">-1</span>] )</span><br><span class="line"> </span><br><span class="line"> <span class="comment">### 从后往前遍历，包含改点的有多少构成回文的方案</span></span><br><span class="line"> <span class="keyword">for</span> i <span class="keyword">in</span> range(len(s)<span class="number">-1</span>,<span class="number">-1</span>,<span class="number">-1</span>):</span><br><span class="line">     <span class="keyword">for</span> j <span class="keyword">in</span> range(i,len(s)):</span><br><span class="line">         <span class="keyword">if</span> flag[i][j]:</span><br><span class="line">             to_str = s[i:j+<span class="number">1</span>]</span><br><span class="line">             <span class="keyword">if</span> i <span class="keyword">not</span> <span class="keyword">in</span> store:</span><br><span class="line">                 store[i] = []</span><br><span class="line"> </span><br><span class="line">             <span class="keyword">if</span>  j + <span class="number">1</span> &lt; len(s):</span><br><span class="line">                 <span class="keyword">for</span> tmp <span class="keyword">in</span> store[j+<span class="number">1</span>]:</span><br><span class="line">                     up = tmp[:]</span><br><span class="line">                     up.insert(<span class="number">0</span>,to_str)</span><br><span class="line">                     store[i].append(up)</span><br><span class="line">             <span class="keyword">else</span>:</span><br><span class="line">                 store[i].append([to_str])</span><br><span class="line"> <span class="keyword">return</span> store[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
-<h4 id="字符串查找"><a href="#字符串查找" class="headerlink" title="字符串查找"></a>字符串查找</h4><p><a href="http://www.ruanyifeng.com/blog/2013/05/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm.html" target="_blank" rel="noopener">参考链接</a></p>
+<h4 id="字符串查找"><a class="markdownIt-Anchor" href="#字符串查找"></a> 字符串查找</h4>
+<p><a href="http://www.ruanyifeng.com/blog/2013/05/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm.html" target="_blank" rel="noopener">参考链接</a></p>
 <p>在一个字符串S中查找子串W出现的位置。</p>
 <ul>
-<li>暴力搜索: 先找到S中与W第一个字符匹配的位置，然后接着比对，一旦不一致，将S中的位置往后移一位。</li>
-<li>KMP(K,M,P 分别是三个人的名字)<ul>
+<li>
+<p>暴力搜索: 先找到S中与W第一个字符匹配的位置，然后接着比对，一旦不一致，将S中的位置往后移一位。</p>
+</li>
+<li>
+<p>KMP(K,M,P 分别是三个人的名字)</p>
+<ul>
 <li>字符匹配的时间复杂度为O(m+n),空间复杂度O(m)</li>
-<li><ol>
+<li>
+<ol>
 <li>先按照W第一个字符匹配</li>
 <li>一旦匹配到一个后，开始维护一个表来记录，这个表记录的是部分匹配的字符串的前缀与后缀的交集的字符串长度</li>
 <li>一旦W中的某个字符与S匹配不上时，移动距离 = 目前匹配的长度 - 最后一个匹配的字符对应的表中的匹配值。  6 - 2 = 4</li>
@@ -276,39 +305,47 @@
 </li>
 </ul>
 </li>
-</ul>
-<ul>
-<li>KMP算法的想法是，设法利用这个已知信息，不要把”搜索位置”移回已经比较过的位置，继续把它向后移，这样就提高了效率。</li>
+<li>
+<p>KMP算法的想法是，设法利用这个已知信息，不要把&quot;搜索位置&quot;移回已经比较过的位置，继续把它向后移，这样就提高了效率。</p>
+</li>
 </ul>
 <p>next 数组就是最大长度值右移一位。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># step1: 先对模式字符串W计算匹配表</span></span><br><span class="line"><span class="comment"># step2: 利用匹配表来匹配</span></span><br></pre></td></tr></table></figure>
 <ul>
-<li>Boyer-Moore 算法<ul>
-<li>坏字符规则<ul>
-<li>后移位数 = 坏字符的位置 - 搜索词中的上一次出现位置<ul>
-<li>如果”坏字符”不包含在搜索词之中，则上一次出现位置为 -1。</li>
+<li>Boyer-Moore 算法
+<ul>
+<li>坏字符规则
+<ul>
+<li>后移位数 = 坏字符的位置 - 搜索词中的上一次出现位置
+<ul>
+<li>如果&quot;坏字符&quot;不包含在搜索词之中，则上一次出现位置为 -1。</li>
 </ul>
 </li>
 </ul>
 </li>
 <li>好后缀规则</li>
-<li>更有效，这两个规则的移动位数，<strong>只与搜索词有关，与原字符串无关</strong>。因此，可以预先计算生成《坏字符规则表》和《好后缀规则表》。使用时，只要查表比较一下就可以了。<ul>
+<li>更有效，这两个规则的移动位数，<strong>只与搜索词有关，与原字符串无关</strong>。因此，可以预先计算生成《坏字符规则表》和《好后缀规则表》。使用时，只要查表比较一下就可以了。
+<ul>
 <li>坏字符移动表 就是一个字典，key是26个字母(如果字符串中只有字母)，value就是对应移动的距离大小，对于那些不在pattern string中的字母，对应的value就是整个pattern string的长度</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<h4 id="最长公共前缀"><a href="#最长公共前缀" class="headerlink" title="最长公共前缀"></a>最长公共前缀</h4><p>编写一个函数来查找字符串数组中的最长公共前缀。如果不存在公共前缀，返回空字符串 “”。</p>
+<h4 id="最长公共前缀"><a class="markdownIt-Anchor" href="#最长公共前缀"></a> 最长公共前缀</h4>
+<p>编写一个函数来查找字符串数组中的最长公共前缀。如果不存在公共前缀，返回空字符串 “”。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">输入: [&quot;flower&quot;,&quot;flow&quot;,&quot;flight&quot;]</span><br><span class="line">输出: &quot;fl&quot;</span><br><span class="line"></span><br><span class="line">输入: [&quot;dog&quot;,&quot;racecar&quot;,&quot;car&quot;]</span><br><span class="line">输出: &quot;&quot;</span><br><span class="line">解释: 输入不存在公共前缀。</span><br></pre></td></tr></table></figure>
 <p>思路: 先将list排序(按照字母顺序排的顺序)，再对比list第一个元素和最后一个元素的公共字符。</p>
-<h4 id="Word-Ladder"><a href="#Word-Ladder" class="headerlink" title="Word Ladder"></a><a href="https://leetcode.com/problems/word-ladder/" target="_blank" rel="noopener">Word Ladder</a></h4><ul>
+<h4 id="word-ladder"><a class="markdownIt-Anchor" href="#word-ladder"></a> <a href="https://leetcode.com/problems/word-ladder/" target="_blank" rel="noopener">Word Ladder</a></h4>
+<ul>
 <li>用一个visited 记录已经访问过的节点， visited 需要是set</li>
-<li>用一个deque(from collections import deque) 记录词 (word,dist) </li>
+<li>用一个deque(from collections import deque) 记录词 (word,dist)</li>
 <li>用一个字典来存可能的映射</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">d = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> word <span class="keyword">in</span> wordList+[beginWord]:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(word)):</span><br><span class="line">        s = word[:i] + <span class="string">"_"</span> + word[i+<span class="number">1</span>:]</span><br><span class="line">        d[s] = d.get(s, []) + [word]</span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> endWord <span class="keyword">not</span> <span class="keyword">in</span> wordList:</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">visited = set()</span><br><span class="line">layer = [(beginWord,<span class="number">1</span>)]</span><br><span class="line"><span class="keyword">while</span> layer:</span><br><span class="line">    word,dist = layer.pop(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">if</span> word <span class="keyword">not</span> <span class="keyword">in</span> visited:</span><br><span class="line">        visited.add(word)</span><br><span class="line">        <span class="keyword">if</span> word == endWord:</span><br><span class="line">            <span class="keyword">return</span> dist</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(word)):</span><br><span class="line">            s = word[:i] + <span class="string">"_"</span> + word[i+<span class="number">1</span>:]</span><br><span class="line">            nxtWords = d.get(s, [])</span><br><span class="line">            <span class="keyword">for</span> w <span class="keyword">in</span> nxtWords:</span><br><span class="line">                <span class="keyword">if</span> w <span class="keyword">not</span> <span class="keyword">in</span> visited:</span><br><span class="line">                    layer.append((w,dist+<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
-<h3 id="序列类问题"><a href="#序列类问题" class="headerlink" title="序列类问题"></a>序列类问题</h3><h4 id="最长连续子序列"><a href="#最长连续子序列" class="headerlink" title="最长连续子序列"></a>最长连续子序列</h4><hr>
+<h3 id="序列类问题"><a class="markdownIt-Anchor" href="#序列类问题"></a> 序列类问题</h3>
+<h4 id="最长连续子序列"><a class="markdownIt-Anchor" href="#最长连续子序列"></a> 最长连续子序列</h4>
+<hr>
 <p><a href="https://leetcode.com/problems/longest-consecutive-sequence/description/" target="_blank" rel="noopener">128. Longest Consecutive Sequence (Hard)</a></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Given [100, 4, 200, 1, 3, 2],</span><br><span class="line">The longest consecutive elements sequence is [1, 2, 3, 4]. Return its length: 4.</span><br></pre></td></tr></table></figure>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">longestConsecutive</span><span class="params">(self, nums)</span>:</span></span><br><span class="line">    nums = set(nums)</span><br><span class="line">    best = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> nums:</span><br><span class="line">        <span class="keyword">if</span> x - <span class="number">1</span> <span class="keyword">not</span> <span class="keyword">in</span> nums:</span><br><span class="line">            y = x + <span class="number">1</span></span><br><span class="line">            <span class="keyword">while</span> y <span class="keyword">in</span> nums:</span><br><span class="line">                y += <span class="number">1</span></span><br><span class="line">            best = max(best, y - x)</span><br><span class="line">    <span class="keyword">return</span> best</span><br></pre></td></tr></table></figure>
@@ -433,7 +470,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串"><span class="toc-number">1.</span> <span class="toc-text">字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#两个字符串之间的最大相同子串"><span class="toc-number">1.1.</span> <span class="toc-text">两个字符串之间的最大相同子串</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#字符串循环移位"><span class="toc-number">1.2.</span> <span class="toc-text">字符串循环移位</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#回文串系列"><span class="toc-number">1.3.</span> <span class="toc-text">回文串系列</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#判断一个整数是否是回文数"><span class="toc-number">1.3.1.</span> <span class="toc-text">判断一个整数是否是回文数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#判断回文子字符串的个数"><span class="toc-number">1.3.2.</span> <span class="toc-text">判断回文子字符串的个数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#最长回文子串"><span class="toc-number">1.3.3.</span> <span class="toc-text">最长回文子串</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#最长回文子序列"><span class="toc-number">1.3.4.</span> <span class="toc-text">最长回文子序列</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#最长回文串"><span class="toc-number">1.3.5.</span> <span class="toc-text">最长回文串</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#判断子串是否是回文串"><span class="toc-number">1.3.6.</span> <span class="toc-text">判断子串是否是回文串</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#分割子串"><span class="toc-number">1.3.7.</span> <span class="toc-text">分割子串</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#字符串查找"><span class="toc-number">1.4.</span> <span class="toc-text">字符串查找</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#最长公共前缀"><span class="toc-number">1.5.</span> <span class="toc-text">最长公共前缀</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Word-Ladder"><span class="toc-number">1.6.</span> <span class="toc-text">Word Ladder</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#序列类问题"><span class="toc-number">2.</span> <span class="toc-text">序列类问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#最长连续子序列"><span class="toc-number">2.1.</span> <span class="toc-text">最长连续子序列</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串"><span class="toc-number">1.</span> <span class="toc-text"> 字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#两个字符串之间的最大相同子串"><span class="toc-number">1.1.</span> <span class="toc-text"> 两个字符串之间的最大相同子串</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#字符串循环移位"><span class="toc-number">1.2.</span> <span class="toc-text"> 字符串循环移位</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#回文串系列"><span class="toc-number">1.3.</span> <span class="toc-text"> 回文串系列</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#最长回文子串"><span class="toc-number">1.3.1.</span> <span class="toc-text"> 最长回文子串</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#最长回文子序列"><span class="toc-number">1.3.2.</span> <span class="toc-text"> 最长回文子序列</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#最长回文串"><span class="toc-number">1.3.3.</span> <span class="toc-text"> 最长回文串</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#分割子串"><span class="toc-number">1.3.4.</span> <span class="toc-text"> 分割子串</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#字符串查找"><span class="toc-number">1.4.</span> <span class="toc-text"> 字符串查找</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#最长公共前缀"><span class="toc-number">1.5.</span> <span class="toc-text"> 最长公共前缀</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#word-ladder"><span class="toc-number">1.6.</span> <span class="toc-text"> Word Ladder</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#序列类问题"><span class="toc-number">2.</span> <span class="toc-text"> 序列类问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#最长连续子序列"><span class="toc-number">2.1.</span> <span class="toc-text"> 最长连续子序列</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -590,7 +627,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -598,7 +635,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">http</a>
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -606,11 +643,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
+                <a href="javascript:void(0)" class="js-tag color5">python, gevent</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -634,11 +671,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+                <a href="javascript:void(0)" class="js-tag color3">OS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OS</a>
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
               </li>
             
             <div class="clearfix"></div>

@@ -8,19 +8,19 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>redis数据结构 | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="value的数据结构类型Redis 可以存储键和五种不同类型的值之间的映射。键的类型只能为字符串，值支持五种数据类型：字符串、列表、集合、散列表、有序集合。  string 字符串类型的值实际可以是字符串（简单的字符串、复杂的字符串（例如JSON、XML））、数字（整数、浮点数），甚至是二进制（图片、音频、视频），但是值最大不能超过512MB。 set key_name value   hash">
+  <meta name="description" content="value的数据结构类型 Redis 可以存储键和五种不同类型的值之间的映射。键的类型只能为字符串，值支持五种数据类型：字符串、列表、集合、散列表、有序集合。  string  字符串类型的值实际可以是字符串（简单的字符串、复杂的字符串（例如JSON、XML））、数字 （整数、浮点数），甚至是二进制（图片、音频、视频），但是值最大不能 超过512MB。 set key_name value">
 <meta name="keywords" content="redis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="redis数据结构">
 <meta property="og:url" content="http://jasonyu.top/2020/11/06/redis数据结构/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="value的数据结构类型Redis 可以存储键和五种不同类型的值之间的映射。键的类型只能为字符串，值支持五种数据类型：字符串、列表、集合、散列表、有序集合。  string 字符串类型的值实际可以是字符串（简单的字符串、复杂的字符串（例如JSON、XML））、数字（整数、浮点数），甚至是二进制（图片、音频、视频），但是值最大不能超过512MB。 set key_name value   hash">
+<meta property="og:description" content="value的数据结构类型 Redis 可以存储键和五种不同类型的值之间的映射。键的类型只能为字符串，值支持五种数据类型：字符串、列表、集合、散列表、有序集合。  string  字符串类型的值实际可以是字符串（简单的字符串、复杂的字符串（例如JSON、XML））、数字 （整数、浮点数），甚至是二进制（图片、音频、视频），但是值最大不能 超过512MB。 set key_name value">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://jasonyu.top/2020/11/06/redis数据结构/image-20200615153153328.png">
-<meta property="og:updated_time" content="2020-11-26T08:54:51.536Z">
+<meta property="og:updated_time" content="2020-11-26T08:57:14.750Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="redis数据结构">
-<meta name="twitter:description" content="value的数据结构类型Redis 可以存储键和五种不同类型的值之间的映射。键的类型只能为字符串，值支持五种数据类型：字符串、列表、集合、散列表、有序集合。  string 字符串类型的值实际可以是字符串（简单的字符串、复杂的字符串（例如JSON、XML））、数字（整数、浮点数），甚至是二进制（图片、音频、视频），但是值最大不能超过512MB。 set key_name value   hash">
+<meta name="twitter:description" content="value的数据结构类型 Redis 可以存储键和五种不同类型的值之间的映射。键的类型只能为字符串，值支持五种数据类型：字符串、列表、集合、散列表、有序集合。  string  字符串类型的值实际可以是字符串（简单的字符串、复杂的字符串（例如JSON、XML））、数字 （整数、浮点数），甚至是二进制（图片、音频、视频），但是值最大不能 超过512MB。 set key_name value">
 <meta name="twitter:image" content="http://jasonyu.top/2020/11/06/redis数据结构/image-20200615153153328.png">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
@@ -171,32 +171,40 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="value的数据结构类型"><a href="#value的数据结构类型" class="headerlink" title="value的数据结构类型"></a>value的数据结构类型</h4><p>Redis 可以存储键和五种不同类型的值之间的映射。键的类型只能为字符串，值支持五种数据类型：字符串、列表、集合、散列表、有序集合。</p>
+        <h4 id="value的数据结构类型"><a class="markdownIt-Anchor" href="#value的数据结构类型"></a> value的数据结构类型</h4>
+<p>Redis 可以存储键和五种不同类型的值之间的映射。键的类型只能为字符串，值支持五种数据类型：字符串、列表、集合、散列表、有序集合。</p>
 <ul>
-<li>string<ul>
-<li>字符串类型的值实际可以是字符串（<strong>简单的字符串、复杂的字符串</strong>（例如JSON、XML））、<strong>数字</strong><br><strong>（整数、浮点数），甚至是二进制</strong>（图片、音频、视频），但是值最大不能<br><strong>超过512MB</strong>。</li>
+<li>string
+<ul>
+<li>字符串类型的值实际可以是字符串（<strong>简单的字符串、复杂的字符串</strong>（例如JSON、XML））、<strong>数字</strong><br>
+<strong>（整数、浮点数），甚至是二进制</strong>（图片、音频、视频），但是值最大不能<br>
+<strong>超过512MB</strong>。</li>
 <li>set key_name value</li>
 </ul>
 </li>
-<li>hash<ul>
+<li>hash
+<ul>
 <li>hset key_name field value</li>
 </ul>
 </li>
-<li>list<ul>
+<li>list
+<ul>
 <li>linkedlist</li>
-<li>ziplist </li>
+<li>ziplist</li>
 <li>lpush key_name v1 v2 … vn list头部添加字符串元素</li>
 <li>rpush key_name v1 v2 … vn</li>
 <li>lrem key_name count value 对应list中删除count个和value相同的元素</li>
 <li>llen key_name 返回对应的list长度</li>
 </ul>
 </li>
-<li>set<ul>
+<li>set
+<ul>
 <li>sadd key_name value</li>
 <li>集合通过哈希表实现，添加删除查找的复杂度都是O(1)</li>
 </ul>
 </li>
-<li>zset(有序集合)<ul>
+<li>zset(有序集合)
+<ul>
 <li>zadd key_name score1 value1</li>
 <li>通过分数从小到大排序，分数可以重复，元素不重复</li>
 </ul>
@@ -204,39 +212,49 @@
 </ul>
 <a id="more"></a>
 <img src="/2020/11/06/redis数据结构/image-20200615153153328.png" title="image-20200615153153328">
-<h4 id="redis-原理"><a href="#redis-原理" class="headerlink" title="redis 原理"></a>redis 原理</h4><p>单线程处理命令，利用I/O多路复用技术来解决I/O问题<br>单线程但快的原因。 每秒万级别的处理能力</p>
+<h4 id="redis-原理"><a class="markdownIt-Anchor" href="#redis-原理"></a> redis 原理</h4>
+<p>单线程处理命令，利用I/O多路复用技术来解决I/O问题<br>
+单线程但快的原因。 每秒万级别的处理能力</p>
 <ul>
 <li>纯内存访问</li>
-<li>非阻塞I / O </li>
+<li>非阻塞I / O</li>
 <li>单线程避免线程切换和竞争状态产生的消耗</li>
 <li>支持数据持久化</li>
 <li>不仅仅支持key-value 类型数据，还提供list，set，zset(有序集合)，hash等数据结构的存储</li>
 </ul>
-<h4 id="string-类型"><a href="#string-类型" class="headerlink" title="string 类型"></a>string 类型</h4><p>一个key对应一个value，string是二进制安全，类似于Java中的map</p>
+<h4 id="string-类型"><a class="markdownIt-Anchor" href="#string-类型"></a> string 类型</h4>
+<p>一个key对应一个value，string是二进制安全，类似于Java中的map</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; <span class="built_in">set</span> hello world</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; get hello</span><br><span class="line"><span class="string">"world"</span></span><br></pre></td></tr></table></figure>
-<p>set/get/del/incr/decr/incrby/decrby<br>应用<br>信息缓存，计数器，分布式锁</p>
+<p>set/get/del/incr/decr/incrby/decrby<br>
+应用<br>
+信息缓存，计数器，分布式锁</p>
 <ul>
-<li>记录每个用户或者每个商品访问次数<ul>
-<li>键名 userid:pageview / pageview:userid </li>
+<li>记录每个用户或者每个商品访问次数
+<ul>
+<li>键名 userid:pageview / pageview:userid</li>
 <li>增加次数用incr</li>
 <li>用户访问以及商品浏览修改频繁，使用mysql频繁修改会造成mysql压力，redis内存快，且单线程无竞争</li>
 </ul>
 </li>
-<li>缓存频繁读取，但不常修改，用户信息，视频信息<ul>
+<li>缓存频繁读取，但不常修改，用户信息，视频信息
+<ul>
 <li>先从redis读，没有的话从mysql读，并写到redis中缓存，设置过期时间</li>
-<li>直接将用户一条mysql记录做序列化(通常序列化为json)作为值，userInfo:userid 作为key，键名:userInfo:123，value存储对应用户信息的json串。如 key为：”user:id:name:1”,  value为”{“name”:”leijia”,”age”:18}”</li>
+<li>直接将用户一条mysql记录做序列化(通常序列化为json)作为值，userInfo:userid 作为key，键名:userInfo:123，value存储对应用户信息的json串。如 key为：“user🆔name:1”,  value为&quot;{“name”:“leijia”,“age”:18}&quot;</li>
 </ul>
 </li>
-<li>限定某个ip特定时间内的访问次数<ul>
+<li>限定某个ip特定时间内的访问次数
+<ul>
 <li>用key记录IP，value记录访问次数，同时key的过期时间设置为60秒，如果key过期了则重新设置，否则进行判断，当一分钟内访问超过100次，则禁止访问</li>
 </ul>
 </li>
-<li>分布式session<ul>
+<li>分布式session
+<ul>
 <li>如果想要多个服务器共享一个session，可以将session存放在redis中，redis可以独立于所有负载均衡服务器，也可以放在其中一台负载均衡服务器上；但是所有应用所在的服务器连接的都是同一个redis服务器</li>
 </ul>
 </li>
 </ul>
-<h4 id="hash类型"><a href="#hash类型" class="headerlink" title="hash类型"></a>hash类型</h4><p>redis hash 是一个键值对(key-value) 集合, string类型的key和value的映射表，适合存储对象</p>
+<h4 id="hash类型"><a class="markdownIt-Anchor" href="#hash类型"></a> hash类型</h4>
+<p>redis hash 是一个键值对(key-value) 集合, string类型的key和value的映射表，适合存储对象</p>
 <p>理解： hash 看成一个key-value 的集合</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">// <span class="built_in">hash</span>-key 可以看成是一个键值对集合的名字,在这里分别为其添加了 sub-key1 : value1、</span><br><span class="line">sub-key2 : value2、sub-key3 : value3 这三个键值对</span><br><span class="line">127.0.0.1:6379&gt; hset <span class="built_in">hash</span>-key sub-key1 value1</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">127.0.0.1:6379&gt; hset <span class="built_in">hash</span>-key sub-key2 value2</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">127.0.0.1:6379&gt; hset <span class="built_in">hash</span>-key sub-key3 value3</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">// 获取 <span class="built_in">hash</span>-key 这个 <span class="built_in">hash</span> 里面的所有键值对</span><br><span class="line">127.0.0.1:6379&gt; hgetall <span class="built_in">hash</span>-key</span><br><span class="line">1) <span class="string">"sub-key1"</span></span><br><span class="line">2) <span class="string">"value1"</span></span><br><span class="line">3) <span class="string">"sub-key2"</span></span><br><span class="line">4) <span class="string">"value2"</span></span><br><span class="line">5) <span class="string">"sub-key3"</span></span><br><span class="line">6) <span class="string">"value3"</span></span><br><span class="line">// 删除 <span class="built_in">hash</span>-key 这个 <span class="built_in">hash</span> 里面的 sub-key2 键值对</span><br><span class="line">127.0.0.1:6379&gt; hdel <span class="built_in">hash</span>-key sub-key2</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">127.0.0.1:6379&gt; hget <span class="built_in">hash</span>-key sub-key2</span><br><span class="line">(nil)</span><br><span class="line">127.0.0.1:6379&gt; hget <span class="built_in">hash</span>-key sub-key1</span><br><span class="line"><span class="string">"value1"</span></span><br><span class="line">127.0.0.1:6379&gt; hgetall <span class="built_in">hash</span>-key</span><br><span class="line">1) <span class="string">"sub-key1"</span></span><br><span class="line">2) <span class="string">"value1"</span></span><br><span class="line">3) <span class="string">"sub-key3"</span></span><br><span class="line">4) <span class="string">"value3"</span></span><br></pre></td></tr></table></figure>
 <p>Hash 和 Java的HashMap类似，都是数组加链表，当发生hash碰撞时，会将元素追加到链表上。</p>
@@ -246,7 +264,8 @@
 <p>购物车：<code>hset [key] [field] [value]</code> 命令， 可以实现以<code>用户Id</code>，<code>商品Id</code>为<code>field</code>，商品数量为<code>value</code>，恰好构成了购物车的3个要素。</p>
 <p>将商品id和商品数量序列化成json字符串，那么也可以用上面讲的string类型存储.</p>
 <p><strong>当对象的某个属性需要频繁修改</strong>时，不适合用string+json，因为它不够灵活，每<strong>次修改都需要重新将整个对象序列化并赋值</strong>；如果使用hash类型，则可以针对某个属性单独修改，没有序列化，也不需要修改整个对象。比如，商品的价格、销量、关注数、评价数等可能经常发生变化的属性，就适合存储在hash类型里</p>
-<h4 id="list-类型"><a href="#list-类型" class="headerlink" title="list 类型"></a>list 类型</h4><p>简单的<strong>字符串</strong>列表，list元素允许<strong>重复</strong>，按照插入顺序排序，可以往两边添加元素</p>
+<h4 id="list-类型"><a class="markdownIt-Anchor" href="#list-类型"></a> list 类型</h4>
+<p>简单的<strong>字符串</strong>列表，list元素允许<strong>重复</strong>，按照插入顺序排序，可以往两边添加元素</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; rpush list-key v1</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">127.0.0.1:6379&gt; rpush list-key v2</span><br><span class="line">(<span class="built_in">integer</span>) 2</span><br><span class="line">127.0.0.1:6379&gt; rpush list-key v1</span><br><span class="line">(<span class="built_in">integer</span>) 3</span><br><span class="line">127.0.0.1:6379&gt; lrange list-key 0 -1</span><br><span class="line">1) <span class="string">"v1"</span></span><br><span class="line">2) <span class="string">"v2"</span></span><br><span class="line">3) <span class="string">"v1"</span></span><br><span class="line">127.0.0.1:6379&gt; lindex list-key 1</span><br><span class="line"><span class="string">"v2"</span></span><br><span class="line">127.0.0.1:6379&gt; lpop list</span><br><span class="line">(nil)</span><br><span class="line">127.0.0.1:6379&gt; lpop list-key</span><br><span class="line"><span class="string">"v1"</span></span><br><span class="line">127.0.0.1:6379&gt; lrange list-key 0 -1</span><br><span class="line">1) <span class="string">"v2"</span></span><br><span class="line">2) <span class="string">"v1"</span></span><br></pre></td></tr></table></figure>
 <p>redis中list底层不是 一个双向链表</p>
 <p>数据量少的时候，底层存储为一块连续内存 (ziplist 压缩链表)，所有元素紧挨着一起存储</p>
@@ -255,28 +274,32 @@
 <ul>
 <li>消息队列: lpop , rpush 实现队列</li>
 <li>朋友圈点赞列表，评论列表，排行榜： lpush, lrange 实现最新列表</li>
-<li>定时排行榜<ul>
+<li>定时排行榜
+<ul>
 <li>lrange命令可以分页查看队列中的数据</li>
 <li>将每隔一段时间计算一次的排行榜存储在list类型</li>
 <li>访问接口时通过page和size分页转化成lrange命令获取排行榜数据</li>
 </ul>
 </li>
 </ul>
-<h4 id="set类型"><a href="#set类型" class="headerlink" title="set类型"></a>set类型</h4><p>redis的set是字符串类型的<strong>无序</strong>集合，集合通过哈希表实现，</p>
+<h4 id="set类型"><a class="markdownIt-Anchor" href="#set类型"></a> set类型</h4>
+<p>redis的set是字符串类型的<strong>无序</strong>集合，集合通过哈希表实现，</p>
 <p>增删查 复杂度都是O(1)</p>
 <p>一个key对应多个字符串类型的value，也是一个字符串类型的集合，只是元素<strong>不能重复</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; sadd k1 v1</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">127.0.0.1:6379&gt; sadd k1 v2</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">127.0.0.1:6379&gt; sadd k1 v3</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">127.0.0.1:6379&gt; sadd k1 v1</span><br><span class="line">(<span class="built_in">integer</span>) 0</span><br><span class="line">127.0.0.1:6379&gt; smembers k1</span><br><span class="line">1) <span class="string">"v3"</span></span><br><span class="line">2) <span class="string">"v2"</span></span><br><span class="line">3) <span class="string">"v1"</span></span><br><span class="line">127.0.0.1:6379&gt;</span><br><span class="line">127.0.0.1:6379&gt; sismember k1 k4</span><br><span class="line">(<span class="built_in">integer</span>) 0</span><br><span class="line">127.0.0.1:6379&gt; sismember k1 v1</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">127.0.0.1:6379&gt; srem k1 v2</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">127.0.0.1:6379&gt; srem k1 v2</span><br><span class="line">(<span class="built_in">integer</span>) 0</span><br><span class="line">127.0.0.1:6379&gt; smembers k1</span><br><span class="line">1) <span class="string">"v3"</span></span><br><span class="line">2) <span class="string">"v1"</span></span><br></pre></td></tr></table></figure>
 <p>set和HashSet类似， 内部的键值对是无序的，唯一的，内部实现相当于一个特殊的字典，所有的value都是一个值NULL</p>
 <p>应用场景</p>
 <ul>
-<li>好友，关注，粉丝，<ul>
+<li>好友，关注，粉丝，
+<ul>
 <li>sinter 获取A和B两个用户的共同好友</li>
 <li>sismember 判断A是否是B的好友</li>
 <li>scard 获取好友数量</li>
 </ul>
 </li>
 <li>存储某活动中中奖的用户ID，有去重功能，保证一个用户不会中奖两次</li>
-<li>收藏夹<ul>
+<li>收藏夹
+<ul>
 <li>QQ音乐中如果你喜欢一首歌，点个『喜欢』就会将歌曲放到个人收藏夹中，每个收藏的集合存放用户收藏过的歌曲id</li>
 </ul>
 </li>
@@ -414,7 +437,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#value的数据结构类型"><span class="toc-number">1.</span> <span class="toc-text">value的数据结构类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#redis-原理"><span class="toc-number">2.</span> <span class="toc-text">redis 原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#string-类型"><span class="toc-number">3.</span> <span class="toc-text">string 类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#hash类型"><span class="toc-number">4.</span> <span class="toc-text">hash类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#list-类型"><span class="toc-number">5.</span> <span class="toc-text">list 类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#set类型"><span class="toc-number">6.</span> <span class="toc-text">set类型</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#value的数据结构类型"><span class="toc-number">1.</span> <span class="toc-text"> value的数据结构类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#redis-原理"><span class="toc-number">2.</span> <span class="toc-text"> redis 原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#string-类型"><span class="toc-number">3.</span> <span class="toc-text"> string 类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#hash类型"><span class="toc-number">4.</span> <span class="toc-text"> hash类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#list-类型"><span class="toc-number">5.</span> <span class="toc-text"> list 类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#set类型"><span class="toc-number">6.</span> <span class="toc-text"> set类型</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -571,7 +594,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -579,7 +602,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">http</a>
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -587,11 +610,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
+                <a href="javascript:void(0)" class="js-tag color5">python, gevent</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -615,11 +638,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+                <a href="javascript:void(0)" class="js-tag color3">OS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OS</a>
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
               </li>
             
             <div class="clearfix"></div>

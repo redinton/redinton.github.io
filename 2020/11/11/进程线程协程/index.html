@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>进程线程协程 | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="python 能多线程运行吗 为什么 怎么办python的线程虽然是真正的线程，但是解释器执行代码时，有一个GIL锁 Global Interpreter Lock,   任何python线程执行前，必须先获得GIL锁，每执行100条字节码，解释器就自动释放GIL锁，让别的线程有机会执行。  全局锁相当于把所有的线程执行代码都上锁了，多线程在Python中只能交替执行 100个线程跑在100核C">
+  <meta name="description" content="python 能多线程运行吗 为什么 怎么办 python的线程虽然是真正的线程，但是解释器执行代码时，有一个GIL锁 Global Interpreter Lock,  任何python线程执行前，必须先获得GIL锁，每执行100条字节码，解释器就自动释放GIL锁，让别的线程有机会执行。 全局锁相当于把所有的线程执行代码都上锁了，多线程在Python中只能交替执行 100个线程跑在100核C">
 <meta name="keywords" content="python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="进程线程协程">
 <meta property="og:url" content="http://jasonyu.top/2020/11/11/进程线程协程/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="python 能多线程运行吗 为什么 怎么办python的线程虽然是真正的线程，但是解释器执行代码时，有一个GIL锁 Global Interpreter Lock,   任何python线程执行前，必须先获得GIL锁，每执行100条字节码，解释器就自动释放GIL锁，让别的线程有机会执行。  全局锁相当于把所有的线程执行代码都上锁了，多线程在Python中只能交替执行 100个线程跑在100核C">
+<meta property="og:description" content="python 能多线程运行吗 为什么 怎么办 python的线程虽然是真正的线程，但是解释器执行代码时，有一个GIL锁 Global Interpreter Lock,  任何python线程执行前，必须先获得GIL锁，每执行100条字节码，解释器就自动释放GIL锁，让别的线程有机会执行。 全局锁相当于把所有的线程执行代码都上锁了，多线程在Python中只能交替执行 100个线程跑在100核C">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-26T08:54:51.595Z">
+<meta property="og:updated_time" content="2020-11-26T08:57:14.835Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="进程线程协程">
-<meta name="twitter:description" content="python 能多线程运行吗 为什么 怎么办python的线程虽然是真正的线程，但是解释器执行代码时，有一个GIL锁 Global Interpreter Lock,   任何python线程执行前，必须先获得GIL锁，每执行100条字节码，解释器就自动释放GIL锁，让别的线程有机会执行。  全局锁相当于把所有的线程执行代码都上锁了，多线程在Python中只能交替执行 100个线程跑在100核C">
+<meta name="twitter:description" content="python 能多线程运行吗 为什么 怎么办 python的线程虽然是真正的线程，但是解释器执行代码时，有一个GIL锁 Global Interpreter Lock,  任何python线程执行前，必须先获得GIL锁，每执行100条字节码，解释器就自动释放GIL锁，让别的线程有机会执行。 全局锁相当于把所有的线程执行代码都上锁了，多线程在Python中只能交替执行 100个线程跑在100核C">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -170,81 +170,102 @@
     <div class="article-entry" itemprop="articleBody">
       
         <a id="more"></a>
-<h4 id="python-能多线程运行吗-为什么-怎么办"><a href="#python-能多线程运行吗-为什么-怎么办" class="headerlink" title="python 能多线程运行吗 为什么 怎么办"></a>python 能多线程运行吗 为什么 怎么办</h4><p>python的线程虽然是真正的线程，但是解释器执行代码时，有一个GIL锁 Global Interpreter Lock, </p>
+<h4 id="python-能多线程运行吗-为什么-怎么办"><a class="markdownIt-Anchor" href="#python-能多线程运行吗-为什么-怎么办"></a> python 能多线程运行吗 为什么 怎么办</h4>
+<p>python的线程虽然是真正的线程，但是解释器执行代码时，有一个GIL锁 Global Interpreter Lock,</p>
 <ul>
-<li>任何python线程执行前，必须先获得GIL锁，每执行100条字节码，解释器就自动释放GIL锁，让别的线程有机会执行。 </li>
+<li>任何python线程执行前，必须先获得GIL锁，每执行100条字节码，解释器就自动释放GIL锁，让别的线程有机会执行。</li>
 <li>全局锁相当于把所有的线程执行代码都上锁了，多线程在Python中只能交替执行</li>
 <li>100个线程跑在100核CPU上，也只能用到1个核。</li>
 <li>可以通过多进程实现多核任务。多个Python进程有各自独立的GIL锁，互不影响</li>
 </ul>
-<h4 id="GIL的枷锁和释放锁的过程，-如何实现"><a href="#GIL的枷锁和释放锁的过程，-如何实现" class="headerlink" title="GIL的枷锁和释放锁的过程， 如何实现"></a>GIL的枷锁和释放锁的过程， 如何实现</h4><ul>
+<h4 id="gil的枷锁和释放锁的过程-如何实现"><a class="markdownIt-Anchor" href="#gil的枷锁和释放锁的过程-如何实现"></a> GIL的枷锁和释放锁的过程， 如何实现</h4>
+<ul>
 <li>GIL导致同一时刻，同一进程只能有一个线程运行在cpu上。</li>
 <li>GIL加在Cpython解释器中，其他解释器中不会有GIL</li>
 <li>GIL: 一个线程拥有解释器的访问权后，其他所有线程必须等待它释放解释器的访问权，即使这些线程的下一条命令并不互相影响</li>
 </ul>
-<h4 id="multiprocessing模块如何，-怎么实现进程间通信"><a href="#multiprocessing模块如何，-怎么实现进程间通信" class="headerlink" title="multiprocessing模块如何， 怎么实现进程间通信"></a>multiprocessing模块如何， 怎么实现进程间通信</h4><ul>
+<h4 id="multiprocessing模块如何-怎么实现进程间通信"><a class="markdownIt-Anchor" href="#multiprocessing模块如何-怎么实现进程间通信"></a> multiprocessing模块如何， 怎么实现进程间通信</h4>
+<ul>
 <li>进程间的通信可以通过 multiprocessing 中的 Queue，Pipes等多种方式交换数据</li>
 </ul>
-<h4 id="python多线程"><a href="#python多线程" class="headerlink" title="python多线程"></a>python多线程</h4><ul>
+<h4 id="python多线程"><a class="markdownIt-Anchor" href="#python多线程"></a> python多线程</h4>
+<ul>
 <li>多线程环境下，每个线程都有自己的数据。<strong>一个线程使用自己的局部变量</strong>比使用全局变量好，因为局部变量只有线程自己能看见，不会影响其他线程，而全局变量的修改必须加锁。</li>
 </ul>
-<h4 id="同步与异步，阻塞与非阻塞"><a href="#同步与异步，阻塞与非阻塞" class="headerlink" title="同步与异步，阻塞与非阻塞"></a>同步与异步，阻塞与非阻塞</h4><ul>
-<li>同步<ul>
+<h4 id="同步与异步阻塞与非阻塞"><a class="markdownIt-Anchor" href="#同步与异步阻塞与非阻塞"></a> 同步与异步，阻塞与非阻塞</h4>
+<ul>
+<li>同步
+<ul>
 <li>一个进程执行某个请求时,若请求需要一段时间才能返回信息，则该进程会一直等待下去，直到收到返回信息才继续执行</li>
 </ul>
 </li>
-<li>异步<ul>
+<li>异步
+<ul>
 <li>进程不需要一直等下去，而是继续执行下面的操作，当有消息返回时，系统通知进程进行处理</li>
 </ul>
 </li>
 </ul>
-<h4 id="协程"><a href="#协程" class="headerlink" title="协程"></a>协程</h4><ul>
+<h4 id="协程"><a class="markdownIt-Anchor" href="#协程"></a> 协程</h4>
+<ul>
 <li>单线程的异步编程模型成为协程</li>
 <li>python里的generator, goroutine</li>
 <li>非抢占式调度(线程是抢占式调度,即当前线程可能被打断，被另一个线程抢占),只有当协程让出(yield)执行体的时候才被打断</li>
 </ul>
-<h4 id="协程与线程"><a href="#协程与线程" class="headerlink" title="协程与线程"></a>协程与线程</h4><ul>
+<h4 id="协程与线程"><a class="markdownIt-Anchor" href="#协程与线程"></a> 协程与线程</h4>
+<ul>
 <li>上下文切换速度快</li>
 <li>适合于IO密集型</li>
 <li>进程和线程都是同步的，协程是异步的</li>
 </ul>
-<h4 id="线程和进程区别"><a href="#线程和进程区别" class="headerlink" title="线程和进程区别"></a>线程和进程区别</h4><ul>
+<h4 id="线程和进程区别"><a class="markdownIt-Anchor" href="#线程和进程区别"></a> 线程和进程区别</h4>
+<ul>
 <li>进程是<strong>资源（包括内存、打开的文件等）分配</strong>的单位，线程是 <strong>CPU 调度</strong>的单位</li>
 <li>进程间的资源相互独立，同一进程内的线程之间共享资源</li>
-<li>初始化和销毁一个进程的成本比线程高<ul>
+<li>初始化和销毁一个进程的成本比线程高
+<ul>
 <li>进程创建撤销涉及系统分配回收资源如内存空间，I/O设备，切换涉及当前执行进程CPU环境的保存及新调度进程CPU环境的设置</li>
 <li>同一个进程内的线程切换比进程切换快，因为线程具有相同的地址空间（虚拟内存共享），这意味着同一个进程的线程都具有同一个页表，那么在切换的时候不需要切换页表。而对于进程之间的切换，切换的时候要把页表给切换掉，而页表的切换过程开销是比较大的</li>
 </ul>
 </li>
 <li>可以安排同一<strong>个进程里的不同线程到不同的CPU</strong>上处理</li>
 </ul>
-<h4 id="信号量-Semaphore"><a href="#信号量-Semaphore" class="headerlink" title="信号量 Semaphore"></a>信号量 Semaphore</h4><p>多线程中同步对共享资源的使用，用于标明当前共享资源可以有多少并发读取。同时也可以<strong>实现线程的同步</strong>。<br>每当调用acquire()时，内置计数器-1<br>每当调用release()时，内置计数器+1<br>计数器不能小于0，当计数器为0时，acquire()将阻塞线程直到其他线程调用release()</p>
+<h4 id="信号量-semaphore"><a class="markdownIt-Anchor" href="#信号量-semaphore"></a> 信号量 Semaphore</h4>
+<p>多线程中同步对共享资源的使用，用于标明当前共享资源可以有多少并发读取。同时也可以<strong>实现线程的同步</strong>。<br>
+每当调用acquire()时，内置计数器-1<br>
+每当调用release()时，内置计数器+1<br>
+计数器不能小于0，当计数器为0时，acquire()将阻塞线程直到其他线程调用release()</p>
 <p>应用:</p>
 <ul>
 <li>主要用在数据库应用中，比如连接数据库的连接，限制同时连接的数量，如数据库连接池</li>
 </ul>
-<h4 id="线程同步"><a href="#线程同步" class="headerlink" title="线程同步"></a>线程同步</h4><ul>
+<h4 id="线程同步"><a class="markdownIt-Anchor" href="#线程同步"></a> 线程同步</h4>
+<ul>
 <li>Lock实现,</li>
-<li>RLock 只有拿到锁的线程才能释放该锁<ul>
+<li>RLock 只有拿到锁的线程才能释放该锁
+<ul>
 <li>可以避免死锁</li>
 <li>同一线程可以多次拿到该锁，即可以acquire多次</li>
 <li>acquire多少次就必须release多少次，只有最后一次release才能改变RLock的状态为unlocked</li>
 </ul>
 </li>
-<li>利用锁排序<ul>
+<li>利用锁排序
+<ul>
 <li>死锁通常发生在线程同时获取多个锁造成的, 一个线程获取了第一个锁，然后在获取第二个锁的时候发生阻塞，那么这个线程就可能阻塞其他线程的执行，从而导致整个程序假死</li>
 <li>为程序中的每一个锁分配一个唯一的id，然后只允许按照升序规则来使用多个锁，这个规则使用上下文管理器 是非常容易实现的</li>
 </ul>
 </li>
-<li>信号量实现两个线程 生产者消费者<ul>
+<li>信号量实现两个线程 生产者消费者
+<ul>
 <li>semaphore设为0，producer在生产东西后semaphore.release(), 然后customer这时候 semaphore.acquire()才能进去</li>
 <li>信号量为1可以实现互斥锁，</li>
 </ul>
 </li>
 <li>事件Event进行线程同步</li>
 </ul>
-<h4 id="线程共享"><a href="#线程共享" class="headerlink" title="线程共享"></a>线程共享</h4><ul>
-<li><p>线程共享的资源</p>
+<h4 id="线程共享"><a class="markdownIt-Anchor" href="#线程共享"></a> 线程共享</h4>
+<ul>
+<li>
+<p>线程共享的资源</p>
 <ul>
 <li>堆， 堆是在进程空间开辟出来的</li>
 <li>全局变量</li>
@@ -253,7 +274,8 @@
 <li>地址空间</li>
 </ul>
 </li>
-<li><p>线程独享</p>
+<li>
+<p>线程独享</p>
 <ul>
 <li>栈，用于保存运行状态和局部自动变量</li>
 <li>寄存器</li>
@@ -262,7 +284,8 @@
 </ul>
 </li>
 </ul>
-<h4 id="事件-Event"><a href="#事件-Event" class="headerlink" title="事件 Event"></a>事件 Event</h4>
+<h4 id="事件-event"><a class="markdownIt-Anchor" href="#事件-event"></a> 事件 Event</h4>
+
       
 
       
@@ -383,7 +406,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#python-能多线程运行吗-为什么-怎么办"><span class="toc-number">1.</span> <span class="toc-text">python 能多线程运行吗 为什么 怎么办</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GIL的枷锁和释放锁的过程，-如何实现"><span class="toc-number">2.</span> <span class="toc-text">GIL的枷锁和释放锁的过程， 如何实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#multiprocessing模块如何，-怎么实现进程间通信"><span class="toc-number">3.</span> <span class="toc-text">multiprocessing模块如何， 怎么实现进程间通信</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#python多线程"><span class="toc-number">4.</span> <span class="toc-text">python多线程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#同步与异步，阻塞与非阻塞"><span class="toc-number">5.</span> <span class="toc-text">同步与异步，阻塞与非阻塞</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#协程"><span class="toc-number">6.</span> <span class="toc-text">协程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#协程与线程"><span class="toc-number">7.</span> <span class="toc-text">协程与线程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#线程和进程区别"><span class="toc-number">8.</span> <span class="toc-text">线程和进程区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#信号量-Semaphore"><span class="toc-number">9.</span> <span class="toc-text">信号量 Semaphore</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#线程同步"><span class="toc-number">10.</span> <span class="toc-text">线程同步</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#线程共享"><span class="toc-number">11.</span> <span class="toc-text">线程共享</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#事件-Event"><span class="toc-number">12.</span> <span class="toc-text">事件 Event</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#python-能多线程运行吗-为什么-怎么办"><span class="toc-number">1.</span> <span class="toc-text"> python 能多线程运行吗 为什么 怎么办</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#gil的枷锁和释放锁的过程-如何实现"><span class="toc-number">2.</span> <span class="toc-text"> GIL的枷锁和释放锁的过程， 如何实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#multiprocessing模块如何-怎么实现进程间通信"><span class="toc-number">3.</span> <span class="toc-text"> multiprocessing模块如何， 怎么实现进程间通信</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#python多线程"><span class="toc-number">4.</span> <span class="toc-text"> python多线程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#同步与异步阻塞与非阻塞"><span class="toc-number">5.</span> <span class="toc-text"> 同步与异步，阻塞与非阻塞</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#协程"><span class="toc-number">6.</span> <span class="toc-text"> 协程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#协程与线程"><span class="toc-number">7.</span> <span class="toc-text"> 协程与线程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#线程和进程区别"><span class="toc-number">8.</span> <span class="toc-text"> 线程和进程区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#信号量-semaphore"><span class="toc-number">9.</span> <span class="toc-text"> 信号量 Semaphore</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#线程同步"><span class="toc-number">10.</span> <span class="toc-text"> 线程同步</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#线程共享"><span class="toc-number">11.</span> <span class="toc-text"> 线程共享</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#事件-event"><span class="toc-number">12.</span> <span class="toc-text"> 事件 Event</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -540,7 +563,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -548,7 +571,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">http</a>
+                <a href="javascript:void(0)" class="js-tag color2">django</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -556,11 +579,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">django</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">python,gevent</a>
+                <a href="javascript:void(0)" class="js-tag color5">python, gevent</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -584,11 +607,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
+                <a href="javascript:void(0)" class="js-tag color3">OS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">OS</a>
+                <a href="javascript:void(0)" class="js-tag color2">develop,分布式</a>
               </li>
             
             <div class="clearfix"></div>
