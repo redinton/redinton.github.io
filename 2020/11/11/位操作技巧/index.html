@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Keep Moving">
 <meta property="og:description" content="判断两个数异号  ((a^b) &amp;lt; 0) 通过乘积或者商来判断异号可能会有溢出">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-29T05:42:30.684Z">
+<meta property="og:updated_time" content="2020-11-29T07:16:06.772Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="位操作技巧">
 <meta name="twitter:description" content="判断两个数异号  ((a^b) &amp;lt; 0) 通过乘积或者商来判断异号可能会有溢出">
@@ -191,6 +191,16 @@
 </ul>
 </li>
 </ul>
+<h4 id="二进制中1的个数"><a class="markdownIt-Anchor" href="#二进制中1的个数"></a> 二进制中1的个数</h4>
+<ul>
+<li>思路1:输入Num， 对Num不断右移一位，再与1 相与，看最低位是否为1,针对负数情况不好解决</li>
+<li>思路2:左移flag, flag 一开始为1，输入Num有几个bit移几次，</li>
+</ul>
+<h4 id="输入整数mn问改变m的二进制表示几位可以得到n"><a class="markdownIt-Anchor" href="#输入整数mn问改变m的二进制表示几位可以得到n"></a> 输入整数m,n，问改变m的二进制表示几位，可以得到n</h4>
+<ul>
+<li>m的二进制表示和n的二进制表示 异或</li>
+<li>统计1的数目</li>
+</ul>
 
       
 
@@ -312,7 +322,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    目录，不存在的…
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#二进制中1的个数"><span class="toc-number">1.</span> <span class="toc-text"> 二进制中1的个数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#输入整数mn问改变m的二进制表示几位可以得到n"><span class="toc-number">2.</span> <span class="toc-text"> 输入整数m,n，问改变m的二进制表示几位，可以得到n</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -469,11 +479,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">http</a>
+                <a href="javascript:void(0)" class="js-tag color3">mq</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -490,10 +504,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">gevent</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mq</a>
               </li>
              
               <li class="article-tag-list-item">
