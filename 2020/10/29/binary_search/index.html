@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://jasonyu.top">
-  <title>binary_search | Keep Moving</title>
+  <title>二分查找 | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="二分查找模板">
 <meta name="keywords" content="algorithm">
 <meta property="og:type" content="article">
-<meta property="og:title" content="binary_search">
+<meta property="og:title" content="二分查找">
 <meta property="og:url" content="http://jasonyu.top/2020/10/29/binary_search/index.html">
 <meta property="og:site_name" content="Keep Moving">
 <meta property="og:description" content="二分查找模板">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-11-26T09:02:50.182Z">
+<meta property="og:updated_time" content="2020-11-29T05:23:04.316Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="binary_search">
+<meta name="twitter:title" content="二分查找">
 <meta name="twitter:description" content="二分查找模板">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
@@ -156,7 +156,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      binary_search
+      二分查找
     </h1>
   
 
@@ -171,7 +171,7 @@
       
         <p>二分查找模板</p>
 <a id="more"></a>
-<h4 id="数组单调有序"><a class="markdownIt-Anchor" href="#数组单调有序"></a> 数组单调有序</h4>
+<h4 id="数组单调有序用labuladong理解"><a class="markdownIt-Anchor" href="#数组单调有序用labuladong理解"></a> 数组单调有序(用labuladong理解)</h4>
 <ul>
 <li>数组无重复,找target</li>
 <li>数组有重复,找target</li>
@@ -181,7 +181,7 @@
 <li>初始化时
 <ul>
 <li>right = len(nums) - 1 意味着搜索区间是闭区间<code>[0,len(nums)-1]</code></li>
-<li>right = len(nums) 意味着搜索区间是闭区间<code>[0,len(nums)]</code></li>
+<li>right = len(nums) 意味着搜索区间是开区间<code>[0,len(nums))</code></li>
 </ul>
 </li>
 <li>break while循环时
@@ -192,19 +192,32 @@
 </li>
 <li>while 循环内部 当nums[mid] == target时
 <ul>
-<li>搜索左边界 right = mid 当right初始化时 = len(nums), 否则 mid - 1 当right = len(nums)-1</li>
-<li>搜索右边界 left = mid + 1</li>
+<li>搜索左边界
+<ul>
+<li>right = mid 当right初始化时 = len(nums)</li>
+<li>right = mid - 1 当right初始化时 = len(nums)-1</li>
+</ul>
+</li>
+<li>搜索右边界
+<ul>
+<li>left = mid + 1</li>
+</ul>
+</li>
 </ul>
 </li>
 <li>跳出while 循环后
 <ul>
-<li>需要判断此时的left / right 是否过界</li>
-<li>针对left的操作始终是 + 1，因此将left和len(nums)比较, 针对right的操作始终是 - 1 或者不减, 因此将right和0比较。</li>
+<li>需要判断此时的 left / right 是否过界
+<ul>
+<li>针对left的操作始终是 + 1，因此将left和len(nums)比较,</li>
+<li>针对right的操作始终是 - 1 或者不减, 因此将right和0比较。</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">searchLeft</span><span class="params">(A,target)</span>:</span></span><br><span class="line">    l,r = <span class="number">0</span>,len(A)<span class="number">-1</span></span><br><span class="line">    <span class="keyword">while</span> l &lt;= r:</span><br><span class="line">        mid = l + (r-l) // <span class="number">2</span></span><br><span class="line">        <span class="keyword">if</span> A[mid] &gt; target:</span><br><span class="line">            r = mid - <span class="number">1</span> </span><br><span class="line">        <span class="keyword">elif</span> A[mid] &lt; target:</span><br><span class="line">            l = mid + <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            r = mid - <span class="number">1</span> </span><br><span class="line">    <span class="keyword">if</span> l &gt;= len(A) <span class="keyword">or</span> A[l] != target:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">    <span class="keyword">return</span> l</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">searchRight</span><span class="params">(A,target)</span>:</span></span><br><span class="line">    l,r = <span class="number">0</span>,len(A)<span class="number">-1</span></span><br><span class="line">    <span class="keyword">while</span> l &lt;= r:</span><br><span class="line">        mid = l + (r-l) // <span class="number">2</span></span><br><span class="line">        <span class="keyword">if</span> A[mid] &gt; target:</span><br><span class="line">            r = mid - <span class="number">1</span> </span><br><span class="line">        <span class="keyword">elif</span> A[mid] &lt; target:</span><br><span class="line">            l = mid + <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            l = mid + <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> r &lt; <span class="number">0</span> <span class="keyword">or</span> A[r] != target:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">    <span class="keyword">return</span> r</span><br></pre></td></tr></table></figure>
-<h4 id="数组单调有序但经过旋转"><a class="markdownIt-Anchor" href="#数组单调有序但经过旋转"></a> 数组单调有序,但经过旋转</h4>
+<h4 id="数组单调有序但经过旋转另一种方式理解"><a class="markdownIt-Anchor" href="#数组单调有序但经过旋转另一种方式理解"></a> 数组单调有序,但经过旋转(另一种方式理解)</h4>
 <h5 id="求旋转无重复数组的最小值"><a class="markdownIt-Anchor" href="#求旋转无重复数组的最小值"></a> <a href="https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array/" target="_blank" rel="noopener">求旋转(无重复)数组的最小值</a></h5>
 <p>关键点在于将nums[mid]和nums[right]比较,判断mid是在最小值的左边还是右边</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> nums[mid] &gt; nums[right]:</span><br><span class="line">    left = mid + <span class="number">1</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    right = mid</span><br></pre></td></tr></table></figure>
@@ -339,7 +352,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#数组单调有序"><span class="toc-number">1.</span> <span class="toc-text"> 数组单调有序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数组单调有序但经过旋转"><span class="toc-number">2.</span> <span class="toc-text"> 数组单调有序,但经过旋转</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#求旋转无重复数组的最小值"><span class="toc-number">2.1.</span> <span class="toc-text"> 求旋转(无重复)数组的最小值</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#求旋转有重复数组的最小值"><span class="toc-number">2.2.</span> <span class="toc-text"> 求旋转(有重复)数组的最小值</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#在旋转有重复数组中搜索target"><span class="toc-number">2.3.</span> <span class="toc-text"> 在旋转(有重复)数组中搜索target</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#数组单调有序用labuladong理解"><span class="toc-number">1.</span> <span class="toc-text"> 数组单调有序(用labuladong理解)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数组单调有序但经过旋转另一种方式理解"><span class="toc-number">2.</span> <span class="toc-text"> 数组单调有序,但经过旋转(另一种方式理解)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#求旋转无重复数组的最小值"><span class="toc-number">2.1.</span> <span class="toc-text"> 求旋转(无重复)数组的最小值</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#求旋转有重复数组的最小值"><span class="toc-number">2.2.</span> <span class="toc-text"> 求旋转(有重复)数组的最小值</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#在旋转有重复数组中搜索target"><span class="toc-number">2.3.</span> <span class="toc-text"> 在旋转(有重复)数组中搜索target</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -353,7 +366,7 @@
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="binary_search" data-title="binary_search" data-url="http://jasonyu.top/2020/10/29/binary_search/"></div>
+	<div class="ds-thread" data-thread-key="binary_search" data-title="二分查找" data-url="http://jasonyu.top/2020/10/29/binary_search/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -488,11 +501,19 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">网络</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mq</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -505,14 +526,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">django</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mq</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
