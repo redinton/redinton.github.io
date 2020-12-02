@@ -146,6 +146,87 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-TCP" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/17/TCP/">TCP</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/17/TCP/" class="archive-article-date">
+  	<time datetime="2020-11-17T03:29:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="#tcp%E5%92%8Cudp%E5%8C%BA%E5%88%AB">TCP和UDP区别</a><br>
+<a href="#tcp%E7%9A%84%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6">TCP的流量控制</a><br>
+<a href="#tcp%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6">TCP拥塞控制</a><br>
+<a href="#syn%E6%B4%AA%E6%B0%B4%E6%94%BB%E5%87%BB">SYN洪水攻击</a><br>
+<a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E8%BF%9E%E6%8E%A5%E8%80%8C%E4%B8%8D%E6%98%AF%E4%B8%A4%E6%AC%A1%E6%88%96%E8%80%85%E5%85%B6%E4%BB%96%E6%AC%A1%E6%95%B0">为什么需要三次握手连接而不是两次或者其他次数</a><br>
+<a href="#tcp%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8Btime_wait%E5%92%8Cclosed_wait">TCP四次挥手time_wait和closed_wait</a></p>
+        
+          <a class="article-more-a" href="/2020/11/17/TCP/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">网络</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/17/TCP/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-http" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -982,139 +1063,6 @@
 
 
   
-    <article id="post-redis场景设计使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/11/redis场景设计使用/">redis场景设计使用</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/11/redis场景设计使用/" class="archive-article-date">
-  	<time datetime="2020-11-11T01:48:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="用redis实现购物车的功能"><a class="markdownIt-Anchor" href="#用redis实现购物车的功能"></a> 用redis实现购物车的功能</h3>
-<p>在修改频繁的情况下，不会用关系型数据库来存储购物车的信息。 可以考虑用redis或者mongodb这种非关系型数据库</p>
-<p>设计: 用户ID作为key,商品ID作为field，商品数量作为value<br>
-增加购物车内商品</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hset cart:1001 10021 1</span><br><span class="line">hset cart:1001 10025 1</span><br><span class="line">hset cart:1001 10079 1</span><br></pre></td></tr></table></figure>
-<ul>
-<li>全选功能
-<ul>
-<li>获取某用户购物车内的所有商品</li>
-<li>
-<blockquote>
-<p>hgetall cart:1001 # 获取某个key下的所有field和value</p>
-</blockquote>
-</li>
-</ul>
-</li>
-<li>商品数量
-<ul>
-<li>显示购物车内商品总数量</li>
-<li>
-<blockquote>
-<p>hlen cart:1001 # 显示某个key下所有field的数量</p>
-</blockquote>
-</li>
-</ul>
-</li>
-<li>删除某商品
-<ul>
-<li>删除购物车内的某个商品</li>
-<li>
-<blockquote>
-<p>hdel cart:1001 10079</p>
-</blockquote>
-</li>
-</ul>
-</li>
-<li>增加或减少商品的数量</li>
-<li>
-<blockquote>
-<p>hincrby cart:1001 10021 1</p>
-</blockquote>
-</li>
-</ul>
-<p>购物车</p>
-<ul>
-<li>未登录时暂存购物车
-<ul>
-<li>如果存在服务端，需要每个暂存购物车有一个全局唯一标识，比较浪费服务端资源</li>
-<li>存客户端，选项是session，cookie，localstorage
-<ul>
-<li>session的保留时间短，且数据实际还是存服务端</li>
-<li>cookie存储实现简单，加减购物车，合并购物车中由于服务端可以读写cookie，全部逻辑都可以在服务端实现，并且客户端和服务端请求的次数也相对少一些。</li>
-<li>LocalStorage 存储，客户端和服务端都要实现一些业务逻辑，但 LocalStorage 的好处是，它的存储容量比 Cookie 的 4KB 上限要大得多，而且不用像 Cookie 那样，无论用不用，每次请求都要带着，可以节省带宽。</li>
-<li>小型电商，那用 Cookie 存储实现起来更简单。再比如，你的电商是面那种批发的行业用户，用户需要加购大量的商品，那 Cookie 可能容量不够用，选择 LocalStorage 就更合适。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>登录后的购物车</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">redis</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/11/redis场景设计使用/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
@@ -1229,6 +1177,10 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">网络</a>
               </li>
              
@@ -1237,7 +1189,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mq</a>
+                <a href="javascript:void(0)" class="js-tag color5">http</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1245,15 +1197,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">http</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">django</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mq</a>
               </li>
              
               <li class="article-tag-list-item">

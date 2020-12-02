@@ -6,15 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://jasonyu.top">
-  <title>Archives: 2020 | Keep Moving</title>
+  <title>分布式锁 | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Keep Moving">
-<meta property="og:url" content="http://jasonyu.top/archives/2020/page/7/index.html">
+  <meta name="description" content="最低保证分布式锁的有效及安全性  互斥: 任何时刻只能有一个client获取锁 释放死锁: 即便锁定资源的服务崩溃或者分区, 仍能释放锁 (给锁设置过期时间)  即便一个客户端持有锁的期间崩溃而没有主动释放锁，需要保证后端其他客户端能加锁成功   容错性:只要多数节点在使用，client就可以获取和释放锁">
+<meta name="keywords" content="redis,分布式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式锁">
+<meta property="og:url" content="http://jasonyu.top/2020/11/30/分布式锁/index.html">
 <meta property="og:site_name" content="Keep Moving">
+<meta property="og:description" content="最低保证分布式锁的有效及安全性  互斥: 任何时刻只能有一个client获取锁 释放死锁: 即便锁定资源的服务崩溃或者分区, 仍能释放锁 (给锁设置过期时间)  即便一个客户端持有锁的期间崩溃而没有主动释放锁，需要保证后端其他客户端能加锁成功   容错性:只要多数节点在使用，client就可以获取和释放锁">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-12-01T03:37:45.340Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Keep Moving">
+<meta name="twitter:title" content="分布式锁">
+<meta name="twitter:description" content="最低保证分布式锁的有效及安全性  互斥: 任何时刻只能有一个client获取锁 释放死锁: 即便锁定资源的服务崩溃或者分区, 仍能释放锁 (给锁设置过期时间)  即便一个客户端持有锁的期间崩溃而没有主动释放锁，需要保证后端其他客户端能加锁成功   容错性:只要多数节点在使用，client就可以获取和释放锁">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -144,344 +149,103 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-分布式锁" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      分布式锁
+    </h1>
+  
+
+        
+        <a href="/2020/11/30/分布式锁/" class="archive-article-date">
+  	<time datetime="2020-11-30T09:34:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-30</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最低保证分布式锁的有效及安全性</p>
+<ul>
+<li>互斥: 任何时刻只能有一个client获取锁</li>
+<li>释放死锁: 即便锁定资源的服务崩溃或者分区, 仍能释放锁 (给锁设置过期时间)
+<ul>
+<li>即便一个客户端持有锁的期间崩溃而没有主动释放锁，需要保证后端其他客户端能加锁成功</li>
+</ul>
+</li>
+<li>容错性:只要多数节点在使用，client就可以获取和释放锁</li>
+</ul>
+<a id="more"></a>
+<h4 id="redis单节点分布式锁"><a class="markdownIt-Anchor" href="#redis单节点分布式锁"></a> redis单节点分布式锁</h4>
+<ul>
+<li>
+<p>设置锁，使用set，包含setnx,expire，起到原子操作</p>
+<ul>
+<li>key设置随机值,只有在key不存在时，才设置成功返回True，并设置key的过期时间<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SET key_name my_random_value NX PX 30000 </span><br><span class="line"><span class="comment"># key_name由业务逻辑决定，保证唯一性</span></span><br><span class="line"><span class="comment"># NX 表示if not exist 就设置并返回True，否则不设置并返回False</span></span><br><span class="line"><span class="comment"># PX 表示过期时间用毫秒级， 30000 表示这些毫秒时间后此key过期</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li>
+<p>获取锁，完成业务逻辑后，要删除自己设置的锁(锁只能被设置的人删除)</p>
+<ul>
+<li>删除方法用Lua脚本(该脚本可以保证删除锁操作的原子性)</li>
+<li>逻辑是先获取key,如果存在并且值是自己就删除此key; 否则跳过。</li>
+</ul>
+</li>
+</ul>
+<h5 id="超时解锁导致的并发"><a class="markdownIt-Anchor" href="#超时解锁导致的并发"></a> 超时解锁导致的并发</h5>
+<p>如果线程 A 成功获取锁并设置过期时间 30 秒，但线程 A 执行时间超过了 30 秒，锁过期自动释放，此时线程 B 获取到了锁，线程 A 和线程 B 并发执行.<br>
+解决方式</p>
+<ul>
+<li>过期时间设置足够长，确保代码逻辑在锁释放之前能够执行完成。</li>
+<li>获取锁的线程增加守护线程，为<strong>将要过期但未释放的锁增加有效</strong>时间</li>
+</ul>
+<h4 id="redis多节点分布式锁"><a class="markdownIt-Anchor" href="#redis多节点分布式锁"></a> redis多节点分布式锁</h4>
+<p>RedLock算法<br>
+奇数个的独立redis服务器</p>
+<ul>
+<li>获取当前时间戳</li>
+<li>client用相同的key 按照顺序去每个redis里请求锁,一般会设置从某个redis获取锁的时间上限，当超过时，就会放弃尝试获取该redis上的锁，原因是为了不要过长时间等待已经关闭的redis服务
+<ul>
+<li>这个时间一般会小于锁过期的时间</li>
+</ul>
+</li>
+<li>client获取所有能获取的锁后的时间减去第一步的时间戳，时间间隔小于锁的TTL(time to live)并且至少有三个redis实例成功获取锁，才算真正获取锁成功</li>
+<li>如果获取锁成功,锁的真正有效时间就是TTL减去上一步计算的client获取所有能获取的锁耗费的总时长</li>
+<li>如果client获取锁失败，便会开始解锁所有redis实例，因为可能已经获取小于三个锁，必须释放，否则可能会影响其他client获取锁。</li>
+</ul>
+<p>RedLock失败重试</p>
+<ul>
+<li>当client获取锁失败后，应该在随机时间重试获取锁，并且最好在同一时刻并发把set命令发送给所有redis实例<br>
+RedLock注意点</li>
+<li>假设client获取所有redis实例，所有实例包含相同的key和TTL，但由于每个实例set命令时间不同导致不能同时过期，假设第一个set命令之前是T1，最后一个set命令是T2，则此client有效获取锁的最小时间是 TTL - (T2-T1) - 时钟漂移</li>
+<li>一半以上方式判断获取锁成功
+<ul>
+<li>因为如果小于一半，则可能出现多个client成功获取锁的情况，锁就失效了</li>
+</ul>
+</li>
+<li>如果一个client锁定大多数实例耗费的时间大于或接近锁的TTL，则认为锁无效，并且解锁这个redis实例(不执行业务)</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/05/mysql索引/" class="archive-article-date">
-  	<time datetime="2020-11-05T02:57:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/05/mysql索引/">mysql索引</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">redis</a>
         		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/05/mysql安装与使用/" class="archive-article-date">
-  	<time datetime="2020-11-05T02:12:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/05/mysql安装与使用/">mysql安装与使用</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/04/django_ORM/" class="archive-article-date">
-  	<time datetime="2020-11-04T08:09:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/04/django_ORM/">django_ORM</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">django</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/04/mysql事务/" class="archive-article-date">
-  	<time datetime="2020-11-04T05:56:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/04/mysql事务/">mysql事务,隔离级别</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/04/mysql概念/" class="archive-article-date">
-  	<time datetime="2020-11-04T05:54:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/04/mysql概念/">mysql概念</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/04/乐观锁悲观锁/" class="archive-article-date">
-  	<time datetime="2020-11-04T02:53:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/04/乐观锁悲观锁/">乐观锁悲观锁</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">develop</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/03/高并发系统设计/" class="archive-article-date">
-  	<time datetime="2020-11-03T14:41:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/03/高并发系统设计/">高并发系统设计</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">develop</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/01/dp/" class="archive-article-date">
-  	<time datetime="2020-11-01T04:26:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/01/dp/">dp</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">algorithm</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/10/31/scalability/" class="archive-article-date">
-  	<time datetime="2020-10-31T09:31:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-31</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/10/31/scalability/">scalability</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
+      		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">分布式</a>
         		</li>
@@ -489,60 +253,138 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://jasonyu.top/2020/11/30/分布式锁/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/10/31/tree_1/" class="archive-article-date">
-  	<time datetime="2020-10-31T05:39:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-31</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/11/26/面向对象/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">面向对象</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/10/31/tree_1/">Tree相关算法题</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">algorithm</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#redis单节点分布式锁"><span class="toc-number">1.</span> <span class="toc-text"> redis单节点分布式锁</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#超时解锁导致的并发"><span class="toc-number">1.1.</span> <span class="toc-text"> 超时解锁导致的并发</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#redis多节点分布式锁"><span class="toc-number">2.</span> <span class="toc-text"> redis多节点分布式锁</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
+  
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="分布式锁" data-title="分布式锁" data-url="http://jasonyu.top/2020/11/30/分布式锁/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
   
   
-    </div></section>
   
 
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/2020/page/6/">&laquo; Prev</a><a class="page-number" href="/archives/2020/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2020/page/5/">5</a><a class="page-number" href="/archives/2020/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/archives/2020/page/8/">8</a><a class="extend next" rel="next" href="/archives/2020/page/8/">Next &raquo;</a>
-    </nav>
+  
+
+  
+
   
 
 
@@ -566,8 +408,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
