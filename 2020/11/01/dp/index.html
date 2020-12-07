@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://jasonyu.top">
   <title>dp | Keep Moving</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="求最值类型的问题一般就往dp方向试 dp问题 重叠子问题且符合最优子结构 子问题间相互独立即dp(n)和dp(n-1)的结果互不影响 最优子结构，从子问题的最优结果推出更大规模的最优结果   找到状态和选择, 遍历状态, 作出选择字符串相关72编辑距离583最长公共子序列背包问题-01背包416分割等和子集-给定一组数据,求是否能组成sum为S139单词拆分问题494目标和-给定一组数据,求su">
+  <meta name="description" content="求最值类型的问题一般就往dp方向试 dp问题 重叠子问题且符合最优子结构  子问题间相互独立即dp(n)和dp(n-1)的结果互不影响 最优子结构，从子问题的最优结果推出更大规模的最优结果   找到状态和选择, 遍历状态, 作出选择 字符串相关 72编辑距离 583最长公共子序列 背包问题-01背包 416分割等和子集-给定一组数据,求是否能组成sum为S 139单词拆分问题 494目标和-给定">
 <meta name="keywords" content="algorithm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="dp">
 <meta property="og:url" content="http://jasonyu.top/2020/11/01/dp/index.html">
 <meta property="og:site_name" content="Keep Moving">
-<meta property="og:description" content="求最值类型的问题一般就往dp方向试 dp问题 重叠子问题且符合最优子结构 子问题间相互独立即dp(n)和dp(n-1)的结果互不影响 最优子结构，从子问题的最优结果推出更大规模的最优结果   找到状态和选择, 遍历状态, 作出选择字符串相关72编辑距离583最长公共子序列背包问题-01背包416分割等和子集-给定一组数据,求是否能组成sum为S139单词拆分问题494目标和-给定一组数据,求su">
+<meta property="og:description" content="求最值类型的问题一般就往dp方向试 dp问题 重叠子问题且符合最优子结构  子问题间相互独立即dp(n)和dp(n-1)的结果互不影响 最优子结构，从子问题的最优结果推出更大规模的最优结果   找到状态和选择, 遍历状态, 作出选择 字符串相关 72编辑距离 583最长公共子序列 背包问题-01背包 416分割等和子集-给定一组数据,求是否能组成sum为S 139单词拆分问题 494目标和-给定">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-12-02T06:01:46.062Z">
+<meta property="og:updated_time" content="2020-12-07T08:41:00.450Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="dp">
-<meta name="twitter:description" content="求最值类型的问题一般就往dp方向试 dp问题 重叠子问题且符合最优子结构 子问题间相互独立即dp(n)和dp(n-1)的结果互不影响 最优子结构，从子问题的最优结果推出更大规模的最优结果   找到状态和选择, 遍历状态, 作出选择字符串相关72编辑距离583最长公共子序列背包问题-01背包416分割等和子集-给定一组数据,求是否能组成sum为S139单词拆分问题494目标和-给定一组数据,求su">
+<meta name="twitter:description" content="求最值类型的问题一般就往dp方向试 dp问题 重叠子问题且符合最优子结构  子问题间相互独立即dp(n)和dp(n-1)的结果互不影响 最优子结构，从子问题的最优结果推出更大规模的最优结果   找到状态和选择, 遍历状态, 作出选择 字符串相关 72编辑距离 583最长公共子序列 背包问题-01背包 416分割等和子集-给定一组数据,求是否能组成sum为S 139单词拆分问题 494目标和-给定">
   
     <link rel="alternative" href="/atom.xml" title="Keep Moving" type="application/atom+xml">
   
@@ -171,44 +171,75 @@
       
         <ul>
 <li>求最值类型的问题一般就往dp方向试</li>
-<li>dp问题 重叠子问题且符合最优子结构<ul>
+<li>dp问题 重叠子问题且符合最优子结构
+<ul>
 <li>子问题间相互独立即dp(n)和dp(n-1)的结果互不影响</li>
 <li>最优子结构，从子问题的最优结果推出更大规模的最优结果</li>
 </ul>
 </li>
-<li>找到状态和选择, 遍历状态, 作出选择<br>字符串相关<br><a href="#字符串的编辑距离">72编辑距离</a><br><a href="#删除两个字符串的字符使它们相等">583最长公共子序列</a><br>背包问题-01背包<br><a href="#0-1背包问题">416分割等和子集-给定一组数据,求是否能组成sum为S</a><br><a href="#0-1背包问题">139单词拆分问题</a><br><a href="#0-1背包问题">494目标和-给定一组数据,求sum为S的组合数</a><br>完全背包-物品数量无限,数量无限的情况下求上述问题<br><a href="#完全背包物品数量无限">322零钱兑换</a><br><a href="#完全背包物品数量无限">518零钱兑换2</a><br>带顺序的完全背包<br><a href="#带顺序的完全背包">377组合数,考虑到顺序因素</a></li>
+<li>找到状态和选择, 遍历状态, 作出选择<br>
+字符串相关<br>
+<a href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E7%BC%96%E8%BE%91%E8%B7%9D%E7%A6%BB">72编辑距离</a><br>
+<a href="#%E5%88%A0%E9%99%A4%E4%B8%A4%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%AD%97%E7%AC%A6%E4%BD%BF%E5%AE%83%E4%BB%AC%E7%9B%B8%E7%AD%89">583最长公共子序列</a><br>
+背包问题-01背包<br>
+<a href="#0-1%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98">416分割等和子集-给定一组数据,求是否能组成sum为S</a><br>
+<a href="#0-1%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98">139单词拆分问题</a><br>
+<a href="#0-1%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98">494目标和-给定一组数据,求sum为S的组合数</a><br>
+完全背包-物品数量无限,数量无限的情况下求上述问题<br>
+<a href="#%E5%AE%8C%E5%85%A8%E8%83%8C%E5%8C%85%E7%89%A9%E5%93%81%E6%95%B0%E9%87%8F%E6%97%A0%E9%99%90">322零钱兑换</a><br>
+<a href="#%E5%AE%8C%E5%85%A8%E8%83%8C%E5%8C%85%E7%89%A9%E5%93%81%E6%95%B0%E9%87%8F%E6%97%A0%E9%99%90">518零钱兑换2</a><br>
+带顺序的完全背包<br>
+<a href="#%E5%B8%A6%E9%A1%BA%E5%BA%8F%E7%9A%84%E5%AE%8C%E5%85%A8%E8%83%8C%E5%8C%85">377组合数,考虑到顺序因素</a></li>
 </ul>
 <a id="more"></a>
-<p>组合问题公式<br><code>dp[i] += dp[i-num]</code><br>True、False问题公式<br><code>dp[i] = dp[i] or dp[i-num]</code><br>最大最小问题公式<br><code>dp[i] = min(dp[i], dp[i-num]+1)</code> 或者 <code>dp[i] = max(dp[i], dp[i-num]+1)</code></p>
-<p>1.分析是否为背包问题。<br>2.是以上三种背包问题中的哪一种。<br>3.是0-1背包问题还是完全背包问题。也就是题目给的nums数组中的元素是否可以重复使用。<br>4.如果是组合问题，是否需要考虑元素之间的顺序。需要考虑顺序有顺序的解法，不需要考虑顺序又有对应的解法  </p>
-<p>1.如果是0-1背包，即数组中的元素不可重复使用，nums放在外循环，target在内循环，且内循环倒序；<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> num <span class="keyword">in</span> nums:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(target, nums<span class="number">-1</span>, <span class="number">-1</span>):</span><br></pre></td></tr></table></figure></p>
-<p>2.如果是完全背包，即数组中的元素可重复使用，nums放在外循环，target在内循环。且内循环正序。<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> num <span class="keyword">in</span> nums:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(nums, target+<span class="number">1</span>):</span><br></pre></td></tr></table></figure></p>
-<p>3.如果组合问题需考虑元素之间的顺序，需将target放在外循环，将nums放在内循环。<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, target+<span class="number">1</span>):</span><br><span class="line">    <span class="keyword">for</span> num <span class="keyword">in</span> nums:</span><br></pre></td></tr></table></figure></p>
-<h3 id="字符串相关-字符串编辑"><a href="#字符串相关-字符串编辑" class="headerlink" title="字符串相关/字符串编辑"></a>字符串相关/字符串编辑</h3><h4 id="字符串的编辑距离"><a href="#字符串的编辑距离" class="headerlink" title="字符串的编辑距离"></a><a href="https://leetcode.com/problems/edit-distance/description/" target="_blank" rel="noopener">字符串的编辑距离</a></h4><p> 参照leetcode 72题，给定word1,word2，通过插入，删除，替换操作把word1变成word2. 求最少操作数目</p>
+<p>组合问题公式<br>
+<code>dp[i] += dp[i-num]</code><br>
+True、False问题公式<br>
+<code>dp[i] = dp[i] or dp[i-num]</code><br>
+最大最小问题公式<br>
+<code>dp[i] = min(dp[i], dp[i-num]+1)</code> 或者 <code>dp[i] = max(dp[i], dp[i-num]+1)</code></p>
+<p>1.分析是否为背包问题。<br>
+2.是以上三种背包问题中的哪一种。<br>
+3.是0-1背包问题还是完全背包问题。也就是题目给的nums数组中的元素是否可以重复使用。<br>
+4.如果是组合问题，是否需要考虑元素之间的顺序。需要考虑顺序有顺序的解法，不需要考虑顺序又有对应的解法</p>
+<p>1.如果是0-1背包，即数组中的元素不可重复使用，nums放在外循环，target在内循环，且内循环倒序；</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> num <span class="keyword">in</span> nums:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(target, nums<span class="number">-1</span>, <span class="number">-1</span>):</span><br></pre></td></tr></table></figure>
+<p>2.如果是完全背包，即数组中的元素可重复使用，nums放在外循环，target在内循环。且内循环正序。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> num <span class="keyword">in</span> nums:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(nums, target+<span class="number">1</span>):</span><br></pre></td></tr></table></figure>
+<p>3.如果组合问题需考虑元素之间的顺序，需将target放在外循环，将nums放在内循环。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, target+<span class="number">1</span>):</span><br><span class="line">    <span class="keyword">for</span> num <span class="keyword">in</span> nums:</span><br></pre></td></tr></table></figure>
+<h3 id="字符串相关字符串编辑"><a class="markdownIt-Anchor" href="#字符串相关字符串编辑"></a> 字符串相关/字符串编辑</h3>
+<h4 id="字符串的编辑距离"><a class="markdownIt-Anchor" href="#字符串的编辑距离"></a> <a href="https://leetcode.com/problems/edit-distance/description/" target="_blank" rel="noopener">字符串的编辑距离</a></h4>
+<p>参照leetcode 72题，给定word1,word2，通过插入，删除，替换操作把word1变成word2. 求最少操作数目</p>
 <p>构建一个二维数组，行列分别是word1,2的长度，每个点(i,j)存的值就是从word1[:i]变到word2[:j]所需要的操作</p>
-<p>若word1 i 处的值和 word2 j处的值相等，$dp[j][i] = dp[j-1][i-1]$</p>
+<p>若word1 i 处的值和 word2 j处的值相等，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>p</mi><mo>[</mo><mi>j</mi><mo>]</mo><mo>[</mo><mi>i</mi><mo>]</mo><mo>=</mo><mi>d</mi><mi>p</mi><mo>[</mo><mi>j</mi><mo>−</mo><mn>1</mn><mo>]</mo><mo>[</mo><mi>i</mi><mo>−</mo><mn>1</mn><mo>]</mo></mrow><annotation encoding="application/x-tex">dp[j][i] = dp[j-1][i-1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span></p>
 <p>若不相等，则</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dp[j][i] = min([dp[j-1][i-1],dp[j-1][i],dp[j][i-1]]) + 1 找到操作中最小的+1.</span><br></pre></td></tr></table></figure>
   <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">n1,n2 = len(word1)+<span class="number">1</span>,len(word2)+<span class="number">1</span></span><br><span class="line">dp = [[<span class="number">0</span>]*n1 <span class="keyword">for</span> _ <span class="keyword">in</span> range(n2)]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n1):</span><br><span class="line">    dp[<span class="number">0</span>][i] = i</span><br><span class="line"><span class="keyword">for</span> j <span class="keyword">in</span> range(n2):</span><br><span class="line">    dp[j][<span class="number">0</span>] = j</span><br><span class="line"><span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">1</span>,n2):</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,n1):</span><br><span class="line">        <span class="keyword">if</span> word1[i<span class="number">-1</span>] == word2[j<span class="number">-1</span>]:</span><br><span class="line">            dp[j][i] = dp[j<span class="number">-1</span>][i<span class="number">-1</span>]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            dp[j][i] = min([dp[j<span class="number">-1</span>][i<span class="number">-1</span>],dp[j<span class="number">-1</span>][i],dp[j][i<span class="number">-1</span>]]) + <span class="number">1</span></span><br><span class="line"><span class="keyword">return</span> dp[<span class="number">-1</span>][<span class="number">-1</span>]</span><br></pre></td></tr></table></figure>
 <ul>
-<li>增加操作 <ul>
-<li><code>dp[j][i] = dp[j-1][i] + 1</code> </li>
+<li>增加操作
+<ul>
+<li><code>dp[j][i] = dp[j-1][i] + 1</code></li>
 <li><code>把word2[:i]变成word1[:j-1]</code>需要的操作是<code>dp[j-1][i]</code> 然后增加一个<code>word1[j]</code>两者就一致了</li>
 </ul>
 </li>
-<li>删除操作<ul>
-<li><code>dp[j][i] = dp[j][i-1] + 1</code> </li>
+<li>删除操作
+<ul>
+<li><code>dp[j][i] = dp[j][i-1] + 1</code></li>
 <li><code>把word2[:i-1]变成word1[:j]</code>需要的操作是<code>dp[j][i-1]</code> 然后删除一个<code>word2[i]</code>两者就一致了</li>
 </ul>
 </li>
 </ul>
-<h4 id="删除两个字符串的字符使它们相等"><a href="#删除两个字符串的字符使它们相等" class="headerlink" title="删除两个字符串的字符使它们相等"></a><a href="https://leetcode.com/problems/delete-operation-for-two-strings/description/" target="_blank" rel="noopener">删除两个字符串的字符使它们相等</a></h4><hr>
+<h4 id="删除两个字符串的字符使它们相等"><a class="markdownIt-Anchor" href="#删除两个字符串的字符使它们相等"></a> <a href="https://leetcode.com/problems/delete-operation-for-two-strings/description/" target="_blank" rel="noopener">删除两个字符串的字符使它们相等</a></h4>
+<hr>
 <p>这道题本质上还是求解两个字符串的<strong>最大公共子序列</strong>(<strong>不一定需要连续</strong>)</p>
 <ul>
-<li>思路一 : 构建一个二维数组，每个点(i,j)存的值就是A[:i]和B[:j]的最大公共子序列长度,  O($n^2$) 时间,O($(n+1)^2$)</li>
+<li>思路一 : 构建一个二维数组，每个点(i,j)存的值就是A[:i]和B[:j]的最大公共子序列长度,  O(<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>n</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">n^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span>) 时间,O(<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>n</mi><mo>+</mo><mn>1</mn><msup><mo>)</mo><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">(n+1)^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span>)</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">dp =  [[<span class="number">0</span>]*(len(A)+<span class="number">1</span>) <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">1</span>+len(B))]</span><br><span class="line">       </span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,len(B)+<span class="number">1</span>):</span><br><span class="line">     <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">1</span>,len(A)+<span class="number">1</span>):</span><br><span class="line">           <span class="keyword">if</span> A[j<span class="number">-1</span>] == B[i<span class="number">-1</span>]:</span><br><span class="line">                dp[i][j] = dp[i<span class="number">-1</span>][j<span class="number">-1</span>] + <span class="number">1</span></span><br><span class="line">           <span class="keyword">else</span>:</span><br><span class="line">                dp[i][j] = max(dp[i<span class="number">-1</span>][j],dp[i][j<span class="number">-1</span>])</span><br><span class="line"><span class="keyword">return</span> len(A) + len(B) - <span class="number">2</span> * dp[<span class="number">-1</span>][<span class="number">-1</span>]</span><br></pre></td></tr></table></figure>
-<h3 id="背包问题"><a href="#背包问题" class="headerlink" title="背包问题"></a>背包问题</h3><h4 id="0-1背包问题"><a href="#0-1背包问题" class="headerlink" title="0-1背包问题"></a>0-1背包问题</h4><p>0-1背包问题，用该背包装下的物品<strong>价值最大</strong>，每个物品两个属性-体积w和价值v。</p>
+<h3 id="背包问题"><a class="markdownIt-Anchor" href="#背包问题"></a> 背包问题</h3>
+<h4 id="0-1背包问题"><a class="markdownIt-Anchor" href="#0-1背包问题"></a> 0-1背包问题</h4>
+<p>0-1背包问题，用该背包装下的物品<strong>价值最大</strong>，每个物品两个属性-体积w和价值v。</p>
 <p>0-1背包意思就是，是否装了该物品。</p>
 <p>用二维数组dp存最大价值,dp[i][j]表示前i件物品体积不超过j时的所能达到的最大价值</p>
 <p>dp[i][j] = max(dp[i-1][j],dp[i-1][j-w]+v)</p>
@@ -217,9 +248,12 @@
 <p>0-1背包问题无法用贪心来解，因为可能会造成空间的浪费。</p>
 <p><a href="https://leetcode-cn.com/problems/partition-equal-subset-sum/solution/fen-ge-deng-he-zi-ji-by-leetcode-solution/" target="_blank" rel="noopener">分割等和子集</a></p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">canPartition</span><span class="params">(self, nums: List[int])</span> -&gt; bool:</span></span><br><span class="line">    nums_sum = sum(nums)</span><br><span class="line">    <span class="keyword">if</span> nums_sum % <span class="number">2</span> == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    target = nums_sum // <span class="number">2</span></span><br><span class="line"></span><br><span class="line">    dp = [<span class="literal">False</span>] * (target + <span class="number">1</span>)</span><br><span class="line">    dp[<span class="number">0</span>] = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> num <span class="keyword">in</span> nums:</span><br><span class="line">        <span class="comment"># 关键每次从后往前遍历</span></span><br><span class="line">        <span class="keyword">for</span> w <span class="keyword">in</span> range(target,num<span class="number">-1</span>,<span class="number">-1</span>):</span><br><span class="line">            dp[w] = dp[w-num] <span class="keyword">or</span> dp[w]</span><br><span class="line">    <span class="keyword">return</span> dp[target]</span><br></pre></td></tr></table></figure>
-<p><a href="https://leetcode-cn.com/problems/target-sum/" target="_blank" rel="noopener">目标和</a><br>可以转化成0-1背包问题。 设所有符号为正的数和为x，所有符号取负的数和为y，那么x+y=sum, x - y = S 因此 x = (S+sum)// 2<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">findTargetSumWays</span><span class="params">(self, nums: List[int], S: int)</span> -&gt; int:</span></span><br><span class="line">    weight = sum(nums) + S</span><br><span class="line">    <span class="keyword">if</span> weight % <span class="number">2</span> == <span class="number">1</span> <span class="keyword">or</span> sum(nums) &lt; S:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        </span><br><span class="line">    target = weight // <span class="number">2</span></span><br><span class="line">    dp = [<span class="number">0</span>] * (target+<span class="number">1</span>)</span><br><span class="line">    dp[<span class="number">0</span>] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> num <span class="keyword">in</span> nums:</span><br><span class="line">        <span class="keyword">for</span> w <span class="keyword">in</span> range(target,num<span class="number">-1</span>,<span class="number">-1</span>):</span><br><span class="line">            dp[w] = dp[w-num] + dp[w]</span><br><span class="line">    <span class="keyword">return</span> dp[target]</span><br></pre></td></tr></table></figure></p>
+<p><a href="https://leetcode-cn.com/problems/target-sum/" target="_blank" rel="noopener">目标和</a><br>
+可以转化成0-1背包问题。 设所有符号为正的数和为x，所有符号取负的数和为y，那么x+y=sum, x - y = S 因此 x = (S+sum)// 2</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">findTargetSumWays</span><span class="params">(self, nums: List[int], S: int)</span> -&gt; int:</span></span><br><span class="line">    weight = sum(nums) + S</span><br><span class="line">    <span class="keyword">if</span> weight % <span class="number">2</span> == <span class="number">1</span> <span class="keyword">or</span> sum(nums) &lt; S:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        </span><br><span class="line">    target = weight // <span class="number">2</span></span><br><span class="line">    dp = [<span class="number">0</span>] * (target+<span class="number">1</span>)</span><br><span class="line">    dp[<span class="number">0</span>] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> num <span class="keyword">in</span> nums:</span><br><span class="line">        <span class="keyword">for</span> w <span class="keyword">in</span> range(target,num<span class="number">-1</span>,<span class="number">-1</span>):</span><br><span class="line">            dp[w] = dp[w-num] + dp[w]</span><br><span class="line">    <span class="keyword">return</span> dp[target]</span><br></pre></td></tr></table></figure>
 <p><strong>变种问题</strong></p>
-<h4 id="完全背包：物品数量无限"><a href="#完全背包：物品数量无限" class="headerlink" title="完全背包：物品数量无限"></a>完全背包：物品数量无限</h4><hr>
+<h4 id="完全背包物品数量无限"><a class="markdownIt-Anchor" href="#完全背包物品数量无限"></a> 完全背包：物品数量无限</h4>
+<hr>
 <p><a href="https://leetcode.com/problems/coin-change/description/" target="_blank" rel="noopener">322. Coin Change (Medium)</a></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Example 1:</span><br><span class="line">coins = [1, 2, 5], amount = 11</span><br><span class="line">return 3 (11 = 5 + 5 + 1)</span><br><span class="line"></span><br><span class="line">Example 2:</span><br><span class="line">coins = [2], amount = 3</span><br><span class="line">return -1.</span><br></pre></td></tr></table></figure>
 <p>给一些面额的硬币，要求用这些硬币来组成给定面额的钱数，并且使得<strong>硬币数量最少</strong>。<strong>硬币可以重复使用</strong>。</p>
@@ -231,13 +265,16 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Input: amount = 5, coins = [1, 2, 5]</span><br><span class="line">Output: 4</span><br><span class="line">Explanation: there are four ways to make up the amount:</span><br><span class="line">5=5</span><br><span class="line">5=2+2+1</span><br><span class="line">5=2+1+1+1</span><br><span class="line">5=1+1+1+1+1</span><br></pre></td></tr></table></figure>
 <p>首先用<strong>顺序遍</strong>历,然后dp记录<strong>每次的组合数</strong>加起来</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">dp = [<span class="number">0</span>] * (amount+<span class="number">1</span>)</span><br><span class="line">dp[<span class="number">0</span>] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> coin <span class="keyword">in</span> coins:</span><br><span class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> range(coin,amount+<span class="number">1</span>):</span><br><span class="line">    dp[i] += dp[i-coin]</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> dp[amount]</span><br></pre></td></tr></table></figure>
-<h5 id="带顺序的完全背包"><a href="#带顺序的完全背包" class="headerlink" title="带顺序的完全背包"></a>带顺序的完全背包</h5><hr>
+<h5 id="带顺序的完全背包"><a class="markdownIt-Anchor" href="#带顺序的完全背包"></a> 带顺序的完全背包</h5>
+<hr>
 <p><a href="https://leetcode.com/problems/combination-sum-iv/description/" target="_blank" rel="noopener">377. Combination Sum IV (Medium)</a></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">nums = [1, 2, 3]</span><br><span class="line">target = 4</span><br><span class="line"></span><br><span class="line">The possible combination ways are:</span><br><span class="line">(1, 1, 1, 1)</span><br><span class="line">(1, 1, 2)</span><br><span class="line">(1, 2, 1)</span><br><span class="line">(1, 3)</span><br><span class="line">(2, 1, 1)</span><br><span class="line">(2, 2)</span><br><span class="line">(3, 1)</span><br><span class="line"></span><br><span class="line">Note that different sequences are counted as different combinations.</span><br><span class="line"></span><br><span class="line">Therefore the output is 7.</span><br></pre></td></tr></table></figure>
-<p>(3,1)和(1,3)是两种不同的情况。求解顺序的完全背包问题时，<strong>对物品的迭代应该放在最里层</strong>。一般都是求解物品的迭代放在最外层如for num in nums: </p>
+<p>(3,1)和(1,3)是两种不同的情况。求解顺序的完全背包问题时，<strong>对物品的迭代应该放在最里层</strong>。一般都是求解物品的迭代放在最外层如for num in nums:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">dp = [<span class="number">0</span>]*(target+<span class="number">1</span>)</span><br><span class="line">dp[<span class="number">0</span>] = <span class="number">1</span></span><br><span class="line">        </span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,target+<span class="number">1</span>):</span><br><span class="line">    <span class="keyword">for</span> num <span class="keyword">in</span> nums:</span><br><span class="line">        <span class="keyword">if</span> num &lt;= i:</span><br><span class="line">           dp[i] += dp[i-num]</span><br><span class="line"><span class="keyword">return</span> dp[target]</span><br></pre></td></tr></table></figure>
-<h4 id="多重背包-物品数量受限"><a href="#多重背包-物品数量受限" class="headerlink" title="多重背包: 物品数量受限"></a>多重背包: 物品数量受限</h4><hr>
-<h4 id="多维费用背包-物品不仅有重量，还有体积，同时考虑两种限制"><a href="#多维费用背包-物品不仅有重量，还有体积，同时考虑两种限制" class="headerlink" title="多维费用背包: 物品不仅有重量，还有体积，同时考虑两种限制"></a>多维费用背包: 物品不仅有重量，还有体积，同时考虑两种限制</h4><hr>
+<h4 id="多重背包-物品数量受限"><a class="markdownIt-Anchor" href="#多重背包-物品数量受限"></a> 多重背包: 物品数量受限</h4>
+<hr>
+<h4 id="多维费用背包-物品不仅有重量还有体积同时考虑两种限制"><a class="markdownIt-Anchor" href="#多维费用背包-物品不仅有重量还有体积同时考虑两种限制"></a> 多维费用背包: 物品不仅有重量，还有体积，同时考虑两种限制</h4>
+<hr>
 <p>多维费用, 相当于有多个背包，一个背包存重量，一个背包存体积。</p>
 <p><a href="https://cyc2018.github.io/CS-Notes/#/notes/Leetcode%20%E9%A2%98%E8%A7%A3%20-%20%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92?id=_01-%e5%ad%97%e7%ac%a6%e6%9e%84%e6%88%90%e6%9c%80%e5%a4%9a%e7%9a%84%e5%ad%97%e7%ac%a6%e4%b8%b2" target="_blank" rel="noopener">01 字符构成最多的字符串</a></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Input: Array = &#123;&quot;10&quot;, &quot;0001&quot;, &quot;111001&quot;, &quot;1&quot;, &quot;0&quot;&#125;, m = 5, n = 3</span><br><span class="line">Output: 4</span><br><span class="line"></span><br><span class="line">Explanation: There are totally 4 strings can be formed by the using of 5 0s and 3 1s, which are &quot;10&quot;,&quot;0001&quot;,&quot;1&quot;,&quot;0&quot;</span><br></pre></td></tr></table></figure>
@@ -364,7 +401,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串相关-字符串编辑"><span class="toc-number">1.</span> <span class="toc-text">字符串相关/字符串编辑</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#字符串的编辑距离"><span class="toc-number">1.1.</span> <span class="toc-text">字符串的编辑距离</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#删除两个字符串的字符使它们相等"><span class="toc-number">1.2.</span> <span class="toc-text">删除两个字符串的字符使它们相等</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#背包问题"><span class="toc-number">2.</span> <span class="toc-text">背包问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#0-1背包问题"><span class="toc-number">2.1.</span> <span class="toc-text">0-1背包问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#完全背包：物品数量无限"><span class="toc-number">2.2.</span> <span class="toc-text">完全背包：物品数量无限</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#带顺序的完全背包"><span class="toc-number">2.2.1.</span> <span class="toc-text">带顺序的完全背包</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#多重背包-物品数量受限"><span class="toc-number">2.3.</span> <span class="toc-text">多重背包: 物品数量受限</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#多维费用背包-物品不仅有重量，还有体积，同时考虑两种限制"><span class="toc-number">2.4.</span> <span class="toc-text">多维费用背包: 物品不仅有重量，还有体积，同时考虑两种限制</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串相关字符串编辑"><span class="toc-number">1.</span> <span class="toc-text"> 字符串相关/字符串编辑</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#字符串的编辑距离"><span class="toc-number">1.1.</span> <span class="toc-text"> 字符串的编辑距离</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#删除两个字符串的字符使它们相等"><span class="toc-number">1.2.</span> <span class="toc-text"> 删除两个字符串的字符使它们相等</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#背包问题"><span class="toc-number">2.</span> <span class="toc-text"> 背包问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#0-1背包问题"><span class="toc-number">2.1.</span> <span class="toc-text"> 0-1背包问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#完全背包物品数量无限"><span class="toc-number">2.2.</span> <span class="toc-text"> 完全背包：物品数量无限</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#带顺序的完全背包"><span class="toc-number">2.2.1.</span> <span class="toc-text"> 带顺序的完全背包</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#多重背包-物品数量受限"><span class="toc-number">2.3.</span> <span class="toc-text"> 多重背包: 物品数量受限</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#多维费用背包-物品不仅有重量还有体积同时考虑两种限制"><span class="toc-number">2.4.</span> <span class="toc-text"> 多维费用背包: 物品不仅有重量，还有体积，同时考虑两种限制</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -513,6 +550,10 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
               </li>
              
@@ -521,7 +562,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -529,15 +570,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color3">mq</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">django</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mq</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -18,7 +18,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://jasonyu.top/2020/11/17/TCP/image-20201120095159344.png">
 <meta property="og:image" content="http://jasonyu.top/2020/11/17/TCP/image-20201120095642239.png">
-<meta property="og:updated_time" content="2020-11-29T07:31:45.765Z">
+<meta property="og:updated_time" content="2020-12-07T08:41:00.574Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TCP">
 <meta name="twitter:description" content="TCP和UDP区别 TCP的流量控制 TCP拥塞控制 SYN洪水攻击 为什么需要三次握手连接而不是两次或者其他次数 TCP四次挥手time_wait和closed_wait">
@@ -315,12 +315,15 @@
 <p>一个客户端不理会服务端发来的ack，一直重发syn怎么办</p>
 <img src="/2020/11/17/TCP/image-20201120095159344.png" title="image-20201120095159344">
 <p>当服务端收到 SYN 包后，服务端会立马回复 SYN+ACK 包，表明确认收到了客户端的序列号，同时也把自己的序列号发给对方。</p>
-<p>服务端出现了新连接，状态是 <code>SYN_RCV</code>，Linux内核会建立一个<strong>半连接队列</strong>来维护 未完成的握手信息。 半连接队列溢出后，server就无法再建立新的连接。</p>
-<p><strong>SYN 攻击，攻击的是就是这个半连接队列</strong>。</p>
+<p>服务端出现了新连接，状态是 <code>SYN_RCV</code>，Linux内核会建立一个<strong>半连接队列</strong>来维护 未完成的握手信息。 半连接队列溢出后，server就无法再<strong>建立新的连接</strong>。<strong>SYN 攻击，攻击的是就是这个半连接队列</strong>。</p>
 <ul>
-<li>如果 SYN 半连接队列已满，只能丢弃连接吗？</li>
+<li>如果 SYN 半连接队列已满，只能丢弃连接吗？
+<ul>
+<li>开启 syncookies 功能就可以在不使用 SYN 半连接队列的情况下成功建立连接。</li>
 </ul>
-<p><strong>开启 syncookies 功能就可以在不使用 SYN 半连接队列的情况下成功建立连接</strong>，</p>
+</li>
+</ul>
+<p>Syn flooding 解决方式  <a href="https://www.zhihu.com/question/26741164/answer/52776074" target="_blank" rel="noopener">参考</a></p>
 <p>syncookies 的工作原理：服务器根据当前状态计算出一个值，放在己方发出的 SYN+ACK 报文中发出，当客户端返回 ACK 报文时，取出该值验证，如果合法，就认为连接建立成功</p>
 <h4 id="tcp四次挥手time_wait和closed_wait"><a class="markdownIt-Anchor" href="#tcp四次挥手time_wait和closed_wait"></a> TCP四次挥手time_wait和closed_wait</h4>
 <p>客户端和服务端双方都可以主动断开连接，<strong>通常先关闭连接的一方称为主动方，后关闭连接的一方称为被动方。</strong></p>
@@ -603,6 +606,10 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
               </li>
              
@@ -611,7 +618,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -619,15 +626,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color3">mq</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">django</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mq</a>
               </li>
              
               <li class="article-tag-list-item">

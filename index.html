@@ -146,6 +146,327 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-高并发_py" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="flask"><a class="markdownIt-Anchor" href="#flask"></a> Flask</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.run(host=HOST, port=PORT, threaded=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<p>Flask中通过threaded变量控制是单线程还是多线程模式</p>
+<ul>
+<li>默认threaded=False即单线程模式, parallel requests是被sequentialy处理的</li>
+<li>threaded=True,对于每个request会起一个新的线程</li>
+<li>processes 该参数用于指定进程数，flask可以指定用多进程或是多线程部署(flask自带的dev  server)，但不能同时启用。</li>
+</ul>
+<p>用Apache bench工具作压测。</p>
+<ul>
+<li>不仅可以对Apache server作压测，也可以对其他类型的server作压测，如Nginx,tomcat</li>
+<li>ab通过创建多个并发访问线程，模拟多个访问者对某个url进行访问</li>
+</ul>
+<p>参数说明</p>
+<ul>
+<li>-n 在测试会话中所执行的请求个数。默认时，仅执行一个请求</li>
+<li>-c：一次产生的请求个数。默认是一次一个</li>
+<li>-r:  don’t exit on socket receive errors</li>
+</ul>
+<p><code>ab -r -n 10 -c 5 http://127.0.0.1:3000/?delay=1</code></p>
+<p>一共发10个请求，并发数是5</p>
+<ul>
+<li>Gunicorn
+<ul>
+<li>workers</li>
+<li>threads</li>
+<li>worker-class
+<ul>
+<li>sync(默认) - 每个请求由一个process去处理</li>
+<li>gthread - 每个请求由一个thread处理
+<ul>
+<li>另有参数thread可以指定每个process能开的thread数量</li>
+</ul>
+</li>
+<li>eventlet , gevent, tornado 异步IO</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>uWSGI
+<ul>
+<li>workers</li>
+<li>threads</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>concurrency</th>
+<th>transaction rate (trans/sec)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sync + gunicorn (4 worker + 50 thread)</td>
+<td>921</td>
+<td>192</td>
+</tr>
+<tr>
+<td>sync + uWSGI (4 worker + 50 thread)</td>
+<td>236</td>
+<td>136.07</td>
+</tr>
+<tr>
+<td>async + gunicorn (4 worker + gevent)</td>
+<td>842</td>
+<td>616</td>
+</tr>
+<tr>
+<td>async + uWSGI (4 worker + gevent )</td>
+<td>759</td>
+<td>575</td>
+</tr>
+<tr>
+<td>nginx + sync + uWSGI</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>nginx + async + uWSGI</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p>async + uWSGI</p>
+<ul>
+<li>flask服务首先要用gevent的monkey patched, 否则并发上不去
+<ul>
+<li>我的理解: flask的服务没有用gevent开异步的话，其实还是sequence处理的</li>
+</ul>
+</li>
+<li>uWSGI的配置不用threads改用gevent参数，否则无效</li>
+</ul>
+</li>
+<li>
+<p>横向扩展</p>
+<ul>
+<li>增加server数量</li>
+</ul>
+</li>
+<li>
+<p>垂直扩展</p>
+<ul>
+<li>提高单机硬件性能，如增加CPU核数，用更好的网卡(万兆)，升级更好的硬盘</li>
+<li>提升单机架构性能,使用Cache减少I/O次数,异步来增加单服务吞吐量；用无锁数据结构来减少响应时间</li>
+</ul>
+</li>
+</ul>
+<h4 id="高并发经典问题"><a class="markdownIt-Anchor" href="#高并发经典问题"></a> 高并发经典问题</h4>
+<ul>
+<li>
+<p>单台服务器最大并发</p>
+<ul>
+<li>单台server支持多少TCP并发连接
+<ul>
+<li>理论是受端口号范围限制, 1024-65535是用户可以使用的，每个TCP连接都要占一个端口号</li>
+<li>实际单机并发连接数还受硬件资源(内存，网卡 带宽等影响)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>C10K并发连接</p>
+<ul>
+<li>requests per second</li>
+<li>创建的进程线程多了，数据拷贝频繁（缓存I/O、内核将数据拷贝到用户进程空间、阻塞）， 进程/线程上下文切换消耗大， 导致操作系统崩溃，这就是C10K问题的本质</li>
+</ul>
+</li>
+<li>
+<p>C10M并发连接</p>
+</li>
+<li>
+<p><strong>去掉自增主键</strong></p>
+<ul>
+<li>自增主键的存在写库存在抢锁, 可以利用全局id生成器提前生成id直接写入数据库</li>
+</ul>
+</li>
+<li>
+<p><strong>异步任务去写库</strong></p>
+<ul>
+<li>数据只是存在mysql中做备份，建议使用异步的方式写入库，先把数据写到缓存下发给用户，之后在利用后台异步任务一点点的写入，例如聊天系统可以这样干</li>
+</ul>
+</li>
+<li>
+<p><strong>uwsgi + nginx</strong></p>
+<ul>
+<li>使用uwsgi协议让它配合nginx处理django的request，参数为4进程+2线程</li>
+<li>uwsgi在处理请求的时候发送了队列溢出的问题，因为当前测试设置的并发数为每秒1000次并发，而uwsgi的处理队列容量默认为100，导致处理请求的时间加长，而这个问题则可以通过修改somaxcon的大小解决，总的来说，使用uwsgi+nginx是一个理想的选择</li>
+</ul>
+</li>
+<li>
+<p><strong>gunicorn + nginx</strong></p>
+<ul>
+<li>gunicorn跟uwsgi类似，也是一个高性能的http服务器</li>
+</ul>
+</li>
+<li>
+<p><strong>gunicorn + nginx + gevent</strong></p>
+<ul>
+<li>gunicorn是同步（sync）单线程模型的，有的时候它不免会发生一些阻塞问题，这时候我们为gunicorn加上-k gevent参数来用gevent做处理接口，这就比较靠谱地处理了阻塞问题</li>
+</ul>
+</li>
+</ul>
+<h4 id="django带数据库连接"><a class="markdownIt-Anchor" href="#django带数据库连接"></a> Django带数据库连接</h4>
+<ul>
+<li>Django本身dev server是单进程多线程的模式，支持一定的并发 60,70吧
+<ul>
+<li>在runserver的时候指定 --nothreading 就可以关闭多线程模式</li>
+</ul>
+</li>
+</ul>
+<h4 id="mysql-查看状态"><a class="markdownIt-Anchor" href="#mysql-查看状态"></a> MySQL 查看状态</h4>
+<ul>
+<li>show processlist</li>
+<li>show status</li>
+<li>show status like ‘%connect%’</li>
+</ul>
+<h4 id="django-实现数据连接池"><a class="markdownIt-Anchor" href="#django-实现数据连接池"></a> Django 实现数据连接池</h4>
+<p><a href="https://yunsonbai.top/2017/07/02/gunicorn-gevent-django/" target="_blank" rel="noopener">https://yunsonbai.top/2017/07/02/gunicorn-gevent-django/</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/12/07/高并发_py/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-django多对多关系优化" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/12/03/django多对多关系优化/">django多对多关系优化</a>
+    </h1>
+  
+
+        
+        <a href="/2020/12/03/django多对多关系优化/" class="archive-article-date">
+  	<time datetime="2020-12-03T06:26:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-03</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>django多对多的关系可以通过ManyToManyField.</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    name = models.CharField(max_length=<span class="number">128</span>)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span> </span><br><span class="line">        <span class="keyword">return</span> self.name</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Group_RAW</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    name = models.CharField(max_length=<span class="number">128</span>)</span><br><span class="line">    members = models.ManyToManyField(Person)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Group</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    name = models.CharField(max_length=<span class="number">128</span>)</span><br><span class="line">    members = models.ManyToManyField(Person, through=<span class="string">'Membership'</span>)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span> </span><br><span class="line">        <span class="keyword">return</span> self.name</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Membership</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    person = models.ForeignKey(Person, on_delete=models.CASCADE)</span><br><span class="line">    group = models.ForeignKey(Group, on_delete=models.CASCADE)</span><br><span class="line">    date_joined = models.DateField()        <span class="comment"># 进组时间</span></span><br><span class="line">    invite_reason = models.CharField(max_length=<span class="number">64</span>)  <span class="comment"># 邀请原因</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>Group_RAW的实现方式就是生成了一个中间关系表。一列是person表的主键，一列是group表的主键。</p>
+<img src="/2020/12/03/django多对多关系优化/image-20201203143018791.png" title="image-20201203143018791">
+</li>
+<li>
+<p>倘若还需要增加一些额外信息，例如该person进入该group的时间，就像Group实现的方式，在中间表中添加这些信息</p>
+<img src="/2020/12/03/django多对多关系优化/image-20201203143038901.png" title="image-20201203143038901">
+</li>
+</ul>
+<h4 id="多对多关系标签文章的关联表如果查找太慢怎么办"><a class="markdownIt-Anchor" href="#多对多关系标签文章的关联表如果查找太慢怎么办"></a> 多对多关系（标签×文章）的关联表如果查找太慢怎么办</h4>
+<ul>
+<li>只在article上建索引。或许可以把每个标签前几页的文章缓存起来</li>
+<li>标签的数量有限，重复度太高不适合建索引？</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">django</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/12/03/django多对多关系优化/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-分布式锁" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -793,159 +1114,6 @@
 
 
   
-    <article id="post-变量生命周期" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/26/变量生命周期/">变量生命周期</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/26/变量生命周期/" class="archive-article-date">
-  	<time datetime="2020-11-26T07:55:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>变量生命周期<br>
-变量存储的空间</p>
-        
-          <a class="article-more-a" href="/2020/11/26/变量生命周期/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">OS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/26/变量生命周期/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-操作系统_1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/26/操作系统_1/">操作系统_1</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/26/操作系统_1/" class="archive-article-date">
-  	<time datetime="2020-11-26T07:50:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="进程和线程的区别"><a class="markdownIt-Anchor" href="#进程和线程的区别"></a> 进程和线程的区别</h5>
-        
-          <a class="article-more-a" href="/2020/11/26/操作系统_1/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">OS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/26/操作系统_1/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1060,6 +1228,10 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
               </li>
              
@@ -1068,7 +1240,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1076,15 +1248,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color3">mq</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">django</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mq</a>
               </li>
              
               <li class="article-tag-list-item">
