@@ -12,7 +12,7 @@ tags:
 * delattr()
 * setattr()
 实现基于字符串的反射机制
-
+<!--more-->
 ```py
 import commons
 

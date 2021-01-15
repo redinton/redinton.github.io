@@ -1,9 +1,10 @@
-
-
-
-
-[TOC]
-
+---
+title: docker_registry_局部网配置
+date: 2020/11/26 15:38:59
+toc: true
+tags:
+- docker,develop
+---
 
 
 
@@ -13,7 +14,7 @@
 ```
 docker run -d -p 5000:5000 --restart=always --name registry registry:2
 ```
-
+<!--more-->
 可以把镜像文件存放在本地的指定路径， 默认是在/var/lib/docker/volumes/ hashid / _data/docker/registry
 
 ```

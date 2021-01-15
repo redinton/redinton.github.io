@@ -1,16 +1,17 @@
-[TOC]
-
-
-
-
-
+---
+title: CI_CD
+date: 2020/11/26 15:23:54
+toc: true
+tags:
+- develop
+---
 
 
 ### Gitlab-CI
 
 
 
-![image-20200922161813467](CI_CD.assets/image-20200922161813467.png)
+![image-20200922161813467](CI_CD/image-20200922161813467.png)
 
 
 
@@ -123,7 +124,7 @@ gitlab-runner register
 
 * 确保每次Merge Request都要通过Pipeline
 
-![image-20200924151752266](CI_CD.assets/image-20200924151752266.png)
+![image-20200924151752266](CI_CD/image-20200924151752266.png)
 
 
 
@@ -145,7 +146,7 @@ cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 
 * 先在部署的服务器上生成ssh，然后把id_rsa中的内容复制到 SSH_PRIVATE_KEY 对应的value中
 
-![image-20200924155947190](CI_CD.assets/image-20200924155947190.png)
+![image-20200924155947190](CI_CD/image-20200924155947190.png)
 
 [参考](http://zacksleo.top/2017/04/14/GitLabCI%E9%80%9A%E8%BF%87ssh%E8%BF%9B%E8%A1%8C%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2/index.html)
 

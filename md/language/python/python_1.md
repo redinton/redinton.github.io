@@ -6,19 +6,61 @@ tags:
 - python
 ---
 
-#### 装饰器
+[解决哈希冲突](#解决哈希冲突)
+[dict实现原理](#dict实现原理)  
+[list和set查询谁复杂度低](#list和set查询谁复杂度低)  
+[else与for,while,try使用](#else与forwhiletry使用)    
+[eval函数](#eval函数)  
+[is not None](#is_not_none)   
+[is和==的区别](#is和的区别)  
+[运算符重载](#运算符重载)  
+[装饰器闭包内的变量存在哪里](#装饰器闭包内的变量存在哪里)  
 
+[pyc,so文件](#pyc文件so文件)  
+[python和java,C++的区别](#python和javac的区别)  
+[type和object的关系](#type和object的关系)  
+
+
+[上下文管理器](#上下文管理器)  
+[python中的高阶函数](#python中的高阶函数)  
+[python特殊方法](#python特殊方法)  
+[python菱形继承](#python菱形继承)  
+[super关键字实现,python多继承](#python多继承子类调用一个父类的方法怎么做super关键字的具体实现方式)  
+
+
+[线程安全的单例设计模式](#线程安全的单例设计模式)  
+
+[函数_和__情况](#函数_和__情况)  
+[函数的参数](#函数的参数)  
+[基础数据类型,可变,不可变](#基础数据类型可变不可变)  
+[深拷贝浅拷贝](#深拷贝浅拷贝)  
+[用python调用系统命令用什么模块](#用python调用系统命令用什么模块)  
+
+[序列迭代](#序列迭代)  
+[itertools 库](#itertools库)  
+[标准迭代器Iterator接口](#标准迭代器iterator接口)  
+[迭代,生成器,generator如何实现](#迭代生成器generator如何实现)  
+<!--more-->
+
+
+
+
+#### 装饰器/闭包内的变量存在哪里
 [装饰器参考](https://stackoverflow.com/questions/739654/how-to-make-a-chain-of-function-decorators/1594484#1594484)
-
-例如统计函数运行时间，打印日志
-
-函数装饰器 和 类装饰器
-
+* 例如统计函数运行时间，打印日志
+* 函数装饰器和类装饰器
+* 本质也是个闭包
+  * 它能访问定义体之外定义的非全局变量
+  * 外函数返回内函数的引用
+* 外函数把临时变量绑定给内函数
+  * 通常一个函数结束时会把变量都释放给内存空间，但外部函数发现临时变量在内部函数会用到，就会把临时变量绑定到内函数
+* 修改外函数临时变量
+  * 方法一: python3 支持nonlocal参数，表明这个变量不是局部变量空间的变量，需要向上一层变量空间找这个变量
+  * 方法二：把闭包变量改成可变类型数据进行修改
+[深入理解python中闭包，闭包的实质](https://blog.csdn.net/pushiqiang/article/details/79282118)
 
 #### 上下文管理器 
-
 基本语法
-
 ```python
 with EXPR as VAR:
 	BLOCK
@@ -32,13 +74,48 @@ with open("file.txt","r") as f: #上下文表达式
 * 一个类中实现了 `__enter__` ,  `__exit__`
 
 场景
-
 * 更优雅的方式操作(创建/获取/释放)资源 如文件操作，数据库连接
 * 处理异常更优雅
 
+#### 解决哈希冲突
+* 拉链法
+  * 在发生哈希冲突的地方接链表
+  * Java的HashMap用的就是链表+红黑树
+* 开放地址法
+  * 关键特征是所有输入元素全部存放在哈希表中
+  * 发生哈希冲突时，以当前地址为基准，根据某种寻址方式，去寻找下一个地址，若发生冲突再去寻找，直到一个为空的地址为止
+  * 寻址方法
+    * 线性探查
+    * 二次探查
+    * 伪随机探测
 
-#### list和set查询,谁复杂度低 why
 
+#### list,tuple,set,dict原理
+* list
+  * 在Cpython中,实现为长度可变的数组,对其它对象的引用组成的连续数组.
+* tuple
+  * 本质也是数组,大小固定
+* dict
+  * 伪随机探测(pseudo-random probing)的散列表(hash table)
+  * key需要是可哈希的对象,py中所有不可变的内置类型都是可哈希的
+  * 可以通过列表推导的方式创建`squares = {number: number**2 for number in range(10)}`
+  * py3中dict的keys,values,items返回的是视图对象(viewing objects),可以用于动态查看字典内容，每次dict内容变化，视图也会对应改变
+* OrderedDict
+  * py3.6之后 dict的实现也是insert-ordered
+  * collections模块中,为了保证key插入的顺序
+  * 内部使用循环双向链表记录记录插入顺序
+  * [参考说明](https://frostming.com/2016/07-07/python-you-xu-zi-dian-de-shi-xian)
+* Set
+  * set()
+    * 可变,无序,有限
+    * 元素唯一, 不可变, 可哈希
+  * frozenset()
+    * 不可变,可哈希,无序
+    * 元素唯一不可变, 可哈希
+* 集合被实现为带有**空值**的字典，只有键才是实际的集合元素
+
+
+#### list和set查询,谁复杂度低
 * list 的底层实现
   * 长度可变的数组，对其他对象的引用组成的连续数组 
   * index() 查找元素 O(N),  pop(i) O(N)
@@ -51,20 +128,16 @@ with open("file.txt","r") as f: #上下文表达式
   * set快 set是算哈希 O(1) 平均， 而list是 O(n)
 
 #### dict实现原理
-
 * dict 实现原理
-
   * 伪随机探测(pseudo-random probing)的散列表(hash table)作为字典的底层数据结构
-
   * 可哈希的对象作为字典的键
-
-    * python内置的所有不可变的内置类型都是可哈希的，可变类型不可哈希
+    * python内置的所有**不可变的内置类型都是可哈希**的，可变类型不可哈希
 
 #### 基础数据类型可变,不可变
 
 * 可变: list, set, dict
   * 可变对象变化后，地址没变 (可以用 id() 来查看地址)
-* 不可变: int , float,string,bool, tuple
+* 不可变: int , float,string,bool,** tuple**
 
 #### 深拷贝,浅拷贝
 
@@ -114,7 +187,7 @@ d = copy.deepcopy(a)
     * 要想不影响 就用 深拷贝
 
 
-```
+```py
 t1 = (1,2,3)
 t2 = tuple(t1)
 t2 is t1 true
@@ -128,8 +201,6 @@ t3 = t1[:]
 t3 is t1 false
 
 ```
-
-
 
 #### is和==的区别
 
@@ -161,13 +232,12 @@ python中所有都是对象，都有着 id, type, value 属性
   * True 和 False是python两个内建的对象，不会再有其他的bool对象
 * None 类型
   * None有自己的类型 type(None) return  NoneType 
-  * None 是一个常量，表示一个空对象，数据空并不代表是空对象垃圾回收机制
-  * None 是一个单例对象，一个变量是None 那么一定和 None是同一个内存空间
+  * None 是一个常量，表示一个空对象，数据空并不代表是空对象
+  * **None 是一个单例对象**，一个变量是None 那么一定和 None是同一个内存空间
   * 在用 not x  判断不是None的时候，会把 x == []，{}，(),'' 的情况也包含，所以要用 is not None
 
 
-#### is not None
-
+#### is_not_None
 is 是比较 内存地址，而None是单例模式生成的，类型是NoneType  除了None 本身，其余对象 is not None的结果都是True
 
 哪些形式的数据为空
@@ -185,13 +255,24 @@ a is not None -> return True
 if a ->  用于判断a是否为空, 调用的是 a自身的 \__nonzero__() 或者 在没有nonezero的时候调用 len()
 
 #### 函数"_"和“__”情况
+* `_`是类似 protected
+* `__`是类似 private
 
 
+#### 写一下线程安全的单例设计模式
+```py
 
-#### 写一下单例设计模式
-
-
-
+def singleton(cls):
+    _instance = {}
+    lock = threading.Lock()
+    def _wrapper(*args,**kwargs):
+        if cls not in _instance:
+            with lock:
+              if cls not in _instance:
+                _instance[cls] = cls(*args,**kwargs)
+        return _instance[cls]
+    return _wrapper
+```
 
 
 #### python中的高阶函数
@@ -227,25 +308,43 @@ lambda，map, reduce filter
     ```
 
     
+#### pyc文件,so文件
+* pyc文件
+  * .py程序被编译成byte-compiled的pyc文件，目的是加快下次执行文件加载速度
+  * 运行py文件时，会自动检查是否有对应的.pyc文件，若存在并且py文件修改时间和pyc文件相同，就会读取pyc文件
+  * 只有在**import对应的.py文件**的时候，才会生成对应的.pyc文件
+* so文件
+  * 用cython把Python文件编译成.so文件
 
 
-
-#### pyc文件
-
-
-
-#### C++ python 解释性语言区别
-
-
-
-#### python 和 java的区别
+#### python和java,C++的区别
 
 * 静态类型和动态类型
 * python 一切皆对象,祖先都是Object
 * python有GIL
 
-#### 迭代 生成器 generator 如何实现,怎么理解
+#### 编译型语言,解释型语言
+* 编译型语言： **代码直接编译成机器码**执行, 但是不同的平台（x86、ARM等）CPU的指令集不同，因此，需要编译出每一种平台的对应机器码。
+  * 例子： C, C++
+* 解释型语言： 可以由**解释器直接加载源码**然后运行，代价是运行效率太低。
+  * 例子: python , ruby
+* Java是将代码编译成一种“字节码”，它类似于抽象的CPU指令，然后，**针对不同平台编写虚拟机**，不同平台的虚拟机负责加载字节码并执行，这样就实现了“一次编写，到处运行”的效果。
 
+
+
+#### 迭代,生成器,generator如何实现
+![image-20201117143012148](python_1/image-20201117143012148.png)
+
+三者区别
+* 可迭代对象 Iterable
+  * 含 `__iter__` () 方法，且返回的是**一个对应的迭代器**(list返回list_iterator)
+  * 迭代器
+    * 除了`__iter__` 还要有 `__next__`方法
+    * 生成器
+      * 一种特殊的迭代器
+      * 在迭代的过程中可以改变当前迭代值
+
+详细介绍
 * 迭代 [参考 ](https://zhuanlan.zhihu.com/p/32162554)
   * iterable 可迭代对象，序列的大小长度已确定
     * list,tuple,dict,string
@@ -270,16 +369,29 @@ lambda，map, reduce filter
 
     * 复杂的算法 就表示成函数的形式 加入 yield  ， 每一次起点就是从yield 后一行开始到下一次yield结束
 
-![image-20201117143012148](python_1/image-20201117143012148.png)
+#### 序列迭代
 
-三者区别
-* 可迭代对象 Iterable
-  * 含 `__iter__` () 方法，且返回的是**一个对应的迭代器**(list返回list_iterator)
-  * 迭代器
-    * 除了`__iter__` 还要有 `__next__`方法
-    * 生成器
-      * 一种特殊的迭代器
-      * 在迭代的过程中可以改变当前迭代值
+* 解释器需要迭代对象x时，会自动调用 iter(x) 
+* 内置 iter 函数
+  * 检查对象是否有`__iter__` 方法，有的话就调用它获取迭代器
+  * 若没有`__iter__` 但有`__getitem__` , python 会创建一个迭代器，按顺序(索引0开始) 获取元素
+  * 尝试失败就抛出 TypeError 异常
+* 检查对象是否可迭代
+  * 最好用iter () 还会考虑 `__getitem__`
+  * 不用 isinstance(x,abc.iterable) 只考虑有无`__iter__`
+
+#### 标准迭代器Iterator接口
+
+* `__next__` 返回下一个元素，如果没有抛出StopIteration
+* `__iter__` 返回self
+
+
+#### itertools库
+
+* chain(it1,it2, ... ,itN)
+  * 先产出 it1 中的所有元素，然后it2的 ，然后所有都连接在一起
+* zip_longest(it1,it2m fillvalue=None)
+  * zip 取最长的iterator，剩余确实的补全
 
 #### 用python调用系统命令用什么模块
 
@@ -302,9 +414,62 @@ lambda，map, reduce filter
   
   * 对线程的控制和监控
 
-#### python是单继承还是多继承,子类调用一个父类的方法,怎么做,super关键字的具体实现方式
+#### python是多继承,子类调用一个父类的方法,怎么做,super关键字的具体实现方式
 
 支持多继承
+
+#### python菱形继承
+
+![image-20201123103511551](python_1/image-20201123103511551.png)
+
+* 当D类的对象使用一个属性时，首先在D类中查找是否有该属性，若没有就去父类
+
+  * 首先是去B还是C
+  * 如果先去B，但B没有的话，是先去C还是去A
+
+* 菱形继承的初始化问题
+
+  * 如果每个类的初始化都是用父类的初始化即
+
+    ```python
+    class Electrical(object):
+        def __init__(self, name):
+            self.name = name
+            print('Electrical init')
+    
+    class Phone(Electrical): 
+        def __init__(self, name, price):
+            Electrical.__init__(self, name)
+            self.price = price
+            print('Phone init')
+     
+    class Computer(Electrical):
+        def __init__(self, name, config):
+            Electrical.__init__(self, name)
+            self.config = config
+            print('Computer init')
+     
+    class HuaWei(Phone, Computer):
+        def __init__(self, name, price, config):
+            Phone.__init__(self, name, price)
+            Computer.__init__(self, name, config)
+            print('HuaWei init')
+    
+    h = HuaWei('huawei', 100, 'i7')
+    ```
+
+  * 创建HuaWei对象时，Eletrical的`__init__`执行了两遍，有问题
+
+    * **用super解决**
+    * super本质也是个类，内部记录着MRO信息，确保每个类只会被查找一次，避免顶层父类中的方法被多次执行。
+    * super()会创建一个super对象
+
+  * 新式类即(py3默认继承Object) 采用广度优先的方式继承顺序
+
+    * 先从水平继承，即上述顺序是 D-B-C-A
+
+  * 可以通过`__mro__`方法查看继承顺序
+
 
 
 #### type和object的关系
@@ -368,7 +533,8 @@ bus3.passengers
 
 #### python特殊方法
 * `__slots__` 节省内存
-  * 默认下，python在实例中`__dict__`的字典中存储实例属性，底层是用散列表来提升速度，会消耗大量内存。如果数百万个属性不多的实例，用`__slots__` ，在元组中存储实例属性，而不是字典。那么实例就不会有 `__slots__` 属性
+  * 默认下，python在实例中`__dict__`的字典中存储实例属性，底层是**用散列表来提升速度，会消耗大量内存**。
+  * 如果数百万个属性不多的实例，用`__slots__` ，在元组中存储实例属性，而不是字典。
   * 每个子类需要定义`__slots__`属性，解释器会忽略继承的`__slots__`属性
 * `__format__` 会被内置的format()函数和str.format()调用，使用特殊格式代码显示对象的字符串表示
 * py3中 `__repr__`,`__str__`,`__format__` 都必须返回Unicode字符串(str类型)， `__bytes__` 返回字节序列(bytes 类型)
@@ -386,31 +552,8 @@ bus3.passengers
 * `__neg__` - 
 
 
-#### 序列迭代
 
-* 解释器需要迭代对象x时，会自动调用 iter(x) 
-* 内置 iter 函数
-  * 检查对象是否有`__iter__` 方法，有的话就调用它获取迭代器
-  * 若没有`__iter__` 但有`__getitem__` , python 会创建一个迭代器，按顺序(索引0开始) 获取元素
-  * 尝试失败就抛出 TypeError 异常
-* 检查对象是否可迭代
-  * 最好用iter () 还会考虑 `__getitem__`
-  * 不用 isinstance(x,abc.iterable) 只考虑有无`__iter__`
-
-#### 标准迭代器Iterator接口
-
-* `__next__` 返回下一个元素，如果没有抛出StopIteration
-* `__iter__` 返回self
-
-
-#### itertools 库
-
-* chain(it1,it2, ... ,itN)
-  * 先产出 it1 中的所有元素，然后it2的 ，然后所有都连接在一起
-* zip_longest(it1,it2m fillvalue=None)
-  * zip 取最长的iterator，剩余确实的补全
-
-#### else 与 for/while/try 使用
+#### else与for,while,try使用
 
 * for 
   * 当for循环运行完(即for循环没有被break语句中止) 才运行else模块
@@ -422,7 +565,7 @@ bus3.passengers
 所有情况下，如果异常或return，break，continue导致控制权跳到了复合语句的主块之外，else也会被跳过
 
 
-#### eval 函数
+#### eval函数
 * str to list/dict/tuple
   * 实现把字符串常量转成变量
 * 慎用的原因是 针对不可信的str，转化成命令后可能造成漏洞，如rm 数据

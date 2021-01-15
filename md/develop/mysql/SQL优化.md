@@ -40,6 +40,7 @@ tags:
     * ref:  索引的前缀扫描
     * range: between .. and.. ， > ，<
   * rows: 需要扫描的行数
+  * possible_keys:可能用到的索引
   * Key:  使用的索引
 
 ### 慢查询优化

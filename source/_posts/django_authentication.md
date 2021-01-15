@@ -92,4 +92,4 @@ base64(Header)  + "." + base64(Payload) +"." + Signature
 
 ###### 服务器验证
 
-收到token后，先decode出JWT三个部分，得到sign的算法和payload，然后结合**secretkey再次生成Signat**ure，与原来的Signature对比验证token是否有效，验证通过才会用payload数据
+收到token后，先decode出JWT三个部分，得到sign的算法和payload，然后结合**secretkey再次生成Signature**，与原来的Signature对比验证token是否有效，验证通过才会用payload数据。

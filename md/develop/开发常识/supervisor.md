@@ -1,10 +1,17 @@
-[TOC]
+---
+title: supervisor
+date: 2020/11/26 15:54:49
+toc: true
+tags:
+- develop
+---
+
 
 
 
 进程管理工具，python开发，监控进程状态，异常退出时能自动重启
 
-
+<!--more-->
 
 #### ubuntu18.04 安装
 

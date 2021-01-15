@@ -2,14 +2,6 @@
 
 
 
-
-
-
-
-
-
-
-
 ### 4 more-sensitive query suggestions
 
 #### 4.1 generate query suggestions

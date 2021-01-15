@@ -5,15 +5,22 @@ import json
 import shutil
 from datetime import datetime
 
+DEVELOP = "md/develop/"
+LEARN = "md/learn/"
+
 markdown_folders = [
-    "md/develop/MQ",
-    "md/develop/mysql",
-    "md/develop/linux",
     "md/algorithm",
-    "md/develop/systemDesign",
-    "md/learn/操作系统",
-    "md/learn/网络",
-    "md/language/python"
+    DEVELOP + "django",
+    DEVELOP + "MQ/celery",
+    DEVELOP + "MQ/kafka",
+    DEVELOP + "MQ/redis",
+    DEVELOP + "linux",
+    DEVELOP + "mysql",
+    DEVELOP + "systemDesign",
+    LEARN + "操作系统",
+    LEARN + "分布式系统",
+    LEARN + "网络",
+    "md/language/python",
     ]
 hexo_des_folder = "source/_posts/"
 time_checkpoint = "last_update_time.txt"
@@ -47,9 +54,9 @@ def main(markdown_folder):
             if fileName.endswith("md"):
                 file_path = os.path.join(root,fileName)
 
-                if fileName not in last_modified_time or getFileAccessTime(file_path) > last_modified_time[fileName]:
+                if fileName not in last_modified_time or getFileAccessTime(file_path) > last_modified_time[file_path]:
                     shutil.copy(file_path,hexo_des_folder)
-                    last_modified_time[fileName] = currTime
+                    last_modified_time[file_path] = currTime
                 
         for dir_name in dirs:
             dirPath = f"{root}/{dir_name}" #os.path.join(root,dir_name)

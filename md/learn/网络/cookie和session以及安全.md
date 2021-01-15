@@ -1,8 +1,10 @@
-
-
-
-
-[TOC]
+---
+title: cookie和session以及安全
+date: 2020/11/26 16:19:52
+toc: true
+tags:
+- http
+---
 
 
 
@@ -15,7 +17,7 @@
 cookie字段存在HTTP header中，量一大就占带宽。
 
 cookie可以存储一个sessionID=xxx， 仅传这个cookie给server，server用这个找到对应的session， 有效解决用户追踪问题。
-
+<!--more-->
 
 
 #### session

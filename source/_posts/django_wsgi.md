@@ -6,9 +6,10 @@ tags:
 toc: true
 ---
 
-Django主要部署平台是WSGI，其是web server 和 web application的python 标准
+[WSGI](#WSGI)
 
-通过startproject command 会生成一个default WSGI configuration，即主目录下有一个WSGI.py文件
+
+Django通过startproject command 会生成一个default WSGI configuration，即主目录下有一个WSGI.py文件
 
 <!--more-->
 
@@ -16,15 +17,13 @@ Django主要部署平台是WSGI，其是web server 和 web application的python 
 
 Server通过application callable 与 代码做交互， application callable 以一个位于 Python 模块中，名为 `application` 的对象的形式提供，且对服务器可见。
 
-通过**runserver**命令起的是**django默认服务器。**
+通过**runserver**命令起的是**django默认服务器。** 用的是python http server.
+
+
 
 [参考](https://docs.djangoproject.com/zh-hans/3.0/howto/deployment/wsgi/)
 
 ![image-20200508175352456](django_wsgi/image-20200508175352456.png)
-
-
-
-
 
 client  <---->  nginx  <----> socket  <----> uwsgi  <-----> django
 
@@ -35,7 +34,38 @@ client  <---->  nginx  <----> socket  <----> uwsgi  <-----> django
 > DO NOT USE THIS SERVER IN A PRODUCTION SETTING. It has not gone through security audits or performance tests. (And that’s how it’s gonna stay.
 
 
+#### WSGI <a name="WSGI"> </a>
+* 让web服务器知道如何调用Python应用程序，并把用户请求告诉应用程序
+* 让Python应用程序(application)知道用户的具体请求是什么,以及如何返回结果给Web服务器
 
+#### Server如何调用application
+* 每个application的入口只有一个，就是**所有客户端请求都同一个入口**进入到应用程序
+* server需要知道从哪里找application的入口
+  * application的可调用对象(函数或类)
+  * WSGI定义了application对象的形式
+  ```py
+  def simple_app(environ,start_response):
+    pass
+  ```
+  * django中就是在wsgi.py中有 application = get_wsgi_application()
+  * environ
+    * dict,存放了所有和客户端相关的信息,就能知道客户端请求的资源是什么，请求中带了什么数据
+      * REQUEST_METHOD,QUERY_STRING:HTTP请求中的查询字符串，URL中?后面的内容,CONTENT_TYPEHTTP headers中的content-type内容 等等
+  * start_response
+    * 可调用的对象
+    * 接收两个必选一个可选参数
+      * status
+      * response_headers
+      * exc_info
+  * application的返回值用于为HTTP提供body
+
+[WGSI简易教程](https://www.xncoding.com/2016/04/22/python/wsgi.html)
+
+#### WSGI 中间件
+* middleware 运行在server和application中间
+  * 对server来说,middleware就是application
+  * 对application来说,middleware就是server
+* middleware能处理所有经过的request和response
 ##### Gunicorn 和 uWSGI的区别
 
 都算WSGI web server，区别不太大， Gunicorn用的更广一点，ins有用
