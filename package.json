@@ -26,7 +26,7 @@
     "hexo-renderer-markdown-it-plus": "^1.0.4",
     "hexo-renderer-marked": "^0.2.11",
     "hexo-renderer-mathjax": "^0.6.0",
-    "hexo-renderer-stylus": "^0.2.3",
+    "hexo-renderer-stylus": "^2.1.0",
     "hexo-server": "^0.3.3"
   }
 }
